@@ -15,5 +15,8 @@ websockets>=12.0
 # For better terminal interaction in chatbot
 readline>=6.2.4.1
 
+# For beautiful CLI interface
+rich>=13.7.0
+
 # Optional: For enhanced logging
 colorlog>=6.7.0
