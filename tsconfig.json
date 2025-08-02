@@ -12,16 +12,6 @@
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
     "declaration": true,
-<<<<<<< Current (Your changes)
-    "allowSyntheticDefaultImports": true,
-    "lib": ["ES2023"],
-    "module": "NodeNext",
-    "moduleResolution": "nodenext",
-    "target": "es2022",
-    "types": ["node", "vitest/globals"],
-    "jsx": "react-jsx"
-  }
-=======
     "declarationMap": true,
     "sourceMap": true,
     "removeComments": true,
@@ -33,5 +23,4 @@
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "dist", "**/*.test.ts"]
->>>>>>> Incoming (Background Agent changes)
 }
