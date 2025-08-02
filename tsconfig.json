@@ -1,14 +1,18 @@
 {
   "compilerOptions": {
+    "target": "ES2022",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "lib": ["ES2023"],
+    "outDir": "./dist",
+    "rootDir": "./src",
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
-    "sourceMap": true,
-    "composite": true,
-    "incremental": true,
     "declaration": true,
+<<<<<<< Current (Your changes)
     "allowSyntheticDefaultImports": true,
     "lib": ["ES2023"],
     "module": "NodeNext",
@@ -17,4 +21,17 @@
     "types": ["node", "vitest/globals"],
     "jsx": "react-jsx"
   }
+=======
+    "declarationMap": true,
+    "sourceMap": true,
+    "removeComments": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "allowSyntheticDefaultImports": true
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist", "**/*.test.ts"]
+>>>>>>> Incoming (Background Agent changes)
 }

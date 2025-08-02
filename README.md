@@ -1,215 +1,241 @@
-# Gemini CLI
+# DeepSeek CLI
 
-[![Gemini CLI CI](https://github.com/google-gemini/gemini-cli/actions/workflows/ci.yml/badge.svg)](https://github.com/google-gemini/gemini-cli/actions/workflows/ci.yml)
+[![npm version](https://img.shields.io/npm/v/@deepseek/cli.svg)](https://www.npmjs.com/package/@deepseek/cli)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-![Gemini CLI Screenshot](./docs/assets/gemini-screenshot.png)
+A powerful command-line interface for interacting with DeepSeek AI models, featuring codebase analysis, interactive chat, and code generation capabilities.
 
-This repository contains the Gemini CLI, a command-line AI workflow tool that connects to your
-tools, understands your code and accelerates your workflows.
+## Features
 
-With the Gemini CLI you can:
+- 🤖 **Interactive Chat** - Engage in conversations with DeepSeek models
+- 📂 **Codebase Analysis** - Analyze and ask questions about your codebase
+- ⚡ **Quick Queries** - Get instant answers without entering chat mode
+- 🎨 **Markdown Support** - Beautiful terminal output with syntax highlighting
+- 🔧 **Configurable** - Customize model settings and API endpoints
+- 🚀 **Stream Support** - Real-time streaming responses
 
-- Query and edit large codebases in and beyond Gemini's 1M token context window.
-- Generate new apps from PDFs or sketches, using Gemini's multimodal capabilities.
-- Automate operational tasks, like querying pull requests or handling complex rebases.
-- Use tools and MCP servers to connect new capabilities, including [media generation with Imagen,
-  Veo or Lyria](https://github.com/GoogleCloudPlatform/vertex-ai-creative-studio/tree/main/experiments/mcp-genmedia)
-- Ground your queries with the [Google Search](https://ai.google.dev/gemini-api/docs/grounding)
-  tool, built into Gemini.
+## Installation
 
-## Quickstart
+### With npm
 
-You have two options to install Gemini CLI.
+```bash
+npm install -g @deepseek/cli
+```
 
-### With Node
+### From source
 
-1. **Prerequisites:** Ensure you have [Node.js version 20](https://nodejs.org/en/download) or higher installed.
-2. **Run the CLI:** Execute the following command in your terminal:
+```bash
+git clone https://github.com/deepseek-ai/deepseek-cli.git
+cd deepseek-cli
+npm install
+npm run build
+npm link
+```
 
-   ```bash
-   npx https://github.com/google-gemini/gemini-cli
-   ```
+## Quick Start
 
-   Or install it with:
+1. **Configure your API key:**
 
-   ```bash
-   npm install -g @google/gemini-cli
-   ```
+```bash
+deepseek config
+```
 
-   Then, run the CLI from anywhere:
+Or set it via environment variable:
 
-   ```bash
-   gemini
-   ```
+```bash
+export DEEPSEEK_API_KEY="your-api-key-here"
+```
 
-### With Homebrew
+2. **Start chatting:**
 
-1. **Prerequisites:** Ensure you have [Homebrew](https://brew.sh/) installed.
-2. **Install the CLI** Execute the following command in your terminal:
+```bash
+deepseek chat
+```
 
-   ```bash
-   brew install gemini-cli
-   ```
+3. **Quick query:**
 
-   Then, run the CLI from anywhere:
+```bash
+deepseek "What is the capital of France?"
+```
 
-   ```bash
-   gemini
-   ```
+## Usage
 
-### Common Configuration steps
+### Interactive Chat
 
-3. **Pick a color theme**
-4. **Authenticate:** When prompted, sign in with your personal Google account. This will grant you up to 60 model requests per minute and 1,000 model requests per day using Gemini.
+Start an interactive chat session:
 
-You are now ready to use the Gemini CLI!
+```bash
+deepseek chat
 
-### Use a Gemini API key:
+# With a custom system prompt
+deepseek chat --system "You are a helpful coding assistant"
 
-The Gemini API provides a free tier with [100 requests per day](https://ai.google.dev/gemini-api/docs/rate-limits#free-tier) using Gemini 2.5 Pro, control over which model you use, and access to higher rate limits (with a paid plan):
+# Use a specific model
+deepseek chat --model deepseek-coder
+```
 
-1. Generate a key from [Google AI Studio](https://aistudio.google.com/apikey).
-2. Set it as an environment variable in your terminal. Replace `YOUR_API_KEY` with your generated key.
+### Codebase Analysis
 
-   ```bash
-   export GEMINI_API_KEY="YOUR_API_KEY"
-   ```
+Analyze your codebase and ask questions:
 
-3. (Optionally) Upgrade your Gemini API project to a paid plan on the API key page (will automatically unlock [Tier 1 rate limits](https://ai.google.dev/gemini-api/docs/rate-limits#tier-1))
+```bash
+# Analyze current directory
+deepseek analyze "What does this project do?"
 
-### Use a Vertex AI API key:
+# Analyze specific directory
+deepseek analyze "Find all API endpoints" --path /path/to/project
 
-The Vertex AI API provides a [free tier](https://cloud.google.com/vertex-ai/generative-ai/docs/start/express-mode/overview) using express mode for Gemini 2.5 Pro, control over which model you use, and access to higher rate limits with a billing account:
+# Generate codebase summary
+deepseek analyze --summary
+```
 
-1. Generate a key from [Google Cloud](https://cloud.google.com/vertex-ai/generative-ai/docs/start/api-keys).
-2. Set it as an environment variable in your terminal. Replace `YOUR_API_KEY` with your generated key and set GOOGLE_GENAI_USE_VERTEXAI to true
+### Quick Queries
 
-   ```bash
-   export GOOGLE_API_KEY="YOUR_API_KEY"
-   export GOOGLE_GENAI_USE_VERTEXAI=true
-   ```
+Get quick answers without entering chat mode:
 
-3. (Optionally) Add a billing account on your project to get access to [higher usage limits](https://cloud.google.com/vertex-ai/generative-ai/docs/quotas)
+```bash
+# Simple query
+deepseek "Explain async/await in JavaScript"
 
-For other authentication methods, including Google Workspace accounts, see the [authentication](./docs/cli/authentication.md) guide.
+# Query with codebase context
+deepseek "How does the authentication work?" --codebase
+```
+
+### Configuration
+
+Configure DeepSeek CLI settings:
+
+```bash
+# Interactive configuration
+deepseek config
+
+# Set specific values
+deepseek config --key apiKey --value "your-api-key"
+deepseek config --key model --value "deepseek-coder"
+
+# View current configuration
+deepseek config --list
+```
+
+## Configuration Options
+
+| Option | Description | Default |
+|--------|-------------|---------|
+| `apiKey` | Your DeepSeek API key | - |
+| `apiEndpoint` | API endpoint URL | `https://api.deepseek.com/v1` |
+| `model` | Default model to use | `deepseek-coder` |
+| `maxTokens` | Maximum tokens in response | `4096` |
+| `temperature` | Response randomness (0-2) | `0.7` |
+
+## Environment Variables
+
+You can also configure the CLI using environment variables:
+
+- `DEEPSEEK_API_KEY` - Your API key
+- `DEEPSEEK_API_ENDPOINT` - Custom API endpoint
+- `DEEPSEEK_MODEL` - Default model
+- `DEEPSEEK_MAX_TOKENS` - Maximum tokens
+- `DEEPSEEK_TEMPERATURE` - Temperature setting
 
 ## Examples
 
-Once the CLI is running, you can start interacting with Gemini from your shell.
-
-You can start a project from a new directory:
-
-```sh
-cd new-project/
-gemini
-> Write me a Gemini Discord bot that answers questions using a FAQ.md file I will provide
-```
-
-Or work with an existing project:
-
-```sh
-git clone https://github.com/google-gemini/gemini-cli
-cd gemini-cli
-gemini
-> Give me a summary of all of the changes that went in yesterday
-```
-
-### Next steps
-
-- Learn how to [contribute to or build from the source](./CONTRIBUTING.md).
-- Explore the available **[CLI Commands](./docs/cli/commands.md)**.
-- If you encounter any issues, review the **[troubleshooting guide](./docs/troubleshooting.md)**.
-- For more comprehensive documentation, see the [full documentation](./docs/index.md).
-- Take a look at some [popular tasks](#popular-tasks) for more inspiration.
-- Check out our **[Official Roadmap](./ROADMAP.md)**
-
-### Troubleshooting
-
-Head over to the [troubleshooting guide](docs/troubleshooting.md) if you're
-having issues.
-
-## Popular tasks
-
 ### Explore a new codebase
 
-Start by `cd`ing into an existing or newly-cloned repository and running `gemini`.
-
-```text
-> Describe the main pieces of this system's architecture.
+```bash
+cd /path/to/project
+deepseek analyze "Give me an overview of this project's architecture"
+deepseek analyze "What are the main components and how do they interact?"
 ```
 
-```text
-> What security mechanisms are in place?
+### Generate code
+
+```bash
+deepseek "Write a Python function to calculate fibonacci numbers"
+deepseek "Create a React component for a todo list" --model deepseek-coder
 ```
 
-```text
-> Provide a step-by-step dev onboarding doc for developers new to the codebase.
+### Debug issues
+
+```bash
+deepseek analyze "Why might this function be causing memory leaks?" --path src/utils/
+deepseek "How can I optimize this SQL query for better performance?"
 ```
 
-```text
-> Summarize this codebase and highlight the most interesting patterns or techniques I could learn from.
+### Learn and explore
+
+```bash
+deepseek "Explain the difference between TCP and UDP"
+deepseek "What are the best practices for REST API design?"
 ```
 
-```text
-> Identify potential areas for improvement or refactoring in this codebase, highlighting parts that appear fragile, complex, or hard to maintain.
+## Advanced Usage
+
+### Custom System Prompts
+
+You can set custom system prompts for specialized behavior:
+
+```bash
+deepseek chat --system "You are an expert in React and TypeScript. Provide detailed explanations with code examples."
 ```
 
-```text
-> Which parts of this codebase might be challenging to scale or debug?
+### Model Selection
+
+DeepSeek CLI supports multiple models:
+
+- `deepseek-coder` - Optimized for code generation and analysis
+- `deepseek-chat` - General purpose conversational model
+
+```bash
+deepseek --model deepseek-chat "Explain quantum computing"
 ```
 
-```text
-> Generate a README section for the [module name] module explaining what it does and how to use it.
-```
+## Troubleshooting
 
-```text
-> What kind of error handling and logging strategies does the project use?
-```
+### API Key Issues
 
-```text
-> Which tools, libraries, and dependencies are used in this project?
-```
+If you encounter authentication errors:
 
-### Work with your existing code
+1. Ensure your API key is correctly set:
+   ```bash
+   deepseek config --list
+   ```
 
-```text
-> Implement a first draft for GitHub issue #123.
-```
+2. Try setting it via environment variable:
+   ```bash
+   export DEEPSEEK_API_KEY="your-api-key"
+   ```
 
-```text
-> Help me migrate this codebase to the latest version of Java. Start with a plan.
-```
+### Connection Issues
 
-### Automate your workflows
+If you experience connection problems:
 
-Use MCP servers to integrate your local system tools with your enterprise collaboration suite.
+1. Check your internet connection
+2. Verify the API endpoint:
+   ```bash
+   deepseek config --key apiEndpoint --value "https://api.deepseek.com/v1"
+   ```
 
-```text
-> Make me a slide deck showing the git history from the last 7 days, grouped by feature and team member.
-```
+### Rate Limiting
 
-```text
-> Make a full-screen web app for a wall display to show our most interacted-with GitHub issues.
-```
+If you hit rate limits, try:
+- Reducing request frequency
+- Using a paid plan for higher limits
+- Implementing exponential backoff in scripts
 
-### Interact with your system
+## Contributing
 
-```text
-> Convert all the images in this directory to png, and rename them to use dates from the exif data.
-```
+Contributions are welcome! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
 
-```text
-> Organize my PDF invoices by month of expenditure.
-```
+## License
 
-### Uninstall
+MIT © DeepSeek Team
 
-Head over to the [Uninstall](docs/Uninstall.md) guide for uninstallation instructions.
+## Support
 
-## Terms of Service and Privacy Notice
-
-For details on the terms of service and privacy notice applicable to your use of Gemini CLI, see the [Terms of Service and Privacy Notice](./docs/tos-privacy.md).
-
-## Security Disclosures
-
+<<<<<<< Current (Your changes)
 Please see our [security disclosure process](SECURITY.md). All [security advisories](https://github.com/google-gemini/gemini-cli/security/advisories) are managed on Github.
+=======
+- 📧 Email: support@deepseek.ai
+- 🐛 Issues: [GitHub Issues](https://github.com/deepseek-ai/deepseek-cli/issues)
+- 💬 Discord: [Join our community](https://discord.gg/deepseek)
+>>>>>>> Incoming (Background Agent changes)
