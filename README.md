@@ -1,215 +1,333 @@
-# Gemini CLI
+# DeepSeek API Integration
 
-[![Gemini CLI CI](https://github.com/google-gemini/gemini-cli/actions/workflows/ci.yml/badge.svg)](https://github.com/google-gemini/gemini-cli/actions/workflows/ci.yml)
+A comprehensive Python integration for DeepSeek's language models, providing easy access to both `deepseek-chat` and `deepseek-reasoner` models with full feature support.
 
-![Gemini CLI Screenshot](./docs/assets/gemini-screenshot.png)
+## Features
 
-This repository contains the Gemini CLI, a command-line AI workflow tool that connects to your
-tools, understands your code and accelerates your workflows.
+- 🤖 **Dual Model Support**: Access both DeepSeek-Chat and DeepSeek-Reasoner models
+- 🔄 **Streaming Responses**: Real-time streaming for better user experience
+- 🧩 **Function Calling**: Built-in support for tool/function definitions
+- 📊 **JSON Output Mode**: Structured data generation with guaranteed valid JSON
+- 💰 **Usage Tracking**: Monitor token usage and estimate costs
+- 🔁 **Automatic Retries**: Handle rate limits with exponential backoff
+- ⚡ **Async Support**: Both synchronous and asynchronous APIs
+- 🎯 **Batch Processing**: Process multiple prompts concurrently
+- 💾 **Context Caching**: Automatic caching for reduced costs (up to 74% savings)
+- 🌐 **Web API**: Ready-to-use FastAPI service with WebSocket support
 
-With the Gemini CLI you can:
+## Installation
 
-- Query and edit large codebases in and beyond Gemini's 1M token context window.
-- Generate new apps from PDFs or sketches, using Gemini's multimodal capabilities.
-- Automate operational tasks, like querying pull requests or handling complex rebases.
-- Use tools and MCP servers to connect new capabilities, including [media generation with Imagen,
-  Veo or Lyria](https://github.com/GoogleCloudPlatform/vertex-ai-creative-studio/tree/main/experiments/mcp-genmedia)
-- Ground your queries with the [Google Search](https://ai.google.dev/gemini-api/docs/grounding)
-  tool, built into Gemini.
+1. Clone the repository:
+```bash
+git clone <repository-url>
+cd deepseek-integration
+```
 
-## Quickstart
+2. Install dependencies:
+```bash
+pip install -r requirements.txt
+```
 
-You have two options to install Gemini CLI.
+3. Set up your environment variables:
+```bash
+cp .env.example .env
+# Edit .env and add your DeepSeek API key
+```
 
-### With Node
+## Quick Start
 
-1. **Prerequisites:** Ensure you have [Node.js version 20](https://nodejs.org/en/download) or higher installed.
-2. **Run the CLI:** Execute the following command in your terminal:
+### Basic Usage
 
-   ```bash
-   npx https://github.com/google-gemini/gemini-cli
-   ```
+```python
+from deepseek_integration import DeepSeekClient
 
-   Or install it with:
+# Initialize client
+client = DeepSeekClient()
 
-   ```bash
-   npm install -g @google/gemini-cli
-   ```
+# Simple chat
+response = client.chat("What is the capital of France?")
+print(response)
 
-   Then, run the CLI from anywhere:
+# Using the reasoning model
+result = client.reason("If a train travels 120 km in 2 hours, what is its average speed?")
+print(f"Answer: {result['answer']}")
+print(f"Reasoning: {result['reasoning']}")
+```
 
-   ```bash
-   gemini
-   ```
+### Streaming Responses
 
-### With Homebrew
+```python
+# Stream responses for better UX
+for chunk in client.chat("Tell me a story", stream=True):
+    print(chunk, end='', flush=True)
+```
 
-1. **Prerequisites:** Ensure you have [Homebrew](https://brew.sh/) installed.
-2. **Install the CLI** Execute the following command in your terminal:
+### JSON Output Mode
 
-   ```bash
-   brew install gemini-cli
-   ```
+```python
+from deepseek_integration import ResponseFormat
 
-   Then, run the CLI from anywhere:
+# Generate structured data
+response = client.chat(
+    "Create a user profile with name, age, and hobbies",
+    response_format=ResponseFormat.JSON,
+    system_prompt="Always respond with valid JSON"
+)
+print(json.dumps(response, indent=2))
+```
 
-   ```bash
-   gemini
-   ```
+### Function Calling
 
-### Common Configuration steps
+```python
+# Define a function tool
+weather_tool = client.create_function_tool(
+    name="get_weather",
+    description="Get the current weather in a location",
+    parameters={
+        "location": {"type": "string", "description": "City name"},
+        "unit": {"type": "string", "enum": ["celsius", "fahrenheit"]}
+    },
+    required=["location"]
+)
 
-3. **Pick a color theme**
-4. **Authenticate:** When prompted, sign in with your personal Google account. This will grant you up to 60 model requests per minute and 1,000 model requests per day using Gemini.
+# Use function calling
+response = client.chat(
+    "What's the weather in Paris?",
+    tools=[weather_tool],
+    tool_choice="auto"
+)
+```
 
-You are now ready to use the Gemini CLI!
+### Batch Processing
 
-### Use a Gemini API key:
+```python
+# Process multiple prompts concurrently
+prompts = [
+    "Translate 'hello' to Spanish",
+    "What is 2+2?",
+    "Name the planets in our solar system"
+]
 
-The Gemini API provides a free tier with [100 requests per day](https://ai.google.dev/gemini-api/docs/rate-limits#free-tier) using Gemini 2.5 Pro, control over which model you use, and access to higher rate limits (with a paid plan):
-
-1. Generate a key from [Google AI Studio](https://aistudio.google.com/apikey).
-2. Set it as an environment variable in your terminal. Replace `YOUR_API_KEY` with your generated key.
-
-   ```bash
-   export GEMINI_API_KEY="YOUR_API_KEY"
-   ```
-
-3. (Optionally) Upgrade your Gemini API project to a paid plan on the API key page (will automatically unlock [Tier 1 rate limits](https://ai.google.dev/gemini-api/docs/rate-limits#tier-1))
-
-### Use a Vertex AI API key:
-
-The Vertex AI API provides a [free tier](https://cloud.google.com/vertex-ai/generative-ai/docs/start/express-mode/overview) using express mode for Gemini 2.5 Pro, control over which model you use, and access to higher rate limits with a billing account:
-
-1. Generate a key from [Google Cloud](https://cloud.google.com/vertex-ai/generative-ai/docs/start/api-keys).
-2. Set it as an environment variable in your terminal. Replace `YOUR_API_KEY` with your generated key and set GOOGLE_GENAI_USE_VERTEXAI to true
-
-   ```bash
-   export GOOGLE_API_KEY="YOUR_API_KEY"
-   export GOOGLE_GENAI_USE_VERTEXAI=true
-   ```
-
-3. (Optionally) Add a billing account on your project to get access to [higher usage limits](https://cloud.google.com/vertex-ai/generative-ai/docs/quotas)
-
-For other authentication methods, including Google Workspace accounts, see the [authentication](./docs/cli/authentication.md) guide.
+responses = client.batch_chat(prompts, max_concurrent=3)
+for prompt, response in zip(prompts, responses):
+    print(f"Q: {prompt}\nA: {response}\n")
+```
 
 ## Examples
 
-Once the CLI is running, you can start interacting with Gemini from your shell.
+### 1. Interactive Chatbot
 
-You can start a project from a new directory:
+Run the interactive chatbot with conversation history and multiple modes:
 
-```sh
-cd new-project/
-gemini
-> Write me a Gemini Discord bot that answers questions using a FAQ.md file I will provide
+```bash
+python examples/chatbot_app.py
 ```
 
-Or work with an existing project:
+Features:
+- Chat, reasoning, and code generation modes
+- Conversation history management
+- Usage statistics tracking
+- Export conversations
 
-```sh
-git clone https://github.com/google-gemini/gemini-cli
-cd gemini-cli
-gemini
-> Give me a summary of all of the changes that went in yesterday
+Commands:
+- `/help` - Show available commands
+- `/mode [chat|reason|code]` - Switch conversation mode
+- `/stats` - Show usage statistics
+- `/save` - Save conversation to file
+- `/quit` - Exit the chatbot
+
+### 2. Web API Service
+
+Start the FastAPI web service:
+
+```bash
+python examples/web_api.py
 ```
 
-### Next steps
+The API will be available at `http://localhost:8000` with the following endpoints:
 
-- Learn how to [contribute to or build from the source](./CONTRIBUTING.md).
-- Explore the available **[CLI Commands](./docs/cli/commands.md)**.
-- If you encounter any issues, review the **[troubleshooting guide](./docs/troubleshooting.md)**.
-- For more comprehensive documentation, see the [full documentation](./docs/index.md).
-- Take a look at some [popular tasks](#popular-tasks) for more inspiration.
-- Check out our **[Official Roadmap](./ROADMAP.md)**
+- `POST /api/v1/chat` - Chat completion
+- `POST /api/v1/reason` - Reasoning endpoint
+- `POST /api/v1/functions/call` - Function calling
+- `POST /api/v1/batch` - Batch processing
+- `GET /api/v1/usage` - Usage statistics
+- `WS /ws/chat` - WebSocket for real-time chat
 
-### Troubleshooting
+#### Example API Calls
 
-Head over to the [troubleshooting guide](docs/troubleshooting.md) if you're
-having issues.
-
-## Popular tasks
-
-### Explore a new codebase
-
-Start by `cd`ing into an existing or newly-cloned repository and running `gemini`.
-
-```text
-> Describe the main pieces of this system's architecture.
+**Chat Completion:**
+```bash
+curl -X POST "http://localhost:8000/api/v1/chat" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "messages": [
+      {"role": "user", "content": "Hello!"}
+    ],
+    "temperature": 0.7
+  }'
 ```
 
-```text
-> What security mechanisms are in place?
+**Streaming Response:**
+```bash
+curl -X POST "http://localhost:8000/api/v1/chat" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "messages": [
+      {"role": "user", "content": "Tell me a joke"}
+    ],
+    "stream": true
+  }'
 ```
 
-```text
-> Provide a step-by-step dev onboarding doc for developers new to the codebase.
+**Reasoning:**
+```bash
+curl -X POST "http://localhost:8000/api/v1/reason" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "prompt": "What is the sum of all numbers from 1 to 100?",
+    "reasoning_effort": "high"
+  }'
 ```
 
-```text
-> Summarize this codebase and highlight the most interesting patterns or techniques I could learn from.
+## Advanced Usage
+
+### Custom Configuration
+
+```python
+from deepseek_integration import DeepSeekClient, DeepSeekConfig, DeepSeekModel
+
+config = DeepSeekConfig(
+    api_key="your-api-key",
+    base_url="https://api.deepseek.com",
+    default_model=DeepSeekModel.REASONER,
+    max_retries=5,
+    timeout=120.0
+)
+
+client = DeepSeekClient(config)
 ```
 
-```text
-> Identify potential areas for improvement or refactoring in this codebase, highlighting parts that appear fragile, complex, or hard to maintain.
+### Async Operations
+
+```python
+import asyncio
+
+async def async_example():
+    client = DeepSeekClient()
+    
+    # Async chat
+    response = await client.achat("Hello, async world!")
+    print(response)
+    
+    # Async streaming
+    async for chunk in await client.achat("Tell me a story", stream=True):
+        print(chunk, end='', flush=True)
+
+asyncio.run(async_example())
 ```
 
-```text
-> Which parts of this codebase might be challenging to scale or debug?
+### Error Handling
+
+```python
+from deepseek_integration import DeepSeekError, RateLimitError
+
+try:
+    response = client.chat("Hello")
+except RateLimitError as e:
+    print(f"Rate limit exceeded: {e}")
+    # Wait and retry
+except DeepSeekError as e:
+    print(f"API error: {e}")
 ```
 
-```text
-> Generate a README section for the [module name] module explaining what it does and how to use it.
+### Token Usage Monitoring
+
+```python
+# Get usage summary
+usage = client.get_usage_summary()
+print(f"Total tokens used: {usage['usage']['total_tokens']:,}")
+print(f"Estimated cost: ${usage['costs']['total_cost']:.4f}")
+print(f"Cache hit rate: {usage['efficiency']['cache_hit_rate']}%")
+
+# Reset usage tracking
+client.reset_usage()
 ```
 
-```text
-> What kind of error handling and logging strategies does the project use?
+## Model Comparison
+
+| Feature | deepseek-chat | deepseek-reasoner |
+|---------|--------------|-------------------|
+| General conversation | ✅ Excellent | ✅ Good |
+| Code generation | ✅ Excellent | ✅ Good |
+| Mathematical reasoning | ✅ Good | ✅ Excellent |
+| Step-by-step problem solving | ✅ Good | ✅ Excellent |
+| Context length | 163,840 tokens | 163,840 tokens |
+| Response speed | Fast | Slower (due to reasoning) |
+
+## Cost Optimization
+
+1. **Use Context Caching**: Repeated prompts are automatically cached, reducing costs by up to 74%
+2. **Optimize Prompts**: Shorter, more specific prompts use fewer tokens
+3. **Set Max Tokens**: Limit response length when appropriate
+4. **Batch Processing**: Process multiple requests concurrently for efficiency
+5. **Monitor Usage**: Regularly check usage statistics to identify optimization opportunities
+
+## API Reference
+
+### DeepSeekClient
+
+The main client class for interacting with DeepSeek API.
+
+#### Methods
+
+- `chat(messages, model=None, temperature=0.7, max_tokens=None, stream=False, response_format=None, tools=None, tool_choice=None, system_prompt=None, **kwargs)`
+- `achat(...)` - Async version of chat
+- `reason(prompt, reasoning_effort="medium", show_reasoning=True, **kwargs)`
+- `create_function_tool(name, description, parameters, required=None)`
+- `batch_chat(prompts, model=None, max_concurrent=5, **kwargs)`
+- `get_usage_summary()` - Get token usage and cost statistics
+- `reset_usage()` - Reset usage tracking
+
+### Configuration Options
+
+- `api_key`: Your DeepSeek API key
+- `base_url`: API endpoint (default: https://api.deepseek.com)
+- `default_model`: Default model to use
+- `max_retries`: Maximum retry attempts
+- `retry_delay`: Initial retry delay in seconds
+- `timeout`: Request timeout in seconds
+
+## Requirements
+
+- Python 3.8+
+- OpenAI Python SDK
+- FastAPI (for web service)
+- python-dotenv
+- httpx
+- pydantic
+
+## Environment Variables
+
+Create a `.env` file with:
+
+```env
+DEEPSEEK_API_KEY=your-api-key-here
+DEEPSEEK_API_ENDPOINT=https://api.deepseek.com/v1  # Optional
+DEEPSEEK_MODEL=deepseek-chat  # Optional
+DEEPSEEK_MAX_TOKENS=4096  # Optional
+DEEPSEEK_TEMPERATURE=0.7  # Optional
 ```
 
-```text
-> Which tools, libraries, and dependencies are used in this project?
-```
+## Contributing
 
-### Work with your existing code
+Contributions are welcome! Please feel free to submit a Pull Request.
 
-```text
-> Implement a first draft for GitHub issue #123.
-```
+## License
 
-```text
-> Help me migrate this codebase to the latest version of Java. Start with a plan.
-```
+This project is licensed under the MIT License - see the LICENSE file for details.
 
-### Automate your workflows
+## Acknowledgments
 
-Use MCP servers to integrate your local system tools with your enterprise collaboration suite.
-
-```text
-> Make me a slide deck showing the git history from the last 7 days, grouped by feature and team member.
-```
-
-```text
-> Make a full-screen web app for a wall display to show our most interacted-with GitHub issues.
-```
-
-### Interact with your system
-
-```text
-> Convert all the images in this directory to png, and rename them to use dates from the exif data.
-```
-
-```text
-> Organize my PDF invoices by month of expenditure.
-```
-
-### Uninstall
-
-Head over to the [Uninstall](docs/Uninstall.md) guide for uninstallation instructions.
-
-## Terms of Service and Privacy Notice
-
-For details on the terms of service and privacy notice applicable to your use of Gemini CLI, see the [Terms of Service and Privacy Notice](./docs/tos-privacy.md).
-
-## Security Disclosures
-
-Please see our [security disclosure process](SECURITY.md). All [security advisories](https://github.com/google-gemini/gemini-cli/security/advisories) are managed on Github.
+- Built on top of the DeepSeek API
+- Uses OpenAI's SDK for compatibility
+- Inspired by modern AI integration patterns

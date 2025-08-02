@@ -1,0 +1,19 @@
+# Core dependencies
+openai>=1.12.0
+python-dotenv>=1.0.0
+httpx>=0.24.0
+pydantic>=2.0.0
+
+# For async support
+asyncio>=3.4.3
+
+# For web API example
+fastapi>=0.109.0
+uvicorn>=0.27.0
+websockets>=12.0
+
+# For better terminal interaction in chatbot
+readline>=6.2.4.1
+
+# Optional: For enhanced logging
+colorlog>=6.7.0
