@@ -14,3 +14,5 @@ export { SelfHealerTool } from './SelfHealerTool';
 export { CommandExecutorTool } from './CommandExecutorTool';
 export { DebuggerTool } from './DebuggerTool';
 export { DatadogIntegrationTool } from './DatadogIntegrationTool';
+export { VisionTool } from './VisionTool';
+export { WebScraperTool } from './WebScraperTool';
