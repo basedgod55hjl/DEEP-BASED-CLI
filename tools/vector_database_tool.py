@@ -469,6 +469,7 @@ class VectorDatabaseTool(BaseTool):
             metadata = {}
         return await self.execute(operation="update", id=id, text=text, metadata=metadata)
 <<<<<<< Current (Your changes)
+<<<<<<< Current (Your changes)
 =======
 <<<<<<< Current (Your changes)
  
@@ -518,5 +519,7 @@ class VectorDatabaseTool(BaseTool):
         } 
 >>>>>>> Incoming (Background Agent changes)
 >>>>>>> d56552d76c9eaadc6392dfb8e6c57491de43475f
+=======
+>>>>>>> Incoming (Background Agent changes)
 =======
 >>>>>>> Incoming (Background Agent changes)

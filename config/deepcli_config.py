@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 """
 Enhanced Configuration Management for DeepCLI
 Advanced configuration system with dynamic settings and validation
@@ -646,6 +645,7 @@ def restore_config_backup(backup_path: str):
     """Restore configuration from backup"""
     config_manager = get_config_manager()
     config_manager.restore_backup(backup_path)
+<<<<<<< Current (Your changes)
 =======
 <<<<<<< Current (Your changes)
  
@@ -718,3 +718,5 @@ def update_config(updates: Dict[str, Any]) -> None:
     deep_update(CONFIG, updates) 
 >>>>>>> Incoming (Background Agent changes)
 >>>>>>> d56552d76c9eaadc6392dfb8e6c57491de43475f
+=======
+>>>>>>> Incoming (Background Agent changes)

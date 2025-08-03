@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 """
 SQL Database Tool - SQLite Integration for DEEP-CLI
 Provides persistent storage for conversations, personas, memory, and more
@@ -70,25 +69,10 @@ class Context:
     context_data: str = ""
     timestamp: str = ""
     relevance_score: float = 0.0
-=======
-<<<<<<< Current (Your changes)
- 
-=======
-"""
-SQL Database Tool - Local SQLite database integration
-"""
-
-import sqlite3
-import aiosqlite
-from typing import Dict, Any, List, Optional
-from datetime import datetime
-from .base_tool import BaseTool, ToolResponse
->>>>>>> d56552d76c9eaadc6392dfb8e6c57491de43475f
 
 
 class SQLDatabaseTool(BaseTool):
     """
-<<<<<<< HEAD
     SQL Database Tool with SQLite for persistent storage
     Manages conversations, personas, memory, and context
     """
@@ -934,6 +918,7 @@ class SQLDatabaseTool(BaseTool):
             },
             "required": ["operation"]
         }
+<<<<<<< Current (Your changes)
 =======
     SQL Database Tool for local data storage and retrieval
     """
@@ -1103,3 +1088,5 @@ class SQLDatabaseTool(BaseTool):
         } 
 >>>>>>> Incoming (Background Agent changes)
 >>>>>>> d56552d76c9eaadc6392dfb8e6c57491de43475f
+=======
+>>>>>>> Incoming (Background Agent changes)

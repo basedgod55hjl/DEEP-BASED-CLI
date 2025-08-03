@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 """
 RAG Pipeline Tool - Retrieval-Augmented Generation for DEEP-CLI
 Integrates vector database, SQL database, and context-aware retrieval
@@ -31,22 +30,10 @@ class RAGContext:
     combined_context: str
     relevance_scores: Dict[str, float]
     timestamp: str
-=======
-<<<<<<< Current (Your changes)
- 
-=======
-"""
-RAG Pipeline Tool - Placeholder for Retrieval-Augmented Generation
-"""
-
-from typing import Dict, Any, List, Optional
-from .base_tool import BaseTool, ToolResponse
->>>>>>> d56552d76c9eaadc6392dfb8e6c57491de43475f
 
 
 class RAGPipelineTool(BaseTool):
     """
-<<<<<<< HEAD
     RAG Pipeline Tool - Comprehensive retrieval-augmented generation
     Combines vector search, SQL queries, and context-aware retrieval
     """
@@ -737,6 +724,7 @@ please answer the following question: {query}"""
             },
             "required": ["operation"]
         }
+<<<<<<< Current (Your changes)
 =======
     Placeholder for RAG Pipeline integration
     Will be implemented when vector database is available
@@ -777,3 +765,5 @@ please answer the following question: {query}"""
         } 
 >>>>>>> Incoming (Background Agent changes)
 >>>>>>> d56552d76c9eaadc6392dfb8e6c57491de43475f
+=======
+>>>>>>> Incoming (Background Agent changes)

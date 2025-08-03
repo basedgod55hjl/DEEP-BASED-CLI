@@ -52,17 +52,11 @@ class ToolManager:
             MemoryTool(),
             llm_tool,
             FastReasoningEngine(llm_tool=llm_tool),  # Pass LLM tool for fast consultations
-<<<<<<< HEAD
             SQLDatabaseTool(),
             FIMCompletionTool(),
             PrefixCompletionTool(),
             UnifiedAgentSystem(),
             SimpleEmbeddingTool()
-=======
-            VectorDatabaseTool(),
-            SQLDatabaseTool(),
-            RAGPipelineTool()
->>>>>>> d56552d76c9eaadc6392dfb8e6c57491de43475f
         ]
         
         # Add optional tools that might fail to initialize
