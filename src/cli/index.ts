@@ -16,11 +16,13 @@ program
   .command('chat')
   .description('Chat with the Unified Agent')
   .argument('<message...>', 'message')
-  .action(async (msg) => {
+  .option('-p, --persona <name>', 'persona name', 'deanna')
+  .action(async (msg, opts) => {
     const spinner = ora('Thinking...').start();
     const res = await tm.executeTool('unifiedagentsystem', {
       operation: 'conversation',
-      message: msg.join(' ')
+      message: msg.join(' '),
+      persona: opts.persona
     });
     spinner.stop();
     console.log(chalk.green(res.data?.response));

@@ -39,8 +39,43 @@ export class UnifiedAgentSystem extends BaseTool {
   }
 
   private async conversation(p: Record<string, unknown>): Promise<ToolResponse> {
-    const prompt = p.message as string;
-    return this.llm.execute({ operation: 'chat_completion', prompt });
+    const prompt = (p.message as string) ?? '';
+    const personaName = ((p.persona as string) ?? 'deanna').toLowerCase();
+
+    // Attempt to load persona definition from data/memory folder
+    let systemContent = '';
+    try {
+      const path = await import('node:path');
+      const fs = await import('node:fs/promises');
+      const personaPath = path.resolve('data', 'memory', `persona_${personaName}.json`);
+
+      try {
+        const raw = await fs.readFile(personaPath, 'utf8');
+        const json = JSON.parse(raw);
+        // Build a compact system prompt based on json fields
+        systemContent = [
+          json.description ?? '',
+          json.personality_traits ? `Traits: ${json.personality_traits.join(', ')}` : '',
+          json.conversation_style ? `Style guide: ${json.conversation_style}` : ''
+        ]
+          .filter(Boolean)
+          .join('\n');
+      } catch {
+        /* ignore if file missing */
+      }
+    } catch {
+      /* ignore dynamic import errors */
+    }
+
+    const messages = systemContent
+      ? ([{ role: 'system', content: systemContent }, { role: 'user', content: prompt }])
+      : undefined;
+
+    return this.llm.execute(
+      messages
+        ? { operation: 'chat_completion', messages }
+        : { operation: 'chat_completion', prompt }
+    );
   }
 
   getSchema(): Record<string, unknown> {
@@ -49,6 +84,7 @@ export class UnifiedAgentSystem extends BaseTool {
       properties: {
         operation: { type: 'string' },
         message: { type: 'string' },
+        persona: { type: 'string' },
         query: { type: 'string' },
         problem: { type: 'string' }
       }
