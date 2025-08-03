@@ -82,6 +82,41 @@ The Enhanced BASED GOD CLI has been completely rebuilt with a modular tool archi
 ✅ Export capabilities
 ```
 
+#### LLM Query Tool (`tools/llm_query_tool.py`)
+```python
+# LangChain Integration:
+✅ Multi-provider support (OpenAI, Anthropic, Ollama)
+✅ Smart provider selection by task type
+✅ Context-aware prompt enhancement
+✅ Token usage tracking
+✅ Fallback provider handling
+```
+
+#### FastReasoningEngine (`tools/fast_reasoning_engine.py`)
+```python
+# Agent Zero-style reasoning patterns
+✅ Deep reasoning and analysis
+✅ Context-aware decision making
+✅ Pattern recognition and generalization
+✅ Error handling and retry logic
+```
+
+#### FIM Completion Tool (`tools/fim_completion_tool.py`)
+```python
+# Fill-in-Middle completion for code generation
+✅ Code generation between prefix and suffix
+✅ Multi-language support
+✅ Error handling and retry logic
+```
+
+#### Prefix Completion Tool (`tools/prefix_completion_tool.py`)
+```python
+# Natural text and code continuation
+✅ Text and code continuation
+✅ Multi-language support
+✅ Error handling and retry logic
+```
+
 ## 🔧 Usage Examples
 
 ### Basic Tool Execution
