@@ -35,7 +35,7 @@ export class FastReasoningEngine extends BaseTool {
       status: ToolStatus.SUCCESS,
       executionTime: (Date.now() - start) / 1000,
       data: {
-        reasoning: res.data?.response
+        reasoning: (res.data as any)?.response
       }
     };
   }

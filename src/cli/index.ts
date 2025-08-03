@@ -1,11 +1,15 @@
 #!/usr/bin/env node
 import { Command } from 'commander';
-import chalk from 'chalk';
-import ora from 'ora';
 import { ToolManager } from '../ToolManager.js';
+import { LLMResponse, ReasoningResponse, CodeResponse, CommandResponse } from '../common/ToolResponse.js';
+import { LazyLoader } from '../tools/LazyLoader.js';
+import { createChalk, createSpinner } from '../tools/OptimizedImports.js';
 
 const program = new Command();
 const tm = new ToolManager();
+
+// Preload critical dependencies in background for better performance
+LazyLoader.preloadCritical();
 
 program
   .name('deep-cli')
@@ -18,14 +22,18 @@ program
   .argument('<message...>', 'message')
   .option('-p, --persona <name>', 'persona name', 'deanna')
   .action(async (msg, opts) => {
-    const spinner = ora('Thinking...').start();
+    const [spinner, chalk] = await Promise.all([
+      createSpinner('Thinking...'),
+      createChalk()
+    ]);
+    spinner.start();
     const res = await tm.executeTool('unifiedagentsystem', {
       operation: 'conversation',
       message: msg.join(' '),
       persona: opts.persona
     });
     spinner.stop();
-    console.log(chalk.green(res.data?.response));
+    console.log(chalk.green((res.data as LLMResponse)?.response));
   });
 
 program
@@ -43,7 +51,7 @@ program
   .argument('<question...>', 'question')
   .action(async (q) => {
     const res = await tm.executeTool('fastreasoningengine', { problem: q.join(' ') });
-    console.log(res.data?.reasoning);
+    console.log((res.data as ReasoningResponse)?.reasoning);
   });
 
 program
@@ -52,7 +60,7 @@ program
   .argument('<spec...>', 'code spec')
   .action(async (spec) => {
     const res = await tm.executeTool('swarmtool', { task: spec.join(' ') });
-    console.log(res.data?.code);
+    console.log((res.data as CodeResponse)?.code);
   });
 
 program
@@ -61,7 +69,7 @@ program
   .argument('<command...>', 'cmd')
   .action(async (cmdParts) => {
     const res = await tm.executeTool('commandexecutortool', { command: cmdParts.join(' ') });
-    console.log(res.data?.stdout);
+    console.log((res.data as CommandResponse)?.stdout);
   });
 
 program

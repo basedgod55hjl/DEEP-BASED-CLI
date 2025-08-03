@@ -24,7 +24,7 @@ export class RAGPipelineTool extends BaseTool {
       message: 'RAG response ready',
       status: ToolStatus.SUCCESS,
       data: {
-        response: llmRes.data?.response,
+        response: (llmRes.data as any)?.response,
         sources: []
       }
     };

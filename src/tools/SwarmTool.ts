@@ -12,7 +12,7 @@ export class SwarmTool extends BaseTool {
 
     // 1. Plan
     const planRes = await this.tm.executeTool('plannertool', { content: task });
-    const plan = planRes.data?.plan ?? '';
+    const plan = (planRes.data as any)?.plan ?? '';
 
     // 2. Code generation
     const codeRes = await this.tm.executeTool('coderagenttool', {
@@ -20,7 +20,7 @@ export class SwarmTool extends BaseTool {
       description: task,
       style: 'clean'
     });
-    const code = codeRes.data?.code ?? '';
+    const code = (codeRes.data as any)?.code ?? '';
 
     // 3. Review
     const reviewRes = await this.tm.executeTool('reviewertool', {

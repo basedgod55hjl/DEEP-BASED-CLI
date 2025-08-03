@@ -1,6 +1,7 @@
 import OpenAI from 'openai';
 import { BaseTool } from '../common/BaseTool';
 import { ToolResponse, ToolStatus } from '../common/ToolResponse';
+import { globalCache } from '../common/CacheManager';
 
 export interface ChatCompletionParams {
   messages?: { role: 'user' | 'system' | 'assistant'; content: string }[];
@@ -68,6 +69,24 @@ export class LLMQueryTool extends BaseTool {
 
     const chosenModel = model || 'deepseek-chat';
 
+    // Create cache key from request parameters
+    const cacheKey = `llm:${chosenModel}:${JSON.stringify(chatMessages)}:${temperature}:${maxTokens}`;
+    
+    // Try to get cached response
+    const cached = await globalCache.get<string>(cacheKey);
+    if (cached) {
+      return {
+        success: true,
+        message: 'Chat completion success (cached)',
+        status: ToolStatus.SUCCESS,
+        executionTime: 0.001, // Very fast for cached responses
+        data: {
+          response: cached,
+          cached: true
+        }
+      };
+    }
+
     const start = Date.now();
     const response = await this.openai.chat.completions.create({
       model: chosenModel,
@@ -77,6 +96,9 @@ export class LLMQueryTool extends BaseTool {
     });
 
     const content = response.choices[0]?.message?.content ?? '';
+    
+    // Cache the response for 15 minutes
+    await globalCache.set(cacheKey, content, 15 * 60 * 1000);
     return {
       success: true,
       message: 'Chat completion success',

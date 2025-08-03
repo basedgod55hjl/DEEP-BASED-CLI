@@ -28,7 +28,7 @@ export class CoderAgentTool extends BaseTool {
       success: true,
       message: 'Code generated',
       status: ToolStatus.SUCCESS,
-      data: { code: res.data?.response }
+      data: { code: (res.data as any)?.response }
     };
   }
 

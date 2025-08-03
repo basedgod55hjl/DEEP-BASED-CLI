@@ -2,12 +2,12 @@ import axios from 'axios';
 import { BaseTool } from '../common/BaseTool';
 import { ToolResponse, ToolStatus } from '../common/ToolResponse';
 
-interface StoreParams {
+interface StoreParams extends Record<string, unknown> {
   operation: 'store';
   texts: string[];
   metadata?: Record<string, unknown>[];
 }
-interface SearchParams {
+interface SearchParams extends Record<string, unknown> {
   operation: 'search';
   query: string;
   limit?: number;
@@ -30,13 +30,21 @@ export class VectorDatabaseTool extends BaseTool {
 
   async execute(params: Record<string, unknown>): Promise<ToolResponse> {
     const op = params.operation as string;
-    if (op === 'store') {
-      return this.store(params as StoreParams);
+    if (op === 'store' && this.isStoreParams(params)) {
+      return this.store(params);
     }
-    if (op === 'search') {
-      return this.search(params as SearchParams);
+    if (op === 'search' && this.isSearchParams(params)) {
+      return this.search(params);
     }
     return { success: false, message: `Unsupported op ${op}`, status: ToolStatus.FAILED };
+  }
+
+  private isStoreParams(params: Record<string, unknown>): params is StoreParams {
+    return params.operation === 'store' && Array.isArray(params.texts);
+  }
+
+  private isSearchParams(params: Record<string, unknown>): params is SearchParams {
+    return params.operation === 'search' && typeof params.query === 'string';
   }
 
   private async store({ texts, metadata = [] }: StoreParams): Promise<ToolResponse> {
