@@ -470,12 +470,12 @@ class LLMQueryTool(BaseTool):
                 data={"error": "Rate limit exceeded"},
                 message="Rate limit exceeded. Please wait before retrying."
             )
-            else:
-                return ToolResponse(
-                    success=False,
+        else:
+            return ToolResponse(
+                success=False,
                 data={"error": str(error)},
                 message=f"{operation} failed: {str(error)}"
-                )
+            )
     
     def get_schema(self) -> Dict[str, Any]:
         """Get enhanced schema for the tool"""

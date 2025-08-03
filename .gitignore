@@ -9,6 +9,13 @@ logs/*.log
 *.db
 *.log
 
+# Large model files (LFS budget exceeded)
+data/models/qwen3_embedding/model.safetensors
+data/models/qwen3_embedding/tokenizer.json
+data/models/**/*.safetensors
+data/models/**/*.bin
+data/models/**/*.gguf
+
 # gemini-cli settings
 .gemini/
 !gemini/config.yaml

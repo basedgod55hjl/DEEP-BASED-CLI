@@ -1,29 +1,76 @@
 {
-  "name": "deep-cli-ts",
-  "version": "0.1.0",
-  "type": "module",
-  "scripts": {
-    "build": "tsc -p .",
-    "start": "node dist/cli/index.js",
-    "test": "jest --passWithNoTests"
+  "name": "based-coder-cli",
+  "version": "1.0.0",
+  "description": "🚀 BASED CODER CLI - Enhanced AI-Powered Command Line Interface Made by @Lucariolucario55 on Telegram",
+  "main": "dist/cli/BasedCoderCLI.js",
+  "bin": {
+    "based-coder": "dist/cli/BasedCoderCLI.js"
   },
+  "scripts": {
+    "build": "tsc",
+    "dev": "ts-node src/cli/BasedCoderCLI.ts",
+    "start": "node dist/cli/BasedCoderCLI.js",
+    "test": "jest",
+    "lint": "eslint src/**/*.ts",
+    "format": "prettier --write src/**/*.ts",
+    "clean": "rm -rf dist",
+    "install-deps": "npm install && pip install -r requirements_enhanced.txt",
+    "setup": "npm run clean && npm run build && python based_coder_cli.py --init"
+  },
+  "keywords": [
+    "cli",
+    "ai",
+    "deepseek",
+    "rag",
+    "embeddings",
+    "reasoning",
+    "fim",
+    "prefix",
+    "chat",
+    "memory",
+    "persona"
+  ],
+  "author": "@Lucariolucario55 on Telegram",
+  "license": "MIT",
   "dependencies": {
-    "openai": "^4.8.0",
-    "axios": "^1.6.5",
-    "better-sqlite3": "^8.6.0",
     "chalk": "^5.3.0",
-    "@xenova/transformers": "^2.13.0",
-    "onnxruntime-node": "^1.18.0",
-    "cheerio": "^1.0.0-rc.12",
-    "commander": "^11.0.0",
-    "pino": "^8.17.0",
-    "pino-pretty": "^9.2.0"
+    "commander": "^11.1.0",
+    "inquirer": "^9.2.12",
+    "ora": "^7.0.1",
+    "rich": "^13.7.0",
+    "colorama": "^0.4.6",
+    "node-fetch": "^3.3.2",
+    "ws": "^8.14.2",
+    "uuid": "^9.0.1",
+    "dotenv": "^16.3.1",
+    "yaml": "^2.3.4",
+    "sqlite3": "^5.1.6",
+    "better-sqlite3": "^9.2.2"
   },
   "devDependencies": {
-    "typescript": "^5.2.2",
-    "@types/node": "^20.5.1",
+    "@types/node": "^20.10.0",
+    "@types/inquirer": "^9.0.7",
+    "@types/uuid": "^9.0.7",
+    "@types/better-sqlite3": "^7.6.8",
+    "@types/ws": "^8.5.10",
+    "@typescript-eslint/eslint-plugin": "^6.13.0",
+    "@typescript-eslint/parser": "^6.13.0",
+    "eslint": "^8.54.0",
     "jest": "^29.7.0",
-    "@types/jest": "^29.5.0",
-    "ts-jest": "^29.1.0"
-  }
+    "prettier": "^3.1.0",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.3.2"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/basedgod55hjl/DEEP-CLI"
+  },
+  "bugs": {
+    "url": "https://github.com/basedgod55hjl/DEEP-CLI/issues"
+  },
+  "homepage": "https://github.com/basedgod55hjl/DEEP-CLI#readme"
 }
