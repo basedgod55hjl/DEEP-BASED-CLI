@@ -5,3 +5,7 @@ export { SimpleEmbeddingTool } from './SimpleEmbeddingTool';
 export { FastReasoningEngine } from './FastReasoningEngine';
 export { RAGPipelineTool } from './RAGPipelineTool';
 export { UnifiedAgentSystem } from './UnifiedAgentSystem';
+export { PlannerTool } from './PlannerTool';
+export { ReaderTool } from './ReaderTool';
+export { WriterTool } from './WriterTool';
+export { ReviewerTool } from './ReviewerTool';
