@@ -10,8 +10,10 @@ import json
 
 async def test_deepseek_api():
     """Test if the DeepSeek API key is working"""
-    api_key = "sk-9af038dd3bdd46258c4a9d02850c9a6d"
-    
+    api_key = os.getenv("DEEPSEEK_API_KEY")
+    if not api_key:
+        raise ValueError("DEEPSEEK_API_KEY environment variable not set")
+
     headers = {
         "Authorization": f"Bearer {api_key}",
         "Content-Type": "application/json"
