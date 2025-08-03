@@ -541,8 +541,142 @@ class DeepSeekClient:
         
         return final_results
     
+    def chat_prefix_completion(
+        self,
+        messages: Union[str, List[ChatCompletionMessageParam]],
+        prefix: str,
+        stop: Optional[List[str]] = None,
+        model: Optional[DeepSeekModel] = None,
+        **kwargs
+    ) -> str:
+        """
+        Beta feature: Chat prefix completion
+        Completes a partial assistant message with given prefix
+        """
+        # Prepare messages for prefix completion
+        if isinstance(messages, str):
+            message_list = [{"role": "user", "content": messages}]
+        else:
+            message_list = messages.copy()
+        
+        # Add assistant message with prefix
+        message_list.append({
+            "role": "assistant", 
+            "content": prefix,
+            "prefix": True
+        })
+        
+        # Use beta endpoint
+        beta_client = OpenAI(
+            api_key=self.config.api_key,
+            base_url=self.config.beta_url,
+            timeout=self.config.timeout,
+            max_retries=self.config.max_retries
+        )
+        
+        params = {
+            "model": (model or self.config.default_model).value,
+            "messages": message_list,
+            **kwargs
+        }
+        
+        if stop:
+            params["stop"] = stop
+            
+        response = beta_client.chat.completions.create(**params)
+        self._update_usage(response.usage.model_dump() if response.usage else {})
+        
+        return response.choices[0].message.content
+
+    def fim_completion(
+        self,
+        prefix: str,
+        suffix: Optional[str] = None,
+        max_tokens: int = 4096,
+        temperature: float = 0.0,
+        **kwargs
+    ) -> str:
+        """
+        Beta feature: Fill-in-the-Middle (FIM) completion
+        Only available with deepseek-chat model, max 4K tokens
+        """
+        # Use beta endpoint
+        beta_client = OpenAI(
+            api_key=self.config.api_key,
+            base_url=self.config.beta_url,
+            timeout=self.config.timeout,
+            max_retries=self.config.max_retries
+        )
+        
+        # FIM uses the completions endpoint, not chat
+        params = {
+            "model": "deepseek-chat",  # FIM only works with chat model
+            "prompt": f"<fim_prefix>{prefix}<fim_suffix>{suffix or ''}<fim_middle>",
+            "max_tokens": min(max_tokens, 4096),  # FIM is limited to 4K tokens
+            "temperature": temperature,
+            **kwargs
+        }
+        
+        response = beta_client.completions.create(**params)
+        self._update_usage(response.usage.model_dump() if response.usage else {})
+        
+        return response.choices[0].text
+
+    def enhanced_json_output(
+        self,
+        messages: Union[str, List[ChatCompletionMessageParam]],
+        json_schema_description: str,
+        example_json: Optional[Dict[str, Any]] = None,
+        model: Optional[DeepSeekModel] = None,
+        **kwargs
+    ) -> Dict[str, Any]:
+        """
+        Enhanced JSON output mode with schema description and examples
+        """
+        # Build enhanced system prompt for JSON output
+        system_prompt = f"""You must respond with valid JSON only. 
+
+Required JSON structure: {json_schema_description}
+
+Always include the word 'json' in your thinking process and ensure the output is properly formatted JSON."""
+
+        if example_json:
+            system_prompt += f"\n\nExample JSON format:\n{json.dumps(example_json, indent=2)}"
+        
+        if isinstance(messages, str):
+            message_list = [
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": messages}
+            ]
+        else:
+            message_list = [{"role": "system", "content": system_prompt}] + messages
+        
+        response = self.chat(
+            message_list,
+            model=model,
+            response_format=ResponseFormat.JSON,
+            **kwargs
+        )
+        
+        # Parse and validate JSON
+        try:
+            return json.loads(response) if isinstance(response, str) else response
+        except json.JSONDecodeError as e:
+            logger.error(f"Failed to parse JSON response: {e}")
+            return {"error": "Invalid JSON response", "raw_response": response}
+
     def get_performance_stats(self) -> Dict[str, Any]:
         """Get detailed performance statistics"""
+        cache_hit_ratio = (
+            self.total_usage.cache_hit_tokens / 
+            max(self.total_usage.total_tokens, 1) * 100
+        )
+        
+        # Calculate cost savings from caching
+        cache_savings = (
+            self.total_usage.cache_hit_tokens * 0.07 * 0.74 / 1_000_000  # 74% savings on cache hits
+        )
+        
         return {
             "total_tokens": self.total_usage.total_tokens,
             "prompt_tokens": self.total_usage.prompt_tokens,
@@ -551,10 +685,8 @@ class DeepSeekClient:
             "cache_miss_tokens": self.total_usage.cache_miss_tokens,
             "reasoning_tokens": self.total_usage.reasoning_tokens,
             "estimated_cost": self.total_usage.estimated_cost,
-            "cache_hit_ratio": (
-                self.total_usage.cache_hit_tokens / 
-                max(self.total_usage.total_tokens, 1) * 100
-            ),
+            "cache_hit_ratio": cache_hit_ratio,
+            "cache_savings": cache_savings,
             "config": {
                 "base_url": self.config.base_url,
                 "default_model": self.config.default_model.value,

@@ -83,10 +83,21 @@ class MenuOption(Enum):
     FILE_ANALYZE = "4"
     BATCH_PROCESS = "5"
     FUNCTION_CALL = "6"
-    USAGE_STATS = "7"
-    SETTINGS = "8"
-    HELP = "9"
+    BETA_FEATURES = "7"
+    JSON_MODE = "8"
+    USAGE_STATS = "9"
+    SETTINGS = "10"
+    HELP = "11"
     EXIT = "0"
+
+class TaskProfile(Enum):
+    """Predefined task profiles with optimal settings"""
+    CODING = {"temperature": 0.0, "model": "deepseek-chat", "description": "Code generation and debugging"}
+    MATH = {"temperature": 0.0, "model": "deepseek-reasoner", "description": "Mathematical problem solving"}
+    CONVERSATION = {"temperature": 1.3, "model": "deepseek-chat", "description": "General conversation"}
+    CREATIVE = {"temperature": 1.5, "model": "deepseek-chat", "description": "Creative writing and brainstorming"}
+    ANALYSIS = {"temperature": 0.7, "model": "deepseek-reasoner", "description": "Data analysis and reasoning"}
+    TRANSLATION = {"temperature": 1.3, "model": "deepseek-chat", "description": "Language translation"}
 
 
 class DeepSeekCLI:
@@ -188,9 +199,11 @@ class DeepSeekCLI:
                 ("4", "File Analysis", "Analyze and process files"),
                 ("5", "Batch Processing", "Process multiple prompts at once"),
                 ("6", "Function Calling", "Demonstrate function calling capabilities"),
-                ("7", "Usage Stats", "View token usage and costs"),
-                ("8", "Settings", "Configure CLI preferences"),
-                ("9", "Help", "Show help and examples"),
+                ("7", "Beta Features", "Chat prefix completion & FIM (Fill-in-Middle)"),
+                ("8", "JSON Mode", "Enhanced structured JSON output"),
+                ("9", "Usage Stats", "View token usage, costs & cache statistics"),
+                ("10", "Settings", "Configure CLI preferences & task profiles"),
+                ("11", "Help", "Show help and examples"),
                 ("0", "Exit", "Exit the application")
             ]
             
@@ -1270,6 +1283,208 @@ Requirements:
         }
         return extensions.get(language.lower(), "txt")
     
+    def _beta_features_menu(self):
+        """Beta features menu: chat prefix completion and FIM"""
+        self._print_section_header("Beta Features")
+        
+        if self.console and RICH_AVAILABLE:
+            self.console.print("[dim]Experimental features from DeepSeek API beta endpoint[/dim]\n")
+            
+            # Beta features menu
+            table = Table(title="Beta Features", box=box.MINIMAL)
+            table.add_column("Option", style="cyan", width=8)
+            table.add_column("Feature", style="white")
+            table.add_column("Description", style="dim")
+            
+            table.add_row("1", "Chat Prefix", "Complete assistant message with given prefix")
+            table.add_row("2", "FIM Completion", "Fill-in-the-Middle code completion")
+            table.add_row("0", "Back", "Return to main menu")
+            
+            self.console.print(table)
+            
+            choice = Prompt.ask("\n[bold green]Select beta feature[/bold green]", choices=["0", "1", "2"])
+            
+            if choice == "1":
+                self._chat_prefix_completion()
+            elif choice == "2":
+                self._fim_completion()
+        else:
+            print("Beta Features:")
+            print("1. Chat Prefix Completion")
+            print("2. FIM (Fill-in-Middle) Completion")
+            print("0. Back")
+            
+            choice = input("Choice: ")
+            if choice == "1":
+                self._chat_prefix_completion()
+            elif choice == "2":
+                self._fim_completion()
+
+    def _chat_prefix_completion(self):
+        """Chat prefix completion feature"""
+        if self.console and RICH_AVAILABLE:
+            self.console.print("[bold cyan]Chat Prefix Completion[/bold cyan]\n")
+            self.console.print("[dim]Complete an assistant message starting with your prefix[/dim]\n")
+            
+            # Get user input
+            user_message = Prompt.ask("[bold green]Your message[/bold green]")
+            prefix = Prompt.ask("[bold blue]Assistant prefix[/bold blue]", default="```python\n")
+            
+            # Optional stop sequences
+            stop_input = Prompt.ask("[dim]Stop sequences (comma-separated, or empty)[/dim]", default="")
+            stop_sequences = [s.strip() for s in stop_input.split(",") if s.strip()] if stop_input else None
+            
+            with self.console.status("[bold green]Generating completion...[/bold green]", spinner="dots"):
+                try:
+                    completion = self.client.chat_prefix_completion(
+                        user_message,
+                        prefix=prefix,
+                        stop=stop_sequences,
+                        model=self.settings["model"]
+                    )
+                    
+                    # Display result
+                    result_panel = Panel(
+                        f"[bold]Prefix:[/bold] {prefix}\n\n"
+                        f"[bold]Completion:[/bold]\n{completion}",
+                        title="Chat Prefix Completion Result",
+                        border_style="green",
+                        padding=(1, 2)
+                    )
+                    self.console.print(result_panel)
+                    
+                except Exception as e:
+                    self._print_error(f"Error: {str(e)}")
+        else:
+            print("Chat Prefix Completion")
+            user_message = input("Your message: ")
+            prefix = input("Assistant prefix (default: ```python\\n): ") or "```python\n"
+            
+            try:
+                completion = self.client.chat_prefix_completion(user_message, prefix=prefix)
+                print(f"\nPrefix: {prefix}")
+                print(f"Completion: {completion}")
+            except Exception as e:
+                print(f"Error: {str(e)}")
+
+    def _fim_completion(self):
+        """Fill-in-the-Middle completion feature"""
+        if self.console and RICH_AVAILABLE:
+            self.console.print("[bold cyan]Fill-in-the-Middle (FIM) Completion[/bold cyan]\n")
+            self.console.print("[dim]Complete code between prefix and suffix (max 4K tokens)[/dim]\n")
+            
+            # Get input
+            prefix = Prompt.ask("[bold green]Code prefix[/bold green]")
+            suffix = Prompt.ask("[bold blue]Code suffix (optional)[/bold blue]", default="")
+            max_tokens = int(Prompt.ask("[dim]Max tokens (1-4096)[/dim]", default="2048"))
+            
+            with self.console.status("[bold green]Generating FIM completion...[/bold green]", spinner="dots"):
+                try:
+                    completion = self.client.fim_completion(
+                        prefix=prefix,
+                        suffix=suffix or None,
+                        max_tokens=min(max_tokens, 4096),
+                        temperature=0.0
+                    )
+                    
+                    # Display with syntax highlighting
+                    syntax = Syntax(
+                        f"{prefix}{completion}{suffix}",
+                        "python",  # Assume Python for highlighting
+                        theme="monokai",
+                        line_numbers=True,
+                        word_wrap=True
+                    )
+                    
+                    result_panel = Panel(
+                        syntax,
+                        title="FIM Completion Result",
+                        border_style="green",
+                        padding=(1, 2)
+                    )
+                    self.console.print(result_panel)
+                    
+                except Exception as e:
+                    self._print_error(f"Error: {str(e)}")
+        else:
+            print("Fill-in-the-Middle (FIM) Completion")
+            prefix = input("Code prefix: ")
+            suffix = input("Code suffix (optional): ")
+            
+            try:
+                completion = self.client.fim_completion(prefix=prefix, suffix=suffix or None)
+                print(f"\nComplete code:\n{prefix}{completion}{suffix}")
+            except Exception as e:
+                print(f"Error: {str(e)}")
+
+    def _json_mode(self):
+        """Enhanced JSON output mode"""
+        self._print_section_header("Enhanced JSON Mode")
+        
+        if self.console and RICH_AVAILABLE:
+            self.console.print("[dim]Generate structured JSON output with schema validation[/dim]\n")
+            
+            # Get input
+            prompt = Prompt.ask("[bold green]Your request[/bold green]")
+            schema_desc = Prompt.ask("[bold blue]JSON structure description[/bold blue]", 
+                                    default="Object with fields: name, age, city")
+            
+            # Optional example
+            if Confirm.ask("Provide example JSON?"):
+                example_text = Prompt.ask("[dim]Example JSON (paste here)[/dim]")
+                try:
+                    example_json = json.loads(example_text)
+                except json.JSONDecodeError:
+                    example_json = None
+                    self._print_warning("Invalid JSON example, proceeding without it")
+            else:
+                example_json = None
+            
+            with self.console.status("[bold green]Generating JSON...[/bold green]", spinner="dots"):
+                try:
+                    result = self.client.enhanced_json_output(
+                        prompt,
+                        json_schema_description=schema_desc,
+                        example_json=example_json,
+                        model=self.settings["model"]
+                    )
+                    
+                    # Pretty print JSON
+                    json_syntax = Syntax(
+                        json.dumps(result, indent=2, ensure_ascii=False),
+                        "json",
+                        theme="monokai",
+                        line_numbers=True
+                    )
+                    
+                    result_panel = Panel(
+                        json_syntax,
+                        title="JSON Output",
+                        border_style="green",
+                        padding=(1, 2)
+                    )
+                    self.console.print(result_panel)
+                    
+                    # Save option
+                    if Confirm.ask("\nSave JSON to file?"):
+                        filename = Prompt.ask("Filename", default="output.json")
+                        with open(filename, 'w', encoding='utf-8') as f:
+                            json.dump(result, f, indent=2, ensure_ascii=False)
+                        self._print_success(f"JSON saved to {filename}")
+                    
+                except Exception as e:
+                    self._print_error(f"Error: {str(e)}")
+        else:
+            print("Enhanced JSON Mode")
+            prompt = input("Your request: ")
+            schema_desc = input("JSON structure description: ")
+            
+            try:
+                result = self.client.enhanced_json_output(prompt, schema_desc)
+                print(f"\nJSON Output:\n{json.dumps(result, indent=2)}")
+            except Exception as e:
+                print(f"Error: {str(e)}")
+    
     def run(self):
         """Main application loop"""
         self._print_header()
@@ -1315,6 +1530,10 @@ Requirements:
                         self._batch_processing_mode()
                     elif option == MenuOption.FUNCTION_CALL:
                         self._function_calling_demo()
+                    elif option == MenuOption.BETA_FEATURES:
+                        self._beta_features_menu()
+                    elif option == MenuOption.JSON_MODE:
+                        self._json_mode()
                     elif option == MenuOption.USAGE_STATS:
                         self._show_usage_stats()
                     elif option == MenuOption.SETTINGS:
@@ -1445,6 +1664,7 @@ Examples:
         # Interactive mode
         cli = DeepSeekCLI()
         cli.run()
+
 
 
 if __name__ == "__main__":
