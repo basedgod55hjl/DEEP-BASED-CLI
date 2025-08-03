@@ -24,8 +24,8 @@ export class LLMQueryTool extends BaseTool {
     ]);
 
     this.openai = new OpenAI({
-      apiKey: apiKey || process.env.DEEPSEEK_API_KEY || 'sk-90e0dd863b8c4e0d879a02851a0ee194',
-      baseURL: baseURL || process.env.DEEPSEEK_BASE_URL || 'https://api.deepseek.com'
+      apiKey: apiKey || 'sk-90e0dd863b8c4e0d879a02851a0ee194',
+      baseURL: baseURL || 'https://api.deepseek.com'
     });
 
     this.providerPreferences = {
