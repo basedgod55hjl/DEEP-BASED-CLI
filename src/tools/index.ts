@@ -17,3 +17,4 @@ export { DatadogIntegrationTool } from './DatadogIntegrationTool';
 export { VisionTool } from './VisionTool';
 export { WebScraperTool } from './WebScraperTool';
 export { MemoryRankerTool } from './MemoryRankerTool';
+export { SwarmTool } from './SwarmTool';
