@@ -187,6 +187,40 @@ class DeepSeekCLI:
     def _print_menu(self):
         """Print the main menu"""
         if self.console and RICH_AVAILABLE:
+            # Display BASED GOD CODER CLI banner
+            ascii_art = """
+██████╗  █████╗ ███████╗███████╗██████╗      ██████╗  ██████╗ ██████╗ 
+██╔══██╗██╔══██╗██╔════╝██╔════╝██╔══██╗    ██╔════╝ ██╔═══██╗██╔══██╗
+██████╔╝███████║███████╗█████╗  ██║  ██║    ██║  ███╗██║   ██║██║  ██║
+██╔══██╗██╔══██║╚════██║██╔══╝  ██║  ██║    ██║   ██║██║   ██║██║  ██║
+██████╔╝██║  ██║███████║███████╗██████╔╝    ╚██████╔╝╚██████╔╝██████╔╝
+╚═════╝ ╚═╝  ╚═╝╚══════╝╚══════╝╚═════╝      ╚═════╝  ╚═════╝ ╚═════╝ 
+                                                                       
+         ██████╗ ██████╗ ██████╗ ███████╗██████╗      ██████╗██╗     ██╗
+        ██╔════╝██╔═══██╗██╔══██╗██╔════╝██╔══██╗    ██╔════╝██║     ██║
+        ██║     ██║   ██║██║  ██║█████╗  ██████╔╝    ██║     ██║     ██║
+        ██║     ██║   ██║██║  ██║██╔══╝  ██╔══██╗    ██║     ██║     ██║
+        ╚██████╗╚██████╔╝██████╔╝███████╗██║  ██║    ╚██████╗███████╗██║
+         ╚═════╝ ╚═════╝ ╚═════╝ ╚══════╝╚═╝  ╚═╝     ╚═════╝╚══════╝╚═╝
+            """
+            
+            # Create colorful banner
+            text = Text()
+            lines = ascii_art.strip().split('\n')
+            colors = ["red", "yellow", "green", "cyan", "blue", "magenta"]
+            
+            for i, line in enumerate(lines):
+                color = colors[i % len(colors)]
+                text.append(line + '\n', style=f"bold {color}")
+            
+            self.console.print(Panel(
+                text,
+                title="[bold white]BASED GOD CODER CLI[/bold white]",
+                subtitle="[dim italic]- made by @Lucariolucario55 on Telegram[/dim italic]",
+                border_style="blue",
+                box=box.DOUBLE
+            ))
+            
             table = Table(title="Main Menu", box=box.ROUNDED)
             table.add_column("Option", style="cyan", width=8)
             table.add_column("Feature", style="white")

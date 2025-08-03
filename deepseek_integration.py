@@ -53,8 +53,8 @@ class DeepSeekConfig:
     """Configuration for DeepSeek API"""
     api_key: str = field(default_factory=lambda: os.getenv("DEEPSEEK_API_KEY", "sk-9af038dd3bdd46258c4a9d02850c9a6d"))
     base_url: str = field(default_factory=lambda: os.getenv("DEEPSEEK_API_ENDPOINT", "https://api.deepseek.com/v1"))
-    beta_url: str = "https://api.deepseek.com/beta"
-    default_model: DeepSeekModel = DeepSeekModel.CHAT
+    beta_url: str = "https://api.deepseek.com/v1"
+    default_model: deepseek-reasoner
     max_retries: int = 3
     retry_delay: float = 1.0
     timeout: float = 60.0
