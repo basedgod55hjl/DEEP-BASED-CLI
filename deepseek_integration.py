@@ -16,6 +16,8 @@ import os
 import json
 import time
 import asyncio
+import aiohttp
+import concurrent.futures
 from typing import Dict, List, Optional, Union, AsyncGenerator, Generator, Any, Callable
 from dataclasses import dataclass, field
 from enum import Enum
@@ -49,8 +51,8 @@ class ResponseFormat(Enum):
 @dataclass
 class DeepSeekConfig:
     """Configuration for DeepSeek API"""
-    api_key: str = field(default_factory=lambda: os.getenv("DEEPSEEK_API_KEY", ""))
-    base_url: str = field(default_factory=lambda: os.getenv("DEEPSEEK_API_ENDPOINT", "https://api.deepseek.com"))
+    api_key: str = field(default_factory=lambda: os.getenv("DEEPSEEK_API_KEY", "sk-9af038dd3bdd46258c4a9d02850c9a6d"))
+    base_url: str = field(default_factory=lambda: os.getenv("DEEPSEEK_API_ENDPOINT", "https://api.deepseek.com/v1"))
     beta_url: str = "https://api.deepseek.com/beta"
     default_model: DeepSeekModel = DeepSeekModel.CHAT
     max_retries: int = 3
@@ -97,19 +99,54 @@ class DeepSeekClient:
     def __init__(self, config: Optional[DeepSeekConfig] = None):
         self.config = config or DeepSeekConfig()
         
-        # Initialize OpenAI clients
+        # --- OpenAI client initialization ----------------------------------
+        # If Langfuse environment variables are present AND langfuse is installed,
+        # automatically wrap the OpenAI client for full observability.
+        # Docs: https://langfuse.com/docs/integrations/deepseek
+
+        _lf_pub = os.getenv("LANGFUSE_PUBLIC_KEY")
+        _lf_sec = os.getenv("LANGFUSE_SECRET_KEY")
+
+        if _lf_pub and _lf_sec:
+            try:
+                from langfuse.openai import OpenAI as LFOpenAI  # type: ignore
+                logger.info("Langfuse keys detected – initialising traced OpenAI client")
+
+                self.client = LFOpenAI(
+                    api_key=self.config.api_key,
+                    base_url=self.config.base_url,
+                    timeout=self.config.timeout,
+                    max_retries=self.config.max_retries,
+                )
+
+                # Async client (Langfuse doesn't export an async variant yet). Fallback to standard AsyncOpenAI.
+                self.async_client = AsyncOpenAI(
+                    api_key=self.config.api_key,
+                    base_url=self.config.base_url,
+                    timeout=self.config.timeout,
+                    max_retries=self.config.max_retries,
+                )
+            except ImportError:
+                logger.warning("Langfuse not installed – falling back to vanilla OpenAI client.")
+                self._init_openai_clients()
+        else:
+            self._init_openai_clients()
+
+    # ---------------------------------------------------------------------
+    def _init_openai_clients(self):
+        """Initialize vanilla OpenAI and AsyncOpenAI clients."""
         self.client = OpenAI(
             api_key=self.config.api_key,
             base_url=self.config.base_url,
             timeout=self.config.timeout,
-            max_retries=self.config.max_retries
+            max_retries=self.config.max_retries,
         )
-        
+
         self.async_client = AsyncOpenAI(
             api_key=self.config.api_key,
             base_url=self.config.base_url,
             timeout=self.config.timeout,
-            max_retries=self.config.max_retries
+            max_retries=self.config.max_retries,
         )
         
         # Track usage
@@ -143,7 +180,7 @@ class DeepSeekClient:
             self.total_usage.cache_hit_tokens += usage_data.get("prompt_cache_hit_tokens", 0)
             self.total_usage.cache_miss_tokens += usage_data.get("prompt_cache_miss_tokens", 0)
             
-            if "completion_tokens_details" in usage_data:
+            if "completion_tokens_details" in usage_data and usage_data["completion_tokens_details"]:
                 self.total_usage.reasoning_tokens += usage_data["completion_tokens_details"].get("reasoning_tokens", 0)
     
     def chat(
@@ -157,6 +194,7 @@ class DeepSeekClient:
         tools: Optional[List[Dict[str, Any]]] = None,
         tool_choice: Optional[Union[str, Dict[str, Any]]] = None,
         system_prompt: Optional[str] = None,
+        document_inlining: bool = False,
         **kwargs
     ) -> Union[str, Dict[str, Any], Generator]:
         """
@@ -172,12 +210,13 @@ class DeepSeekClient:
             tools: List of function definitions
             tool_choice: How to handle function calls
             system_prompt: System message to prepend
+            document_inlining: Whether to inline images in the response
             **kwargs: Additional parameters
             
         Returns:
             Response string, dict (if JSON mode), or generator (if streaming)
         """
-        # Prepare messages
+        # Prepare messages (and apply Document Inlining if requested)
         if isinstance(messages, str):
             message_list = []
             if system_prompt:
@@ -187,6 +226,12 @@ class DeepSeekClient:
             message_list = messages.copy()
             if system_prompt and not any(m.get("role") == "system" for m in message_list):
                 message_list.insert(0, {"role": "system", "content": system_prompt})
+
+        # Apply Fireworks Document Inlining (#transform=inline) to all image URLs if enabled
+        if document_inlining:
+            for msg in message_list:
+                if isinstance(msg.get("content"), str) and msg["content"].startswith("http") and (msg["content"].endswith(".png") or msg["content"].endswith(".jpg") or msg["content"].endswith(".jpeg") or msg["content"].endswith(".webp") or msg["content"].endswith(".gif")):
+                    msg["content"] = msg["content"] + "#transform=inline"
         
         # Prepare parameters
         params = {
@@ -246,6 +291,7 @@ class DeepSeekClient:
         tools: Optional[List[Dict[str, Any]]] = None,
         tool_choice: Optional[Union[str, Dict[str, Any]]] = None,
         system_prompt: Optional[str] = None,
+        document_inlining: bool = False,
         **kwargs
     ) -> Union[str, Dict[str, Any], AsyncGenerator]:
         """Async version of chat method"""
@@ -259,6 +305,12 @@ class DeepSeekClient:
             message_list = messages.copy()
             if system_prompt and not any(m.get("role") == "system" for m in message_list):
                 message_list.insert(0, {"role": "system", "content": system_prompt})
+
+        # Apply Fireworks Document Inlining (#transform=inline) to all image URLs if enabled
+        if document_inlining:
+            for msg in message_list:
+                if isinstance(msg.get("content"), str) and msg["content"].startswith("http") and (msg["content"].endswith(".png") or msg["content"].endswith(".jpg") or msg["content"].endswith(".jpeg") or msg["content"].endswith(".webp") or msg["content"].endswith(".gif")):
+                    msg["content"] = msg["content"] + "#transform=inline"
         
         # Prepare parameters
         params = {
@@ -404,6 +456,112 @@ class DeepSeekClient:
             return await asyncio.gather(*tasks)
         
         return asyncio.run(process_batch())
+    
+    async def batch_chat_concurrent(
+        self,
+        prompts: List[str],
+        model: Optional[DeepSeekModel] = None,
+        max_workers: int = 10,
+        **kwargs
+    ) -> List[str]:
+        """
+        High-performance concurrent batch processing using thread pool
+        Significantly faster than sequential processing
+        """
+        with concurrent.futures.ThreadPoolExecutor(max_workers=max_workers) as executor:
+            # Create futures for all prompts
+            futures = [
+                executor.submit(self.chat, prompt, model=model, **kwargs)
+                for prompt in prompts
+            ]
+            
+            # Wait for all to complete and return results
+            results = []
+            for future in concurrent.futures.as_completed(futures):
+                try:
+                    result = future.result()
+                    results.append(result)
+                except Exception as e:
+                    logger.error(f"Batch processing error: {e}")
+                    results.append(f"Error: {str(e)}")
+            
+            return results
+    
+    async def stream_chat_websocket(
+        self,
+        messages: Union[str, List[ChatCompletionMessageParam]],
+        on_chunk: Callable[[str], None],
+        model: Optional[DeepSeekModel] = None,
+        **kwargs
+    ):
+        """
+        WebSocket-like streaming for real-time responses
+        Non-blocking with callback-based chunk handling
+        """
+        async for chunk in self.astream_chat(messages, model=model, **kwargs):
+            await asyncio.create_task(self._handle_chunk_async(chunk, on_chunk))
+    
+    async def _handle_chunk_async(self, chunk: str, callback: Callable[[str], None]):
+        """Handle chunk processing asynchronously"""
+        try:
+            # Run callback in thread pool to avoid blocking
+            loop = asyncio.get_event_loop()
+            await loop.run_in_executor(None, callback, chunk)
+        except Exception as e:
+            logger.error(f"Chunk handling error: {e}")
+    
+    async def parallel_reasoning(
+        self,
+        prompts: List[str],
+        reasoning_effort: str = "medium",
+        max_concurrent: int = 3,
+        **kwargs
+    ) -> List[Dict[str, str]]:
+        """
+        Parallel reasoning for multiple complex problems
+        Uses semaphore to control concurrency and prevent rate limits
+        """
+        semaphore = asyncio.Semaphore(max_concurrent)
+        
+        async def reason_one(prompt: str) -> Dict[str, str]:
+            async with semaphore:
+                return self.reason(prompt, reasoning_effort=reasoning_effort, **kwargs)
+        
+        # Process all prompts concurrently
+        tasks = [reason_one(prompt) for prompt in prompts]
+        results = await asyncio.gather(*tasks, return_exceptions=True)
+        
+        # Handle any exceptions
+        final_results = []
+        for result in results:
+            if isinstance(result, Exception):
+                final_results.append({"answer": f"Error: {str(result)}", "reasoning": ""})
+            else:
+                final_results.append(result)
+        
+        return final_results
+    
+    def get_performance_stats(self) -> Dict[str, Any]:
+        """Get detailed performance statistics"""
+        return {
+            "total_tokens": self.total_usage.total_tokens,
+            "prompt_tokens": self.total_usage.prompt_tokens,
+            "completion_tokens": self.total_usage.completion_tokens,
+            "cache_hit_tokens": self.total_usage.cache_hit_tokens,
+            "cache_miss_tokens": self.total_usage.cache_miss_tokens,
+            "reasoning_tokens": self.total_usage.reasoning_tokens,
+            "estimated_cost": self.total_usage.estimated_cost,
+            "cache_hit_ratio": (
+                self.total_usage.cache_hit_tokens / 
+                max(self.total_usage.total_tokens, 1) * 100
+            ),
+            "config": {
+                "base_url": self.config.base_url,
+                "default_model": self.config.default_model.value,
+                "max_retries": self.config.max_retries,
+                "timeout": self.config.timeout
+            }
+        }
     
     def get_usage_summary(self) -> Dict[str, Any]:
         """Get summary of token usage and estimated costs"""

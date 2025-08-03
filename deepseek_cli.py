@@ -18,7 +18,13 @@ import sys
 import json
 import time
 import asyncio
-import readline
+import concurrent.futures
+from concurrent.futures import ThreadPoolExecutor
+# Import readline if available (not on Windows)
+try:
+    import readline
+except ImportError:
+    pass
 from datetime import datetime
 from typing import List, Dict, Optional, Any, Tuple
 from pathlib import Path
@@ -64,6 +70,9 @@ except ImportError:
 # Load environment variables
 from dotenv import load_dotenv
 load_dotenv()
+
+# Hardcoded DeepSeek API key fallback
+os.environ.setdefault("DEEPSEEK_API_KEY", "sk-9af038dd3bdd46258c4a9d02850c9a6d")
 
 
 class MenuOption(Enum):
@@ -652,17 +661,33 @@ Requirements:
                 task = progress.add_task("Processing prompts...", total=len(prompts))
                 
                 try:
-                    responses = []
-                    for i, prompt in enumerate(prompts):
-                        progress.update(task, description=f"Processing prompt {i+1}/{len(prompts)}...")
+                    # Choose processing method based on number of prompts
+                    if len(prompts) <= 3:
+                        # Sequential for small batches
+                        responses = []
+                        for i, prompt in enumerate(prompts):
+                            progress.update(task, description=f"Processing prompt {i+1}/{len(prompts)}...")
+                            
+                            response = self.client.chat(
+                                prompt,
+                                model=self.settings["model"],
+                                temperature=self.settings["temperature"]
+                            )
+                            responses.append(response)
+                            progress.advance(task)
+                    else:
+                        # High-performance concurrent processing for larger batches
+                        progress.update(task, description="Processing prompts concurrently...")
                         
-                        response = self.client.chat(
-                            prompt,
-                            model=self.settings["model"],
-                            temperature=self.settings["temperature"]
+                        responses = asyncio.run(
+                            self.client.batch_chat_concurrent(
+                                prompts,
+                                model=self.settings["model"],
+                                temperature=self.settings["temperature"],
+                                max_workers=min(len(prompts), 5)  # Limit concurrent requests
+                            )
                         )
-                        responses.append(response)
-                        progress.advance(task)
+                        progress.advance(task, advance=len(prompts))
                     
                     # Display results
                     self.console.print("\n[bold green]✓ Batch processing complete![/bold green]\n")
