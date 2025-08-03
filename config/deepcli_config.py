@@ -6,7 +6,7 @@ import os
 from typing import Dict, Any
 
 # DeepSeek API Configuration
-DEEPSEEK_API_KEY = os.getenv("DEEPSEEK_API_KEY", "sk-90e0dd863b8c4e0d879a02851a0ee194")
+DEEPSEEK_API_KEY = os.getenv("DEEPSEEK_API_KEY", "sk-2942f8c8a2c6449db5a3858ff862b5de")
 DEEPSEEK_BASE_URL = os.getenv("DEEPSEEK_BASE_URL", "https://api.deepseek.com")
 
 # Configuration dictionary
