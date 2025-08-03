@@ -10,3 +10,7 @@ export { ReaderTool } from './ReaderTool';
 export { WriterTool } from './WriterTool';
 export { ReviewerTool } from './ReviewerTool';
 export { CoderAgentTool } from './CoderAgentTool';
+export { SelfHealerTool } from './SelfHealerTool';
+export { CommandExecutorTool } from './CommandExecutorTool';
+export { DebuggerTool } from './DebuggerTool';
+export { DatadogIntegrationTool } from './DatadogIntegrationTool';
