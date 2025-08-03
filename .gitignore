@@ -2,6 +2,13 @@
 .env
 .env~
 
+# Data and logs
+data/*.db
+data/*.json
+logs/*.log
+*.db
+*.log
+
 # gemini-cli settings
 .gemini/
 !gemini/config.yaml

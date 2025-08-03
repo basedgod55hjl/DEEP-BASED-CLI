@@ -15,6 +15,9 @@ from .file_processor_tool import FileProcessorTool
 from .memory_tool import MemoryTool
 from .llm_query_tool import LLMQueryTool
 from .reasoning_engine import FastReasoningEngine
+from .vector_database_tool import VectorDatabaseTool
+from .sql_database_tool import SQLDatabaseTool
+from .rag_pipeline_tool import RAGPipelineTool
 
 class ToolManager:
     """
@@ -41,7 +44,10 @@ class ToolManager:
             FileProcessorTool(),
             MemoryTool(),
             llm_tool,
-            FastReasoningEngine(llm_tool=llm_tool)  # Pass LLM tool for fast consultations
+            FastReasoningEngine(llm_tool=llm_tool),  # Pass LLM tool for fast consultations
+            VectorDatabaseTool(),
+            SQLDatabaseTool(),
+            RAGPipelineTool()
         ]
         
         for tool in default_tools:
