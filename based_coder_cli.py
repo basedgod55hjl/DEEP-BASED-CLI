@@ -258,6 +258,9 @@ class RainbowCLI:
         self.user_preferences = {}
         self.active_persona = "Deanna"
         
+        # API key management
+        self.env_file = Path(".env")
+        
         # Prefix commands mapping
         self.prefix_commands = {
             "/chat": "chat",
@@ -296,11 +299,18 @@ class RainbowCLI:
             "/idea": "store_idea",
             "/store": "store_code",
             "/learn": "learn_from_code",
-            "/run": "run_code"
+            "/run": "run_code",
+            "/setup": "setup_api_keys"
         }
         
     async def initialize_system(self):
         """Initialize the complete BASED CODER system"""
+        # Check for API keys first
+        if not self._check_api_keys():
+            print(f"{Fore.YELLOW}⚠️ API keys not found or invalid.{Style.RESET_ALL}")
+            print(f"{Fore.CYAN}🔧 Running API keys setup...{Style.RESET_ALL}")
+            self._run_api_setup()
+        
         with Progress(
             SpinnerColumn(),
             TextColumn("[progress.description]{task.description}"),
@@ -457,6 +467,7 @@ class RainbowCLI:
   /store <code>            - Store code example
   /learn <code>            - Learn from code
   /run <code>              - Execute code
+  /setup                   - Setup API keys
 
 {Fore.YELLOW}🚀 Prefix Commands (Quick Access):{Style.RESET_ALL}
   /chat <message>          - Quick chat
@@ -476,6 +487,62 @@ class RainbowCLI:
   /personas                - Quick personas list
 """
         print(help_text)
+    
+    def _check_api_keys(self) -> bool:
+        """Check if API keys are properly configured"""
+        try:
+            # Check if .env file exists
+            if not self.env_file.exists():
+                return False
+            
+            # Load environment variables
+            from dotenv import load_dotenv
+            load_dotenv()
+            
+            # Check DeepSeek API key
+            deepseek_key = os.getenv("DEEPSEEK_API_KEY")
+            if not deepseek_key or not deepseek_key.startswith("sk-"):
+                return False
+            
+            # Check HuggingFace token
+            huggingface_token = os.getenv("HUGGINGFACE_API_KEY")
+            if not huggingface_token or not huggingface_token.startswith("hf_"):
+                return False
+            
+            return True
+            
+        except Exception as e:
+            print(f"{Fore.RED}❌ Error checking API keys: {str(e)}{Style.RESET_ALL}")
+            return False
+    
+    def _run_api_setup(self):
+        """Run the API keys setup script"""
+        try:
+            import subprocess
+            import sys
+            
+            setup_script = Path("setup_api_keys.py")
+            if setup_script.exists():
+                print(f"{Fore.CYAN}🔧 Running API keys setup script...{Style.RESET_ALL}")
+                result = subprocess.run([sys.executable, str(setup_script)], 
+                                      capture_output=False, text=True)
+                
+                if result.returncode == 0:
+                    print(f"{Fore.GREEN}✅ API keys setup completed successfully!{Style.RESET_ALL}")
+                    # Reload environment variables
+                    from dotenv import load_dotenv
+                    load_dotenv()
+                else:
+                    print(f"{Fore.RED}❌ API keys setup failed. Please run 'python setup_api_keys.py' manually.{Style.RESET_ALL}")
+                    sys.exit(1)
+            else:
+                print(f"{Fore.RED}❌ API keys setup script not found. Please run 'python setup_api_keys.py' manually.{Style.RESET_ALL}")
+                sys.exit(1)
+                
+        except Exception as e:
+            print(f"{Fore.RED}❌ Error running API setup: {str(e)}{Style.RESET_ALL}")
+            print(f"{Fore.YELLOW}💡 Please run 'python setup_api_keys.py' manually to configure your API keys.{Style.RESET_ALL}")
+            sys.exit(1)
     
     def parse_prefix_command(self, user_input: str) -> tuple:
         """Parse prefix commands and return (command, args)"""
@@ -1000,6 +1067,11 @@ class RainbowCLI:
                         # Handle DeepSeek Coder commands
                         response = await self.handle_coder_command(prefix_command, prefix_args)
                         print(f"{Fore.BLUE}🚀 {response}{Style.RESET_ALL}")
+                        continue
+                    elif prefix_command == "setup_api_keys":
+                        # Handle API setup command
+                        print(f"{Fore.CYAN}🔧 Running API keys setup...{Style.RESET_ALL}")
+                        self._run_api_setup()
                         continue
                     else:
                         # Handle regular prefix commands

@@ -60,6 +60,9 @@ cd DEEP-CLI
 # Install Python dependencies
 pip install -r requirements_enhanced.txt
 
+# Setup API keys (required)
+python setup_api_keys.py
+
 # Run the enhanced CLI
 python based_coder_cli.py
 ```
@@ -100,9 +103,9 @@ python based_coder_cli.py
 /logic <code>            # Algorithm and logic analysis
 /idea <idea>             # Store programming idea
 /store <code>            # Store code example
-/learn <code>            # Learn from code examples
-/run <code>              # Execute code safely
-```
+  /learn <code>            # Learn from code examples
+  /run <code>              # Execute code safely
+  /setup                   # Setup API keys
 
 ### System Access Commands
 ```bash
@@ -180,17 +183,53 @@ DEEP-CLI/
 
 ## 🔧 **Configuration**
 
-### API Keys
-```python
-# config/api_keys.py
-DEEPSEEK_API_KEY = "your-deepseek-api-key"
-DEEPSEEK_BASE_URL = "https://api.deepseek.com"
+### API Keys Setup
+
+The BASED CODER CLI requires API keys for DeepSeek and HuggingFace. You can set them up in two ways:
+
+#### Option 1: Interactive Setup (Recommended)
+```bash
+python setup_api_keys.py
 ```
+
+This will:
+- Prompt for your DeepSeek API key
+- Prompt for your HuggingFace token
+- Create a `.env` file with your keys
+- Test the keys to ensure they work
+- Update configuration files automatically
+
+#### Option 2: Manual Setup
+Create a `.env` file in the project root:
+
+```bash
+# .env file
+DEEPSEEK_API_KEY=your-deepseek-api-key-here
+DEEPSEEK_BASE_URL=https://api.deepseek.com
+HUGGINGFACE_API_KEY=your-huggingface-token-here
+```
+
+### Getting API Keys
+
+#### DeepSeek API Key
+1. Visit https://platform.deepseek.com
+2. Sign up or log in to your account
+3. Go to API Keys section
+4. Create a new API key
+5. Copy the key (starts with 'sk-')
+
+#### HuggingFace Token
+1. Visit https://huggingface.co
+2. Sign up or log in to your account
+3. Go to Settings > Access Tokens
+4. Create a new token
+5. Copy the token (starts with 'hf_')
 
 ### Environment Variables
 ```bash
 export DEEPSEEK_API_KEY="your-api-key"
 export DEEPSEEK_BASE_URL="https://api.deepseek.com"
+export HUGGINGFACE_API_KEY="your-huggingface-token"
 ```
 
 ## 📊 **Performance Benchmarks**
