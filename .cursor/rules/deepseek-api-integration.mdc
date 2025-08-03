@@ -1,0 +1,193 @@
+---
+alwaysApply: true
+---
+# DeepSeek API Integration Guide
+
+Always use DeepSeek API as the primary LLM provider for the Enhanced BASED GOD CLI project. DeepSeek offers two powerful models accessible via OpenAI-compatible API.
+
+## Available Models
+
+### deepseek-chat (Primary Model)
+- **Underlying**: DeepSeek-V3-0324 model
+- **Context**: 64K tokens
+- **Output**: Default 4K, maximum 8K tokens
+- **Features**: JSON output, function calling, chat prefix completion (beta), FIM completion (beta)
+- **Use case**: General chat/completion tasks, suitable for most CLI interactions
+
+### deepseek-reasoner (Advanced Reasoning)
+- **Underlying**: DeepSeek-R1-0528 model  
+- **Context**: 64K tokens (reasoning content doesn't count toward limit)
+- **Output**: Default 32K, maximum 64K tokens
+- **Features**: Chain-of-thought reasoning, JSON output, function calling
+- **Use case**: Complex reasoning tasks, mathematical problems, logical analysis
+
+## Configuration in [tools/llm_query_tool.py](mdc:tools/llm_query_tool.py)
+
+```python
+# DeepSeek API (hardcoded configuration)
+deepseek_api_key = "sk-9af038dd3bdd46258c4a9d02850c9a6d"
+deepseek_base_url = "https://api.deepseek.com"
+
+# DeepSeek Chat model (primary)
+self.providers["deepseek_chat"] = ChatOpenAI(
+    model="deepseek-chat",
+    temperature=0.7,
+    api_key=deepseek_api_key,
+    base_url=deepseek_base_url,
+    max_tokens=2000
+)
+
+# DeepSeek Coder model (for programming tasks)
+self.providers["deepseek_coder"] = ChatOpenAI(
+    model="deepseek-coder", 
+    temperature=0.3,  # Lower temperature for coding
+    api_key=deepseek_api_key,
+    base_url=deepseek_base_url,
+    max_tokens=4000
+)
+```
+
+## Hardcoded Configuration
+
+API key is hardcoded directly in the `tools/llm_query_tool.py` file for immediate use. No environment variables needed.
+
+## Recommended Temperature Settings
+
+- **Coding/Math**: `temperature=0` (most deterministic)
+- **Data Analysis**: `temperature=1.0` 
+- **General Conversation**: `temperature=1.3`
+- **Translation**: `temperature=1.3`
+- **Creative Writing**: `temperature=1.5`
+
+## Provider Priority in [tools/llm_query_tool.py](mdc:tools/llm_query_tool.py)
+
+DeepSeek-only configuration:
+
+```python
+provider_preferences = {
+    "coding": ["deepseek_coder", "deepseek_chat"],
+    "creative": ["deepseek_chat", "deepseek_coder"],  
+    "reasoning": ["deepseek_chat", "deepseek_coder"],
+    "analysis": ["deepseek_chat", "deepseek_coder"],
+    "factual": ["deepseek_chat", "deepseek_coder"],
+    "general": ["deepseek_chat", "deepseek_coder"]
+}
+```
+
+## Error Handling
+
+Always handle DeepSeek-specific error codes:
+
+- **402 - Insufficient Balance**: Account balance depleted, implement fallback
+- **429 - Rate Limit**: Pace requests, temporary switch to other providers
+- **503 - Server Overloaded**: Retry after short wait during high traffic
+
+## Special Features Usage
+
+### JSON Output Mode
+```python
+response = client.chat.completions.create(
+    model="deepseek-chat",
+    messages=messages,
+    response_format={'type': 'json_object'},
+    max_tokens=4000  # Set high enough to avoid truncation
+)
+```
+
+### Chain-of-Thought with deepseek-reasoner
+```python
+response = client.chat.completions.create(
+    model="deepseek-reasoner", 
+    messages=messages
+)
+reasoning_content = response.choices[0].message.reasoning_content
+final_answer = response.choices[0].message.content
+```
+
+### Function Calling
+```python
+tools = [{
+    "type": "function",
+    "function": {
+        "name": "function_name",
+        "description": "Function description",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "param": {"type": "string", "description": "Parameter description"}
+            },
+            "required": ["param"]
+        }
+    }
+}]
+```
+
+## Context Caching Optimization
+
+DeepSeek automatically caches repeated prefixes to reduce cost and latency:
+
+- **Multi-round conversations**: Reuse system messages and conversation history
+- **Few-shot learning**: Keep example prompts consistent across requests  
+- **Long text Q&A**: Share common prefixes between requests
+
+## Authentication
+
+Always use Bearer token authentication:
+
+```python
+headers = {
+    "Authorization": f"Bearer {DEEPSEEK_API_KEY}",
+    "Content-Type": "application/json"
+}
+```
+
+## Pricing Awareness
+
+- **Standard hours** (00:30-16:30 UTC): Higher rates
+- **Off-peak hours** (16:30-00:30 UTC): 50-75% discount
+- **Cache hits**: Significantly cheaper than cache misses
+- **deepseek-reasoner**: Higher cost due to reasoning step
+
+## Dependencies in [requirements_enhanced.txt](mdc:requirements_enhanced.txt)
+
+Minimal required dependencies for DeepSeek-only integration:
+
+```txt
+# Core
+typing-extensions>=4.0.0
+
+# LangChain ecosystem
+langchain>=0.1.0
+langchain-openai>=0.0.5
+langchain-core>=0.1.0
+
+# DeepSeek via OpenAI SDK
+openai>=1.0.0
+
+# Tools
+requests>=2.31.0
+aiohttp>=3.8.0
+beautifulsoup4>=4.12.0
+rich>=13.0.0
+```
+
+## Best Practices
+
+1. **API key is hardcoded** - no configuration needed
+2. **Implement intelligent fallbacks** for insufficient balance (402 errors)
+3. **Use appropriate models** - deepseek-coder for programming, deepseek-chat for general tasks
+4. **Optimize for context caching** by reusing message prefixes
+5. **Handle rate limits gracefully** with exponential backoff
+6. **Set appropriate temperature** based on task type
+7. **Monitor account balance** at https://platform.deepseek.com
+
+## Integration with Enhanced BASED GOD CLI
+
+The DeepSeek-only integration in [enhanced_based_god_cli.py](mdc:enhanced_based_god_cli.py):
+
+- Uses hardcoded DeepSeek API key for immediate functionality
+- Implements robust error handling for API failures
+- Provides intelligent fallbacks when DeepSeek is unavailable
+- Uses smart model selection (deepseek-coder vs deepseek-chat) based on task complexity
+- Maintains conversation context for optimal caching
+- No other LLM providers configured - clean, focused setup
