@@ -58,6 +58,15 @@ export class VectorDatabaseTool extends BaseTool {
     };
   }
 
+  async ping(): Promise<boolean> {
+    try {
+      await axios.get(`http://${this.host}:${this.port}/collections`);
+      return true;
+    } catch {
+      return false;
+    }
+  }
+
   getSchema(): Record<string, unknown> {
     return {
       type: 'object',
