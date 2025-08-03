@@ -4,6 +4,21 @@
 
 The Enhanced BASED GOD CLI has been successfully upgraded with comprehensive features, fixed all major issues, and is now **production-ready** with both Python and Node.js implementations.
 
+## 🚀 Node/TypeScript CLI
+
+```
+# install deps and build TS
+npm install
+npm run build
+
+# chat with the AI
+node dist/cli/index.js chat "Hello there!"
+```
+
+The legacy Python CLI is still available via `python enhanced_based_god_cli.py`.
+
+---
+
 ## ✅ **WHAT'S WORKING**
 
 ### 🔑 **API Integration - FULLY WORKING**
