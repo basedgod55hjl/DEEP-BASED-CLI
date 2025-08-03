@@ -22,8 +22,8 @@ The legacy Python CLI is still available via `python enhanced_based_god_cli.py`.
 ## ✅ **WHAT'S WORKING**
 
 ### 🔑 **API Integration - FULLY WORKING**
-- ✅ **DeepSeek API**: `sk-90e0dd863b8c4e0d879a02851a0ee194` (hardcoded)
-- ✅ **HuggingFace Token**: `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` (hardcoded)
+- ✅ **DeepSeek API**: `` (hardcoded)
+- ✅ **HuggingFace Token**: `` (hardcoded)
 - ✅ **Beta API Support**: FIM and prefix completion working with beta API
 - ✅ **Centralized Configuration**: All tools use centralized API key management
 
