@@ -284,3 +284,16 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 ---
 
 **Enjoy using DeepSeek CLI! 🚀**
+## Minimal Gemini-Style CLI
+
+For a lightweight interface similar to Google's Gemini CLI, this repository
+provides `deepseek_gemini_cli.py`. It uses the same DeepSeek models while
+exposing a simple `prompt` interface:
+
+```bash
+python deepseek_gemini_cli.py "Hello" --model chat
+python deepseek_gemini_cli.py "Solve 2+2" --model reasoner
+```
+
+Ensure the `DEEPSEEK_API_KEY` environment variable is set before running the
+script.
