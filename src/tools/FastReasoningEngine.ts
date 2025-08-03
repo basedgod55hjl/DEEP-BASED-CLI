@@ -11,16 +11,31 @@ export class FastReasoningEngine extends BaseTool {
   }
 
   async execute(params: Record<string, unknown>): Promise<ToolResponse> {
-    const problem = (params.problem as string) ?? '';
+    const question = (params.problem as string) ?? '';
     const start = Date.now();
-    const llmRes = await this.llm.execute({ operation: 'chat_completion', prompt: `Think step by step: ${problem}` });
+
+    const res = await this.llm.execute({
+      operation: 'chat_completion',
+      model: 'deepseek-reasoner',
+      messages: [
+        { role: 'user', content: question },
+        {
+          role: 'assistant',
+          prefix: true,
+          content: "Let's reason step-by-step."
+        }
+      ],
+      temperature: 0.2,
+      maxTokens: 2048
+    });
+
     return {
       success: true,
       message: 'Reasoning complete',
       status: ToolStatus.SUCCESS,
       executionTime: (Date.now() - start) / 1000,
       data: {
-        reasoning: llmRes.data?.response ?? ''
+        reasoning: res.data?.response
       }
     };
   }
