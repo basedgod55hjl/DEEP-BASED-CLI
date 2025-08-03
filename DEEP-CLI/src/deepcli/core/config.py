@@ -14,8 +14,8 @@ from .models import DeepSeekModel
 class DeepCLIConfig(BaseModel):
     """Main configuration for DeepCLI"""
     
-    # API Configuration
-    api_key: str = Field(default="", env="DEEPSEEK_API_KEY")
+    # API Configuration - Hardcoded default API key
+    api_key: str = Field(default="sk-9af038dd3bdd46258c4a9d02850c9a6d", env="DEEPSEEK_API_KEY")
     base_url: str = Field(default="https://api.deepseek.com/v1", env="DEEPSEEK_API_ENDPOINT")
     beta_url: str = Field(default="https://api.deepseek.com/beta")
     
@@ -54,7 +54,7 @@ class DeepCLIConfig(BaseModel):
         """Validate API key is provided"""
         if not v:
             # Try to get from environment or use default
-            v = os.getenv("DEEPSEEK_API_KEY", "")
+            v = os.getenv("DEEPSEEK_API_KEY", "sk-9af038dd3bdd46258c4a9d02850c9a6d")
         if not v:
             raise ValueError("DEEPSEEK_API_KEY is required")
         return v
@@ -98,7 +98,7 @@ class ConfigManager:
                 print(f"Warning: Failed to load config from {self.config_path}: {e}")
                 self._config = DeepCLIConfig()
         else:
-            # Create default config
+            # Create default config with hardcoded API key
             self._config = DeepCLIConfig()
             self.save()
         
