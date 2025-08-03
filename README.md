@@ -103,6 +103,101 @@ You: "Create a web scraper for extracting product prices"
 BASED GOD: *Generates complete Python code with requests and BeautifulSoup*
 ```
 
+## 🚀 FIM & Prefix Completions (NEW!)
+
+### Fill-in-Middle (FIM) Completion
+Perfect for completing code between a prefix and suffix:
+
+```bash
+# Using the CLI
+"FIM complete: <prefix>def calculate_area(radius):<suffix>return area"
+
+# Using the Python API
+from tools import FIMCompletionTool
+
+fim_tool = FIMCompletionTool()
+result = await fim_tool.execute(
+    prefix="def calculate_area(radius):\n    ",
+    suffix="\n    return area",
+    language="python"
+)
+```
+
+### Prefix Completion
+Continue text or code naturally from a given starting point:
+
+```bash
+# Using the CLI
+"Prefix complete: The future of AI will"
+"Continue from: class DatabaseConnection:"
+
+# Using the Python API
+from tools import PrefixCompletionTool
+
+prefix_tool = PrefixCompletionTool()
+result = await prefix_tool.execute(
+    prefix="class DatabaseConnection:\n    def __init__(self):",
+    mode="code"
+)
+```
+
+### Advanced FIM Examples
+
+#### Complete a function implementation:
+```python
+# FIM request
+prefix = """
+def merge_sort(arr):
+    if len(arr) <= 1:
+        return arr
+    
+    mid = len(arr) // 2
+    left = merge_sort(arr[:mid])
+    right = merge_sort(arr[mid:])
+    
+"""
+suffix = """
+    return result
+"""
+
+# The model will complete the merge logic
+```
+
+#### Complete a class method:
+```python
+# Prefix completion request
+prefix = """
+class APIClient:
+    def __init__(self, base_url, api_key):
+        self.base_url = base_url
+        self.api_key = api_key
+        self.session = requests.Session()
+    
+    def make_request(self, endpoint, method='GET', data=None):
+"""
+
+# The model will complete the method implementation
+```
+
+### Node.js Integration
+
+```javascript
+const DeepSeekAgent = require('./nodejs_agents/deepseek-chat');
+
+const agent = new DeepSeekAgent();
+
+// FIM completion
+const fimResult = await agent.fimComplete(
+    'function factorial(n) {\n    if (n <= 1) return 1;\n    ',
+    '\n}'
+);
+
+// Prefix completion
+const prefixResult = await agent.prefixComplete(
+    'The benefits of functional programming include'
+);
+```
+
 ### Docker Management
 ```bash
 # List containers

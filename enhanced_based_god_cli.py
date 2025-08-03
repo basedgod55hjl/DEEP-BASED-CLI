@@ -573,14 +573,43 @@ class EnhancedBasedGodCLI:
         """Extract LLM query parameters"""
         params = {"query": user_input}
         
+        # Detect FIM or prefix mode
+        lower_input = user_input.lower()
+        if "fim" in lower_input or "fill in middle" in lower_input or "complete between" in lower_input:
+            params["mode"] = "fim"
+            # Try to extract prefix and suffix
+            if "<prefix>" in user_input and "<suffix>" in user_input:
+                prefix_start = user_input.find("<prefix>") + 8
+                prefix_end = user_input.find("<suffix>")
+                suffix_start = user_input.find("<suffix>") + 8
+                suffix_end = user_input.find("</suffix>") if "</suffix>" in user_input else len(user_input)
+                
+                params["prefix"] = user_input[prefix_start:prefix_end].strip()
+                params["suffix"] = user_input[suffix_start:suffix_end].strip()
+            elif "```" in user_input:
+                # Try to extract from code blocks
+                parts = user_input.split("```")
+                if len(parts) >= 3:
+                    params["prefix"] = parts[1].strip()
+                    params["suffix"] = parts[2].strip() if len(parts) > 2 else ""
+        elif "prefix complete" in lower_input or "continue from" in lower_input:
+            params["mode"] = "prefix"
+            # Extract prefix after the command
+            if ":" in user_input:
+                params["prefix"] = user_input.split(":", 1)[1].strip()
+            elif "```" in user_input:
+                parts = user_input.split("```")
+                if len(parts) >= 2:
+                    params["prefix"] = parts[1].strip()
+        
         # Detect task type
-        if "code" in user_input.lower():
+        if "code" in lower_input or params.get("mode") in ["fim", "prefix"]:
             params["task_type"] = "coding"
-        elif "create" in user_input.lower() or "write" in user_input.lower():
+        elif "create" in lower_input or "write" in lower_input:
             params["task_type"] = "creative"
-        elif "analyze" in user_input.lower():
+        elif "analyze" in lower_input:
             params["task_type"] = "analysis"
-        elif "explain" in user_input.lower() or "reason" in user_input.lower():
+        elif "explain" in lower_input or "reason" in lower_input:
             params["task_type"] = "reasoning"
         else:
             params["task_type"] = "general"
@@ -922,6 +951,13 @@ def main():
 [green]• "Analyze this CSV data: name,age\nJohn,25\nJane,30"[/green]
 [green]• "Ask AI: What is machine learning?"[/green]
 [green]• "Remember that I prefer Python for web development"[/green]
+
+[bold cyan]FIM & Prefix Completion:[/bold cyan]
+
+[blue]• "FIM complete: <prefix>def add(a, b):<suffix>return result"[/blue]
+[blue]• "Fill in middle: ```python\ndef fibonacci(n):\n    # TODO: implement\n```"[/blue]
+[blue]• "Prefix complete: The meaning of life is"[/blue]
+[blue]• "Continue from: ```python\nclass Calculator:\n    def __init__(self):"[/blue]
 """
                     console.print(Panel(help_text, title="[bold white]Help[/bold white]", border_style="blue"))
                 else:
@@ -939,6 +975,11 @@ def main():
                     print('• "Analyze this CSV data: name,age\\nJohn,25\\nJane,30"')
                     print('• "Ask AI: What is machine learning?"')
                     print('• "Remember that I prefer Python for web development"')
+                    print("\n🚀 FIM & Prefix Completion:")
+                    print('• "FIM complete: <prefix>def add(a, b):<suffix>return result"')
+                    print('• "Fill in middle: ```python\\ndef fibonacci(n):\\n    # TODO: implement\\n```"')
+                    print('• "Prefix complete: The meaning of life is"')
+                    print('• "Continue from: ```python\\nclass Calculator:\\n    def __init__(self):"')
                 continue
             
             elif user_input.lower() == 'tools':

@@ -5,6 +5,8 @@ LangChain-powered LLM integration with Agent Zero patterns
 
 from typing import Any, Dict, List, Optional
 from datetime import datetime
+import openai
+import asyncio
 
 from langchain_core.messages import HumanMessage, SystemMessage
 from langchain_openai import ChatOpenAI
@@ -27,11 +29,14 @@ class LLMQueryTool(BaseTool):
                 "Context-aware prompt enhancement",
                 "Conversation history management",
                 "Token usage tracking and optimization",
-                "Error handling and fallback providers"
+                "Error handling and fallback providers",
+                "FIM (Fill-in-Middle) completion support",
+                "Prefix completion for code and text"
             ]
         )
         self.providers = {}
         self.provider_stats = {}
+        self.openai_client = None
         self._init_providers()
     
     def _init_providers(self):
@@ -42,6 +47,12 @@ class LLMQueryTool(BaseTool):
         deepseek_base_url = "https://api.deepseek.com"
         
         try:
+            # Initialize OpenAI client for FIM and prefix completions
+            self.openai_client = openai.AsyncOpenAI(
+                api_key=deepseek_api_key,
+                base_url=deepseek_base_url + "/v1"
+            )
+            
             # DeepSeek Chat model (primary)
             self.providers["deepseek_chat"] = ChatOpenAI(
                 model="deepseek-chat",
@@ -71,6 +82,7 @@ class LLMQueryTool(BaseTool):
         """Execute LLM query with DeepSeek chat → reasoner → chat flow"""
         
         query = kwargs.get("query")
+        mode = kwargs.get("mode", "chat")  # chat, fim, or prefix
         task_type = kwargs.get("task_type", "general")
         provider = kwargs.get("provider", "auto")
         context = kwargs.get("context", [])
@@ -80,6 +92,12 @@ class LLMQueryTool(BaseTool):
         
         # Extract RAG context if available
         rag_context = session_data.get("rag_context", {})
+        
+        # Handle FIM and prefix modes
+        if mode == "fim":
+            return await self.fim_complete(**kwargs)
+        elif mode == "prefix":
+            return await self.prefix_complete(**kwargs)
         
         if not query:
             return ToolResponse(
@@ -361,6 +379,20 @@ class LLMQueryTool(BaseTool):
                 "query": {
                     "type": "string",
                     "description": "The query or prompt to send to the LLM"
+                },
+                "mode": {
+                    "type": "string",
+                    "enum": ["chat", "fim", "prefix"],
+                    "description": "Completion mode: chat (default), fim (fill-in-middle), or prefix",
+                    "default": "chat"
+                },
+                "prefix": {
+                    "type": "string",
+                    "description": "Prefix text for FIM or prefix completion modes"
+                },
+                "suffix": {
+                    "type": "string",
+                    "description": "Suffix text for FIM mode"
                 },
                 "task_type": {
                     "type": "string",
@@ -739,6 +771,145 @@ Your question touches on important concepts that I can help explore using the En
                 status["provider_details"][provider_name]["error"] = stats.get("error", "Unknown error")
         
         return status
+    
+    async def fim_complete(self, **kwargs) -> ToolResponse:
+        """Execute Fill-in-Middle completion using DeepSeek"""
+        prefix = kwargs.get("prefix", "")
+        suffix = kwargs.get("suffix", "")
+        max_tokens = kwargs.get("max_tokens", 1024)
+        temperature = kwargs.get("temperature", 0.3)
+        model = kwargs.get("model", "deepseek-coder")
+        
+        if not prefix:
+            return ToolResponse(
+                success=False,
+                message="Prefix parameter is required for FIM completion",
+                status=ToolStatus.FAILED
+            )
+        
+        if not self.openai_client:
+            return ToolResponse(
+                success=False,
+                message="OpenAI client not initialized",
+                status=ToolStatus.FAILED
+            )
+        
+        try:
+            # Format the prompt for FIM
+            fim_prompt = f"{prefix}"
+            
+            # Use completions API for FIM
+            response = await self.openai_client.completions.create(
+                model=model,
+                prompt=fim_prompt,
+                max_tokens=max_tokens,
+                temperature=temperature,
+                stop=["\n", ""]
+            )
+            
+            completion = response.choices[0].text
+            
+            # Update statistics
+            if "deepseek" in self.provider_stats:
+                self.provider_stats["deepseek"]["usage"] += 1
+            
+            return ToolResponse(
+                success=True,
+                message="FIM completion successful",
+                data={
+                    "completion": completion,
+                    "full_code": prefix + completion + suffix,
+                    "provider": "deepseek",
+                    "model": model,
+                    "mode": "fim",
+                    "tokens_used": response.usage.total_tokens if hasattr(response, 'usage') else None
+                },
+                metadata={
+                    "prefix_length": len(prefix),
+                    "suffix_length": len(suffix),
+                    "completion_length": len(completion)
+                }
+            )
+            
+        except Exception as e:
+            # Update error statistics
+            if "deepseek" in self.provider_stats:
+                self.provider_stats["deepseek"]["errors"] += 1
+            
+            return ToolResponse(
+                success=False,
+                message=f"FIM completion failed: {str(e)}",
+                status=ToolStatus.FAILED
+            )
+    
+    async def prefix_complete(self, **kwargs) -> ToolResponse:
+        """Execute prefix completion using DeepSeek"""
+        prefix = kwargs.get("prefix", "")
+        max_tokens = kwargs.get("max_tokens", 1024)
+        temperature = kwargs.get("temperature", 0.7)
+        model = kwargs.get("model", "deepseek-chat")
+        stop_sequences = kwargs.get("stop", None)
+        
+        if not prefix:
+            return ToolResponse(
+                success=False,
+                message="Prefix parameter is required for prefix completion",
+                status=ToolStatus.FAILED
+            )
+        
+        if not self.openai_client:
+            return ToolResponse(
+                success=False,
+                message="OpenAI client not initialized",
+                status=ToolStatus.FAILED
+            )
+        
+        try:
+            # Use chat completions API with prefix mode
+            response = await self.openai_client.chat.completions.create(
+                model=model,
+                messages=[
+                    {"role": "system", "content": "Continue the following text naturally:"},
+                    {"role": "assistant", "content": prefix, "prefix": True}
+                ],
+                max_tokens=max_tokens,
+                temperature=temperature,
+                stop=stop_sequences
+            )
+            
+            completion = response.choices[0].message.content
+            
+            # Update statistics
+            if "deepseek" in self.provider_stats:
+                self.provider_stats["deepseek"]["usage"] += 1
+            
+            return ToolResponse(
+                success=True,
+                message="Prefix completion successful",
+                data={
+                    "completion": completion,
+                    "full_text": prefix + completion,
+                    "provider": "deepseek",
+                    "model": model,
+                    "mode": "prefix",
+                    "tokens_used": response.usage.total_tokens if hasattr(response, 'usage') else None
+                },
+                metadata={
+                    "prefix_length": len(prefix),
+                    "completion_length": len(completion)
+                }
+            )
+            
+        except Exception as e:
+            # Update error statistics
+            if "deepseek" in self.provider_stats:
+                self.provider_stats["deepseek"]["errors"] += 1
+            
+            return ToolResponse(
+                success=False,
+                message=f"Prefix completion failed: {str(e)}",
+                status=ToolStatus.FAILED
+            )
     
     def get_available_models(self) -> List[str]:
         """Get list of available models"""

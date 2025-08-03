@@ -12,6 +12,8 @@ from .memory_tool import MemoryTool
 from .llm_query_tool import LLMQueryTool
 from .reasoning_engine import FastReasoningEngine
 from .tool_manager import ToolManager
+from .fim_completion_tool import FIMCompletionTool
+from .prefix_completion_tool import PrefixCompletionTool
 
 __all__ = [
     'BaseTool',
@@ -23,5 +25,7 @@ __all__ = [
     'MemoryTool',
     'LLMQueryTool',
     'FastReasoningEngine',
-    'ToolManager'
+    'ToolManager',
+    'FIMCompletionTool',
+    'PrefixCompletionTool'
 ]

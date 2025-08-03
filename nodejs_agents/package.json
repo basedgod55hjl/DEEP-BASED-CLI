@@ -1,0 +1,24 @@
+{
+  "name": "deepseek-nodejs-agents",
+  "version": "1.0.0",
+  "description": "Node.js agents for DeepSeek API with FIM and prefix completion support",
+  "main": "deepseek-chat.js",
+  "scripts": {
+    "test": "node deepseek-chat.js",
+    "start": "node deepseek-chat.js"
+  },
+  "keywords": [
+    "deepseek",
+    "ai",
+    "llm",
+    "fim",
+    "prefix-completion",
+    "code-completion"
+  ],
+  "author": "Enhanced BASED GOD CLI",
+  "license": "MIT",
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "dependencies": {}
+}
