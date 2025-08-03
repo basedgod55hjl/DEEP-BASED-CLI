@@ -1,11 +1,11 @@
 {
   "stats": {
     "created_at": "2025-08-03T01:38:49.435008",
-    "total_entries": 7,
+    "total_entries": 10,
     "entries_by_category": {
-      "conversation": 7
+      "conversation": 10
     },
-    "last_updated": "2025-08-03T12:10:09.644277"
+    "last_updated": "2025-08-03T12:13:30.962338"
   },
   "conversation": [
     {
@@ -107,6 +107,51 @@
       "content": "User: What is 2+2?\nAssistant: ❌ llm_query_tool failed: DeepSeek chat failed: LLM provider error: Error code: 401 - {'error': {'message': 'Authentication Fails, Your api key: ****9a6d is invalid', 'type': 'authentication_error', 'p...",
       "metadata": {
         "plan_id": "51001eec",
+        "tools_used": [
+          "llm_query_tool"
+        ],
+        "confidence": "low"
+      },
+      "access_count": 0,
+      "last_accessed": null
+    },
+    {
+      "id": "3653047e",
+      "timestamp": "2025-08-03T12:13:28.292291",
+      "category": "conversation",
+      "content": "User: What is the capital of France?\nAssistant: ❌ llm_query_tool failed: DeepSeek chat failed: LLM provider error: Error code: 401 - {'error': {'message': 'Authentication Fails, Your api key: ****9a6d is invalid', 'type': 'authentication_error', 'p...",
+      "metadata": {
+        "plan_id": "861151f4",
+        "tools_used": [
+          "llm_query_tool"
+        ],
+        "confidence": "low"
+      },
+      "access_count": 0,
+      "last_accessed": null
+    },
+    {
+      "id": "7a251bf9",
+      "timestamp": "2025-08-03T12:13:29.125936",
+      "category": "conversation",
+      "content": "User: Generate a Python function to calculate factorial\nAssistant: ✅ Successfully generated python code\n\n💻 **Language:** python\n📏 **Lines:** 16\n✅ **Validation:** Passed\n\n**Generated Code:**\n```python\ndef generate_python_function():\n    \"\"\"Generate a Python function t...",
+      "metadata": {
+        "plan_id": "0764ccc5",
+        "tools_used": [
+          "code_generator"
+        ],
+        "confidence": "medium"
+      },
+      "access_count": 0,
+      "last_accessed": null
+    },
+    {
+      "id": "221be905",
+      "timestamp": "2025-08-03T12:13:30.962335",
+      "category": "conversation",
+      "content": "User: Remember that I prefer Python for backend development\nAssistant: ❌ llm_query_tool failed: DeepSeek chat failed: LLM provider error: Error code: 401 - {'error': {'message': 'Authentication Fails, Your api key: ****9a6d is invalid', 'type': 'authentication_error', 'p...",
+      "metadata": {
+        "plan_id": "f25e95e7",
         "tools_used": [
           "llm_query_tool"
         ],
