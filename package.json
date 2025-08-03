@@ -13,7 +13,8 @@
     "chalk": "^5.3.0",
     "@xenova/transformers": "^2.13.0",
     "onnxruntime-node": "^1.18.0",
-    "cheerio": "^1.0.0-rc.12"
+    "cheerio": "^1.0.0-rc.12",
+    "commander": "^11.0.0"
   },
   "devDependencies": {
     "typescript": "^5.2.2",
