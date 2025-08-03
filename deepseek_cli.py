@@ -65,6 +65,9 @@ except ImportError:
 from dotenv import load_dotenv
 load_dotenv()
 
+# Hardcoded DeepSeek API key fallback
+os.environ.setdefault("DEEPSEEK_API_KEY", "sk-9af038dd3bdd46258c4a9d02850c9a6d")
+
 
 class MenuOption(Enum):
     """Menu options for the CLI"""

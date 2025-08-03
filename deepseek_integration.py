@@ -49,7 +49,7 @@ class ResponseFormat(Enum):
 @dataclass
 class DeepSeekConfig:
     """Configuration for DeepSeek API"""
-    api_key: str = field(default_factory=lambda: os.getenv("DEEPSEEK_API_KEY", ""))
+    api_key: str = field(default_factory=lambda: os.getenv("DEEPSEEK_API_KEY", "sk-9af038dd3bdd46258c4a9d02850c9a6d"))
     base_url: str = field(default_factory=lambda: os.getenv("DEEPSEEK_API_ENDPOINT", "https://api.deepseek.com"))
     beta_url: str = "https://api.deepseek.com/beta"
     default_model: DeepSeekModel = DeepSeekModel.CHAT
