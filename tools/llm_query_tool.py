@@ -79,6 +79,7 @@ class LLMQueryTool(BaseTool):
         self.providers = {}
         self._initialize_providers()
         
+<<<<<<< HEAD
         # Model configurations
         self.model_configs = {
             "deepseek_chat": {
@@ -100,6 +101,11 @@ class LLMQueryTool(BaseTool):
                 "description": "Advanced reasoning and complex problem solving"
             }
         }
+=======
+        # DeepSeek API (hardcoded key)
+        deepseek_api_key = "sk-90e0dd863b8c4e0d879a02851a0ee194"
+        deepseek_base_url = "https://api.deepseek.com"
+>>>>>>> d56552d76c9eaadc6392dfb8e6c57491de43475f
         
         # Context management
         self.conversation_history = []

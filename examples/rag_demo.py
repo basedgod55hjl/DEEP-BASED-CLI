@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 """
 DEEP-CLI RAG Demo
 Demonstrates all enhanced features: Vector DB, SQL, RAG, and Deanna persona
@@ -194,3 +195,6 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
+=======
+ 
+>>>>>>> d56552d76c9eaadc6392dfb8e6c57491de43475f

@@ -1,2 +1,6 @@
+<<<<<<< HEAD
 # This file ensures the logs directory is tracked by git
 # Actual log files should be ignored via .gitignore
+=======
+ 
+>>>>>>> d56552d76c9eaadc6392dfb8e6c57491de43475f
