@@ -9,3 +9,4 @@ export { PlannerTool } from './PlannerTool';
 export { ReaderTool } from './ReaderTool';
 export { WriterTool } from './WriterTool';
 export { ReviewerTool } from './ReviewerTool';
+export { CoderAgentTool } from './CoderAgentTool';
