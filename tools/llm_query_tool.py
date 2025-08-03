@@ -38,7 +38,7 @@ class LLMQueryTool(BaseTool):
         """Initialize DeepSeek API providers only - hardcoded configuration"""
         
         # DeepSeek API (hardcoded key)
-        deepseek_api_key = "sk-9af038dd3bdd46258c4a9d02850c9a6d"
+        deepseek_api_key = "sk-2942f8c8a2c6449db5a3858ff862b5de"
         deepseek_base_url = "https://api.deepseek.com"
         
         try:
