@@ -311,55 +311,12 @@ class EnhancedBASEDGODCLI:
                 "temperature": self._extract_temperature(user_input)
             }
         
-<<<<<<< HEAD
         # FIM detection with enhanced patterns
         if (input_lower.startswith("fim:") or
             input_lower.startswith("fill:") or
             "fim" in input_lower and ":" in input_lower or
             "fill in middle" in input_lower or
             "complete between" in input_lower):
-=======
-        return base_params
-    
-    async def _retrieve_rag_context(self, user_input: str) -> Dict[str, Any]:
-        """Retrieve relevant context from memory for RAG enhancement"""
-        try:
-            # First, try the new RAG Pipeline if available
-            rag_tool = self.tool_manager.get_tool("rag_pipeline")
-            if rag_tool:
-                try:
-                    # Execute full RAG query with Deanna persona
-                    rag_result = await self.tool_manager.execute_tool(
-                        "rag_pipeline",
-                        operation="persona_query",
-                        query=user_input,
-                        persona_name="Deanna",
-                        session_id=self.session_data["session_id"],
-                        include_memory=True,
-                        include_history=True
-                    )
-                    
-                    if rag_result.success:
-                        # Return enhanced RAG context
-                        return {
-                            "rag_response": rag_result.data.get("response", ""),
-                            "context_used": rag_result.data.get("context_used", {}),
-                            "persona": rag_result.data.get("persona", "Deanna"),
-                            "relevant_conversations": [],
-                            "relevant_patterns": [],
-                            "context_summary": "Using Deanna persona with full RAG pipeline"
-                        }
-                except Exception as e:
-                    self.console.print(f"[yellow]RAG pipeline error: {str(e)}[/yellow]")
-            
-            # Fallback to legacy memory search
-            search_result = await self.tool_manager.execute_tool(
-                "memory_tool",
-                operation="search",
-                query=user_input,
-                limit=5
-            )
->>>>>>> d56552d76c9eaadc6392dfb8e6c57491de43475f
             
             # Extract prefix and suffix
             if ":" in user_input:
@@ -1077,6 +1034,9 @@ class EnhancedBASEDGODCLI:
             table.add_row(tool.name, status, str(last_used))
         
         self.console.print(table)
+
+# Backward compatibility alias for older imports
+EnhancedBasedGodCLI = EnhancedBASEDGODCLI
 
 def main():
     """Main entry point for the enhanced CLI"""
