@@ -7,6 +7,13 @@ import { ToolManager } from '../ToolManager.js';
 const program = new Command();
 const tm = new ToolManager();
 
+// Performance monitoring
+const performanceMetrics = {
+  toolLoadTimes: new Map<string, number>(),
+  totalRequests: 0,
+  cacheHits: 0
+};
+
 program
   .name('deep-cli')
   .description('Enhanced BASED GOD CLI (TypeScript)')
@@ -19,13 +26,25 @@ program
   .option('-p, --persona <name>', 'persona name', 'deanna')
   .action(async (msg, opts) => {
     const spinner = ora('Thinking...').start();
-    const res = await tm.executeTool('unifiedagentsystem', {
-      operation: 'conversation',
-      message: msg.join(' '),
-      persona: opts.persona
-    });
-    spinner.stop();
-    console.log(chalk.green(res.data?.response));
+    const startTime = Date.now();
+    
+    try {
+      const res = await tm.executeTool('unifiedagentsystem', {
+        operation: 'conversation',
+        message: msg.join(' '),
+        persona: opts.persona
+      });
+      
+      const executionTime = Date.now() - startTime;
+      performanceMetrics.totalRequests++;
+      
+      spinner.stop();
+      console.log(chalk.green(res.data?.response));
+      console.log(chalk.gray(`⏱️  Execution time: ${executionTime}ms`));
+    } catch (error) {
+      spinner.stop();
+      console.error(chalk.red('Error:', error));
+    }
   });
 
 program
@@ -33,8 +52,21 @@ program
   .description('Scrape a webpage and store context')
   .argument('<url>', 'URL to scrape')
   .action(async (url) => {
-    const res = await tm.executeTool('webscrapertool', { url });
-    console.log(res.message, res.data);
+    const spinner = ora('Scraping...').start();
+    const startTime = Date.now();
+    
+    try {
+      const res = await tm.executeTool('webscrapertool', { url });
+      const executionTime = Date.now() - startTime;
+      performanceMetrics.totalRequests++;
+      
+      spinner.stop();
+      console.log(res.message, res.data);
+      console.log(chalk.gray(`⏱️  Execution time: ${executionTime}ms`));
+    } catch (error) {
+      spinner.stop();
+      console.error(chalk.red('Error:', error));
+    }
   });
 
 program
@@ -42,8 +74,21 @@ program
   .description('Chain-of-thought reasoning')
   .argument('<question...>', 'question')
   .action(async (q) => {
-    const res = await tm.executeTool('fastreasoningengine', { problem: q.join(' ') });
-    console.log(res.data?.reasoning);
+    const spinner = ora('Reasoning...').start();
+    const startTime = Date.now();
+    
+    try {
+      const res = await tm.executeTool('fastreasoningengine', { problem: q.join(' ') });
+      const executionTime = Date.now() - startTime;
+      performanceMetrics.totalRequests++;
+      
+      spinner.stop();
+      console.log(res.data?.reasoning);
+      console.log(chalk.gray(`⏱️  Execution time: ${executionTime}ms`));
+    } catch (error) {
+      spinner.stop();
+      console.error(chalk.red('Error:', error));
+    }
   });
 
 program
@@ -51,8 +96,21 @@ program
   .description('Generate code via swarm pipeline')
   .argument('<spec...>', 'code spec')
   .action(async (spec) => {
-    const res = await tm.executeTool('swarmtool', { task: spec.join(' ') });
-    console.log(res.data?.code);
+    const spinner = ora('Generating code...').start();
+    const startTime = Date.now();
+    
+    try {
+      const res = await tm.executeTool('swarmtool', { task: spec.join(' ') });
+      const executionTime = Date.now() - startTime;
+      performanceMetrics.totalRequests++;
+      
+      spinner.stop();
+      console.log(res.data?.code);
+      console.log(chalk.gray(`⏱️  Execution time: ${executionTime}ms`));
+    } catch (error) {
+      spinner.stop();
+      console.error(chalk.red('Error:', error));
+    }
   });
 
 program
@@ -60,16 +118,42 @@ program
   .description('Execute safe shell command (echo, ls)')
   .argument('<command...>', 'cmd')
   .action(async (cmdParts) => {
-    const res = await tm.executeTool('commandexecutortool', { command: cmdParts.join(' ') });
-    console.log(res.data?.stdout);
+    const spinner = ora('Executing...').start();
+    const startTime = Date.now();
+    
+    try {
+      const res = await tm.executeTool('commandexecutortool', { command: cmdParts.join(' ') });
+      const executionTime = Date.now() - startTime;
+      performanceMetrics.totalRequests++;
+      
+      spinner.stop();
+      console.log(res.data?.stdout);
+      console.log(chalk.gray(`⏱️  Execution time: ${executionTime}ms`));
+    } catch (error) {
+      spinner.stop();
+      console.error(chalk.red('Error:', error));
+    }
   });
 
 program
   .command('heal')
   .description('Run test suite and report status')
   .action(async () => {
-    const res = await tm.executeTool('selfhealertool', {});
-    console.log(res.message);
+    const spinner = ora('Running tests...').start();
+    const startTime = Date.now();
+    
+    try {
+      const res = await tm.executeTool('selfhealertool', {});
+      const executionTime = Date.now() - startTime;
+      performanceMetrics.totalRequests++;
+      
+      spinner.stop();
+      console.log(res.message);
+      console.log(chalk.gray(`⏱️  Execution time: ${executionTime}ms`));
+    } catch (error) {
+      spinner.stop();
+      console.error(chalk.red('Error:', error));
+    }
   });
 
 program
@@ -78,8 +162,44 @@ program
   .argument('<name>', 'metric name')
   .argument('[value]', 'value', '1')
   .action(async (name, value) => {
-    const res = await tm.executeTool('datadogintegrationtool', { metric: name, value: Number(value) });
-    console.log(res.message);
+    const spinner = ora('Sending metric...').start();
+    const startTime = Date.now();
+    
+    try {
+      const res = await tm.executeTool('datadogintegrationtool', { metric: name, value: Number(value) });
+      const executionTime = Date.now() - startTime;
+      performanceMetrics.totalRequests++;
+      
+      spinner.stop();
+      console.log(res.message);
+      console.log(chalk.gray(`⏱️  Execution time: ${executionTime}ms`));
+    } catch (error) {
+      spinner.stop();
+      console.error(chalk.red('Error:', error));
+    }
+  });
+
+program
+  .command('tools')
+  .description('List available tools')
+  .action(async () => {
+    const spinner = ora('Loading tools...').start();
+    try {
+      const tools = await tm.listTools();
+      spinner.stop();
+      console.log(chalk.blue('Available tools:'));
+      tools.forEach(tool => console.log(chalk.green(`  - ${tool}`)));
+    } catch (error) {
+      spinner.stop();
+      console.error(chalk.red('Error:', error));
+    }
+  });
+
+program
+  .command('stats')
+  .description('Show performance statistics')
+  .action(() => {
+    console.log(chalk.blue(tm.getPerformanceMetrics()));
   });
 
 program.parseAsync();
