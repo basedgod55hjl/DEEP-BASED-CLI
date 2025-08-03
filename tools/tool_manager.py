@@ -14,6 +14,13 @@ from .data_analyzer_tool import DataAnalyzerTool
 from .file_processor_tool import FileProcessorTool
 from .memory_tool import MemoryTool
 from .llm_query_tool import LLMQueryTool
+from .fim_completion_tool import FIMCompletionTool
+from .prefix_completion_tool import PrefixCompletionTool
+from .unified_agent_system import UnifiedAgentSystem
+from .vector_database_tool import VectorDatabaseTool
+from .sql_database_tool import SQLDatabaseTool
+from .rag_pipeline_tool import RAGPipelineTool
+from .simple_embedding_tool import SimpleEmbeddingTool
 from .reasoning_engine import FastReasoningEngine
 
 class ToolManager:
@@ -41,8 +48,28 @@ class ToolManager:
             FileProcessorTool(),
             MemoryTool(),
             llm_tool,
-            FastReasoningEngine(llm_tool=llm_tool)  # Pass LLM tool for fast consultations
+            FastReasoningEngine(llm_tool=llm_tool),  # Pass LLM tool for fast consultations
+            SQLDatabaseTool(),
+            FIMCompletionTool(),
+            PrefixCompletionTool(),
+            UnifiedAgentSystem(),
+            SimpleEmbeddingTool()
         ]
+        
+        # Add optional tools that might fail to initialize
+        try:
+            vector_db_tool = VectorDatabaseTool()
+            default_tools.append(vector_db_tool)
+            print("✅ Vector database tool registered")
+        except Exception as e:
+            print(f"⚠️ Vector database tool not available: {str(e)}")
+        
+        try:
+            rag_tool = RAGPipelineTool()
+            default_tools.append(rag_tool)
+            print("✅ RAG pipeline tool registered")
+        except Exception as e:
+            print(f"⚠️ RAG pipeline tool not available: {str(e)}")
         
         for tool in default_tools:
             self.register_tool(tool)

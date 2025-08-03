@@ -1,985 +1,1055 @@
+#!/usr/bin/env python3
 """
-Enhanced BASED GOD CLI with Modular Tools and LangChain Integration
-Inspired by Agent Zero architecture with separate tool files
+Enhanced BASED GOD CLI - Advanced AI-Powered Command Line Interface
+Upgraded with FIM completion, prefix completion, streaming, and unified agent system
 """
 
 import asyncio
+import json
+import logging
+import sys
+import os
+from typing import Dict, Any, Optional, List, Tuple
 from datetime import datetime
-from typing import Any, Dict, List, Optional
-from dataclasses import dataclass
-from enum import Enum
+import argparse
+import signal
+import threading
+from pathlib import Path
 
-# Import the modular tool system
-from tools import ToolManager, ToolResponse
+# Rich for beautiful terminal output
+from rich.console import Console
+from rich.panel import Panel
+from rich.text import Text
+from rich.live import Live
+from rich.table import Table
+from rich.progress import Progress, SpinnerColumn, TextColumn
+from rich.prompt import Prompt, Confirm
+from rich.syntax import Syntax
 
-# Rich for enhanced output (optional)
-try:
-    from rich.console import Console
-    from rich.panel import Panel
-    from rich.table import Table
-    from rich.progress import Progress, SpinnerColumn, TextColumn
-    RICH_AVAILABLE = True
-    console = Console()
-except ImportError:
-    RICH_AVAILABLE = False
-    console = None
+# Import our enhanced tools
+from tools.llm_query_tool import LLMQueryTool
+from tools.fim_completion_tool import FIMCompletionTool
+from tools.prefix_completion_tool import PrefixCompletionTool
+from tools.unified_agent_system import UnifiedAgentSystem
+from tools.vector_database_tool import VectorDatabaseTool
+from tools.sql_database_tool import SQLDatabaseTool
+from tools.rag_pipeline_tool import RAGPipelineTool
+from tools.tool_manager import ToolManager
 
-class ActionType(Enum):
-    DIRECT_RESPONSE = "direct_response"
-    TOOL_EXECUTION = "tool_execution"
-    WORKFLOW_EXECUTION = "workflow_execution"
-    MULTI_TOOL_PROCESS = "multi_tool_process"
-    LEARNING_UPDATE = "learning_update"
+# Configuration
+from config.deepcli_config import get_config
 
-class ConfidenceLevel(Enum):
-    LOW = "low"
-    MEDIUM = "medium"
-    HIGH = "high"
-    VERY_HIGH = "very_high"
+# Setup logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.FileHandler('logs/enhanced_cli.log'),
+        logging.StreamHandler(sys.stdout)
+    ]
+)
 
-@dataclass
-class ReasoningContext:
-    user_input: str
-    conversation_history: List[Dict]
-    available_tools: List[str]
-    session_data: Dict[str, Any]
-    timestamp: str
+logger = logging.getLogger(__name__)
 
-@dataclass
-class ActionPlan:
-    plan_id: str
-    primary_action: ActionType
-    tools_to_use: List[str]
-    parameters: Dict[str, Any]
-    estimated_time: int
-    confidence: ConfidenceLevel
-    reasoning: str
-    fallback_plan: Optional[str] = None
-
-class EnhancedBasedGodCLI:
+class EnhancedBASEDGODCLI:
     """
-    Enhanced BASED GOD CLI with modular tools and LangChain integration
+    Enhanced BASED GOD CLI with advanced AI capabilities
     """
     
     def __init__(self):
-        self.tool_manager = ToolManager()
-        self.conversation_history = []
-        self.session_data = {}
-        self.last_action_plan = None
-        self.startup_time = datetime.now()
+        """Initialize the enhanced CLI"""
+        self.console = Console()
+        self.config = get_config()
         
-        # Initialize session
-        self._initialize_session()
-    
-    def _initialize_session(self):
-        """Initialize CLI session"""
+        # Initialize tools (will be properly initialized in async setup)
+        self.llm_tool = None
+        self.fim_tool = None
+        self.prefix_tool = None
+        self.unified_agent = None
+        self.vector_db = None
+        self.sql_db = None
+        self.rag_pipeline = None
+        self.tool_manager = None
+        
+        # Session state
         self.session_data = {
-            "session_id": self._generate_session_id(),
-            "started_at": self.startup_time.isoformat(),
-            "total_interactions": 0,
-            "successful_operations": 0,
-            "failed_operations": 0
+            "conversation_history": [],
+            "current_mode": "chat",
+            "active_tools": [],
+            "performance_metrics": {},
+            "user_preferences": {}
         }
         
-        if RICH_AVAILABLE:
-            self._display_startup_banner()
-        else:
-            self._display_simple_banner()
+        # Streaming state
+        self.is_streaming = False
+        self.streaming_task = None
+        
+        # Signal handling
+        signal.signal(signal.SIGINT, self._signal_handler)
+        signal.signal(signal.SIGTERM, self._signal_handler)
     
-    def _display_startup_banner(self):
-        """Display rich startup banner"""
-        banner_text = """
-[bold cyan]🚀 ENHANCED BASED GOD CLI v2.0[/bold cyan]
-[bold]Powered by Agent Zero Intelligence & LangChain[/bold]
-
-[dim]✅ Modular Tool Architecture
-✅ LangChain LLM Integration  
-✅ Agent Zero Reasoning Patterns
-✅ Persistent Memory System
-✅ Advanced Web Scraping
-✅ Code Generation & Analysis[/dim]
-
-[bold yellow]Available Tools:[/bold yellow]
-"""
-        
-        tools = self.tool_manager.list_tools()
-        for tool in tools:
-            banner_text += f"[green]• {tool['name']}[/green]: {tool['description'][:60]}...\n"
-        
-        banner_text += f"\n[bold]Session ID:[/bold] [cyan]{self.session_data['session_id']}[/cyan]"
-        
-        console.print(Panel(banner_text, title="[bold white]ENHANCED BASED GOD CLI[/bold white]", border_style="cyan"))
-    
-    def _display_simple_banner(self):
-        """Display simple text banner"""
-        print("=" * 80)
-        print("🚀 ENHANCED BASED GOD CLI v2.0")
-        print("Powered by Agent Zero Intelligence & LangChain")
-        print("=" * 80)
-        print("✅ Modular Tool Architecture")
-        print("✅ LangChain LLM Integration") 
-        print("✅ Agent Zero Reasoning Patterns")
-        print("✅ Persistent Memory System")
-        print("✅ Advanced Web Scraping")
-        print("✅ Code Generation & Analysis")
-        print("=" * 80)
-        
-        tools = self.tool_manager.list_tools()
-        print(f"Available Tools ({len(tools)}):")
-        for tool in tools:
-            print(f"  • {tool['name']}: {tool['description'][:60]}...")
-        
-        print(f"\nSession ID: {self.session_data['session_id']}")
-        print("=" * 80)
-    
-    async def chat(self, user_input: str) -> str:
-        """Main chat interface with enhanced reasoning"""
-        
-        # Store user input in conversation history
-        self.conversation_history.append({
-            "role": "user",
-            "content": user_input,
-            "timestamp": datetime.now().isoformat()
-        })
-        
-        # Enhance with RAG - retrieve relevant context from memory
-        relevant_context = await self._retrieve_rag_context(user_input)
-        
-        # Create reasoning context with RAG enhancement
-        context = ReasoningContext(
-            user_input=user_input,
-            conversation_history=self.conversation_history[-10:],  # Last 10 messages
-            available_tools=list(self.tool_manager.tools.keys()),
-            session_data={**self.session_data, "rag_context": relevant_context},
-            timestamp=datetime.now().isoformat()
-        )
-        
-        # Analyze and plan
-        action_plan = await self._create_action_plan(context)
-        self.last_action_plan = action_plan
-        
-        # Display reasoning if rich available
-        if RICH_AVAILABLE:
-            self._display_reasoning_process(action_plan)
-        
-        # Execute plan
-        response = await self._execute_action_plan(action_plan, context)
-        
-        # Update conversation history
-        self.conversation_history.append({
-            "timestamp": context.timestamp,
-            "user_input": user_input,
-            "response": response,
-            "action_plan": action_plan,
-            "success": "error" not in response.lower()
-        })
-        
-        # Update session stats
-        self.session_data["total_interactions"] += 1
-        if "error" not in response.lower():
-            self.session_data["successful_operations"] += 1
-        else:
-            self.session_data["failed_operations"] += 1
-        
-        # Store in memory
-        await self._store_interaction_memory(user_input, response, action_plan)
-        
-        return response
-    
-    def chat_sync(self, user_input: str) -> str:
-        """Synchronous wrapper for chat"""
-        return asyncio.run(self.chat(user_input))
-    
-    async def _create_action_plan(self, context: ReasoningContext) -> ActionPlan:
-        """Create action plan using fast iterative reasoning with LLM consultation loops"""
-        
-        # Use the fast reasoning engine for intelligent planning
-        reasoning_result = await self.tool_manager.execute_tool(
-            "fast_reasoning_engine",
-            user_query=context.user_input,
-            context={
-                "conversation_history": context.conversation_history,
-                "available_tools": context.available_tools,
-                "session_data": context.session_data
-            },
-            max_iterations=4,  # Fast iterations
-            speed_mode=True    # Enable speed optimizations
-        )
-        
-        if reasoning_result.success:
-            # Extract decision from reasoning engine
-            final_decision = reasoning_result.data.get("final_decision", {})
-            
-            # Convert reasoning engine output to ActionPlan
-            return ActionPlan(
-                plan_id=self._generate_plan_id(),
-                primary_action=self._map_decision_to_action_type(final_decision.get("decision_type", "tool_execution")),
-                tools_to_use=final_decision.get("selected_tools", ["llm_query_tool"]),
-                parameters=final_decision.get("parameters", {"query": context.user_input}),
-                estimated_time=int(reasoning_result.data.get("execution_time", 8) * 1.5),  # Add buffer
-                confidence=self._map_confidence_to_level(final_decision.get("confidence_score", 0.7)),
-                reasoning=final_decision.get("reasoning_summary", "Fast iterative reasoning analysis completed"),
-                fallback_plan="llm_query_tool"
-            )
-        
-        else:
-            # Fallback to simple keyword-based planning if reasoning engine fails
-            return await self._create_fallback_action_plan(context)
-    
-    def _map_decision_to_action_type(self, decision_type: str) -> ActionType:
-        """Map reasoning engine decision type to ActionType"""
-        mapping = {
-            "tool_execution": ActionType.TOOL_EXECUTION,
-            "multi_tool_process": ActionType.MULTI_TOOL_PROCESS,
-            "workflow_execution": ActionType.WORKFLOW_EXECUTION,
-            "direct_response": ActionType.DIRECT_RESPONSE,
-            "deepseek_conversation_flow": ActionType.TOOL_EXECUTION  # Use tool execution for DeepSeek flow
-        }
-        return mapping.get(decision_type, ActionType.TOOL_EXECUTION)
-    
-    def _map_confidence_to_level(self, confidence_score: float) -> ConfidenceLevel:
-        """Map numerical confidence to ConfidenceLevel enum"""
-        if confidence_score >= 0.9:
-            return ConfidenceLevel.VERY_HIGH
-        elif confidence_score >= 0.75:
-            return ConfidenceLevel.HIGH
-        elif confidence_score >= 0.6:
-            return ConfidenceLevel.MEDIUM
-        else:
-            return ConfidenceLevel.LOW
-    
-    async def _create_fallback_action_plan(self, context: ReasoningContext) -> ActionPlan:
-        """Fallback action plan creation using keyword analysis"""
-        
-        user_input = context.user_input.lower()
-        
-        # Quick keyword-based analysis for fallback
-        if any(keyword in user_input for keyword in ["scrape", "web", "crawl"]):
-            return ActionPlan(
-                plan_id=self._generate_plan_id(),
-                primary_action=ActionType.TOOL_EXECUTION,
-                tools_to_use=["web_scraper"],
-                parameters=self._extract_scraping_parameters(context.user_input),
-                estimated_time=15,
-                confidence=ConfidenceLevel.MEDIUM,
-                reasoning="Fallback: Web scraping detected via keywords"
-            )
-        
-        elif any(keyword in user_input for keyword in ["code", "function", "script"]):
-            return ActionPlan(
-                plan_id=self._generate_plan_id(),
-                primary_action=ActionType.TOOL_EXECUTION,
-                tools_to_use=["code_generator"],
-                parameters=self._extract_code_parameters(context.user_input),
-                estimated_time=10,
-                confidence=ConfidenceLevel.MEDIUM,
-                reasoning="Fallback: Code generation detected via keywords"
-            )
-        
-        elif any(keyword in user_input for keyword in ["analyze", "data", "csv"]):
-            return ActionPlan(
-                plan_id=self._generate_plan_id(),
-                primary_action=ActionType.TOOL_EXECUTION,
-                tools_to_use=["data_analyzer"],
-                parameters=self._extract_analysis_parameters(context.user_input),
-                estimated_time=8,
-                confidence=ConfidenceLevel.MEDIUM,
-                reasoning="Fallback: Data analysis detected via keywords"
-            )
-        
-        # Default fallback
-        return ActionPlan(
-            plan_id=self._generate_plan_id(),
-            primary_action=ActionType.TOOL_EXECUTION,
-            tools_to_use=["llm_query_tool"],
-            parameters={"query": context.user_input, "task_type": "general"},
-            estimated_time=8,
-            confidence=ConfidenceLevel.LOW,
-            reasoning="Fallback: Default LLM query"
-        )
-    
-    async def _execute_action_plan(self, plan: ActionPlan, context: ReasoningContext) -> str:
-        """Execute the action plan"""
-        
+    async def _initialize_tools(self):
+        """Initialize all tools asynchronously"""
         try:
-            if plan.primary_action == ActionType.TOOL_EXECUTION:
-                return await self._execute_single_tool(plan, context)
+            self.console.print("[yellow]Initializing tools...[/yellow]")
             
-            elif plan.primary_action == ActionType.MULTI_TOOL_PROCESS:
-                return await self._execute_multi_tool_process(plan, context)
+            # Initialize tools that don't require async setup
+            self.fim_tool = FIMCompletionTool()
+            self.prefix_tool = PrefixCompletionTool()
             
-            elif plan.primary_action == ActionType.WORKFLOW_EXECUTION:
-                return await self._execute_workflow(plan, context)
+            # Initialize tools that require async setup
+            self.llm_tool = LLMQueryTool()
+            self.unified_agent = UnifiedAgentSystem()
+            self.sql_db = SQLDatabaseTool()
+            self.tool_manager = ToolManager()
             
+            # Initialize optional tools (vector database and RAG)
+            try:
+                self.vector_db = VectorDatabaseTool()
+                self.rag_pipeline = RAGPipelineTool()
+                self.console.print("[green]✅ Vector database and RAG initialized[/green]")
+            except Exception as e:
+                self.console.print(f"[yellow]⚠️ Vector database/RAG not available: {str(e)}[/yellow]")
+                self.vector_db = None
+                self.rag_pipeline = None
+            
+            self.console.print("[green]✅ Core tools initialized successfully[/green]")
+            
+        except Exception as e:
+            self.console.print(f"[red]❌ Core tool initialization failed: {str(e)}[/red]")
+            raise
+    
+    def _display_welcome(self):
+        """Display enhanced welcome message"""
+        welcome_text = """
+[bold cyan]🚀 Enhanced BASED GOD CLI v2.0[/bold cyan]
+
+[bold green]Advanced AI-Powered Command Line Interface[/bold green]
+
+[bold yellow]✨ New Features:[/bold yellow]
+• [bold]FIM Completion[/bold] - Fill-in-middle code completion
+• [bold]Prefix Completion[/bold] - Smart text and code continuation  
+• [bold]Real-time Streaming[/bold] - Live response streaming
+• [bold]Unified Agent System[/bold] - Advanced AI with memory and learning
+• [bold]Vector Database[/bold] - Semantic search and RAG
+• [bold]Multi-modal Support[/bold] - Text, code, and structured data
+• [bold]Advanced Reasoning[/bold] - Chain-of-thought and logical analysis
+
+[bold blue]🎯 Quick Start:[/bold blue]
+• Type your message for chat
+• Use "fim: [prefix] [suffix]" for FIM completion
+• Use "prefix: [text]" for prefix completion
+• Use "stream: [message]" for streaming responses
+• Use "agent: [task]" for unified agent operations
+• Type "help" for complete command reference
+
+[bold magenta]🔧 Available Modes:[/bold magenta]
+• [bold]chat[/bold] - General conversation
+• [bold]fim[/bold] - Fill-in-middle completion
+• [bold]prefix[/bold] - Prefix completion
+• [bold]stream[/bold] - Streaming responses
+• [bold]agent[/bold] - Unified agent system
+• [bold]rag[/bold] - Retrieval-augmented generation
+• [bold]tools[/bold] - Tool management
+
+[bold green]Ready to assist you with advanced AI capabilities![/bold green]
+        """
+        
+        self.console.print(Panel(welcome_text, title="[bold cyan]Enhanced BASED GOD CLI[/bold cyan]", border_style="cyan"))
+    
+    def _signal_handler(self, signum, frame):
+        """Handle interrupt signals gracefully"""
+        self.console.print("\n[bold red]Shutting down gracefully...[/bold red]")
+        
+        # Stop streaming if active
+        if self.is_streaming and self.streaming_task:
+            self.streaming_task.cancel()
+        
+        # Save session data
+        self._save_session_data()
+        
+        self.console.print("[bold green]Goodbye![/bold green]")
+        sys.exit(0)
+    
+    def _save_session_data(self):
+        """Save session data for persistence"""
+        try:
+            session_file = Path("data/session_data.json")
+            session_file.parent.mkdir(exist_ok=True)
+            
+            with open(session_file, 'w') as f:
+                json.dump(self.session_data, f, indent=2, default=str)
+                
+        except Exception as e:
+            logger.error(f"Failed to save session data: {str(e)}")
+    
+    def _load_session_data(self):
+        """Load previous session data"""
+        try:
+            session_file = Path("data/session_data.json")
+            if session_file.exists():
+                with open(session_file, 'r') as f:
+                    self.session_data = json.load(f)
+                    
+        except Exception as e:
+            logger.error(f"Failed to load session data: {str(e)}")
+    
+    async def run(self):
+        """Main CLI loop with enhanced capabilities"""
+        # Initialize tools asynchronously
+        await self._initialize_tools()
+        
+        # Display welcome message
+        self._display_welcome()
+        
+        # Load session data
+        self._load_session_data()
+        
+        while True:
+            try:
+                # Get user input with enhanced prompt
+                prompt_text = self._get_prompt_text()
+                user_input = Prompt.ask(prompt_text)
+                
+                if not user_input.strip():
+                    continue
+                
+                # Handle special commands
+                if user_input.lower() in ['quit', 'exit', 'bye']:
+                    self._save_session_data()
+                    self.console.print("[bold green]Goodbye![/bold green]")
+                    break
+                
+                if user_input.lower() == 'help':
+                    self._display_help()
+                    continue
+                
+                if user_input.lower() == 'clear':
+                    self.console.clear()
+                    self._display_welcome()
+                    continue
+                
+                if user_input.lower() == 'status':
+                    self._display_status()
+                    continue
+                
+                if user_input.lower() == 'tools':
+                    self._display_tools()
+                    continue
+                
+                # Process user input with enhanced parsing
+                await self._process_user_input(user_input)
+                
+            except KeyboardInterrupt:
+                self.console.print("\n[bold yellow]Use 'quit' to exit gracefully[/bold yellow]")
+            except Exception as e:
+                logger.error(f"Error in main loop: {str(e)}")
+                self.console.print(f"[bold red]Error: {str(e)}[/bold red]")
+    
+    def _get_prompt_text(self) -> str:
+        """Get enhanced prompt text based on current mode"""
+        mode = self.session_data.get("current_mode", "chat")
+        
+        if mode == "fim":
+            return "[bold cyan]FIM[/bold cyan] > "
+        elif mode == "prefix":
+            return "[bold green]PREFIX[/bold green] > "
+        elif mode == "stream":
+            return "[bold magenta]STREAM[/bold magenta] > "
+        elif mode == "agent":
+            return "[bold yellow]AGENT[/bold yellow] > "
+        elif mode == "rag":
+            return "[bold blue]RAG[/bold blue] > "
+        else:
+            return "[bold white]Enhanced CLI[/bold white] > "
+    
+    async def _process_user_input(self, user_input: str):
+        """Process user input with enhanced parsing and routing"""
+        try:
+            # Enhanced input parsing
+            parsed_input = self._parse_user_input(user_input)
+            
+            if parsed_input["mode"] == "stream":
+                await self._handle_streaming_request(parsed_input)
+            elif parsed_input["mode"] == "fim":
+                await self._handle_fim_request(parsed_input)
+            elif parsed_input["mode"] == "prefix":
+                await self._handle_prefix_request(parsed_input)
+            elif parsed_input["mode"] == "agent":
+                await self._handle_agent_request(parsed_input)
+            elif parsed_input["mode"] == "rag":
+                await self._handle_rag_request(parsed_input)
+            elif parsed_input["mode"] == "tools":
+                await self._handle_tools_request(parsed_input)
             else:
-                return "I understand your request, but I need more specific instructions to help you. Could you please provide more details?"
+                await self._handle_chat_request(parsed_input)
         
         except Exception as e:
-            return f"❌ An error occurred while processing your request: {str(e)}\n\nPlease try rephrasing your request or use the 'help' command."
+            logger.error(f"Error processing user input: {str(e)}")
+            self.console.print(f"[bold red]Error processing input: {str(e)}[/bold red]")
     
-    async def _execute_single_tool(self, plan: ActionPlan, context: ReasoningContext) -> str:
-        """Execute a single tool"""
+    def _parse_user_input(self, user_input: str) -> Dict[str, Any]:
+        """Enhanced input parsing with multiple detection methods"""
+        input_lower = user_input.lower().strip()
         
-        if not plan.tools_to_use:
-            return "❌ No tools specified in action plan"
+        # Mode switching commands
+        if input_lower.startswith("mode:"):
+            mode = input_lower.split(":", 1)[1].strip()
+            self.session_data["current_mode"] = mode
+            self.console.print(f"[bold green]Switched to {mode} mode[/bold green]")
+            return {"mode": "mode_switch", "new_mode": mode}
         
-        tool_name = plan.tools_to_use[0]
-        
-        # Show progress if rich available
-        if RICH_AVAILABLE:
-            with Progress(SpinnerColumn(), TextColumn("[progress.description]{task.description}")) as progress:
-                task = progress.add_task(f"Executing {tool_name}...", total=None)
-                result = await self.tool_manager.execute_tool(tool_name, **plan.parameters)
-        else:
-            print(f"🔧 Executing {tool_name}...")
-            result = await self.tool_manager.execute_tool(tool_name, **plan.parameters)
-        
-        return self._format_tool_response(result, tool_name)
-    
-    async def _execute_multi_tool_process(self, plan: ActionPlan, context: ReasoningContext) -> str:
-        """Execute multiple tools in sequence"""
-        
-        responses = []
-        
-        for tool_name in plan.tools_to_use:
-            if RICH_AVAILABLE:
-                console.print(f"[cyan]🔧 Executing {tool_name}...[/cyan]")
-            else:
-                print(f"🔧 Executing {tool_name}...")
-            
-            # Customize parameters for each tool
-            tool_params = self._customize_parameters_for_tool(tool_name, plan.parameters, context)
-            
-            result = await self.tool_manager.execute_tool(tool_name, **tool_params)
-            formatted_response = self._format_tool_response(result, tool_name)
-            responses.append(f"**{tool_name.title()}:**\n{formatted_response}")
-        
-        return "\n\n".join(responses)
-    
-    async def _execute_workflow(self, plan: ActionPlan, context: ReasoningContext) -> str:
-        """Execute a predefined workflow"""
-        
-        # This would contain predefined workflows
-        return "Workflow execution not yet implemented"
-    
-    def _format_tool_response(self, result: ToolResponse, tool_name: str) -> str:
-        """Format tool response for display"""
-        
-        if not result.success:
-            return f"❌ {tool_name} failed: {result.message}"
-        
-        response = f"✅ {result.message}\n"
-        
-        if result.data:
-            # Tool-specific formatting
-            if tool_name == "web_scraper":
-                response += self._format_scraper_response(result.data)
-            elif tool_name == "code_generator":
-                response += self._format_code_response(result.data)
-            elif tool_name == "data_analyzer":
-                response += self._format_analysis_response(result.data)
-            elif tool_name == "file_processor":
-                response += self._format_file_response(result.data)
-            elif tool_name == "memory_tool":
-                response += self._format_memory_response(result.data)
-            elif tool_name == "llm_query_tool":
-                response += self._format_llm_response(result.data)
-            else:
-                response += f"Result: {result.data}"
-        
-        if result.metadata:
-            response += f"\n\n⏱️ Execution time: {result.metadata.get('processing_time', result.execution_time):.2f}s"
-        
-        return response
-    
-    def _format_scraper_response(self, data: Dict[str, Any]) -> str:
-        """Format web scraper response"""
-        return f"""
-🌐 **Scraped URL:** {data.get('url', 'N/A')}
-📊 **Items Found:** {data.get('items_found', 0)}
-🎯 **Strategy:** {data.get('scraping_strategy', 'N/A')}
-
-**Sample Data:**
-{str(data.get('extracted_data', [])[:3])[:200]}...
-"""
-    
-    def _format_code_response(self, data: Dict[str, Any]) -> str:
-        """Format code generator response"""
-        code = data.get('code', '')
-        return f"""
-💻 **Language:** {data.get('language', 'N/A')}
-📏 **Lines:** {data.get('estimated_lines', 0)}
-✅ **Validation:** {'Passed' if data.get('validation', {}).get('valid', False) else 'Failed'}
-
-**Generated Code:**
-```{data.get('language', '')}
-{code[:500]}...
-```
-"""
-    
-    def _format_analysis_response(self, data: Dict[str, Any]) -> str:
-        """Format data analysis response"""
-        results = data.get('results', {})
-        return f"""
-📊 **Data Format:** {data.get('format', 'N/A')}
-📈 **Records:** {data.get('data_summary', {}).get('record_count', 0)}
-
-**Analysis Results:**
-{str(results)[:300]}...
-"""
-    
-    def _format_file_response(self, data: Dict[str, Any]) -> str:
-        """Format file processor response"""
-        return f"""
-📁 **File:** {data.get('file_path', 'N/A')}
-📏 **Size:** {data.get('size_bytes', 0)} bytes
-📄 **Lines:** {data.get('line_count', 0)}
-"""
-    
-    def _format_memory_response(self, data: Dict[str, Any]) -> str:
-        """Format memory tool response"""
-        entries = data.get('entries', [])
-        return f"""
-🧠 **Memory Operation Completed**
-📚 **Entries:** {len(entries)}
-🔍 **Results:** {data.get('total_found', len(entries))}
-"""
-    
-    def _format_llm_response(self, data: Dict[str, Any]) -> str:
-        """Format LLM response"""
-        response_text = data.get('response', '')
-        return f"""
-🤖 **Provider:** {data.get('provider', 'N/A')}
-💭 **Response:**
-
-{response_text}
-"""
-    
-    def _display_reasoning_process(self, plan: ActionPlan):
-        """Display the reasoning process"""
-        if RICH_AVAILABLE:
-            reasoning_panel = Panel(
-                f"[bold yellow]🧠 Reasoning:[/bold yellow] {plan.reasoning}\n" +
-                f"[bold cyan]🎯 Action:[/bold cyan] {plan.primary_action.value}\n" +
-                f"[bold green]🔧 Tools:[/bold green] {', '.join(plan.tools_to_use)}\n" +
-                f"[bold blue]⏱️ Estimated Time:[/bold blue] {plan.estimated_time}s\n" +
-                f"[bold magenta]🎯 Confidence:[/bold magenta] {plan.confidence.value}",
-                title="[bold white]Action Plan[/bold white]",
-                border_style="yellow"
-            )
-            console.print(reasoning_panel)
-        else:
-            print(f"\n🧠 Reasoning: {plan.reasoning}")
-            print(f"🎯 Action: {plan.primary_action.value}")
-            print(f"🔧 Tools: {', '.join(plan.tools_to_use)}")
-            print(f"⏱️ Estimated Time: {plan.estimated_time}s")
-            print(f"🎯 Confidence: {plan.confidence.value}\n")
-    
-    # Parameter extraction methods
-    def _extract_scraping_parameters(self, user_input: str) -> Dict[str, Any]:
-        """Extract web scraping parameters"""
-        import re
-        
-        # Try to find URL in input
-        url_pattern = r'https?://[^\s]+'
-        urls = re.findall(url_pattern, user_input)
-        
-        params = {}
-        if urls:
-            params["url"] = urls[0]
-        
-        # Extract extraction type
-        if "news" in user_input:
-            params["extraction_type"] = "news"
-        elif "product" in user_input or "shop" in user_input:
-            params["extraction_type"] = "ecommerce"
-        elif "link" in user_input:
-            params["extraction_type"] = "links"
-        else:
-            params["extraction_type"] = "auto"
-        
-        return params
-    
-    def _extract_code_parameters(self, user_input: str) -> Dict[str, Any]:
-        """Extract code generation parameters"""
-        params = {"description": user_input}
-        
-        # Detect language
-        if "python" in user_input.lower():
-            params["language"] = "python"
-        elif "javascript" in user_input.lower() or "js" in user_input.lower():
-            params["language"] = "javascript"
-        elif "html" in user_input.lower():
-            params["language"] = "html"
-        elif "css" in user_input.lower():
-            params["language"] = "css"
-        
-        # Detect code type
-        if "function" in user_input.lower():
-            params["code_type"] = "function"
-        elif "class" in user_input.lower():
-            params["code_type"] = "class"
-        elif "script" in user_input.lower():
-            params["code_type"] = "script"
-        
-        return params
-    
-    def _extract_analysis_parameters(self, user_input: str) -> Dict[str, Any]:
-        """Extract data analysis parameters"""
-        return {"data": user_input}  # Simplified - would need more sophisticated extraction
-    
-    def _extract_file_parameters(self, user_input: str) -> Dict[str, Any]:
-        """Extract file processing parameters"""
-        params = {}
-        
-        # Try to extract file path
-        import re
-        path_pattern = r'["\']([^"\']+)["\']'
-        paths = re.findall(path_pattern, user_input)
-        
-        if paths:
-            params["file_path"] = paths[0]
-        
-        # Detect operation
-        if "read" in user_input:
-            params["operation"] = "read"
-        elif "write" in user_input:
-            params["operation"] = "write"
-        elif "analyze" in user_input:
-            params["operation"] = "analyze"
-        
-        return params
-    
-    def _extract_memory_parameters(self, user_input: str) -> Dict[str, Any]:
-        """Extract memory operation parameters"""
-        params = {}
-        
-        if "search" in user_input:
-            params["operation"] = "search"
-            # Extract search query
-            words = user_input.split()
-            search_idx = words.index("search") if "search" in words else -1
-            if search_idx >= 0 and search_idx < len(words) - 1:
-                params["query"] = " ".join(words[search_idx + 1:])
-        elif "remember" in user_input or "store" in user_input:
-            params["operation"] = "store"
-            params["content"] = user_input
-        else:
-            params["operation"] = "stats"
-        
-        return params
-    
-    def _extract_llm_parameters(self, user_input: str) -> Dict[str, Any]:
-        """Extract LLM query parameters"""
-        params = {"query": user_input}
-        
-        # Detect task type
-        if "code" in user_input.lower():
-            params["task_type"] = "coding"
-        elif "create" in user_input.lower() or "write" in user_input.lower():
-            params["task_type"] = "creative"
-        elif "analyze" in user_input.lower():
-            params["task_type"] = "analysis"
-        elif "explain" in user_input.lower() or "reason" in user_input.lower():
-            params["task_type"] = "reasoning"
-        else:
-            params["task_type"] = "general"
-        
-        return params
-    
-    def _customize_parameters_for_tool(self, tool_name: str, base_params: Dict[str, Any], context: ReasoningContext) -> Dict[str, Any]:
-        """Customize parameters for specific tools in multi-tool processes"""
-        
-        if tool_name == "code_generator":
+        # Streaming detection
+        if (input_lower.startswith("stream:") or 
+            input_lower.startswith("live:") or
+            "stream" in input_lower and ":" in input_lower):
+            content = user_input.split(":", 1)[1].strip()
             return {
-                "description": base_params.get("description", ""),
-                "language": "python",
-                "include_docs": True
-            }
-        elif tool_name == "file_processor":
-            return {
-                "operation": "write",
-                "file_path": "generated_code.py",
-                "content": "# Generated code will be placed here"
-            }
-        elif tool_name == "llm_query_tool":
-            return {
-                "query": base_params.get("query", context.user_input),
-                "task_type": "general",
-                "context": context.conversation_history,
-                "session_data": context.session_data
+                "mode": "stream",
+                "content": content,
+                "model": self._extract_model(user_input),
+                "temperature": self._extract_temperature(user_input)
             }
         
-        return base_params
-    
-    async def _retrieve_rag_context(self, user_input: str) -> Dict[str, Any]:
-        """Retrieve relevant context from memory for RAG enhancement"""
-        try:
-            # Search memory for relevant conversations
-            search_result = await self.tool_manager.execute_tool(
-                "memory_tool",
-                operation="search",
-                query=user_input,
-                limit=5
-            )
+        # FIM detection with enhanced patterns
+        if (input_lower.startswith("fim:") or
+            input_lower.startswith("fill:") or
+            "fim" in input_lower and ":" in input_lower or
+            "fill in middle" in input_lower or
+            "complete between" in input_lower):
             
-            rag_context = {
-                "relevant_conversations": [],
-                "relevant_patterns": [],
-                "context_summary": ""
-            }
-            
-            if search_result.success and search_result.data:
-                entries = search_result.data.get("entries", [])
-                
-                # Extract relevant conversations
-                for entry in entries[:3]:  # Top 3 most relevant
-                    rag_context["relevant_conversations"].append({
-                        "content": entry.get("content", "")[:200] + "...",
-                        "timestamp": entry.get("timestamp", ""),
-                        "category": entry.get("category", ""),
-                        "relevance": entry.get("relevance", 0)
-                    })
-                
-                # Create context summary
-                if rag_context["relevant_conversations"]:
-                    rag_context["context_summary"] = f"Found {len(rag_context['relevant_conversations'])} relevant past conversations related to your query."
+            # Extract prefix and suffix
+            if ":" in user_input:
+                content = user_input.split(":", 1)[1].strip()
+                parts = content.split("|")
+                if len(parts) >= 2:
+                    prefix = parts[0].strip()
+                    suffix = parts[1].strip()
                 else:
-                    rag_context["context_summary"] = "No directly relevant past conversations found."
+                    prefix = content
+                    suffix = ""
+            else:
+                # Try to extract from natural language
+                prefix, suffix = self._extract_fim_from_natural_language(user_input)
             
-            return rag_context
-            
-        except Exception as e:
-            # Return empty context on error
             return {
-                "relevant_conversations": [],
-                "relevant_patterns": [],
-                "context_summary": f"RAG context retrieval failed: {str(e)}"
+                "mode": "fim",
+                "prefix": prefix,
+                "suffix": suffix,
+                "language": self._extract_language(user_input),
+                "model": self._extract_model(user_input) or "deepseek-coder"
             }
-    
-    async def _store_interaction_memory(self, user_input: str, response: str, plan: ActionPlan):
-        """Store interaction in memory"""
-        try:
-            await self.tool_manager.execute_tool(
-                "memory_tool",
-                operation="store",
-                content=f"User: {user_input}\nAssistant: {response[:200]}...",
-                category="conversation",
-                metadata={
-                    "plan_id": plan.plan_id,
-                    "tools_used": plan.tools_to_use,
-                    "confidence": plan.confidence.value
-                }
-            )
-        except:
-            pass  # Silent fail for memory storage
-    
-    # Utility methods
-    def _generate_session_id(self) -> str:
-        """Generate unique session ID"""
-        import uuid
-        return str(uuid.uuid4())[:8]
-    
-    def _generate_plan_id(self) -> str:
-        """Generate unique plan ID"""
-        import uuid
-        return str(uuid.uuid4())[:8]
-    
-    # CLI Commands
-    def show_tools(self):
-        """Show available tools"""
-        tools = self.tool_manager.list_tools()
         
-        if RICH_AVAILABLE:
-            from rich.table import Table as RichTable
-            table = RichTable(title="Available Tools")
-            table.add_column("Name", style="cyan")
-            table.add_column("Description", style="white")
-            table.add_column("Usage", style="green")
+        # Prefix detection with enhanced patterns
+        if (input_lower.startswith("prefix:") or
+            input_lower.startswith("continue:") or
+            "prefix" in input_lower and ":" in input_lower or
+            "continue from" in input_lower or
+            "complete" in input_lower and not "fim" in input_lower):
             
-            for tool in tools:
-                table.add_row(
-                    tool["name"],
-                    tool["description"][:50] + "...",
-                    str(tool["statistics"]["usage_count"])
-                )
-            
-            console.print(table)
-        else:
-            print("\n🔧 Available Tools:")
-            print("=" * 60)
-            for tool in tools:
-                print(f"• {tool['name']}: {tool['description']}")
-                print(f"  Usage: {tool['statistics']['usage_count']} times")
-                print()
-    
-    def show_memory_stats(self):
-        """Show memory statistics"""
-        try:
-            # Try to get current event loop
-            loop = asyncio.get_event_loop()
-            if loop.is_running():
-                # If loop is running, create task
-                import concurrent.futures
-                with concurrent.futures.ThreadPoolExecutor() as executor:
-                    future = executor.submit(asyncio.run, self._show_memory_stats_async())
-                    future.result()
+            if ":" in user_input:
+                content = user_input.split(":", 1)[1].strip()
             else:
-                # If no loop running, use asyncio.run
-                asyncio.run(self._show_memory_stats_async())
-        except RuntimeError:
-            # Fallback to asyncio.run
-            asyncio.run(self._show_memory_stats_async())
-    
-    async def _show_memory_stats_async(self):
-        """Async version of show memory stats"""
-        result = await self.tool_manager.execute_tool("memory_tool", operation="stats")
-        
-        if result.success and result.data:
-            stats = result.data
+                content = user_input
             
-            if RICH_AVAILABLE:
-                memory_panel = Panel(
-                    f"[bold cyan]Total Entries:[/bold cyan] {stats.get('total_entries', 0)}\n" +
-                    f"[bold green]Categories:[/bold green] {len(stats.get('entries_by_category', {}))}\n" +
-                    f"[bold yellow]Total Accesses:[/bold yellow] {stats.get('total_accesses', 0)}\n" +
-                    f"[bold blue]Most Accessed:[/bold blue] {stats.get('most_accessed_entry', 'None')}",
-                    title="[bold white]Memory Statistics[/bold white]",
-                    border_style="blue"
-                )
-                console.print(memory_panel)
-            else:
-                print("\n🧠 Memory Statistics:")
-                print("=" * 40)
-                print(f"Total Entries: {stats.get('total_entries', 0)}")
-                print(f"Categories: {len(stats.get('entries_by_category', {}))}")
-                print(f"Total Accesses: {stats.get('total_accesses', 0)}")
-                print(f"Most Accessed: {stats.get('most_accessed_entry', 'None')}")
+            return {
+                "mode": "prefix",
+                "prefix": content,
+                "model": self._extract_model(user_input),
+                "temperature": self._extract_temperature(user_input)
+            }
+        
+        # Agent detection
+        if (input_lower.startswith("agent:") or
+            input_lower.startswith("ai:") or
+            "agent" in input_lower and ":" in input_lower):
+            
+            content = user_input.split(":", 1)[1].strip()
+            return {
+                "mode": "agent",
+                "content": content,
+                "operation": self._extract_agent_operation(content)
+            }
+        
+        # RAG detection
+        if (input_lower.startswith("rag:") or
+            input_lower.startswith("search:") or
+            "rag" in input_lower and ":" in input_lower):
+            
+            content = user_input.split(":", 1)[1].strip()
+            return {
+                "mode": "rag",
+                "query": content,
+                "persona": self._extract_persona(user_input)
+            }
+        
+        # Tools detection
+        if (input_lower.startswith("tools:") or
+            input_lower.startswith("tool:") or
+            "tools" in input_lower and ":" in input_lower):
+            
+            content = user_input.split(":", 1)[1].strip()
+            return {
+                "mode": "tools",
+                "command": content
+            }
+        
+        # Default to chat mode
+        return {
+            "mode": "chat",
+            "message": user_input,
+            "model": self._extract_model(user_input),
+            "temperature": self._extract_temperature(user_input),
+            "system_message": self._extract_system_message(user_input)
+        }
+    
+    def _extract_fim_from_natural_language(self, text: str) -> Tuple[str, str]:
+        """Extract FIM prefix and suffix from natural language"""
+        text_lower = text.lower()
+        
+        # Common patterns
+        if "between" in text_lower and "and" in text_lower:
+            parts = text.split("between", 1)[1].split("and", 1)
+            if len(parts) >= 2:
+                return parts[0].strip(), parts[1].strip()
+        
+        if "fill in" in text_lower:
+            # Try to extract from "fill in X and Y"
+            fill_part = text.split("fill in", 1)[1]
+            if "and" in fill_part:
+                parts = fill_part.split("and", 1)
+                return parts[0].strip(), parts[1].strip()
+        
+        # Default: treat as prefix only
+        return text, ""
+    
+    def _extract_model(self, text: str) -> Optional[str]:
+        """Extract model specification from text"""
+        text_lower = text.lower()
+        
+        if "deepseek-chat" in text_lower or "chat" in text_lower:
+            return "deepseek-chat"
+        elif "deepseek-coder" in text_lower or "coder" in text_lower:
+            return "deepseek-coder"
+        elif "deepseek-reasoner" in text_lower or "reasoner" in text_lower:
+            return "deepseek-reasoner"
+        
+        return None
+    
+    def _extract_temperature(self, text: str) -> Optional[float]:
+        """Extract temperature from text"""
+        import re
+        
+        temp_match = re.search(r'temp[:\s]*([0-9]*\.?[0-9]+)', text.lower())
+        if temp_match:
+            return float(temp_match.group(1))
+        
+        return None
+    
+    def _extract_language(self, text: str) -> Optional[str]:
+        """Extract programming language from text"""
+        text_lower = text.lower()
+        
+        languages = ["python", "javascript", "java", "cpp", "c++", "c#", "rust", "go", "php", "ruby", "swift"]
+        for lang in languages:
+            if lang in text_lower:
+                return lang
+        
+        return "python"  # Default
+    
+    def _extract_agent_operation(self, text: str) -> str:
+        """Extract agent operation from text"""
+        text_lower = text.lower()
+        
+        if any(word in text_lower for word in ["conversation", "chat", "talk"]):
+            return "conversation"
+        elif any(word in text_lower for word in ["tool", "use", "execute"]):
+            return "tool_use"
+        elif any(word in text_lower for word in ["memory", "remember", "recall"]):
+            return "memory_retrieval"
+        elif any(word in text_lower for word in ["learn", "learning"]):
+            return "learning"
+        elif any(word in text_lower for word in ["reason", "reasoning", "think"]):
+            return "reasoning"
+        elif any(word in text_lower for word in ["plan", "planning"]):
+            return "planning"
         else:
-            print("❌ Could not retrieve memory statistics")
+            return "conversation"
     
-    def show_system_stats(self):
-        """Show system statistics"""
-        stats = self.tool_manager.get_system_statistics()
+    def _extract_persona(self, text: str) -> Optional[str]:
+        """Extract persona from text"""
+        text_lower = text.lower()
         
-        if RICH_AVAILABLE:
-            system_panel = Panel(
-                f"[bold cyan]Total Tools:[/bold cyan] {stats['total_tools']}\n" +
-                f"[bold green]Total Executions:[/bold green] {stats['total_executions']}\n" +
-                f"[bold yellow]Success Rate:[/bold yellow] {stats['success_rate']:.1f}%\n" +
-                f"[bold blue]Session Interactions:[/bold blue] {self.session_data['total_interactions']}",
-                title="[bold white]System Statistics[/bold white]",
-                border_style="green"
-            )
-            console.print(system_panel)
-        else:
-            print("\n📊 System Statistics:")
-            print("=" * 40)
-            print(f"Total Tools: {stats['total_tools']}")
-            print(f"Total Executions: {stats['total_executions']}")
-            print(f"Success Rate: {stats['success_rate']:.1f}%")
-            print(f"Session Interactions: {self.session_data['total_interactions']}")
+        if "deanna" in text_lower:
+            return "deanna"
+        elif "assistant" in text_lower:
+            return "assistant"
+        elif "expert" in text_lower:
+            return "expert"
+        
+        return None
     
-    def show_last_plan(self):
-        """Show details of the last action plan"""
-        if not self.last_action_plan:
-            print("❌ No action plan available")
-            return
-        
-        plan = self.last_action_plan
-        
-        if RICH_AVAILABLE:
-            plan_panel = Panel(
-                f"[bold cyan]Plan ID:[/bold cyan] {plan.plan_id}\n" +
-                f"[bold green]Action:[/bold green] {plan.primary_action.value}\n" +
-                f"[bold yellow]Tools:[/bold yellow] {', '.join(plan.tools_to_use)}\n" +
-                f"[bold blue]Confidence:[/bold blue] {plan.confidence.value}\n" +
-                f"[bold magenta]Reasoning:[/bold magenta] {plan.reasoning}",
-                title="[bold white]Last Action Plan[/bold white]",
-                border_style="magenta"
-            )
-            console.print(plan_panel)
-        else:
-            print("\n📋 Last Action Plan:")
-            print("=" * 40)
-            print(f"Plan ID: {plan.plan_id}")
-            print(f"Action: {plan.primary_action.value}")
-            print(f"Tools: {', '.join(plan.tools_to_use)}")
-            print(f"Confidence: {plan.confidence.value}")
-            print(f"Reasoning: {plan.reasoning}")
+    def _extract_system_message(self, text: str) -> Optional[str]:
+        """Extract system message from text"""
+        if text.startswith("system:"):
+            return text.split(":", 1)[1].strip()
+        return None
     
-    def show_reasoning_analytics(self):
-        """Show reasoning engine analytics"""
-        asyncio.run(self._show_reasoning_analytics_async())
-    
-    async def _show_reasoning_analytics_async(self):
-        """Async version of show reasoning analytics"""
-        
-        reasoning_tool = self.tool_manager.get_tool("fast_reasoning_engine")
-        if not reasoning_tool:
-            print("❌ Reasoning engine not available")
-            return
-        
+    async def _handle_streaming_request(self, parsed_input: Dict[str, Any]):
+        """Handle streaming request with real-time output"""
         try:
-            analytics = reasoning_tool.get_reasoning_analytics()
+            self.console.print("[bold magenta]Starting streaming response...[/bold magenta]")
             
-            if RICH_AVAILABLE:
-                from rich.table import Table
+            # Create streaming display
+            with Live(Panel("", title="[bold magenta]Streaming Response[/bold magenta]"), refresh_per_second=10) as live:
+                self.is_streaming = True
                 
-                # Main analytics panel
-                analytics_panel = Panel(
-                    f"[bold cyan]Total Chains:[/bold cyan] {analytics.get('total_reasoning_chains', 0)}\n" +
-                    f"[bold green]Avg Confidence:[/bold green] {analytics.get('average_confidence', 0):.2f}\n" +
-                    f"[bold yellow]Avg Steps:[/bold yellow] {analytics.get('average_steps_per_chain', 0):.1f}\n" +
-                    f"[bold blue]Avg Time:[/bold blue] {analytics.get('average_execution_time', 0):.2f}s",
-                    title="[bold white]Reasoning Analytics[/bold white]",
-                    border_style="cyan"
+                # Start streaming task
+                self.streaming_task = asyncio.create_task(
+                    self._stream_response(parsed_input, live)
                 )
-                console.print(analytics_panel)
                 
-                # Recent chains table
-                recent_chains = analytics.get('recent_chains', [])
-                if recent_chains:
-                    chains_table = Table(title="Recent Reasoning Chains")
-                    chains_table.add_column("ID", style="cyan")
-                    chains_table.add_column("Query", style="white")
-                    chains_table.add_column("Confidence", style="green")
-                    chains_table.add_column("Steps", style="blue")
+                try:
+                    await self.streaming_task
+                except asyncio.CancelledError:
+                    self.console.print("[bold yellow]Streaming cancelled[/bold yellow]")
+                finally:
+                    self.is_streaming = False
                     
-                    for chain in recent_chains:
-                        chains_table.add_row(
-                            chain.get('id', 'N/A'),
-                            chain.get('query', 'N/A')[:30] + "...",
-                            f"{chain.get('confidence', 0):.2f}",
-                            str(chain.get('steps', 0))
-                        )
-                    
-                    console.print(chains_table)
-                
-            else:
-                print("\n🧠 Reasoning Analytics:")
-                print("=" * 40)
-                print(f"Total Chains: {analytics.get('total_reasoning_chains', 0)}")
-                print(f"Average Confidence: {analytics.get('average_confidence', 0):.2f}")
-                print(f"Average Steps: {analytics.get('average_steps_per_chain', 0):.1f}")
-                print(f"Average Time: {analytics.get('average_execution_time', 0):.2f}s")
-                
-                # Recent chains
-                recent_chains = analytics.get('recent_chains', [])
-                if recent_chains:
-                    print(f"\nRecent Chains ({len(recent_chains)}):")
-                    for chain in recent_chains:
-                        print(f"• {chain.get('id', 'N/A')}: {chain.get('query', 'N/A')[:40]}... "
-                              f"(conf: {chain.get('confidence', 0):.2f}, steps: {chain.get('steps', 0)})")
-        
         except Exception as e:
-            if RICH_AVAILABLE:
-                console.print(f"[bold red]❌ Error retrieving reasoning analytics: {str(e)}[/bold red]")
+            self.console.print(f"[bold red]Streaming error: {str(e)}[/bold red]")
+            self.is_streaming = False
+    
+    async def _stream_response(self, parsed_input: Dict[str, Any], live):
+        """Stream response in real-time"""
+        try:
+            content = parsed_input["content"]
+            model = parsed_input.get("model", "deepseek-chat")
+            temperature = parsed_input.get("temperature", 0.7)
+            
+            # Use LLM tool for streaming
+            response = await self.llm_tool.stream_completion(
+                prompt=content,
+                model=model,
+                temperature=temperature
+            )
+            
+            if response.success:
+                streamed_text = response.data.get("response", "")
+                
+                # Display streamed content
+                live.update(Panel(
+                    streamed_text,
+                    title="[bold magenta]Streaming Response[/bold magenta]",
+                    border_style="magenta"
+                ))
+                
+                # Update session data
+                self.session_data["conversation_history"].append({
+                    "role": "user",
+                    "content": content,
+                    "timestamp": datetime.now().isoformat()
+                })
+                self.session_data["conversation_history"].append({
+                    "role": "assistant", 
+                    "content": streamed_text,
+                    "timestamp": datetime.now().isoformat()
+                })
+                
             else:
-                print(f"❌ Error retrieving reasoning analytics: {str(e)}")
+                live.update(Panel(
+                    f"[bold red]Error: {response.message}[/bold red]",
+                    title="[bold red]Streaming Error[/bold red]",
+                    border_style="red"
+                ))
+                
+        except Exception as e:
+            live.update(Panel(
+                f"[bold red]Streaming failed: {str(e)}[/bold red]",
+                title="[bold red]Streaming Error[/bold red]",
+                border_style="red"
+            ))
+    
+    async def _handle_fim_request(self, parsed_input: Dict[str, Any]):
+        """Handle FIM completion request"""
+        try:
+            with Progress(
+                SpinnerColumn(),
+                TextColumn("[progress.description]{task.description}"),
+                console=self.console
+            ) as progress:
+                task = progress.add_task("Generating FIM completion...", total=None)
+                
+                response = await self.fim_tool.execute(
+                    prefix=parsed_input["prefix"],
+                    suffix=parsed_input["suffix"],
+                    language=parsed_input.get("language", "python"),
+                    model=parsed_input.get("model", "deepseek-coder")
+                )
+                
+                progress.update(task, completed=True)
+            
+            if response.success:
+                completion = response.data.get("completion", "")
+                mode = response.data.get("mode", "text")
+                
+                # Display result with appropriate formatting
+                if mode == "code":
+                    syntax = Syntax(completion, "python", theme="monokai")
+                    self.console.print(Panel(
+                        syntax,
+                        title="[bold cyan]FIM Completion[/bold cyan]",
+                        border_style="cyan"
+                    ))
+                else:
+                    self.console.print(Panel(
+                        completion,
+                        title="[bold cyan]FIM Completion[/bold cyan]",
+                        border_style="cyan"
+                    ))
+                
+                # Show metadata
+                self._display_completion_metadata(response.data)
+                
+            else:
+                self.console.print(f"[bold red]FIM completion failed: {response.message}[/bold red]")
+                
+        except Exception as e:
+            self.console.print(f"[bold red]FIM completion error: {str(e)}[/bold red]")
+    
+    async def _handle_prefix_request(self, parsed_input: Dict[str, Any]):
+        """Handle prefix completion request"""
+        try:
+            with Progress(
+                SpinnerColumn(),
+                TextColumn("[progress.description]{task.description}"),
+                console=self.console
+            ) as progress:
+                task = progress.add_task("Generating prefix completion...", total=None)
+                
+                response = await self.prefix_tool.execute(
+                    prefix=parsed_input["prefix"],
+                    model=parsed_input.get("model", "deepseek-chat"),
+                    temperature=parsed_input.get("temperature", 0.7)
+                )
+                
+                progress.update(task, completed=True)
+            
+            if response.success:
+                completion = response.data.get("completion", "")
+                mode = response.data.get("mode", "text")
+                
+                # Display result with appropriate formatting
+                if mode == "code":
+                    syntax = Syntax(completion, "python", theme="monokai")
+                    self.console.print(Panel(
+                        syntax,
+                        title="[bold green]Prefix Completion (Code)[/bold green]",
+                        border_style="green"
+                    ))
+                else:
+                    self.console.print(Panel(
+                        completion,
+                        title="[bold green]Prefix Completion (Text)[/bold green]",
+                        border_style="green"
+                    ))
+                
+                # Show metadata
+                self._display_completion_metadata(response.data)
+                
+            else:
+                self.console.print(f"[bold red]Prefix completion failed: {response.message}[/bold red]")
+            
+        except Exception as e:
+            self.console.print(f"[bold red]Prefix completion error: {str(e)}[/bold red]")
+    
+    async def _handle_agent_request(self, parsed_input: Dict[str, Any]):
+        """Handle unified agent request"""
+        try:
+            with Progress(
+                SpinnerColumn(),
+                TextColumn("[progress.description]{task.description}"),
+                console=self.console
+            ) as progress:
+                task = progress.add_task("Processing with unified agent...", total=None)
+                
+                response = await self.unified_agent.execute(
+                    operation=parsed_input.get("operation", "conversation"),
+                    message=parsed_input["content"],
+                    context=self.session_data
+                )
+                
+                progress.update(task, completed=True)
+            
+            if response.success:
+                agent_response = response.data.get("response", "")
+                context_used = response.data.get("context_used", {})
+                
+                # Display agent response
+                self.console.print(Panel(
+                    agent_response,
+                    title="[bold yellow]Unified Agent Response[/bold yellow]",
+                    border_style="yellow"
+                ))
+                
+                # Show context information
+                if context_used:
+                    self._display_agent_context(context_used)
+                
+            else:
+                self.console.print(f"[bold red]Agent request failed: {response.message}[/bold red]")
+            
+        except Exception as e:
+            self.console.print(f"[bold red]Agent request error: {str(e)}[/bold red]")
+    
+    async def _handle_rag_request(self, parsed_input: Dict[str, Any]):
+        """Handle RAG request"""
+        try:
+            if not self.rag_pipeline:
+                self.console.print("[bold red]RAG pipeline not initialized. Please ensure Qdrant is running and configured.[/bold red]")
+                return
+            
+            with Progress(
+                SpinnerColumn(),
+                TextColumn("[progress.description]{task.description}"),
+                console=self.console
+            ) as progress:
+                task = progress.add_task("Retrieving information with RAG...", total=None)
+                
+                response = await self.rag_pipeline.execute(
+                    query=parsed_input["query"],
+                    persona=parsed_input.get("persona")
+                )
+                
+                progress.update(task, completed=True)
+            
+            if response.success:
+                rag_response = response.data.get("response", "")
+                sources = response.data.get("sources", [])
+                
+                # Display RAG response
+                self.console.print(Panel(
+                    rag_response,
+                    title="[bold blue]RAG Response[/bold blue]",
+                    border_style="blue"
+                ))
+                
+                # Display sources
+                if sources:
+                    self._display_rag_sources(sources)
+                
+            else:
+                self.console.print(f"[bold red]RAG request failed: {response.message}[/bold red]")
+            
+        except Exception as e:
+            self.console.print(f"[bold red]RAG request error: {str(e)}[/bold red]")
+    
+    async def _handle_tools_request(self, parsed_input: Dict[str, Any]):
+        """Handle tool execution request"""
+        try:
+            command = parsed_input["command"]
+            
+            # Example: parse command like "execute tool_name arg1=val1 arg2=val2"
+            parts = command.split(" ", 2)
+            if len(parts) < 2 or parts[0].lower() != "execute":
+                self.console.print("[bold red]Invalid tool command format. Use: execute tool_name [args][/bold red]")
+                return
+            
+            tool_name = parts[1]
+            tool_args = {}
+            if len(parts) > 2:
+                # Simple arg parsing (e.g., arg1=val1 arg2=val2)
+                arg_string = parts[2]
+                for arg in arg_string.split():
+                    if '=' in arg:
+                        key, value = arg.split('=', 1)
+                        tool_args[key] = value
+            
+            with Progress(
+                SpinnerColumn(),
+                TextColumn("[progress.description]{task.description}"),
+                console=self.console
+            ) as progress:
+                task = progress.add_task(f"Executing tool [bold magenta]{tool_name}[/bold magenta]...", total=None)
+                
+                response = await self.tool_manager.execute_tool(tool_name, **tool_args)
+                
+                progress.update(task, completed=True)
+            
+            if response.success:
+                self.console.print(Panel(
+                    str(response.data),
+                    title="[bold green]Tool Execution Result[/bold green]",
+                    border_style="green"
+                ))
+            else:
+                self.console.print(f"[bold red]Tool execution failed: {response.message}[/bold red]")
+            
+        except Exception as e:
+            self.console.print(f"[bold red]Tool execution error: {str(e)}[/bold red]")
+    
+    async def _handle_chat_request(self, parsed_input: Dict[str, Any]):
+        """Handle chat request"""
+        try:
+            with Progress(
+                SpinnerColumn(),
+                TextColumn("[progress.description]{task.description}"),
+                console=self.console
+            ) as progress:
+                task = progress.add_task("Generating chat response...", total=None)
+                
+                response = await self.llm_tool.execute(
+                    operation="chat_completion",
+                    messages=[
+                        {"role": "user", "content": parsed_input["message"]}
+                    ],
+                    model=parsed_input.get("model", "deepseek-chat"),
+                    temperature=parsed_input.get("temperature", 0.7),
+                    system_message=parsed_input.get("system_message")
+                )
+                
+                progress.update(task, completed=True)
+            
+            if response.success:
+                chat_response = response.data.get("response", "")
+                self.console.print(Panel(
+                    chat_response,
+                    title="[bold blue]AI Response[/bold blue]",
+                    border_style="blue"
+                ))
+                
+                self.session_data["conversation_history"].append({
+                    "role": "user",
+                    "content": parsed_input["message"],
+                    "timestamp": datetime.now().isoformat()
+                })
+                self.session_data["conversation_history"].append({
+                    "role": "assistant", 
+                    "content": chat_response,
+                    "timestamp": datetime.now().isoformat()
+                })
+            else:
+                self.console.print(f"[bold red]Chat failed: {response.message}[/bold red]")
+            
+        except Exception as e:
+            logger.error(f"Chat error: {str(e)}")
+            self.console.print(f"[bold red]Chat error: {str(e)}[/bold red]")
+    
+    def _display_completion_metadata(self, data: Dict[str, Any]):
+        """Display completion metadata"""
+        table = Table(title="Completion Metadata")
+        table.add_column("Property", style="cyan")
+        table.add_column("Value", style="green")
+        
+        if "model" in data:
+            table.add_row("Model", data["model"])
+        if "language" in data:
+            table.add_row("Language", data["language"])
+        if "mode" in data:
+            table.add_row("Mode", data["mode"])
+        if "tokens_used" in data:
+            table.add_row("Tokens Used", str(data["tokens_used"]))
+        if "timestamp" in data:
+            table.add_row("Timestamp", data["timestamp"])
+        
+        self.console.print(table)
+    
+    def _display_agent_context(self, context: Dict[str, Any]):
+        """Display agent context information"""
+        table = Table(title="Agent Context")
+        table.add_column("Context Type", style="cyan")
+        table.add_column("Details", style="green")
+        
+        if "relevant_memories" in context:
+            table.add_row("Relevant Memories", str(len(context["relevant_memories"])))
+        if "relevant_contacts" in context:
+            table.add_row("Relevant Contacts", str(len(context["relevant_contacts"])))
+        if "conversation_history" in context:
+            table.add_row("Conversation History", str(len(context["conversation_history"])))
+        if "current_persona" in context:
+            table.add_row("Current Persona", context["current_persona"])
+        
+        self.console.print(table)
+    
+    def _display_rag_sources(self, sources: List[Dict[str, Any]]):
+        """Display RAG sources"""
+        table = Table(title="RAG Sources")
+        table.add_column("Source", style="cyan")
+        table.add_column("Relevance", style="green")
+        table.add_column("Content", style="white")
+        
+        for source in sources[:5]:  # Show top 5 sources
+            table.add_row(
+                source.get("source", "Unknown"),
+                f"{source.get('relevance', 0):.2f}",
+                source.get("content", "")[:100] + "..." if len(source.get("content", "")) > 100 else source.get("content", "")
+            )
+        
+        self.console.print(table)
+    
+    def _display_help(self):
+        """Display enhanced help information"""
+        help_text = """
+[bold cyan]Enhanced BASED GOD CLI - Complete Command Reference[/bold cyan]
+
+[bold yellow]🎯 Core Commands:[/bold yellow]
+• [bold]help[/bold] - Show this help message
+• [bold]quit/exit/bye[/bold] - Exit the CLI gracefully
+• [bold]clear[/bold] - Clear the screen
+• [bold]status[/bold] - Show system status
+• [bold]tools[/bold] - Show available tools
+
+[bold green]💬 Chat & Conversation:[/bold green]
+• [bold]Regular text[/bold] - General conversation
+• [bold]system: [message][/bold] - With system message
+• [bold]model: [model] [message][/bold] - Specify model (deepseek-chat, deepseek-coder, deepseek-reasoner)
+• [bold]temp: [value] [message][/bold] - Specify temperature (0.0-2.0)
+
+[bold cyan]🔧 FIM Completion:[/bold cyan]
+• [bold]fim: [prefix] | [suffix][/bold] - Fill-in-middle completion
+• [bold]fill: [prefix] | [suffix][/bold] - Alternative FIM syntax
+• [bold]fim: [prefix] | [suffix] lang: [language][/bold] - With language specification
+• [bold]fim: [prefix] | [suffix] model: deepseek-coder[/bold] - With model specification
+
+[bold green]📝 Prefix Completion:[/bold green]
+• [bold]prefix: [text][/bold] - Prefix completion
+• [bold]continue: [text][/bold] - Alternative prefix syntax
+• [bold]prefix: [text] model: [model][/bold] - With model specification
+• [bold]prefix: [text] temp: [value][/bold] - With temperature
+
+[bold magenta]🌊 Streaming Responses:[/bold magenta]
+• [bold]stream: [message][/bold] - Real-time streaming response
+• [bold]live: [message][/bold] - Alternative streaming syntax
+• [bold]stream: [message] model: [model][/bold] - With model specification
+
+[bold yellow]🤖 Unified Agent System:[/bold yellow]
+• [bold]agent: [task][/bold] - Use unified agent system
+• [bold]ai: [task][/bold] - Alternative agent syntax
+• [bold]agent: conversation [message][/bold] - Agent conversation
+• [bold]agent: tool_use [task][/bold] - Agent tool usage
+• [bold]agent: memory_retrieval [query][/bold] - Agent memory retrieval
+• [bold]agent: learning [data][/bold] - Agent learning
+• [bold]agent: reasoning [problem][/bold] - Agent reasoning
+• [bold]agent: planning [goal][/bold] - Agent planning
+
+[bold blue]🔍 RAG (Retrieval-Augmented Generation):[/bold blue]
+• [bold]rag: [query][/bold] - RAG query
+• [bold]search: [query][/bold] - Alternative RAG syntax
+• [bold]rag: [query] persona: deanna[/bold] - With persona specification
+
+[bold white]🛠️ Tool Management:[/bold white]
+• [bold]tools: list[/bold] - List available tools
+• [bold]tools: status[/bold] - Show tool status
+• [bold]tools: [tool_command][/bold] - Execute tool command
+
+[bold cyan]🎛️ Mode Switching:[/bold cyan]
+• [bold]mode: chat[/bold] - Switch to chat mode
+• [bold]mode: fim[/bold] - Switch to FIM mode
+• [bold]mode: prefix[/bold] - Switch to prefix mode
+• [bold]mode: stream[/bold] - Switch to streaming mode
+• [bold]mode: agent[/bold] - Switch to agent mode
+• [bold]mode: rag[/bold] - Switch to RAG mode
+
+[bold green]📊 Examples:[/bold green]
+• [bold]fim: def calculate_sum(a, b): | return a + b[/bold]
+• [bold]prefix: The future of artificial intelligence[/bold]
+• [bold]stream: Explain quantum computing in simple terms[/bold]
+• [bold]agent: Help me plan a software project[/bold]
+• [bold]rag: What are the latest developments in machine learning?[/bold]
+• [bold]model: deepseek-coder temp: 0.3 Write a Python function[/bold]
+
+[bold yellow]💡 Tips:[/bold yellow]
+• Use Ctrl+C to cancel streaming responses
+• Combine multiple parameters for fine-tuned control
+• The system remembers conversation context automatically
+• All responses are saved for learning and improvement
+        """
+        
+        self.console.print(Panel(help_text, title="[bold cyan]Enhanced CLI Help[/bold cyan]", border_style="cyan"))
+    
+    def _display_status(self):
+        """Display system status"""
+        status_text = f"""
+[bold cyan]Enhanced BASED GOD CLI Status[/bold cyan]
+
+[bold green]System Information:[/bold green]
+• [bold]Current Mode:[/bold] {self.session_data.get('current_mode', 'chat')}
+• [bold]Conversation History:[/bold] {len(self.session_data.get('conversation_history', []))} messages
+• [bold]Active Tools:[/bold] {len(self.session_data.get('active_tools', []))}
+• [bold]Streaming Active:[/bold] {self.is_streaming}
+
+[bold yellow]Performance Metrics:[/bold yellow]
+• [bold]Total Interactions:[/bold] {self.session_data.get('performance_metrics', {}).get('total_interactions', 0)}
+• [bold]Successful Tool Uses:[/bold] {self.session_data.get('performance_metrics', {}).get('successful_tool_uses', 0)}
+• [bold]Learning Events:[/bold] {self.session_data.get('performance_metrics', {}).get('learning_events', 0)}
+
+[bold blue]Available Models:[/bold blue]
+• [bold]deepseek-chat[/bold] - General conversation and completion
+• [bold]deepseek-coder[/bold] - Code generation and analysis
+• [bold]deepseek-reasoner[/bold] - Advanced reasoning and problem solving
+
+[bold magenta]Active Features:[/bold magenta]
+• [bold]FIM Completion:[/bold] ✅ Enabled
+• [bold]Prefix Completion:[/bold] ✅ Enabled
+• [bold]Streaming:[/bold] ✅ Enabled
+• [bold]Unified Agent:[/bold] ✅ Enabled
+• [bold]RAG Pipeline:[/bold] ✅ Enabled
+• [bold]Vector Database:[/bold] ✅ Enabled
+• [bold]SQL Database:[/bold] ✅ Enabled
+        """
+        
+        self.console.print(Panel(status_text, title="[bold cyan]System Status[/bold cyan]", border_style="cyan"))
+    
+    def _display_tools(self):
+        """Display available tools"""
+        tools = self.tool_manager.get_available_tools()
+        
+        table = Table(title="Available Tools")
+        table.add_column("Tool Name", style="cyan")
+        table.add_column("Description", style="green")
+        table.add_column("Capabilities", style="yellow")
+        
+        for tool in tools:
+            capabilities = ", ".join(tool.capabilities[:3])  # Show first 3 capabilities
+            if len(tool.capabilities) > 3:
+                capabilities += "..."
+            
+            table.add_row(tool.name, tool.description, capabilities)
+        
+        self.console.print(table)
+    
+    def _display_tool_status(self):
+        """Display tool status"""
+        tools = self.tool_manager.get_available_tools()
+        
+        table = Table(title="Tool Status")
+        table.add_column("Tool Name", style="cyan")
+        table.add_column("Status", style="green")
+        table.add_column("Last Used", style="yellow")
+        
+        for tool in tools:
+            status = "✅ Active" if hasattr(tool, 'is_active') and tool.is_active else "❌ Inactive"
+            last_used = getattr(tool, 'last_used', 'Never')
+            
+            table.add_row(tool.name, status, str(last_used))
+        
+        self.console.print(table)
 
 def main():
-    """Main CLI loop"""
-    
-    cli = EnhancedBasedGodCLI()
-    
-    print("\n💬 Enhanced BASED GOD CLI is ready!")
-    print("Type 'help' for commands, 'exit' to quit")
-    print("=" * 60)
-    
-    while True:
-        try:
-            user_input = input("\n🔥 BASED GOD > ").strip()
-            
-            if not user_input:
-                continue
-            
-            # Handle special commands
-            if user_input.lower() == 'exit':
-                if RICH_AVAILABLE:
-                    console.print("[bold red]👋 Goodbye! Stay Based! 🔥[/bold red]")
-                else:
-                    print("👋 Goodbye! Stay Based! 🔥")
-                break
-            
-            elif user_input.lower() == 'help':
-                if RICH_AVAILABLE:
-                    help_text = """
-[bold cyan]Available Commands:[/bold cyan]
-
-[yellow]• help[/yellow] - Show this help
-[yellow]• tools[/yellow] - Show available tools
-[yellow]• memory[/yellow] - Show memory statistics  
-[yellow]• stats[/yellow] - Show system statistics
-[yellow]• plan[/yellow] - Show last action plan
-[yellow]• reasoning[/yellow] - Show reasoning analytics
-[yellow]• exit[/yellow] - Exit the CLI
-
-[bold cyan]Example Queries:[/bold cyan]
-
-[green]• "Scrape https://example.com for news articles"[/green]
-[green]• "Generate a Python function to calculate fibonacci"[/green]
-[green]• "Analyze this CSV data: name,age\nJohn,25\nJane,30"[/green]
-[green]• "Ask AI: What is machine learning?"[/green]
-[green]• "Remember that I prefer Python for web development"[/green]
-"""
-                    console.print(Panel(help_text, title="[bold white]Help[/bold white]", border_style="blue"))
-                else:
-                    print("\n📖 Available Commands:")
-                    print("• help - Show this help")
-                    print("• tools - Show available tools")
-                    print("• memory - Show memory statistics")
-                    print("• stats - Show system statistics") 
-                    print("• plan - Show last action plan")
-                    print("• reasoning - Show reasoning analytics")
-                    print("• exit - Exit the CLI")
-                    print("\n📝 Example Queries:")
-                    print('• "Scrape https://example.com for news articles"')
-                    print('• "Generate a Python function to calculate fibonacci"')
-                    print('• "Analyze this CSV data: name,age\\nJohn,25\\nJane,30"')
-                    print('• "Ask AI: What is machine learning?"')
-                    print('• "Remember that I prefer Python for web development"')
-                continue
-            
-            elif user_input.lower() == 'tools':
-                cli.show_tools()
-                continue
-            
-            elif user_input.lower() == 'memory':
-                cli.show_memory_stats()
-                continue
-            
-            elif user_input.lower() == 'stats':
-                cli.show_system_stats()
-                continue
-            
-            elif user_input.lower() == 'plan':
-                cli.show_last_plan()
-                continue
-            
-            elif user_input.lower() == 'reasoning':
-                cli.show_reasoning_analytics()
-                continue
-            
-            # Process normal chat input
-            response = cli.chat_sync(user_input)
-            
-            if RICH_AVAILABLE:
-                console.print(f"\n[bold green]🤖 Assistant:[/bold green]\n{response}")
-            else:
-                print(f"\n🤖 Assistant:\n{response}")
+    """Main entry point for the enhanced CLI"""
+    try:
+        # Create and run the enhanced CLI
+        cli = EnhancedBASEDGODCLI()
         
-        except KeyboardInterrupt:
-            if RICH_AVAILABLE:
-                console.print("\n[bold red]👋 Goodbye! Stay Based! 🔥[/bold red]")
-            else:
-                print("\n👋 Goodbye! Stay Based! 🔥")
-            break
-        except Exception as e:
-            if RICH_AVAILABLE:
-                console.print(f"[bold red]❌ Error: {str(e)}[/bold red]")
-            else:
-                print(f"❌ Error: {str(e)}")
+        # Run the CLI
+        asyncio.run(cli.run())
+        
+    except KeyboardInterrupt:
+        print("\n[bold green]Goodbye![/bold green]")
+    except Exception as e:
+        logger.error(f"Fatal error: {str(e)}")
+        print(f"[bold red]Fatal error: {str(e)}[/bold red]")
+        sys.exit(1)
 
 if __name__ == "__main__":
     main()
