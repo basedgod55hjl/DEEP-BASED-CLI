@@ -5,9 +5,14 @@ const { stdin: input, stdout: output } = require('process');
 
 // Setup DeepSeek API
 const openai = new OpenAI({
-  baseURL: 'https://api.deepseek.com',
-  apiKey: 'sk-9af038dd3bdd46258c4a9d02850c9a6d'  // Your API Key
+  baseURL: 'https://api.deepseek.com/v1',
+  apiKey: process.env.DEEPSEEK_API_KEY
 });
+
+if (!process.env.DEEPSEEK_API_KEY) {
+  console.error('DEEPSEEK_API_KEY environment variable not set');
+  process.exit(1);
+}
 
 // Create readline interface
 const rl = readline.createInterface({ input, output });

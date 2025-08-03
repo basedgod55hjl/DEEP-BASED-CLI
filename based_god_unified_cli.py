@@ -58,8 +58,11 @@ except ImportError:
     pass
 
 # Set API key
-DEEPSEEK_API_KEY = os.getenv("DEEPSEEK_API_KEY", "sk-9af038dd3bdd46258c4a9d02850c9a6d")
+DEEPSEEK_API_KEY = os.getenv("DEEPSEEK_API_KEY")
 DEEPSEEK_BASE_URL = "https://api.deepseek.com/v1"
+
+if not DEEPSEEK_API_KEY:
+    raise ValueError("DEEPSEEK_API_KEY environment variable not set")
 
 
 class BasedGodCLI:
