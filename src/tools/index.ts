@@ -2,3 +2,5 @@
 export { LLMQueryTool } from './LLMQueryTool';
 export { VectorDatabaseTool } from './VectorDatabaseTool';
 export { SimpleEmbeddingTool } from './SimpleEmbeddingTool';
+export { FastReasoningEngine } from './FastReasoningEngine';
+export { RAGPipelineTool } from './RAGPipelineTool';
