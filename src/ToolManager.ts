@@ -1,6 +1,6 @@
 import { BaseTool } from './common/BaseTool';
 import { ToolResponse, ToolStatus } from './common/ToolResponse';
-import * as ToolExports from './tools/index.js';
+import { toolFactories } from './tools/index.js';
 
 /**
  * Dynamic Tool Manager (TypeScript)
@@ -11,28 +11,33 @@ export class ToolManager {
   private readonly executionHistory: Array<{ name: string; params: Record<string, unknown>; response: ToolResponse }> = [];
 
   constructor() {
-    this.autoRegisterTools();
+    // No eager registration – tools load on demand.
   }
 
-  private autoRegisterTools(): void {
-    for (const [exportName, exported] of Object.entries(ToolExports)) {
-      // Only attempt to instantiate classes that extend BaseTool
-      if (typeof exported === 'function') {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const MaybeClass = exported as any;
-        const instance: unknown = new MaybeClass();
-        if (instance instanceof BaseTool) {
-          const key = MaybeClass.name.toLowerCase();
-          this.tools[key] = instance;
-          // eslint-disable-next-line no-console
-          console.log(`🔧 Registered tool: ${MaybeClass.name}`);
-        }
-      }
+  private async loadTool(name: string): Promise<BaseTool | undefined> {
+    const key = name.toLowerCase();
+    if (this.tools[key]) {
+      return this.tools[key];
+    }
+    const factory = toolFactories[key];
+    if (!factory) {
+      return undefined;
+    }
+    try {
+      const instance = await factory();
+      this.tools[key] = instance;
+      // eslint-disable-next-line no-console
+      console.log(`🔧 Loaded tool: ${instance.constructor.name}`);
+      return instance;
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.error(`Failed to load tool ${name}:`, err);
+      return undefined;
     }
   }
 
   listTools(): string[] {
-    return Object.keys(this.tools);
+    return Object.keys(toolFactories);
   }
 
   getTool(name: string): BaseTool | undefined {
@@ -40,7 +45,7 @@ export class ToolManager {
   }
 
   async executeTool(name: string, params: Record<string, unknown>): Promise<ToolResponse> {
-    const tool = this.getTool(name);
+    const tool = await this.loadTool(name);
     if (!tool) {
       return {
         success: false,
