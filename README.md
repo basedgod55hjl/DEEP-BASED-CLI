@@ -6,6 +6,8 @@
 
 *Made by [@Lucariolucario55](https://t.me/Lucariolucario55) on Telegram*
 
+> **🚀 NEW: Ultimate CLI Available!** Check out `ultimate_based_god_cli.py` - integrates ALL features from the entire codebase including SuperAgentScraper, Docker tools, vector memory, and 18+ major features! [See Ultimate CLI README](ULTIMATE_CLI_README.md)
+
 ## 🚀 Features
 
 ### 🎨 Beautiful Interface
