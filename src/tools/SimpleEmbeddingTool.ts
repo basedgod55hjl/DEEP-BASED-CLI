@@ -1,5 +1,6 @@
 import { BaseTool } from '../common/BaseTool';
 import { ToolResponse, ToolStatus } from '../common/ToolResponse';
+import { GGUFEmbedder } from '../embeddings/GGUFEmbedder.js';
 
 export class SimpleEmbeddingTool extends BaseTool {
   constructor() {
@@ -8,18 +9,14 @@ export class SimpleEmbeddingTool extends BaseTool {
 
   async execute(params: Record<string, unknown>): Promise<ToolResponse> {
     const text = (params.text as string) ?? '';
-    const embedding = this.fakeEmbed(text);
+    const embedder = await GGUFEmbedder.get();
+    const embedding = await embedder.embed(text);
     return {
       success: true,
-      message: 'Embedding generated (fake)',
+      message: 'Embedding generated',
       status: ToolStatus.SUCCESS,
       data: { embedding }
     };
-  }
-
-  private fakeEmbed(text: string): number[] {
-    // very naive hash to numbers
-    return Array.from(text).map((c) => (c.charCodeAt(0) % 53) / 53);
   }
 
   getSchema(): Record<string, unknown> {
