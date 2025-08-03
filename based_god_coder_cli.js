@@ -2,12 +2,18 @@
 const OpenAI = require("openai");
 const readline = require('readline');
 const { stdin: input, stdout: output } = require('process');
+require('dotenv').config();
 
 // Setup DeepSeek API
 const openai = new OpenAI({
-  baseURL: 'https://api.deepseek.com',
-  apiKey: 'sk-9af038dd3bdd46258c4a9d02850c9a6d'  // Your API Key
+  baseURL: process.env.DEEPSEEK_API_ENDPOINT || 'https://api.deepseek.com/v1',
+  apiKey: process.env.DEEPSEEK_API_KEY
 });
+
+if (!openai.apiKey) {
+  console.error('Missing DEEPSEEK_API_KEY environment variable.');
+  process.exit(1);
+}
 
 // Create readline interface
 const rl = readline.createInterface({ input, output });
@@ -72,4 +78,4 @@ async function chat() {
 }
 
 // Start chatting
-chat(); 
+chat();
