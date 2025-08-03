@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 """
 Vector Database Tool - Qdrant Integration for DEEP-CLI
 Provides vector storage, similarity search, and RAG capabilities
@@ -78,10 +77,10 @@ class VectorDatabaseTool(BaseTool):
         """Initialize Qdrant client and local embedding model"""
         try:
             # Initialize Qdrant client
-                self.client = QdrantClient(
-                    host=self.host,
+            self.client = QdrantClient(
+                host=self.host,
                 port=self.port,
-                api_key=self.api_key
+                api_key=self.api_key,
             )
             
             # Initialize simple embedding tool
@@ -167,9 +166,9 @@ class VectorDatabaseTool(BaseTool):
             texts = kwargs.get("texts", [])
             metadata = kwargs.get("metadata", [])
         
-        if not texts:
-            return ToolResponse(
-                success=False,
+            if not texts:
+                return ToolResponse(
+                    success=False,
                     data={"error": "No texts provided"},
                     message="No texts provided for embedding storage"
                 )
@@ -192,7 +191,7 @@ class VectorDatabaseTool(BaseTool):
                     id=i,
                     vector=embedding,
                     payload={
-                "text": text,
+                        "text": text,
                         "metadata": meta,
                         "timestamp": datetime.now().isoformat()
                     }
@@ -200,16 +199,16 @@ class VectorDatabaseTool(BaseTool):
                 points.append(point)
             
             # Store in Qdrant
-        self.client.upsert(
-            collection_name=self.collection_name,
-            points=points
-        )
-        
-        return ToolResponse(
-            success=True,
-            data={
+            self.client.upsert(
+                collection_name=self.collection_name,
+                points=points
+            )
+            
+            return ToolResponse(
+                success=True,
+                data={
                     "stored_count": len(texts),
-                "collection": self.collection_name,
+                    "collection": self.collection_name,
                     "embeddings_generated": len(embeddings_data)
                 },
                 message=f"Successfully stored {len(texts)} embeddings"
@@ -246,13 +245,13 @@ class VectorDatabaseTool(BaseTool):
             
             # Search in Qdrant
             search_results = self.client.search(
-            collection_name=self.collection_name,
+                collection_name=self.collection_name,
                 query_vector=query_embedding,
-            limit=limit,
-            score_threshold=score_threshold
-        )
-        
-        # Format results
+                limit=limit,
+                score_threshold=score_threshold
+            )
+            
+            # Format results
             results = []
             for result in search_results:
                 results.append({
@@ -262,11 +261,11 @@ class VectorDatabaseTool(BaseTool):
                     "metadata": result.payload.get("metadata", {}),
                     "timestamp": result.payload.get("timestamp", "")
                 })
-        
-        return ToolResponse(
-            success=True,
-            data={
-                "query": query,
+            
+            return ToolResponse(
+                success=True,
+                data={
+                    "query": query,
                     "results": results,
                     "total_found": len(results),
                     "collection": self.collection_name
@@ -299,9 +298,9 @@ class VectorDatabaseTool(BaseTool):
                 collection_name=self.collection_name,
                 points_selector=ids
             )
-        
-        return ToolResponse(
-            success=True,
+            
+            return ToolResponse(
+                success=True,
                 data={
                     "deleted_count": len(ids),
                     "collection": self.collection_name
@@ -397,7 +396,7 @@ class VectorDatabaseTool(BaseTool):
                 success=False,
                 data={"error": str(e)},
                 message=f"Failed to update embedding: {str(e)}"
-        )
+            )
     
     def get_schema(self) -> Dict[str, Any]:
         """Get parameter schema for vector database operations"""
@@ -469,52 +468,3 @@ class VectorDatabaseTool(BaseTool):
         if metadata is None:
             metadata = {}
         return await self.execute(operation="update", id=id, text=text, metadata=metadata)
-=======
-<<<<<<< Current (Your changes)
- 
-=======
-"""
-Vector Database Tool - Placeholder for Qdrant integration
-"""
-
-from typing import Dict, Any, List, Optional
-from .base_tool import BaseTool, ToolResponse
-
-
-class VectorDatabaseTool(BaseTool):
-    """
-    Placeholder for Vector Database integration
-    Will be implemented when Qdrant is available
-    """
-    
-    def __init__(self, **kwargs):
-        super().__init__(
-            name="vector_database",
-            description="Vector database operations (placeholder)",
-            capabilities=["search", "store", "retrieve"]
-        )
-        self.connected = False
-    
-    async def execute(self, **kwargs) -> ToolResponse:
-        """Execute vector database operations"""
-        return ToolResponse(
-            success=False,
-            message="Vector database not configured. Please install and configure Qdrant.",
-            data={"available": False}
-        )
-    
-    def get_schema(self) -> Dict[str, Any]:
-        """Get the tool schema"""
-        return {
-            "name": self.name,
-            "description": self.description,
-            "parameters": {
-                "operation": {
-                    "type": "string",
-                    "description": "Operation to perform",
-                    "enum": ["search", "store", "retrieve"]
-                }
-            }
-        } 
->>>>>>> Incoming (Background Agent changes)
->>>>>>> d56552d76c9eaadc6392dfb8e6c57491de43475f
