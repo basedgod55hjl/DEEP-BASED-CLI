@@ -189,6 +189,35 @@ class MenuSystem:
             )
         ]
     
+    def _get_ascii_banner(self) -> Text:
+        """Get the ASCII art banner with colors"""
+        # ASCII art for "BASED GOD CODER CLI"
+        ascii_art = """
+██████╗  █████╗ ███████╗███████╗██████╗      ██████╗  ██████╗ ██████╗ 
+██╔══██╗██╔══██╗██╔════╝██╔════╝██╔══██╗    ██╔════╝ ██╔═══██╗██╔══██╗
+██████╔╝███████║███████╗█████╗  ██║  ██║    ██║  ███╗██║   ██║██║  ██║
+██╔══██╗██╔══██║╚════██║██╔══╝  ██║  ██║    ██║   ██║██║   ██║██║  ██║
+██████╔╝██║  ██║███████║███████╗██████╔╝    ╚██████╔╝╚██████╔╝██████╔╝
+╚═════╝ ╚═╝  ╚═╝╚══════╝╚══════╝╚═════╝      ╚═════╝  ╚═════╝ ╚═════╝ 
+                                                                        
+         ██████╗ ██████╗ ██████╗ ███████╗██████╗      ██████╗██╗     ██╗
+        ██╔════╝██╔═══██╗██╔══██╗██╔════╝██╔══██╗    ██╔════╝██║     ██║
+        ██║     ██║   ██║██║  ██║█████╗  ██████╔╝    ██║     ██║     ██║
+        ██║     ██║   ██║██║  ██║██╔══╝  ██╔══██╗    ██║     ██║     ██║
+        ╚██████╗╚██████╔╝██████╔╝███████╗██║  ██║    ╚██████╗███████╗██║
+         ╚═════╝ ╚═════╝ ╚═════╝ ╚══════╝╚═╝  ╚═╝     ╚═════╝╚══════╝╚═╝"""
+        
+        # Create colored text
+        text = Text()
+        lines = ascii_art.strip().split('\n')
+        colors = ["red", "yellow", "green", "cyan", "blue", "magenta"]
+        
+        for i, line in enumerate(lines):
+            color = colors[i % len(colors)]
+            text.append(line + '\n', style=f"bold {color}")
+        
+        return text
+    
     def display_menu(self, menu_name: str = "main") -> None:
         """Display a beautiful menu"""
         self.console.clear()
@@ -196,24 +225,23 @@ class MenuSystem:
         # Create layout
         layout = Layout()
         layout.split_column(
-            Layout(name="header", size=7),
+            Layout(name="header", size=15),
             Layout(name="menu"),
             Layout(name="footer", size=3)
         )
         
-        # Header
-        header_text = Text()
-        header_text.append("╔═══════════════════════════════════════╗\n", style="bold blue")
-        header_text.append("║       ", style="bold blue")
-        header_text.append("DeepCLI v2.0", style="bold cyan")
-        header_text.append(" - AI Assistant      ║\n", style="bold blue")
-        header_text.append("╚═══════════════════════════════════════╝\n", style="bold blue")
-        header_text.append("Powered by DeepSeek Models", style="dim")
+        # Header with ASCII art
+        header_content = Layout()
+        header_content.split_column(
+            Layout(self._get_ascii_banner(), size=12),
+            Layout(Text("- made by @Lucariolucario55 on Telegram", style="dim italic"), size=1),
+            Layout(Text("Powered by DeepSeek Models", style="dim"), size=1)
+        )
         
         layout["header"].update(Panel(
-            Align.center(header_text),
+            Align.center(header_content),
             border_style="blue",
-            box=box.ROUNDED
+            box=box.DOUBLE
         ))
         
         # Menu

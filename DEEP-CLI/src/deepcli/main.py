@@ -20,7 +20,8 @@ from .core.models import DeepSeekModel, CommandContext
 from .commands.base import command_registry
 from .commands.implement import ImplementCommand
 from .memory.manager import MemoryManager
-from .ui.interactive import InteractiveCLI
+from .ui.menu import MenuSystem, MenuItem
+from .agents.coder import CoderAgent
 
 # Load environment variables
 load_dotenv()
@@ -36,9 +37,9 @@ console = Console()
 @click.pass_context
 def cli(ctx: click.Context, config: Optional[str], api_key: Optional[str], model: Optional[str]):
     """
-    DeepCLI - A powerful AI-powered CLI for DeepSeek models
+    BASED GOD CODER CLI - Powered by DeepSeek AI
     
-    Run without arguments to start interactive mode.
+    Run without arguments to start the main menu.
     """
     # Update configuration if provided
     if api_key:
@@ -46,9 +47,9 @@ def cli(ctx: click.Context, config: Optional[str], api_key: Optional[str], model
     if model:
         update_config(default_model=DeepSeekModel.CHAT if model == 'chat' else DeepSeekModel.REASONER)
     
-    # If no subcommand, launch interactive mode
+    # If no subcommand, launch menu mode
     if ctx.invoked_subcommand is None:
-        asyncio.run(interactive_mode())
+        asyncio.run(menu_mode())
 
 
 @cli.command()
@@ -124,6 +125,17 @@ async def reason(prompt: str, show_reasoning: bool):
     except Exception as e:
         console.print(f"[red]Error: {str(e)}[/red]")
         sys.exit(1)
+
+
+@cli.command()
+async def coder():
+    """Launch the Coder Agent directly"""
+    config = get_config()
+    client = DeepSeekClient(config)
+    memory = MemoryManager(config.memory_db_path)
+    
+    agent = CoderAgent(client, memory, console)
+    await agent.start_session()
 
 
 @cli.group()
@@ -266,32 +278,117 @@ def version():
     from . import __version__
     
     console.print(Panel(
-        f"DeepCLI v{__version__}\n\n"
-        "A powerful AI-powered CLI for DeepSeek models\n"
-        "https://github.com/yourusername/deep-cli",
-        title="About DeepCLI",
+        f"BASED GOD CODER CLI v{__version__}\n\n"
+        "AI-powered coding assistant with DeepSeek models\n"
+        "Made by @Lucariolucario55 on Telegram",
+        title="About",
         border_style="blue"
     ))
 
 
-async def interactive_mode():
-    """Launch interactive mode"""
-    console.print(Panel(
-        "Welcome to [bold cyan]DeepCLI[/bold cyan] Interactive Mode!\n\n"
-        "Type your messages or use commands:\n"
-        "  • /help - Show available commands\n"
-        "  • /exit - Exit the application\n"
-        "  • /clear - Clear the screen\n",
-        title="DeepCLI v2.0.0",
-        border_style="blue"
-    ))
+async def menu_mode():
+    """Launch menu-based interface"""
+    config = get_config()
+    client = DeepSeekClient(config)
+    memory_manager = MemoryManager(config.memory_db_path)
     
     # Register commands
     command_registry.register(ImplementCommand())
     
-    # Create and run interactive CLI
-    interactive_cli = InteractiveCLI()
-    await interactive_cli.run()
+    # Create menu system
+    menu = MenuSystem(console)
+    
+    while True:
+        choice = await menu.run()
+        
+        if choice is None:
+            console.print("\n[yellow]Exiting BASED GOD CODER CLI. Stay based! 🔥[/yellow]")
+            break
+        
+        # Handle menu choices
+        if choice.key == "1" and choice.title == "💬 Chat Assistant":
+            # Launch interactive chat
+            from .ui.interactive import InteractiveCLI
+            interactive_cli = InteractiveCLI()
+            await interactive_cli.run()
+            
+        elif choice.key == "2" and choice.title == "🧑‍💻 Coder Agent":
+            # Launch coder agent
+            agent = CoderAgent(client, memory_manager, console)
+            await agent.start_session()
+            
+        elif choice.key == "3" and choice.title == "🧠 Memory Bank":
+            # Memory management interface
+            await memory_interface(memory_manager)
+            
+        elif choice.key == "4" and choice.title == "🛠️ Tools & Commands":
+            # Tools interface (handled by submenu)
+            pass
+            
+        elif choice.key == "5" and choice.title == "📊 Analytics":
+            # Show usage analytics
+            await show_analytics(client)
+            
+        elif choice.key == "6" and choice.title == "⚙️ Settings":
+            # Settings interface
+            await settings_interface()
+        
+        # Handle submenu items for coder agent
+        elif choice.title in ["✨ Create Code", "🐛 Debug Code", "🔧 Refactor Code", 
+                             "🧪 Generate Tests", "📝 Document Code", "🚀 Execute Code",
+                             "💡 Explain Code", "🔄 Convert Code"]:
+            # Launch coder agent with specific intent
+            agent = CoderAgent(client, memory_manager, console)
+            await agent.start_session()
+
+
+async def memory_interface(memory: MemoryManager):
+    """Memory management interface"""
+    console.print(Panel(
+        "[bold cyan]Memory Bank[/bold cyan]\n\n"
+        "Manage your persistent memories and context",
+        border_style="yellow"
+    ))
+    
+    # Show memory stats
+    stats = await memory.get_stats()
+    console.print(f"\nTotal memories: {stats['total_memories']}")
+    console.print(f"Namespaces: {', '.join(stats['namespaces'].keys())}")
+    
+    input("\nPress Enter to return to menu...")
+
+
+async def show_analytics(client: DeepSeekClient):
+    """Show usage analytics"""
+    stats = client.get_usage_stats()
+    
+    table = Table(title="Usage Analytics")
+    table.add_column("Metric", style="cyan")
+    table.add_column("Value", style="white")
+    
+    for key, value in stats.items():
+        table.add_row(key.replace('_', ' ').title(), str(value))
+    
+    console.print(table)
+    input("\nPress Enter to return to menu...")
+
+
+async def settings_interface():
+    """Settings interface"""
+    config = get_config()
+    
+    console.print(Panel(
+        "[bold cyan]Settings[/bold cyan]\n\n"
+        "Configure your DeepCLI preferences",
+        border_style="white"
+    ))
+    
+    console.print(f"\nCurrent settings:")
+    console.print(f"• Model: {config.default_model.value}")
+    console.print(f"• Temperature: {config.temperature}")
+    console.print(f"• Max tokens: {config.max_tokens}")
+    
+    input("\nPress Enter to return to menu...")
 
 
 def main():
