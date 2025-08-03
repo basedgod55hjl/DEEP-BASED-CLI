@@ -31,6 +31,8 @@ A beautiful, feature-rich command-line interface for DeepSeek's AI models, combi
 ### 🔄 Advanced Features
 - **Streaming Responses**: Real-time output for better user experience
 - **Context Caching**: Automatic caching for up to 74% cost savings
+- **Observability with Langfuse**: Automatic tracing when `LANGFUSE_PUBLIC_KEY` / `LANGFUSE_SECRET_KEY` are set
+- **Vision via Document Inlining**: Inline image/PDF URLs (`#transform=inline`) to unlock vision capabilities (Fireworks AI)
 - **Export Options**: Save conversations and results in multiple formats
 - **Command-line Arguments**: Quick access to features without menu navigation
 - **Error Handling**: Graceful handling with retry logic for rate limits
