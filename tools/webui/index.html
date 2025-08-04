@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CLI WebUI</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="sidebar">
+      <h2>Commands</h2>
+      <button data-cmd="--status">Status</button>
+      <button data-cmd="--interactive">Interactive</button>
+      <button data-cmd="--help">Help</button>
+    </div>
+    <div id="main">
+      <div id="console"></div>
+      <div id="inputBar">
+        <input type="text" id="commandInput" placeholder="Enter CLI args e.g. --status" />
+        <button id="runBtn">Run</button>
+      </div>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
