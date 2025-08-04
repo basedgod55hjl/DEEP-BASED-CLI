@@ -951,7 +951,7 @@ Learning insights:
             )
     
     async def _store_debugging_pattern(self, original_code: str, fixed_code: str, error_message: str, language: str):
-    """_store_debugging_pattern function."""
+    
         """Store debugging patterns for learning"""
         pattern_id = f"debug_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
         

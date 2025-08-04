@@ -24,7 +24,7 @@ class SimpleEmbeddingSystem:
     """Simple embedding system using TF-IDF"""
     
     def __init__(self, embedding_dim: int = 512):
-    """__init__ function."""
+    
         self.embedding_dim = embedding_dim
         self.vectorizer = TfidfVectorizer(
             max_features=embedding_dim,

@@ -38,7 +38,7 @@ def get_deepseek_config() -> dict:
     }
 
 def update_deepseek_api_key(new_key: str):
-    """update_deepseek_api_key function."""
+    
     """Update DeepSeek API key"""
     global DEEPSEEK_API_KEY
     DEEPSEEK_API_KEY = new_key

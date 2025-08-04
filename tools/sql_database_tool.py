@@ -80,7 +80,7 @@ class SQLDatabaseTool(BaseTool):
     """
     
     def __init__(self, db_path: str = "data/deepcli_database.db"):
-    """__init__ function."""
+    
         """Initialize SQL Database Tool"""
         super().__init__(
             name="SQL Database",

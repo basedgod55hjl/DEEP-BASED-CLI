@@ -150,7 +150,7 @@ class AIAgentOrchestrator(BaseTool):
         )
     
     async def _register_agent_internal(self, agent_name: str, config: Dict[str, Any]):
-    """_register_agent_internal function."""
+    
         """Internal agent registration"""
         self.agents[agent_name] = {
             'config': config,
@@ -207,7 +207,7 @@ class AIAgentOrchestrator(BaseTool):
         order = []
         
         def dfs(node: str):
-    """dfs function."""
+    
             if node in temp_visited:
                 raise ValueError(f"Circular dependency detected: {node}")
             if node in visited:
@@ -328,7 +328,7 @@ class AIAgentOrchestrator(BaseTool):
         }
     
     async def _wait_for_dependencies(self, task: AgentTask, completed_results: Dict[str, Any]):
-    """_wait_for_dependencies function."""
+    
         """Wait for task dependencies to complete"""
         for dep_id in task.dependencies:
             while dep_id not in completed_results:
@@ -395,7 +395,7 @@ class AIAgentOrchestrator(BaseTool):
         }
     
     async def _update_agent_performance(self, task: AgentTask, result: Dict[str, Any]):
-    """_update_agent_performance function."""
+    
         """Update agent performance history"""
         if task.agent_name in self.agents:
             performance_data = {

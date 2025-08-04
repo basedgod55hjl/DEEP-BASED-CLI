@@ -27,6 +27,8 @@ from .reasoning_engine import FastReasoningEngine
 from .vector_database_tool import VectorDatabaseTool
 from .sql_database_tool import SQLDatabaseTool
 from .rag_pipeline_tool import RAGPipelineTool
+from .git_rag_tool import GitRAGTool
+from .deepseek_reasoner_tool import DeepSeekReasonerTool
 
 class ToolManager:
     """
@@ -75,6 +77,20 @@ class ToolManager:
             logging.info("✅ RAG pipeline tool registered")
         except Exception as e:
             logging.info(f"⚠️ RAG pipeline tool not available: {str(e)}")
+        
+        try:
+            git_rag_tool = GitRAGTool()
+            default_tools.append(git_rag_tool)
+            logging.info("✅ Git RAG tool registered")
+        except Exception as e:
+            logging.info(f"⚠️ Git RAG tool not available: {str(e)}")
+        
+        try:
+            deepseek_reasoner_tool = DeepSeekReasonerTool()
+            default_tools.append(deepseek_reasoner_tool)
+            logging.info("✅ DeepSeek Reasoner tool registered")
+        except Exception as e:
+            logging.info(f"⚠️ DeepSeek Reasoner tool not available: {str(e)}")
         
         for tool in default_tools:
             self.register_tool(tool)
@@ -408,7 +424,7 @@ class ToolManager:
         return str(uuid.uuid4())[:8]
     
     async def _wait_for_dependencies(self, depends_on: List[str], results: List[ToolResponse]):
-    """_wait_for_dependencies function."""
+    
         """Wait for workflow dependencies"""
         
         # Simple implementation - in production, this would be more sophisticated

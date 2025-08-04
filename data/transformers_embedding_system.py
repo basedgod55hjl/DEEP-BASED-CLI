@@ -21,7 +21,7 @@ class TransformersEmbeddingSystem:
     """Transformers-based embedding system using Qwen3-Embedding-0.6B"""
     
     def __init__(self, model_name: str = "Qwen/Qwen3-Embedding-0.6B", embedding_dim: int = 1024):
-    """__init__ function."""
+    
         self.model_name = model_name
         self.embedding_dim = embedding_dim
         self.device = "cuda" if torch.cuda.is_available() else "cpu"
@@ -298,7 +298,7 @@ class TransformersEmbeddingSystem:
         }
     
     def save_embeddings_cache(self, embeddings: Dict[str, np.ndarray], cache_file: str):
-    """save_embeddings_cache function."""
+    
         """Save embeddings to cache file"""
         try:
             cache_path = Path("data/embeddings") / cache_file

@@ -139,7 +139,7 @@ class UnifiedAgentSystem(BaseTool):
                  enable_learning: bool = True,
                  enable_reasoning: bool = True,
                  enable_planning: bool = True):
-    """__init__ function."""
+    
         """Initialize Enhanced Unified Agent System"""
         super().__init__(
             name="Enhanced Unified Agent System",
@@ -873,7 +873,7 @@ class UnifiedAgentSystem(BaseTool):
         return conversations[:limit]
     
     async def _learn_from_interaction(self, conversation: EnhancedConversation):
-    """_learn_from_interaction function."""
+    
         """Learn from conversation interaction"""
         # Extract learning insights
         insights = await self._extract_insights_from_conversation(conversation)
@@ -955,7 +955,7 @@ class UnifiedAgentSystem(BaseTool):
         return patterns
     
     async def _update_learning_from_patterns(self, patterns: Dict[str, Any]):
-    """_update_learning_from_patterns function."""
+    
         """Update learning based on identified patterns"""
         # Create pattern memory
         pattern_memory = EnhancedMemory(
@@ -974,7 +974,7 @@ class UnifiedAgentSystem(BaseTool):
     
     # Database operations
     async def _save_memory(self, memory: EnhancedMemory):
-    """_save_memory function."""
+    
         """Save memory to database"""
         async with aiosqlite.connect(self.db_path) as db:
             await db.execute("""
@@ -991,7 +991,7 @@ class UnifiedAgentSystem(BaseTool):
             await db.commit()
     
     async def _save_conversation(self, conversation: EnhancedConversation):
-    """_save_conversation function."""
+    
         """Save conversation to database"""
         async with aiosqlite.connect(self.db_path) as db:
             await db.execute("""
@@ -1009,7 +1009,7 @@ class UnifiedAgentSystem(BaseTool):
             await db.commit()
     
     async def _update_tool_metrics(self, tool_id: str, success: bool):
-    """_update_tool_metrics function."""
+    
         """Update tool usage metrics"""
         if tool_id in self.tools:
             tool = self.tools[tool_id]
@@ -1124,20 +1124,20 @@ class UnifiedAgentSystem(BaseTool):
         return self.current_state
     
     async def set_persona(self, persona_name: str):
-    """set_persona function."""
+    
         """Set the current persona"""
         self.current_persona = persona_name
         # Load persona-specific memories and preferences
         await self._load_persona_data(persona_name)
     
     async def _load_persona_data(self, persona_name: str):
-    """_load_persona_data function."""
+    
         """Load persona-specific data"""
         # Implementation for loading persona-specific memories, preferences, etc.
         pass
     
     async def _save_contact(self, contact: EnhancedContact):
-    """_save_contact function."""
+    
         """Save contact to database"""
         async with aiosqlite.connect(self.db_path) as db:
             await db.execute("""

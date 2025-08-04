@@ -23,7 +23,7 @@ class DeannaEmbeddingSystem:
     """Advanced embedding system for Deanna memory"""
     
     def __init__(self, memory_manager, embedding_dim: int = 384):
-    """__init__ function."""
+    
         self.memory_manager = memory_manager
         self.embedding_dim = embedding_dim
         self.tfidf_vectorizer = TfidfVectorizer(
@@ -289,7 +289,7 @@ class DeannaEmbeddingSystem:
         }
     
     def export_embeddings(self, export_path: str):
-    """export_embeddings function."""
+    
         """Export all embeddings to file"""
         export_data = {
             'export_timestamp': str(datetime.now()),

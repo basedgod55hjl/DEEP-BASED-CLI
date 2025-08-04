@@ -39,7 +39,7 @@ class LLMQueryTool(BaseTool):
                  api_key: str = None,
                  base_url: str = None,
                  default_model: str = "deepseek-chat"):
-    """__init__ function."""
+    
         """Initialize Enhanced LLM Query Tool"""
         super().__init__(
             name="Enhanced LLM Query",
@@ -542,7 +542,7 @@ class LLMQueryTool(BaseTool):
         return self.conversation_history.copy()
     
     def add_to_history(self, role: str, content: str):
-    """add_to_history function."""
+    
         """Add message to conversation history"""
         if role == "user":
             self.conversation_history.append(HumanMessage(content=content))

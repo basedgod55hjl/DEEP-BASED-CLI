@@ -30,7 +30,7 @@ class DeannaMemoryManager:
     """Comprehensive memory manager for Deanna persona"""
     
     def __init__(self, data_dir: str = "data"):
-    """__init__ function."""
+    
         self.data_dir = Path(data_dir)
         self.data_dir.mkdir(exist_ok=True)
         
@@ -180,7 +180,7 @@ class DeannaMemoryManager:
             return {}
     
     def store_persona_config(self, name: str, config_data: Dict[str, Any]):
-    """store_persona_config function."""
+    
         """Store persona configuration in database"""
         conn = sqlite3.connect(self.db_path)
         cursor = conn.cursor()
@@ -200,7 +200,7 @@ class DeannaMemoryManager:
         logger.info(f"Stored persona config for {name}")
     
     def extract_memory_components(self, memory_data: Dict[str, Any]):
-    """extract_memory_components function."""
+    
         """Extract key components from memory data and store as separate entries"""
         conn = sqlite3.connect(self.db_path)
         cursor = conn.cursor()
@@ -264,7 +264,7 @@ class DeannaMemoryManager:
         logger.info("Extracted and stored memory components")
     
     def store_memory_entry(self, category: str, content: str, importance: int = 5, tags: str = ""):
-    """store_memory_entry function."""
+    
         """Store a memory entry"""
         conn = sqlite3.connect(self.db_path)
         cursor = conn.cursor()
@@ -289,7 +289,7 @@ class DeannaMemoryManager:
     
     def store_chat_history(self, session_id: str, user_input: str, deanna_response: str, 
                           context_hash: str = None, emotion_score: float = 0.0, tags: str = ""):
-    """store_chat_history function."""
+    
         """Store chat history"""
         conn = sqlite3.connect(self.db_path)
         cursor = conn.cursor()
@@ -327,7 +327,7 @@ class DeannaMemoryManager:
     
     def cache_deepseek_response(self, prompt: str, response: str, model_used: str = "deepseek-chat",
                                tokens_used: int = 0, cost: float = 0.0, context_length: int = 0):
-    """cache_deepseek_response function."""
+    
         """Cache DeepSeek API response"""
         conn = sqlite3.connect(self.db_path)
         cursor = conn.cursor()
@@ -391,7 +391,7 @@ class DeannaMemoryManager:
         return result[0] if result else None
     
     def store_embedding(self, content: str, vector: np.ndarray, model_used: str = "local"):
-    """store_embedding function."""
+    
         """Store embedding vector"""
         content_hash = hashlib.md5(content.encode()).hexdigest()
         
@@ -517,7 +517,7 @@ class DeannaMemoryManager:
         return {}
     
     def log_access(self, memory_id: int, access_type: str, session_id: str = None, metadata: str = None):
-    """log_access function."""
+    
         """Log memory access"""
         conn = sqlite3.connect(self.db_path)
         cursor = conn.cursor()
@@ -574,7 +574,7 @@ class DeannaMemoryManager:
         }
     
     def cleanup_old_cache(self, days: int = 30):
-    """cleanup_old_cache function."""
+    
         """Clean up old cache entries"""
         cutoff_date = datetime.now() - timedelta(days=days)
         
@@ -605,7 +605,7 @@ class DeannaMemoryManager:
         logger.info(f"Cleaned up cache entries older than {days} days")
     
     def export_memory_data(self, export_path: str):
-    """export_memory_data function."""
+    
         """Export all memory data to JSON"""
         conn = sqlite3.connect(self.db_path)
         cursor = conn.cursor()

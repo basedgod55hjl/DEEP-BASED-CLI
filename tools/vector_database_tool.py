@@ -42,7 +42,7 @@ class VectorDatabaseTool(BaseTool):
                  api_key: Optional[str] = None,
                  collection_name: str = "deepcli_vectors",
                  embedding_model: str = "all-MiniLM-L6-v2"):
-    """__init__ function."""
+    
         """Initialize Vector Database Tool"""
         super().__init__(
             name="Vector Database",

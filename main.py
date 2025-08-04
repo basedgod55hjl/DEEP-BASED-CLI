@@ -423,7 +423,6 @@ class BasedCoderCLI:
         return command, args
     
     async def handle_chat(self, message: str):
-    """handle_chat function."""
         """Handle chat with AI"""
         try:
             # Add to conversation history
@@ -456,7 +455,6 @@ class BasedCoderCLI:
             logging.info(f"{Fore.RED}❌ Error in chat: {str(e)}{Style.RESET_ALL}")
     
     async def handle_fim_completion(self, prefix: str, suffix: str):
-    """handle_fim_completion function."""
         """Handle FIM completion"""
         try:
             result = await self.fim_tool.execute(
@@ -475,7 +473,6 @@ class BasedCoderCLI:
             logging.info(f"{Fore.RED}❌ Error in FIM completion: {str(e)}{Style.RESET_ALL}")
     
     async def handle_prefix_completion(self, prefix: str):
-    """handle_prefix_completion function."""
         """Handle prefix completion"""
         try:
             result = await self.prefix_tool.execute(
@@ -493,7 +490,6 @@ class BasedCoderCLI:
             logging.info(f"{Fore.RED}❌ Error in prefix completion: {str(e)}{Style.RESET_ALL}")
     
     async def handle_rag_query(self, query: str):
-    """handle_rag_query function."""
         """Handle RAG pipeline query"""
         try:
             result = await self.rag_tool.execute(
@@ -513,7 +509,6 @@ class BasedCoderCLI:
             logging.info(f"{Fore.RED}❌ Error in RAG query: {str(e)}{Style.RESET_ALL}")
     
     async def handle_reasoning(self, question: str):
-    """handle_reasoning function."""
         """Handle reasoning engine"""
         try:
             result = await self.reasoning_tool.execute(
@@ -531,7 +526,6 @@ class BasedCoderCLI:
             logging.info(f"{Fore.RED}❌ Error in reasoning: {str(e)}{Style.RESET_ALL}")
     
     async def handle_memory_operation(self, operation: str, **kwargs):
-    """handle_memory_operation function."""
         """Handle memory operations"""
         try:
             if operation == "store":

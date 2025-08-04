@@ -19,7 +19,6 @@ class MemoryTool(BaseTool):
     """
     
     def __init__(self, memory_file: str = "based_god_memory.json"):
-    """__init__ function."""
         super().__init__(
             name="Memory Tool",
             description="Persistent memory and learning system for storing conversations, patterns, and insights",

@@ -1,6 +1,0 @@
-{
-  "model_path": "data\\models\\qwen3_embedding",
-  "embedding_dim": 1024,
-  "model_type": "Qwen3-Embedding-0.6B",
-  "status": "working"
-}

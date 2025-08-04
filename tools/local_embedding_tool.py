@@ -38,7 +38,7 @@ class LocalEmbeddingTool(BaseTool):
     def __init__(self, 
                  model_name: str = "all-MiniLM-L6-v2",
                  cache_dir: str = "./embeddings_cache"):
-    """__init__ function."""
+    
         """Initialize Local Embedding Tool"""
         super().__init__(
             name="Local Embedding",

@@ -24,7 +24,7 @@ class LocalEmbeddingSystem:
     """Local embedding system using llama.cpp with CUDA"""
     
     def __init__(self, model_path: str = None, embedding_dim: int = 1024):
-    """__init__ function."""
+    
         self.embedding_dim = embedding_dim
         self.model_path = model_path or self._download_model()
         self.llama_cpp_path = self._find_llama_cpp()
