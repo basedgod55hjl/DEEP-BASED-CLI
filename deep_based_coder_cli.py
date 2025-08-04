@@ -127,6 +127,8 @@ class QwenEmbeddingConfig:
     dimension: int = 1024
     max_batch_size: int = 16
 
+from tools.code_analyzer_tool import CodeAnalyzerTool
+
 class DeepBasedCoderCore:
     """Core engine for DEEP-BASED-CODER CLI"""
     
@@ -144,6 +146,7 @@ class DeepBasedCoderCore:
         
         self.load_configuration()
         self.initialize_clients()
+        self._register_tools()
         
     def load_configuration(self):
         """Load configuration from files and environment"""
@@ -220,6 +223,23 @@ class DeepBasedCoderCore:
             
         except Exception as e:
             logger.error(f"❌ Failed to initialize clients: {e}")
+            
+    def _register_tools(self):
+        """Register all available tools"""
+        try:
+            # Enhanced analysis tools
+            self.tools_registry["code_analyzer"] = CodeAnalyzerTool()
+            
+            logger.info(f"✅ Registered {len(self.tools_registry)} tools")
+            
+            # Log tool capabilities
+            for name, tool in self.tools_registry.items():
+                if hasattr(tool, 'get_schema'):
+                    schema = tool.get_schema()
+                    logger.info(f"Tool '{name}' capabilities: {schema.get('description', 'No description')}")
+            
+        except Exception as e:
+            logger.error(f"Failed to register tools: {e}")
             
     async def ensure_http_session(self):
         """Ensure HTTP session is available"""
@@ -625,6 +645,17 @@ class AdvancedCLI:
             await self.cmd_write_file(args[0], " ".join(args[1:]))
         elif cmd == "analyze" and args:
             await self.cmd_analyze_code(args[0])
+        elif cmd == "analyze-project":
+            path = args[0] if args else "."
+            await self.cmd_analyze_project(path)
+        elif cmd == "explain" and args:
+            await self.cmd_explain_code(args[0])
+        elif cmd == "security-scan":
+            path = args[0] if args else "."
+            await self.cmd_security_scan(path)
+        elif cmd == "performance-analyze":
+            path = args[0] if args else "."
+            await self.cmd_performance_analyze(path)
         elif cmd == "generate" and args:
             await self.cmd_generate_code(" ".join(args))
         elif cmd == "ls":
@@ -692,6 +723,173 @@ class AdvancedCLI:
             ))
         else:
             console.print(f"[red]Analysis failed: {analysis_result.error_message}[/red]")
+    
+    async def cmd_analyze_project(self, path: str):
+        """Comprehensive project analysis using enhanced code analyzer"""
+        try:
+            if "code_analyzer" not in self.core.tools_registry:
+                console.print("[red]Code analyzer tool not available[/red]")
+                return
+                
+            code_analyzer = self.core.tools_registry["code_analyzer"]
+            
+            with console.status("[bold green]Analyzing project...") as status:
+                result = await code_analyzer.execute("analyze_project", path=path)
+            
+            if result.status.name == "SUCCESS":
+                analysis = result.data
+                
+                # Display project info
+                if "project_info" in analysis:
+                    project_info = analysis["project_info"]
+                    console.print(Panel(
+                        f"""**Project Name:** {project_info.get('name', 'Unknown')}
+**Type:** {project_info.get('type', 'Unknown')} ({project_info.get('framework', 'None')})
+**Files:** {project_info.get('file_count', 0)}
+**Size:** {project_info.get('size', 0) / 1024 / 1024:.2f} MB
+**Languages:** {', '.join(project_info.get('language_distribution', {}).keys())}""",
+                        title="[bold blue]Project Overview[/bold blue]",
+                        border_style="blue"
+                    ))
+                
+                # Display analysis insights
+                if "ai_insights" in analysis:
+                    console.print(Panel(
+                        Markdown(analysis["ai_insights"]),
+                        title="[bold green]DeepSeek Analysis[/bold green]",
+                        border_style="green"
+                    ))
+                
+                # Display suggestions
+                if "enhanced_suggestions" in analysis and analysis["enhanced_suggestions"]:
+                    suggestions_text = "\n".join([f"• {s}" for s in analysis["enhanced_suggestions"][:5]])
+                    console.print(Panel(
+                        suggestions_text,
+                        title="[bold yellow]Top Recommendations[/bold yellow]",
+                        border_style="yellow"
+                    ))
+                    
+            else:
+                console.print(f"[red]Project analysis failed: {result.message}[/red]")
+                
+        except Exception as e:
+            console.print(f"[red]Error analyzing project: {e}[/red]")
+    
+    async def cmd_explain_code(self, file_path: str):
+        """Explain code using enhanced code analyzer"""
+        try:
+            if "code_analyzer" not in self.core.tools_registry:
+                console.print("[red]Code analyzer tool not available[/red]")
+                return
+                
+            code_analyzer = self.core.tools_registry["code_analyzer"]
+            
+            with console.status("[bold green]Analyzing and explaining code...") as status:
+                result = await code_analyzer.execute("explain", file_path=file_path)
+            
+            if result.status.name == "SUCCESS":
+                explanation = result.data.get("explanation", "No explanation available")
+                console.print(Panel(
+                    Markdown(explanation),
+                    title=f"[bold blue]Code Explanation: {file_path}[/bold blue]",
+                    border_style="blue"
+                ))
+            else:
+                console.print(f"[red]Code explanation failed: {result.message}[/red]")
+                
+        except Exception as e:
+            console.print(f"[red]Error explaining code: {e}[/red]")
+    
+    async def cmd_security_scan(self, path: str):
+        """Security vulnerability scan"""
+        try:
+            if "code_analyzer" not in self.core.tools_registry:
+                console.print("[red]Code analyzer tool not available[/red]")
+                return
+                
+            code_analyzer = self.core.tools_registry["code_analyzer"]
+            
+            with console.status("[bold red]Scanning for security vulnerabilities...") as status:
+                result = await code_analyzer.execute("security_scan", path=path)
+            
+            if result.status.name == "SUCCESS":
+                security_data = result.data
+                issues = security_data.get("issues", [])
+                severity_breakdown = security_data.get("severity_breakdown", {})
+                
+                # Display summary
+                console.print(Panel(
+                    f"""**Total Issues Found:** {len(issues)}
+**High Severity:** {severity_breakdown.get('high', 0)}
+**Medium Severity:** {severity_breakdown.get('medium', 0)}
+**Low Severity:** {severity_breakdown.get('low', 0)}""",
+                    title="[bold red]Security Scan Results[/bold red]",
+                    border_style="red"
+                ))
+                
+                # Display top issues
+                if issues:
+                    high_issues = [i for i in issues if i.get('severity') == 'high'][:5]
+                    if high_issues:
+                        issues_text = "\n".join([
+                            f"• **{issue['description']}** in {issue['file']}:{issue['line']}"
+                            for issue in high_issues
+                        ])
+                        console.print(Panel(
+                            Markdown(issues_text),
+                            title="[bold red]High Priority Issues[/bold red]",
+                            border_style="red"
+                        ))
+                        
+            else:
+                console.print(f"[red]Security scan failed: {result.message}[/red]")
+                
+        except Exception as e:
+            console.print(f"[red]Error during security scan: {e}[/red]")
+    
+    async def cmd_performance_analyze(self, path: str):
+        """Performance analysis"""
+        try:
+            if "code_analyzer" not in self.core.tools_registry:
+                console.print("[red]Code analyzer tool not available[/red]")
+                return
+                
+            code_analyzer = self.core.tools_registry["code_analyzer"]
+            
+            with console.status("[bold yellow]Analyzing performance...") as status:
+                result = await code_analyzer.execute("performance_analyze", path=path)
+            
+            if result.status.name == "SUCCESS":
+                perf_data = result.data
+                issues = perf_data.get("issues", [])
+                categories = perf_data.get("categories", {})
+                
+                # Display summary
+                console.print(Panel(
+                    f"""**Performance Issues Found:** {len(issues)}
+**Issue Types:** {', '.join(categories.keys())}""",
+                    title="[bold yellow]Performance Analysis Results[/bold yellow]",
+                    border_style="yellow"
+                ))
+                
+                # Display top issues
+                if issues:
+                    top_issues = issues[:5]
+                    issues_text = "\n".join([
+                        f"• **{issue['description']}** in {issue['file']}:{issue['line']}"
+                        for issue in top_issues
+                    ])
+                    console.print(Panel(
+                        Markdown(issues_text),
+                        title="[bold yellow]Performance Issues[/bold yellow]",
+                        border_style="yellow"
+                    ))
+                        
+            else:
+                console.print(f"[red]Performance analysis failed: {result.message}[/red]")
+                
+        except Exception as e:
+            console.print(f"[red]Error during performance analysis: {e}[/red]")
             
     def detect_language(self, extension: str) -> str:
         """Detect programming language from file extension"""
@@ -735,6 +933,10 @@ class AdvancedCLI:
         
         ## Code Operations
         - `/analyze <file>` - Analyze code quality and provide insights
+        - `/analyze-project [path]` - Comprehensive project analysis
+        - `/explain <file>` - Get detailed code explanation
+        - `/security-scan [path]` - Security vulnerability scan
+        - `/performance-analyze [path]` - Performance analysis
         - `/generate <description>` - Generate code based on description
         - `/find <query>` - Find similar files/content using embeddings
         
