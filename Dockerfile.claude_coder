@@ -26,9 +26,8 @@ COPY . .
 # Create necessary directories
 RUN mkdir -p data logs config scans
 
-# Install MCP servers (these are the correct packages)
+# Install MCP filesystem server
 RUN npx -y @modelcontextprotocol/server-filesystem@latest
-RUN npx -y @modelcontextprotocol/server-docker@latest
 
 # Create MCP configuration
 RUN echo '{\
@@ -36,11 +35,6 @@ RUN echo '{\
     "filesystem": {\
       "command": "npx",\
       "args": ["-y", "@modelcontextprotocol/server-filesystem", "/app/scans"],\
-      "env": {}\
-    },\
-    "docker": {\
-      "command": "npx",\
-      "args": ["-y", "@modelcontextprotocol/server-docker"],\
       "env": {}\
     }\
   }\

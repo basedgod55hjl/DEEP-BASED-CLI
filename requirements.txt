@@ -30,7 +30,7 @@ selenium>=4.10.0
 playwright>=1.40.0
 
 # Code analysis and processing
-ast>=0.0.2
+# ast is built into Python, no need to install
 pylint>=2.17.0
 black>=23.0.0
 flake8>=6.0.0
