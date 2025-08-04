@@ -1,4 +1,4 @@
-# 🚀 BASED CODER CLI - Enhanced Requirements with Anthropic Cookbook Upgrades
+# 🚀 BASED CODER CLI - Unified Requirements
 # Made by @Lucariolucario55 on Telegram
 
 # Core dependencies
@@ -58,10 +58,6 @@ gitpython>=3.1.0
 # JSON Schema validation (for JSON mode support)
 jsonschema>=4.17.0
 
-# Compression and caching (for prompt caching)
-gzip
-pickle  # Built-in, no installation needed
-
 # Advanced debugging and profiling
 memory-profiler>=0.61.0
 line-profiler>=4.1.0
@@ -72,37 +68,11 @@ prometheus-client>=0.17.0
 # Enhanced logging
 structlog>=23.1.0
 
-# MCP (Model Context Protocol) - Local setup
-# Note: MCP tools will be installed via npm instead of pip
-
-# Optional: GPU support (uncomment if needed)
-# torch-cuda>=2.0.0
-
 # Enhanced tool integration dependencies
 dataclasses-json>=0.5.0
 typing-extensions>=4.0.0
 
-# Sub-agent architecture dependencies
-uuid  # Built-in, no installation needed
-abc  # Built-in, no installation needed
-
-# Prompt caching system dependencies
-sqlite3  # Built-in, no installation needed
-threading  # Built-in, no installation needed
-hashlib  # Built-in, no installation needed
-
-# Enhanced JSON mode dependencies
-json  # Built-in, no installation needed
-re  # Built-in, no installation needed
-
-# Additional utilities
-pathlib  # Built-in, no installation needed
-datetime  # Built-in, no installation needed
-enum  # Built-in, no installation needed
-functools  # Built-in, no installation needed
-traceback  # Built-in, no installation needed
-
-# Optional: Advanced features
+# Optional: Advanced features (uncomment if needed)
 # ray>=2.0.0  # For distributed computing
 # celery>=5.2.0  # For task queue management
-# redis>=4.0.0  # For caching and message broker 
+# redis>=4.0.0  # For caching and message broker
