@@ -1,0 +1,57 @@
+# 🚀 BASED CODER CLI - Requirements
+# Made by @Lucariolucario55 on Telegram
+
+# Core dependencies
+aiohttp>=3.8.0
+aiofiles>=0.8.0
+asyncio>=3.4.3
+colorama>=0.4.6
+python-dotenv>=1.0.0
+psutil>=5.9.0
+pyyaml>=6.0
+pydantic>=2.0.0
+
+# Rich CLI interface
+rich>=13.0.0
+
+# AI and ML dependencies
+transformers>=4.30.0
+torch>=2.0.0
+sentence-transformers>=2.2.0
+numpy>=1.21.0
+scikit-learn>=1.3.0
+huggingface-hub>=0.16.0
+accelerate>=0.20.0
+
+# Database
+aiosqlite>=0.19.0
+qdrant-client>=1.6.0
+
+# Web scraping
+requests>=2.31.0
+beautifulsoup4>=4.12.0
+duckduckgo-search>=4.0.0
+
+# Code analysis
+pylint>=2.17.0
+black>=23.0.0
+
+# API clients
+openai>=1.0.0
+anthropic>=0.7.0
+
+# Enhanced features
+langchain>=0.1.0
+langchain-core>=0.1.0
+langchain-community>=0.0.10
+gitpython>=3.1.0
+jsonschema>=4.17.0
+dataclasses-json>=0.5.0
+typing-extensions>=4.0.0
+
+# Logging and monitoring
+structlog>=23.1.0
+
+# Testing
+pytest>=7.4.0
+pytest-asyncio>=0.21.0
