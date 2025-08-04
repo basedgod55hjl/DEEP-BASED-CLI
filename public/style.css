@@ -1,0 +1,63 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body, html {
+    height: 100%;
+    font-family: monospace;
+    background: #1e1e1e;
+    color: #eaeaea;
+}
+
+#container {
+    display: flex;
+    height: 100%;
+}
+
+#sidebar {
+    width: 200px;
+    background: #272727;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    border-right: 1px solid #444;
+}
+
+#sidebar h1 {
+    font-size: 1.2rem;
+    color: #6cf;
+}
+
+#sidebar button {
+    padding: 10px;
+    background: #6cf;
+    border: none;
+    cursor: pointer;
+    color: #000;
+    font-weight: bold;
+}
+
+#terminal {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.terminal-output {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    background: #1e1e1e;
+    white-space: pre-wrap;
+}
+
+#commandInput {
+    padding: 10px;
+    border: none;
+    outline: none;
+    background: #333;
+    color: #eaeaea;
+}
