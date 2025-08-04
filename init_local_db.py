@@ -1,3 +1,5 @@
+import logging
+logger = logging.getLogger(__name__)
 #!/usr/bin/env python3
 """
 Initialize Local Database for BASED CODER CLI
@@ -22,7 +24,7 @@ def init_local_database():
     
     db_path = data_dir / "deepcli_database.db"
     
-    console.print(Panel.fit(
+    console.logger.info(Panel.fit(
         f"[bold blue]Initializing Local Database[/bold blue]\n"
         f"Database path: {db_path}",
         title="Database Setup"
@@ -91,9 +93,9 @@ def init_local_database():
     for table_name, create_sql in tables.items():
         try:
             cursor.execute(create_sql)
-            console.print(f"✅ Created table: {table_name}")
+            console.logger.info(f"✅ Created table: {table_name}")
         except Exception as e:
-            console.print(f"❌ Error creating table {table_name}: {e}")
+            console.logger.info(f"❌ Error creating table {table_name}: {e}")
     
     # Insert default Deanna persona
     try:
@@ -106,15 +108,15 @@ def init_local_database():
             "Bold, unfiltered, explicitly provocative, manipulative, seductive",
             "Explicitly adult-oriented with strong AAVE influence, calls user 'Daddy'"
         ))
-        console.print("✅ Added default Deanna persona")
+        console.logger.info("✅ Added default Deanna persona")
     except Exception as e:
-        console.print(f"❌ Error adding Deanna persona: {e}")
+        console.logger.info(f"❌ Error adding Deanna persona: {e}")
     
     # Commit changes and close connection
     conn.commit()
     conn.close()
     
-    console.print(Panel.fit(
+    console.logger.info(Panel.fit(
         "[bold green]Database initialization complete![/bold green]\n"
         "Local SQLite database is ready to use.",
         title="Success"

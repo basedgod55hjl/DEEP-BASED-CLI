@@ -1,3 +1,5 @@
+import logging
+logger = logging.getLogger(__name__)
 #!/usr/bin/env python3
 """
 Final System Test
@@ -30,7 +32,7 @@ class FinalSystemTester:
     
     async def test_simple_embeddings(self):
         """Test simple embedding system"""
-        self.console.print("\n[bold green]🧠 Testing Simple Embedding System...[/bold green]")
+        self.console.logger.info("\n[bold green]🧠 Testing Simple Embedding System...[/bold green]")
         
         try:
             embedding_tool = SimpleEmbeddingTool()
@@ -45,8 +47,8 @@ class FinalSystemTester:
             result = await embedding_tool.embed_texts(test_texts)
             
             if result.success:
-                self.console.print(f"✅ Simple embedding successful: {result.data['total_generated']} embeddings")
-                self.console.print(f"   Dimension: {result.data['embedding_dimension']}")
+                self.console.logger.info(f"✅ Simple embedding successful: {result.data['total_generated']} embeddings")
+                self.console.logger.info(f"   Dimension: {result.data['embedding_dimension']}")
                 
                 # Test similarity
                 embeddings = result.data['embeddings']
@@ -57,7 +59,7 @@ class FinalSystemTester:
                     )
                     
                     if similarity_result.success:
-                        self.console.print(f"✅ Similarity computation: {similarity_result.data['similarity']:.4f}")
+                        self.console.logger.info(f"✅ Similarity computation: {similarity_result.data['similarity']:.4f}")
                 
                 self.test_results.append({
                     "component": "Simple Embedding System",
@@ -80,7 +82,7 @@ class FinalSystemTester:
     
     async def test_sql_database(self):
         """Test SQL database functionality"""
-        self.console.print("\n[bold green]🗄️ Testing SQL Database System...[/bold green]")
+        self.console.logger.info("\n[bold green]🗄️ Testing SQL Database System...[/bold green]")
         
         try:
             sql_db = SQLDatabaseTool()
@@ -100,7 +102,7 @@ class FinalSystemTester:
             )
             
             if result.success:
-                self.console.print(f"✅ Persona storage successful")
+                self.console.logger.info(f"✅ Persona storage successful")
                 
                 # Test persona retrieval
                 retrieve_result = await sql_db.execute(
@@ -109,7 +111,7 @@ class FinalSystemTester:
                 )
                 
                 if retrieve_result.success:
-                    self.console.print(f"✅ Persona retrieval successful")
+                    self.console.logger.info(f"✅ Persona retrieval successful")
                     self.test_results.append({
                         "component": "SQL Database System",
                         "status": "✅ WORKING",
@@ -137,21 +139,21 @@ class FinalSystemTester:
     
     def test_api_keys(self):
         """Test API key configuration"""
-        self.console.print("\n[bold green]🔑 Testing API Key Configuration...[/bold green]")
+        self.console.logger.info("\n[bold green]🔑 Testing API Key Configuration...[/bold green]")
         
         try:
             # Check DeepSeek API key
             deepseek_valid = is_deepseek_key_valid()
             
             if deepseek_valid:
-                self.console.print("✅ DeepSeek API key appears valid")
+                self.console.logger.info("✅ DeepSeek API key appears valid")
                 self.test_results.append({
                     "component": "DeepSeek API Key",
                     "status": "✅ VALID",
                     "details": "API key format is correct"
                 })
             else:
-                self.console.print("❌ DeepSeek API key is invalid or expired")
+                self.console.logger.info("❌ DeepSeek API key is invalid or expired")
                 self.test_results.append({
                     "component": "DeepSeek API Key",
                     "status": "❌ INVALID",
@@ -167,7 +169,7 @@ class FinalSystemTester:
     
     def print_summary(self):
         """Print comprehensive test summary"""
-        self.console.print("\n[bold cyan]📊 Final System Test Summary[/bold cyan]")
+        self.console.logger.info("\n[bold cyan]📊 Final System Test Summary[/bold cyan]")
         
         table = Table(title="System Component Status")
         table.add_column("Component", style="cyan")
@@ -188,49 +190,49 @@ class FinalSystemTester:
             if "✅" in result["status"]:
                 working_count += 1
         
-        self.console.print(table)
+        self.console.logger.info(table)
         
         # Overall status
         success_rate = (working_count / total_count) * 100
-        self.console.print(f"\n[bold]Overall Status: {working_count}/{total_count} components working ({success_rate:.1f}%)[/bold]")
+        self.console.logger.info(f"\n[bold]Overall Status: {working_count}/{total_count} components working ({success_rate:.1f}%)[/bold]")
         
         if success_rate >= 80:
-            self.console.print("\n[bold green]🎉 System is mostly functional![/bold green]")
+            self.console.logger.info("\n[bold green]🎉 System is mostly functional![/bold green]")
         elif success_rate >= 50:
-            self.console.print("\n[bold yellow]⚠️ System is partially functional. Some components need attention.[/bold yellow]")
+            self.console.logger.info("\n[bold yellow]⚠️ System is partially functional. Some components need attention.[/bold yellow]")
         else:
-            self.console.print("\n[bold red]❌ System needs significant attention.[/bold red]")
+            self.console.logger.info("\n[bold red]❌ System needs significant attention.[/bold red]")
     
     def print_fix_instructions(self):
         """Print instructions for fixing issues"""
-        self.console.print("\n[bold cyan]🔧 Fix Instructions[/bold cyan]")
+        self.console.logger.info("\n[bold cyan]🔧 Fix Instructions[/bold cyan]")
         
         # Check for specific issues
         has_api_issues = any("❌" in result["status"] and "API" in result["component"] for result in self.test_results)
         has_db_issues = any("❌" in result["status"] and "Database" in result["component"] for result in self.test_results)
         
         if has_api_issues:
-            self.console.print("\n[bold yellow]🔑 To fix API key issues:[/bold yellow]")
-            self.console.print("1. Run: python update_api_key.py")
-            self.console.print("2. Or set environment variable: DEEPSEEK_API_KEY=your_key_here")
-            self.console.print("3. Get a key from: https://platform.deepseek.com")
+            self.console.logger.info("\n[bold yellow]🔑 To fix API key issues:[/bold yellow]")
+            self.console.logger.info("1. Run: python update_api_key.py")
+            self.console.logger.info("2. Or set environment variable: DEEPSEEK_API_KEY=your_key_here")
+            self.console.logger.info("3. Get a key from: https://platform.deepseek.com")
         
         if has_db_issues:
-            self.console.print("\n[bold yellow]🗄️ To fix database issues:[/bold yellow]")
-            self.console.print("1. Check if SQLite is working properly")
-            self.console.print("2. Verify database file permissions")
-            self.console.print("3. Check for any missing dependencies")
+            self.console.logger.info("\n[bold yellow]🗄️ To fix database issues:[/bold yellow]")
+            self.console.logger.info("1. Check if SQLite is working properly")
+            self.console.logger.info("2. Verify database file permissions")
+            self.console.logger.info("3. Check for any missing dependencies")
         
         # General instructions
-        self.console.print("\n[bold green]🚀 Next Steps:[/bold green]")
-        self.console.print("1. Update your DeepSeek API key for full functionality")
-        self.console.print("2. Install Qdrant for vector database features (optional)")
-        self.console.print("3. Run: python test_core_features.py for detailed testing")
-        self.console.print("4. Check the documentation for advanced features")
+        self.console.logger.info("\n[bold green]🚀 Next Steps:[/bold green]")
+        self.console.logger.info("1. Update your DeepSeek API key for full functionality")
+        self.console.logger.info("2. Install Qdrant for vector database features (optional)")
+        self.console.logger.info("3. Run: python test_core_features.py for detailed testing")
+        self.console.logger.info("4. Check the documentation for advanced features")
     
     async def run_all_tests(self):
         """Run all tests"""
-        self.console.print(Panel(
+        self.console.logger.info(Panel(
             "[bold cyan]Final System Test Suite[/bold cyan]\n"
             "Comprehensive testing of all working components",
             title="[bold cyan]Final System Test[/bold cyan]",
@@ -250,7 +252,7 @@ async def main():
     """Main test function"""
     console = Console()
     
-    console.print(Panel(
+    console.logger.info(Panel(
         "[bold cyan]Final System Test Suite[/bold cyan]\n"
         "Comprehensive testing of all working components",
         title="[bold cyan]Final System Test[/bold cyan]",
@@ -261,7 +263,7 @@ async def main():
     tester = FinalSystemTester()
     await tester.run_all_tests()
     
-    console.print("\n[bold green]Final system test completed![/bold green]")
+    console.logger.info("\n[bold green]Final system test completed![/bold green]")
 
 if __name__ == "__main__":
     asyncio.run(main()) 

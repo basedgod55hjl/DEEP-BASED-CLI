@@ -127,7 +127,7 @@ class DataAnalyzerTool(BaseTool):
         try:
             json.loads(data)
             return "json"
-        except:
+        except Exception as e:
             pass
         
         # Check for CSV patterns

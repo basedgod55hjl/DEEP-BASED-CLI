@@ -1,3 +1,5 @@
+import logging
+logger = logging.getLogger(__name__)
 #!/usr/bin/env python3
 """
 Configuration Manager for BASED CODER CLI
@@ -49,20 +51,20 @@ class ConfigManager:
         """Read all configuration files"""
         configs = {}
         
-        console.print(Panel.fit("Reading All Configuration Files", title="Config Manager"))
+        console.logger.info(Panel.fit("Reading All Configuration Files", title="Config Manager"))
         
         for name, file_path in self.config_files.items():
             try:
                 if file_path.exists():
                     configs[name] = self.read_config_file(file_path)
-                    console.print(f"✅ {name}: {file_path}")
+                    console.logger.info(f"✅ {name}: {file_path}")
                 else:
                     configs[name] = None
-                    console.print(f"❌ {name}: {file_path} (not found)")
+                    console.logger.info(f"❌ {name}: {file_path} (not found)")
             except Exception as e:
                 logger.log_error(e, f"reading_config_{name}")
                 configs[name] = None
-                console.print(f"⚠️ {name}: {file_path} (error: {e})")
+                console.logger.info(f"⚠️ {name}: {file_path} (error: {e})")
         
         return configs
     
@@ -106,7 +108,7 @@ class ConfigManager:
                     key = key.strip()
                     value = value.strip().strip('"\'')
                     config[key] = value
-                except:
+                except Exception as e:
                     continue
         
         return config
@@ -132,7 +134,7 @@ class ConfigManager:
     
     def display_config_summary(self, configs: Dict[str, Any]):
         """Display configuration summary"""
-        console.print(Panel.fit("Configuration Summary", title="Config Summary"))
+        console.logger.info(Panel.fit("Configuration Summary", title="Config Summary"))
         
         # Create summary table
         table = Table(title="Configuration Files Status")
@@ -161,11 +163,11 @@ class ConfigManager:
             
             table.add_row(name, status, config_type, size)
         
-        console.print(table)
+        console.logger.info(table)
     
     def display_model_configs(self, configs: Dict[str, Any]):
         """Display model-specific configurations"""
-        console.print(Panel.fit("Model Configurations", title="Model Configs"))
+        console.logger.info(Panel.fit("Model Configurations", title="Model Configs"))
         
         # Qwen model config
         if configs.get('qwen_config'):
@@ -184,7 +186,7 @@ class ConfigManager:
                 if param in qwen_config:
                     table.add_row(param, str(qwen_config[param]))
             
-            console.print(table)
+            console.logger.info(table)
         
         # Model info
         if configs.get('models'):
@@ -197,11 +199,11 @@ class ConfigManager:
             for key, value in model_info.items():
                 table.add_row(key, str(value))
             
-            console.print(table)
+            console.logger.info(table)
     
     def validate_configs(self, configs: Dict[str, Any]) -> Dict[str, List[str]]:
         """Validate configuration files"""
-        console.print(Panel.fit("Validating Configurations", title="Config Validation"))
+        console.logger.info(Panel.fit("Validating Configurations", title="Config Validation"))
         
         validation_results = {}
         
@@ -237,11 +239,11 @@ class ConfigManager:
         # Display validation results
         for config_type, issues in validation_results.items():
             if issues:
-                console.print(f"❌ {config_type}: {len(issues)} issues found")
+                console.logger.info(f"❌ {config_type}: {len(issues)} issues found")
                 for issue in issues:
-                    console.print(f"  - {issue}")
+                    console.logger.info(f"  - {issue}")
             else:
-                console.print(f"✅ {config_type}: Valid")
+                console.logger.info(f"✅ {config_type}: Valid")
         
         return validation_results
     
@@ -251,7 +253,7 @@ class ConfigManager:
         backup_dir = self.base_dir / "config_backups" / f"backup_{timestamp}"
         backup_dir.mkdir(parents=True, exist_ok=True)
         
-        console.print(Panel.fit(f"Creating Config Backup: {backup_dir}", title="Config Backup"))
+        console.logger.info(Panel.fit(f"Creating Config Backup: {backup_dir}", title="Config Backup"))
         
         backed_up_files = 0
         
@@ -261,17 +263,17 @@ class ConfigManager:
                     backup_path = backup_dir / f"{name}_{file_path.name}"
                     shutil.copy2(file_path, backup_path)
                     backed_up_files += 1
-                    console.print(f"✅ Backed up: {file_path.name}")
+                    console.logger.info(f"✅ Backed up: {file_path.name}")
                 except Exception as e:
                     logger.log_error(e, f"backing_up_{name}")
-                    console.print(f"❌ Failed to backup: {file_path.name}")
+                    console.logger.info(f"❌ Failed to backup: {file_path.name}")
         
-        console.print(f"📦 Backup completed: {backed_up_files} files backed up")
+        console.logger.info(f"📦 Backup completed: {backed_up_files} files backed up")
         return backup_dir
     
     def clean_configs(self):
         """Clean and optimize configuration files"""
-        console.print(Panel.fit("Cleaning Configuration Files", title="Config Cleanup"))
+        console.logger.info(Panel.fit("Cleaning Configuration Files", title="Config Cleanup"))
         
         # Clean backup files older than 7 days
         backup_root = self.base_dir / "config_backups"
@@ -289,11 +291,11 @@ class ConfigManager:
                     except Exception as e:
                         logger.log_error(e, f"cleaning_backup_{backup_dir.name}")
             
-            console.print(f"🗑️ Deleted {deleted_count} old backup directories")
+            console.logger.info(f"🗑️ Deleted {deleted_count} old backup directories")
     
     def create_config_report(self) -> Dict[str, Any]:
         """Create comprehensive configuration report"""
-        console.print(Panel.fit("Generating Configuration Report", title="Config Report"))
+        console.logger.info(Panel.fit("Generating Configuration Report", title="Config Report"))
         
         configs = self.read_all_configs()
         validation_results = self.validate_configs(configs)
@@ -321,12 +323,12 @@ class ConfigManager:
         with open(report_file, 'w') as f:
             json.dump(report, f, indent=2)
         
-        console.print(f"📊 Configuration report saved: {report_file}")
+        console.logger.info(f"📊 Configuration report saved: {report_file}")
         return report
     
     def run_full_analysis(self):
         """Run complete configuration analysis"""
-        console.print(Panel.fit(
+        console.logger.info(Panel.fit(
             "[bold blue]BASED CODER CLI - Configuration Analysis[/bold blue]\n"
             "Analyzing all configuration files...",
             title="Config Analysis"
@@ -353,7 +355,7 @@ class ConfigManager:
         # Generate report
         report = self.create_config_report()
         
-        console.print(Panel.fit(
+        console.logger.info(Panel.fit(
             "[bold green]Configuration analysis completed![/bold green]\n"
             f"📁 Backup created: {backup_dir}\n"
             f"📊 Report generated: config_report.json\n"

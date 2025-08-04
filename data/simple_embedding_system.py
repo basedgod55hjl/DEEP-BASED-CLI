@@ -1,3 +1,5 @@
+import logging
+logger = logging.getLogger(__name__)
 #!/usr/bin/env python3
 """
 Simple Embedding System for DEEP-CLI
@@ -187,11 +189,11 @@ class SimpleEmbeddingSystem:
 simple_embedding_system = SimpleEmbeddingSystem()
 
 if __name__ == "__main__":
-    print("Testing Simple Embedding System...")
+    logger.info("Testing Simple Embedding System...")
     
     # Test embedding
     if simple_embedding_system.test_embedding():
-        print("✅ Simple embedding system is working!")
+        logger.info("✅ Simple embedding system is working!")
         
         # Test similarity
         text1 = "Deanna is a flirtatious AI companion"
@@ -205,12 +207,12 @@ if __name__ == "__main__":
         sim12 = simple_embedding_system.compute_similarity(emb1, emb2)
         sim13 = simple_embedding_system.compute_similarity(emb1, emb3)
         
-        print(f"Similarity between '{text1}' and '{text2}': {sim12:.4f}")
-        print(f"Similarity between '{text1}' and '{text3}': {sim13:.4f}")
+        logger.info(f"Similarity between '{text1}' and '{text2}': {sim12:.4f}")
+        logger.info(f"Similarity between '{text1}' and '{text3}': {sim13:.4f}")
         
         # Get system info
         info = simple_embedding_system.get_system_info()
-        print(f"System info: {info}")
+        logger.info(f"System info: {info}")
         
     else:
-        print("❌ Simple embedding system failed!") 
+        logger.info("❌ Simple embedding system failed!") 

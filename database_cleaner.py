@@ -1,3 +1,5 @@
+import logging
+logger = logging.getLogger(__name__)
 #!/usr/bin/env python3
 """
 Database Cleaner and Maintenance Script for BASED CODER CLI
@@ -79,7 +81,7 @@ class DatabaseCleaner:
     
     def clean_main_database(self):
         """Clean the main database"""
-        console.print(Panel.fit("Cleaning Main Database", title="Database Cleanup"))
+        console.logger.info(Panel.fit("Cleaning Main Database", title="Database Cleanup"))
         
         if not self.main_db_path.exists():
             self.logger.warning("Main database does not exist")
@@ -146,11 +148,11 @@ class DatabaseCleaner:
             
         except Exception as e:
             self.logger.error(f"Error cleaning main database: {e}")
-            console.print(f"[red]Error cleaning main database: {e}[/red]")
+            console.logger.info(f"[red]Error cleaning main database: {e}[/red]")
     
     def clean_memory_database(self):
         """Clean the memory database"""
-        console.print(Panel.fit("Cleaning Memory Database", title="Database Cleanup"))
+        console.logger.info(Panel.fit("Cleaning Memory Database", title="Database Cleanup"))
         
         if not self.memory_db_path.exists():
             self.logger.warning("Memory database does not exist")
@@ -212,7 +214,7 @@ class DatabaseCleaner:
             
         except Exception as e:
             self.logger.error(f"Error cleaning memory database: {e}")
-            console.print(f"[red]Error cleaning memory database: {e}[/red]")
+            console.logger.info(f"[red]Error cleaning memory database: {e}[/red]")
     
     def get_database_stats(self, cursor, db_type: str) -> Dict[str, Any]:
         """Get database statistics"""
@@ -255,7 +257,7 @@ class DatabaseCleaner:
                 f"{difference:+d}" if difference != 0 else "0"
             )
         
-        console.print(table)
+        console.logger.info(table)
     
     def optimize_database(self, db_path: Path):
         """Optimize database performance"""
@@ -340,7 +342,7 @@ class DatabaseCleaner:
     
     def run_full_cleanup(self):
         """Run complete database cleanup and maintenance"""
-        console.print(Panel.fit(
+        console.logger.info(Panel.fit(
             "[bold blue]BASED CODER CLI - Database Cleanup & Maintenance[/bold blue]\n"
             "Running comprehensive cleanup...",
             title="Database Maintenance"
@@ -374,7 +376,7 @@ class DatabaseCleaner:
             progress.add_task("Cleaning cache files...", total=None)
             self.clean_cache_files()
         
-        console.print(Panel.fit(
+        console.logger.info(Panel.fit(
             "[bold green]Database cleanup completed successfully![/bold green]\n"
             "All databases have been cleaned, optimized, and backed up.",
             title="Cleanup Complete"

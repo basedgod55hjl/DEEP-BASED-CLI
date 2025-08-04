@@ -1,3 +1,5 @@
+import logging
+logger = logging.getLogger(__name__)
 #!/usr/bin/env python3
 """
 🧹 BASED CODER CLI - Redundant Files Cleanup Script
@@ -29,7 +31,7 @@ def print_banner():
 ║                                                                              ║
 ╚══════════════════════════════════════════════════════════════════════════════╝{Style.RESET_ALL}
     """
-    print(banner)
+    logger.info(banner)
 
 def get_redundant_files():
     """Get list of redundant files to remove"""
@@ -107,7 +109,7 @@ def backup_file(file_path):
             shutil.copy2(file_path, backup_path)
             return backup_path
     except Exception as e:
-        print(f"{Fore.RED}❌ Failed to backup {file_path}: {e}{Style.RESET_ALL}")
+        logger.info(f"{Fore.RED}❌ Failed to backup {file_path}: {e}{Style.RESET_ALL}")
     return None
 
 def remove_file(file_path):
@@ -117,17 +119,17 @@ def remove_file(file_path):
             # Create backup
             backup_path = backup_file(file_path)
             if backup_path:
-                print(f"{Fore.YELLOW}📁 Backed up: {file_path} -> {backup_path}{Style.RESET_ALL}")
+                logger.info(f"{Fore.YELLOW}📁 Backed up: {file_path} -> {backup_path}{Style.RESET_ALL}")
             
             # Remove file
             file_path.unlink()
-            print(f"{Fore.GREEN}✅ Removed: {file_path}{Style.RESET_ALL}")
+            logger.info(f"{Fore.GREEN}✅ Removed: {file_path}{Style.RESET_ALL}")
             return True
         else:
-            print(f"{Fore.YELLOW}⚠️ File not found: {file_path}{Style.RESET_ALL}")
+            logger.info(f"{Fore.YELLOW}⚠️ File not found: {file_path}{Style.RESET_ALL}")
             return False
     except Exception as e:
-        print(f"{Fore.RED}❌ Failed to remove {file_path}: {e}{Style.RESET_ALL}")
+        logger.info(f"{Fore.RED}❌ Failed to remove {file_path}: {e}{Style.RESET_ALL}")
         return False
 
 def remove_directory(dir_path):
@@ -137,23 +139,23 @@ def remove_directory(dir_path):
             # Create backup
             backup_path = dir_path.with_suffix('.backup')
             shutil.copytree(dir_path, backup_path)
-            print(f"{Fore.YELLOW}📁 Backed up: {dir_path} -> {backup_path}{Style.RESET_ALL}")
+            logger.info(f"{Fore.YELLOW}📁 Backed up: {dir_path} -> {backup_path}{Style.RESET_ALL}")
             
             # Remove directory
             shutil.rmtree(dir_path)
-            print(f"{Fore.GREEN}✅ Removed: {dir_path}{Style.RESET_ALL}")
+            logger.info(f"{Fore.GREEN}✅ Removed: {dir_path}{Style.RESET_ALL}")
             return True
         else:
-            print(f"{Fore.YELLOW}⚠️ Directory not found: {dir_path}{Style.RESET_ALL}")
+            logger.info(f"{Fore.YELLOW}⚠️ Directory not found: {dir_path}{Style.RESET_ALL}")
             return False
     except Exception as e:
-        print(f"{Fore.RED}❌ Failed to remove {dir_path}: {e}{Style.RESET_ALL}")
+        logger.info(f"{Fore.RED}❌ Failed to remove {dir_path}: {e}{Style.RESET_ALL}")
         return False
 
 def cleanup_redundant_files():
     """Clean up all redundant files"""
-    print(f"{Fore.CYAN}🧹 Starting cleanup process...{Style.RESET_ALL}")
-    print()
+    logger.info(f"{Fore.CYAN}🧹 Starting cleanup process...{Style.RESET_ALL}")
+    logger.info()
     
     project_root = Path(__file__).parent
     redundant_files = get_redundant_files()
@@ -165,64 +167,64 @@ def cleanup_redundant_files():
     removed_files = 0
     removed_dirs = 0
     
-    print(f"{Fore.YELLOW}📋 Files to remove: {total_files}{Style.RESET_ALL}")
-    print(f"{Fore.YELLOW}📁 Directories to remove: {total_dirs}{Style.RESET_ALL}")
-    print()
+    logger.info(f"{Fore.YELLOW}📋 Files to remove: {total_files}{Style.RESET_ALL}")
+    logger.info(f"{Fore.YELLOW}📁 Directories to remove: {total_dirs}{Style.RESET_ALL}")
+    logger.info()
     
     # Remove files
-    print(f"{Fore.CYAN}🗑️ Removing redundant files...{Style.RESET_ALL}")
-    print("-" * 60)
+    logger.info(f"{Fore.CYAN}🗑️ Removing redundant files...{Style.RESET_ALL}")
+    logger.info("-" * 60)
     
     for file_name in redundant_files:
         file_path = project_root / file_name
         if remove_file(file_path):
             removed_files += 1
-        print()
+        logger.info()
     
     # Remove directories
-    print(f"{Fore.CYAN}🗑️ Removing redundant directories...{Style.RESET_ALL}")
-    print("-" * 60)
+    logger.info(f"{Fore.CYAN}🗑️ Removing redundant directories...{Style.RESET_ALL}")
+    logger.info("-" * 60)
     
     for dir_name in redundant_dirs:
         dir_path = project_root / dir_name
         if remove_directory(dir_path):
             removed_dirs += 1
-        print()
+        logger.info()
     
     # Print summary
-    print(f"{Fore.CYAN}📊 CLEANUP SUMMARY{Style.RESET_ALL}")
-    print("=" * 60)
-    print(f"{Fore.GREEN}✅ Files removed: {removed_files}/{total_files}{Style.RESET_ALL}")
-    print(f"{Fore.GREEN}✅ Directories removed: {removed_dirs}/{total_dirs}{Style.RESET_ALL}")
-    print()
+    logger.info(f"{Fore.CYAN}📊 CLEANUP SUMMARY{Style.RESET_ALL}")
+    logger.info("=" * 60)
+    logger.info(f"{Fore.GREEN}✅ Files removed: {removed_files}/{total_files}{Style.RESET_ALL}")
+    logger.info(f"{Fore.GREEN}✅ Directories removed: {removed_dirs}/{total_dirs}{Style.RESET_ALL}")
+    logger.info()
     
     if removed_files == total_files and removed_dirs == total_dirs:
-        print(f"{Fore.GREEN}🎉 All redundant files cleaned up successfully!{Style.RESET_ALL}")
+        logger.info(f"{Fore.GREEN}🎉 All redundant files cleaned up successfully!{Style.RESET_ALL}")
     else:
-        print(f"{Fore.YELLOW}⚠️ Some files could not be removed. Check the output above.{Style.RESET_ALL}")
+        logger.info(f"{Fore.YELLOW}⚠️ Some files could not be removed. Check the output above.{Style.RESET_ALL}")
     
-    print()
-    print(f"{Fore.CYAN}💡 Next steps:{Style.RESET_ALL}")
-    print("1. Test the unified system: python main.py")
-    print("2. Run tests: python test_suite.py --all")
-    print("3. Run demos: python demo.py --complete")
-    print("4. Check that everything works correctly")
+    logger.info()
+    logger.info(f"{Fore.CYAN}💡 Next steps:{Style.RESET_ALL}")
+    logger.info("1. Test the unified system: python main.py")
+    logger.info("2. Run tests: python test_suite.py --all")
+    logger.info("3. Run demos: python demo.py --complete")
+    logger.info("4. Check that everything works correctly")
 
 def main():
     """Main cleanup function"""
     print_banner()
     
     # Confirm cleanup
-    print(f"{Fore.YELLOW}⚠️ WARNING: This will remove redundant files from the BASED CODER CLI.{Style.RESET_ALL}")
-    print(f"{Fore.YELLOW}⚠️ Backups will be created before deletion.{Style.RESET_ALL}")
-    print()
+    logger.info(f"{Fore.YELLOW}⚠️ WARNING: This will remove redundant files from the BASED CODER CLI.{Style.RESET_ALL}")
+    logger.info(f"{Fore.YELLOW}⚠️ Backups will be created before deletion.{Style.RESET_ALL}")
+    logger.info()
     
     confirm = input(f"{Fore.CYAN}Do you want to proceed with cleanup? (y/N): {Style.RESET_ALL}").strip().lower()
     
     if confirm in ['y', 'yes']:
         cleanup_redundant_files()
     else:
-        print(f"{Fore.YELLOW}❌ Cleanup cancelled.{Style.RESET_ALL}")
+        logger.info(f"{Fore.YELLOW}❌ Cleanup cancelled.{Style.RESET_ALL}")
 
 if __name__ == "__main__":
     main() 

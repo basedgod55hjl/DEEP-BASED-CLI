@@ -1,3 +1,5 @@
+import logging
+logger = logging.getLogger(__name__)
 #!/usr/bin/env python3
 """
 Run All Improvements Script for BASED CODER CLI
@@ -16,7 +18,7 @@ console = Console()
 
 def run_script(script_name: str, description: str) -> bool:
     """Run a Python script and return success status"""
-    console.print(f"🔄 Running {description}...")
+    console.logger.info(f"🔄 Running {description}...")
     
     try:
         result = subprocess.run(
@@ -27,24 +29,24 @@ def run_script(script_name: str, description: str) -> bool:
         )
         
         if result.returncode == 0:
-            console.print(f"✅ {description} completed successfully")
+            console.logger.info(f"✅ {description} completed successfully")
             return True
         else:
-            console.print(f"❌ {description} failed with return code {result.returncode}")
+            console.logger.info(f"❌ {description} failed with return code {result.returncode}")
             if result.stderr:
-                console.print(f"Error: {result.stderr}")
+                console.logger.info(f"Error: {result.stderr}")
             return False
             
     except subprocess.TimeoutExpired:
-        console.print(f"⏰ {description} timed out after 5 minutes")
+        console.logger.info(f"⏰ {description} timed out after 5 minutes")
         return False
     except Exception as e:
-        console.print(f"❌ {description} failed with exception: {e}")
+        console.logger.info(f"❌ {description} failed with exception: {e}")
         return False
 
 def main():
     """Run all improvement scripts"""
-    console.print(Panel.fit(
+    console.logger.info(Panel.fit(
         "[bold blue]BASED CODER CLI - Complete System Improvement[/bold blue]\n"
         "Running all improvement scripts in sequence...",
         title="System Improvement"
@@ -75,7 +77,7 @@ def main():
             progress.update(task, completed=True)
     
     # Display results summary
-    console.print(Panel.fit("Improvement Results Summary", title="Results"))
+    console.logger.info(Panel.fit("Improvement Results Summary", title="Results"))
     
     table = Table(title="Script Execution Results")
     table.add_column("Script", style="cyan")
@@ -86,14 +88,14 @@ def main():
         status = "✅ PASS" if success else "❌ FAIL"
         table.add_row(description, status, "Completed successfully" if success else "Failed to complete")
     
-    console.print(table)
+    console.logger.info(table)
     
     # Calculate success rate
     successful = sum(1 for _, success in results if success)
     total = len(results)
     success_rate = (successful / total) * 100
     
-    console.print(Panel.fit(
+    console.logger.info(Panel.fit(
         f"[bold]Final Results:[/bold]\n"
         f"✅ Successful: {successful}/{total}\n"
         f"📊 Success Rate: {success_rate:.1f}%\n"
@@ -102,7 +104,7 @@ def main():
     ))
     
     if success_rate == 100:
-        console.print(Panel.fit(
+        console.logger.info(Panel.fit(
             "[bold green]🎉 All improvements completed successfully![/bold green]\n"
             "Your BASED CODER CLI system is now fully optimized with:\n"
             "• Clean and optimized databases\n"
@@ -113,7 +115,7 @@ def main():
             title="Success!"
         ))
     else:
-        console.print(Panel.fit(
+        console.logger.info(Panel.fit(
             "[bold yellow]⚠️ Some improvements failed[/bold yellow]\n"
             "Please check the error messages above and run failed scripts individually.\n"
             "The system may still be partially improved.",

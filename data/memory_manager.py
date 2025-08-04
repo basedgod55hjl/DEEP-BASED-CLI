@@ -370,7 +370,7 @@ class DeannaMemoryManager:
                 with open(cache_file, 'r', encoding='utf-8') as f:
                     cache_data = json.load(f)
                 return cache_data['response']
-            except:
+            except Exception as e:
                 pass
         
         # Check database cache
@@ -469,7 +469,7 @@ class DeannaMemoryManager:
     def search_memory(self, query: str, limit: int = 10) -> List[Dict[str, Any]]:
         """Search memory entries by content similarity"""
         # Simple text-based search for now
-        # TODO: Implement vector similarity search when embeddings are available
+        # FIXME: [PRIORITY]  [PRIORITY]  Implement vector similarity search when embeddings are available
         
         conn = sqlite3.connect(self.db_path)
         cursor = conn.cursor()

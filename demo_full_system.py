@@ -1,3 +1,5 @@
+import logging
+logger = logging.getLogger(__name__)
 #!/usr/bin/env python3
 """
 🚀 BASED CODER CLI - Full System Demo
@@ -32,7 +34,7 @@ class SystemDemo:
             
             # Chat and AI features
             ("chat Hello, I'm testing BASED CODER!", "Basic chat"),
-            ("fim def hello():" "print('world')", "FIM completion"),
+            ("fim def hello():" "logger.info('world')", "FIM completion"),
             ("prefix The quick brown fox", "Prefix completion"),
             ("rag What is machine learning?", "RAG pipeline"),
             ("reason Why is the sky blue?", "Reasoning engine"),
@@ -54,7 +56,7 @@ class SystemDemo:
             
             # Prefix commands (quick access)
             ("/chat How are you today?", "Quick chat"),
-            ("/fim def greet():" "print('Hello')", "Quick FIM"),
+            ("/fim def greet():" "logger.info('Hello')", "Quick FIM"),
             ("/prefix Machine learning is", "Quick prefix"),
             ("/rag Explain neural networks", "Quick RAG"),
             ("/reason How do computers work?", "Quick reasoning"),
@@ -86,22 +88,22 @@ class SystemDemo:
 ║                                                                              ║
 ╚══════════════════════════════════════════════════════════════════════════════╝{Style.RESET_ALL}
         """
-        print(banner)
+        logger.info(banner)
     
     async def run_demo(self):
         """Run the full system demo"""
         self.print_demo_banner()
         
-        print(f"{Fore.GREEN}🎯 Initializing BASED CODER system...{Style.RESET_ALL}")
+        logger.info(f"{Fore.GREEN}🎯 Initializing BASED CODER system...{Style.RESET_ALL}")
         await self.cli.initialize_system()
         
-        print(f"{Fore.GREEN}✅ System initialized successfully!{Style.RESET_ALL}")
-        print(f"{Fore.YELLOW}🚀 Starting demo...{Style.RESET_ALL}\n")
+        logger.info(f"{Fore.GREEN}✅ System initialized successfully!{Style.RESET_ALL}")
+        logger.info(f"{Fore.YELLOW}🚀 Starting demo...{Style.RESET_ALL}\n")
         
         # Run demo commands
         for i, (command, description) in enumerate(self.demo_commands, 1):
-            print(f"{Fore.CYAN}📋 Demo {i}/{len(self.demo_commands)}: {description}{Style.RESET_ALL}")
-            print(f"{Fore.YELLOW}💻 Command: {command}{Style.RESET_ALL}")
+            logger.info(f"{Fore.CYAN}📋 Demo {i}/{len(self.demo_commands)}: {description}{Style.RESET_ALL}")
+            logger.info(f"{Fore.YELLOW}💻 Command: {command}{Style.RESET_ALL}")
             
             try:
                 # Parse and execute command
@@ -179,22 +181,22 @@ class SystemDemo:
                         response = f"❌ Unknown command: {cmd}"
                 
                 # Display response
-                print(f"{Fore.GREEN}✅ Response:{Style.RESET_ALL}")
+                logger.info(f"{Fore.GREEN}✅ Response:{Style.RESET_ALL}")
                 if isinstance(response, dict):
-                    print(f"{Fore.WHITE}{json.dumps(response, indent=2)}{Style.RESET_ALL}")
+                    logger.info(f"{Fore.WHITE}{json.dumps(response, indent=2)}{Style.RESET_ALL}")
                 else:
-                    print(f"{Fore.WHITE}{response}{Style.RESET_ALL}")
+                    logger.info(f"{Fore.WHITE}{response}{Style.RESET_ALL}")
                 
             except Exception as e:
-                print(f"{Fore.RED}❌ Error: {str(e)}{Style.RESET_ALL}")
+                logger.info(f"{Fore.RED}❌ Error: {str(e)}{Style.RESET_ALL}")
             
-            print(f"{Fore.BLUE}{'='*80}{Style.RESET_ALL}\n")
+            logger.info(f"{Fore.BLUE}{'='*80}{Style.RESET_ALL}\n")
             
             # Small delay between commands
             await asyncio.sleep(1)
         
-        print(f"{Fore.GREEN}🎉 Demo completed successfully!{Style.RESET_ALL}")
-        print(f"{Fore.YELLOW}💡 Try running the CLI interactively: python based_coder_cli.py{Style.RESET_ALL}")
+        logger.info(f"{Fore.GREEN}🎉 Demo completed successfully!{Style.RESET_ALL}")
+        logger.info(f"{Fore.YELLOW}💡 Try running the CLI interactively: python based_coder_cli.py{Style.RESET_ALL}")
 
 async def main():
     """Main demo function"""

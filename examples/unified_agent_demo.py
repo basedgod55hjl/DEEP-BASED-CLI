@@ -1,3 +1,5 @@
+import logging
+logger = logging.getLogger(__name__)
 h"""
 Unified Agent System Demo - Enhanced BASED GOD CLI
 Demonstrates the unified brain approach with memory, persona, tools, and contacts
@@ -22,7 +24,7 @@ console = Console()
 async def demo_unified_agent():
     """Demonstrate the unified agent system"""
     
-    console.print(Panel.fit(
+    console.logger.info(Panel.fit(
         "[bold cyan]🧠 Unified Agent System Demo[/bold cyan]\n"
         "Memory, Persona, Tools, Contacts, and Conversation as One Brain",
         border_style="cyan"
@@ -35,7 +37,7 @@ async def demo_unified_agent():
     await asyncio.sleep(2)
     
     # Demo 1: Basic conversation with memory
-    console.print("\n[bold yellow]1. Basic Conversation with Memory[/bold yellow]")
+    console.logger.info("\n[bold yellow]1. Basic Conversation with Memory[/bold yellow]")
     
     result = await agent.execute(
         operation="process_input",
@@ -44,15 +46,15 @@ async def demo_unified_agent():
     )
     
     if result.success:
-        console.print(f"✅ Response: {result.data['response']}")
-        console.print(f"📝 Context used: {len(result.data['context_used'])} items")
-        console.print(f"👥 Contacts found: {len(result.data['contacts_found'])}")
-        console.print(f"🔧 Tools selected: {result.data['tools_selected']}")
+        console.logger.info(f"✅ Response: {result.data['response']}")
+        console.logger.info(f"📝 Context used: {len(result.data['context_used'])} items")
+        console.logger.info(f"👥 Contacts found: {len(result.data['contacts_found'])}")
+        console.logger.info(f"🔧 Tools selected: {result.data['tools_selected']}")
     else:
-        console.print(f"❌ Error: {result.message}")
+        console.logger.info(f"❌ Error: {result.message}")
     
     # Demo 2: Tool usage and learning
-    console.print("\n[bold yellow]2. Tool Usage and Learning[/bold yellow]")
+    console.logger.info("\n[bold yellow]2. Tool Usage and Learning[/bold yellow]")
     
     result = await agent.execute(
         operation="process_input",
@@ -61,13 +63,13 @@ async def demo_unified_agent():
     )
     
     if result.success:
-        console.print(f"✅ Response: {result.data['response']}")
-        console.print(f"🔧 Tools selected: {result.data['tools_selected']}")
+        console.logger.info(f"✅ Response: {result.data['response']}")
+        console.logger.info(f"🔧 Tools selected: {result.data['tools_selected']}")
     else:
-        console.print(f"❌ Error: {result.message}")
+        console.logger.info(f"❌ Error: {result.message}")
     
     # Demo 3: Contact extraction and enrichment
-    console.print("\n[bold yellow]3. Contact Extraction and Enrichment[/bold yellow]")
+    console.logger.info("\n[bold yellow]3. Contact Extraction and Enrichment[/bold yellow]")
     
     result = await agent.execute(
         operation="process_input",
@@ -76,15 +78,15 @@ async def demo_unified_agent():
     )
     
     if result.success:
-        console.print(f"✅ Response: {result.data['response']}")
-        console.print(f"👥 Contacts found: {len(result.data['contacts_found'])}")
+        console.logger.info(f"✅ Response: {result.data['response']}")
+        console.logger.info(f"👥 Contacts found: {len(result.data['contacts_found'])}")
         for contact in result.data['contacts_found']:
-            console.print(f"   - {contact.name}: {contact.details}")
+            console.logger.info(f"   - {contact.name}: {contact.details}")
     else:
-        console.print(f"❌ Error: {result.message}")
+        console.logger.info(f"❌ Error: {result.message}")
     
     # Demo 4: Memory retrieval and context awareness
-    console.print("\n[bold yellow]4. Memory Retrieval and Context Awareness[/bold yellow]")
+    console.logger.info("\n[bold yellow]4. Memory Retrieval and Context Awareness[/bold yellow]")
     
     result = await agent.execute(
         operation="process_input",
@@ -93,13 +95,13 @@ async def demo_unified_agent():
     )
     
     if result.success:
-        console.print(f"✅ Response: {result.data['response']}")
-        console.print(f"🧠 Context retrieved from memory")
+        console.logger.info(f"✅ Response: {result.data['response']}")
+        console.logger.info(f"🧠 Context retrieved from memory")
     else:
-        console.print(f"❌ Error: {result.message}")
+        console.logger.info(f"❌ Error: {result.message}")
     
     # Demo 5: Persona adaptation
-    console.print("\n[bold yellow]5. Persona Adaptation[/bold yellow]")
+    console.logger.info("\n[bold yellow]5. Persona Adaptation[/bold yellow]")
     
     result = await agent.execute(
         operation="process_input",
@@ -108,13 +110,13 @@ async def demo_unified_agent():
     )
     
     if result.success:
-        console.print(f"✅ Response: {result.data['response']}")
-        console.print(f"🎭 Persona adapted based on user preference")
+        console.logger.info(f"✅ Response: {result.data['response']}")
+        console.logger.info(f"🎭 Persona adapted based on user preference")
     else:
-        console.print(f"❌ Error: {result.message}")
+        console.logger.info(f"❌ Error: {result.message}")
     
     # Demo 6: Learning from interaction
-    console.print("\n[bold yellow]6. Learning from Interaction[/bold yellow]")
+    console.logger.info("\n[bold yellow]6. Learning from Interaction[/bold yellow]")
     
     result = await agent.execute(
         operation="learn_from_interaction",
@@ -126,12 +128,12 @@ async def demo_unified_agent():
     )
     
     if result.success:
-        console.print(f"✅ Learning data stored: {result.data['learning_data']}")
+        console.logger.info(f"✅ Learning data stored: {result.data['learning_data']}")
     else:
-        console.print(f"❌ Error: {result.message}")
+        console.logger.info(f"❌ Error: {result.message}")
     
     # Demo 7: Memory summarization
-    console.print("\n[bold yellow]7. Memory Summarization[/bold yellow]")
+    console.logger.info("\n[bold yellow]7. Memory Summarization[/bold yellow]")
     
     result = await agent.execute(
         operation="summarize_memories",
@@ -140,13 +142,13 @@ async def demo_unified_agent():
     )
     
     if result.success:
-        console.print(f"✅ Memory summarization: {result.message}")
-        console.print(f"📊 Summarized {result.data.get('summarized_count', 0)} memories")
+        console.logger.info(f"✅ Memory summarization: {result.message}")
+        console.logger.info(f"📊 Summarized {result.data.get('summarized_count', 0)} memories")
     else:
-        console.print(f"❌ Error: {result.message}")
+        console.logger.info(f"❌ Error: {result.message}")
     
     # Demo 8: Tool registration
-    console.print("\n[bold yellow]8. Tool Registration[/bold yellow]")
+    console.logger.info("\n[bold yellow]8. Tool Registration[/bold yellow]")
     
     result = await agent.execute(
         operation="register_tool",
@@ -158,12 +160,12 @@ async def demo_unified_agent():
     )
     
     if result.success:
-        console.print(f"✅ Tool registered successfully")
+        console.logger.info(f"✅ Tool registered successfully")
     else:
-        console.print(f"❌ Error: {result.message}")
+        console.logger.info(f"❌ Error: {result.message}")
     
     # Demo 9: Complex multi-turn conversation
-    console.print("\n[bold yellow]9. Complex Multi-turn Conversation[/bold yellow]")
+    console.logger.info("\n[bold yellow]9. Complex Multi-turn Conversation[/bold yellow]")
     
     conversations = [
         "I'm building a web application with React and Node.js",
@@ -173,7 +175,7 @@ async def demo_unified_agent():
     ]
     
     for i, conv in enumerate(conversations, 1):
-        console.print(f"\n[blue]Turn {i}:[/blue] {conv}")
+        console.logger.info(f"\n[blue]Turn {i}:[/blue] {conv}")
         
         result = await agent.execute(
             operation="process_input",
@@ -182,12 +184,12 @@ async def demo_unified_agent():
         )
         
         if result.success:
-            console.print(f"✅ Response: {result.data['response'][:100]}...")
+            console.logger.info(f"✅ Response: {result.data['response'][:100]}...")
         else:
-            console.print(f"❌ Error: {result.message}")
+            console.logger.info(f"❌ Error: {result.message}")
     
     # Demo 10: System overview
-    console.print("\n[bold yellow]10. System Overview[/bold yellow]")
+    console.logger.info("\n[bold yellow]10. System Overview[/bold yellow]")
     
     # Create a table showing system capabilities
     table = Table(title="Unified Agent System Capabilities")
@@ -202,23 +204,23 @@ async def demo_unified_agent():
     table.add_row("Learning", "Interaction-based improvement", "✅ Active")
     table.add_row("Context", "Multi-source awareness", "✅ Active")
     
-    console.print(table)
+    console.logger.info(table)
     
-    console.print("\n" + "=" * 80)
-    console.print("[bold green]🎉 Unified Agent System Demo Completed![/bold green]")
-    console.print("The system successfully demonstrated:")
-    console.print("• Unified memory management across all interactions")
-    console.print("• Intelligent tool selection based on context")
-    console.print("• Contact extraction and enrichment")
-    console.print("• Persona adaptation to user preferences")
-    console.print("• Learning from interactions for improvement")
-    console.print("• Context-aware responses using multiple data sources")
+    console.logger.info("\n" + "=" * 80)
+    console.logger.info("[bold green]🎉 Unified Agent System Demo Completed![/bold green]")
+    console.logger.info("The system successfully demonstrated:")
+    console.logger.info("• Unified memory management across all interactions")
+    console.logger.info("• Intelligent tool selection based on context")
+    console.logger.info("• Contact extraction and enrichment")
+    console.logger.info("• Persona adaptation to user preferences")
+    console.logger.info("• Learning from interactions for improvement")
+    console.logger.info("• Context-aware responses using multiple data sources")
 
 
 async def demo_advanced_features():
     """Demonstrate advanced unified agent features"""
     
-    console.print(Panel.fit(
+    console.logger.info(Panel.fit(
         "[bold magenta]🚀 Advanced Features Demo[/bold magenta]\n"
         "Advanced capabilities of the unified agent system",
         border_style="magenta"
@@ -227,7 +229,7 @@ async def demo_advanced_features():
     agent = UnifiedAgentSystem()
     
     # Advanced Demo 1: Relationship mapping
-    console.print("\n[bold yellow]Advanced 1: Memory Relationship Mapping[/bold yellow]")
+    console.logger.info("\n[bold yellow]Advanced 1: Memory Relationship Mapping[/bold yellow]")
     
     # Store related memories
     memories = [
@@ -255,10 +257,10 @@ async def demo_advanced_features():
             user_id="alice"
         )
         if result.success:
-            console.print(f"✅ Memory stored: {memory['type']}")
+            console.logger.info(f"✅ Memory stored: {memory['type']}")
     
     # Advanced Demo 2: Context-aware tool selection
-    console.print("\n[bold yellow]Advanced 2: Context-Aware Tool Selection[/bold yellow]")
+    console.logger.info("\n[bold yellow]Advanced 2: Context-Aware Tool Selection[/bold yellow]")
     
     result = await agent.execute(
         operation="process_input",
@@ -267,13 +269,13 @@ async def demo_advanced_features():
     )
     
     if result.success:
-        console.print(f"✅ Response: {result.data['response'][:150]}...")
-        console.print(f"🔧 Tools selected based on context: {result.data['tools_selected']}")
+        console.logger.info(f"✅ Response: {result.data['response'][:150]}...")
+        console.logger.info(f"🔧 Tools selected based on context: {result.data['tools_selected']}")
     else:
-        console.print(f"❌ Error: {result.message}")
+        console.logger.info(f"❌ Error: {result.message}")
     
     # Advanced Demo 3: Multi-modal interaction
-    console.print("\n[bold yellow]Advanced 3: Multi-Modal Interaction[/bold yellow]")
+    console.logger.info("\n[bold yellow]Advanced 3: Multi-Modal Interaction[/bold yellow]")
     
     # Simulate different types of interactions
     interactions = [
@@ -284,7 +286,7 @@ async def demo_advanced_features():
     ]
     
     for interaction_type, content in interactions:
-        console.print(f"\n[blue]{interaction_type.upper()}:[/blue] {content}")
+        console.logger.info(f"\n[blue]{interaction_type.upper()}:[/blue] {content}")
         
         result = await agent.execute(
             operation="process_input",
@@ -293,15 +295,15 @@ async def demo_advanced_features():
         )
         
         if result.success:
-            console.print(f"✅ Processed {interaction_type} interaction")
+            console.logger.info(f"✅ Processed {interaction_type} interaction")
         else:
-            console.print(f"❌ Error: {result.message}")
+            console.logger.info(f"❌ Error: {result.message}")
 
 
 def main():
     """Main demo runner"""
-    console.print("[bold red]🔥 Unified Agent System - Enhanced BASED GOD CLI[/bold red]")
-    console.print("Demonstrating the unified brain approach to AI agents")
+    console.logger.info("[bold red]🔥 Unified Agent System - Enhanced BASED GOD CLI[/bold red]")
+    console.logger.info("Demonstrating the unified brain approach to AI agents")
     
     # Run demos
     asyncio.run(demo_unified_agent())

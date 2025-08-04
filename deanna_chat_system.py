@@ -1,3 +1,5 @@
+import logging
+logger = logging.getLogger(__name__)
 #!/usr/bin/env python3
 """
 Deanna Chat System
@@ -248,20 +250,20 @@ class DeannaChatSystem:
 
 def main():
     """Main chat interface"""
-    print("🎭 Deanna Chat System")
-    print("=" * 50)
-    print("Type 'quit' to exit, 'status' for system info, 'clear' to clear history")
-    print()
+    logger.info("🎭 Deanna Chat System")
+    logger.info("=" * 50)
+    logger.info("Type 'quit' to exit, 'status' for system info, 'clear' to clear history")
+    logger.info()
     
     # Initialize chat system
     chat_system = DeannaChatSystem()
     
     # Get system status
     status = chat_system.get_system_status()
-    print(f"System initialized: {status.get('persona_name', 'Unknown')} ({status.get('nickname', 'Unknown')})")
-    print(f"Memory entries: {status.get('memory_stats', {}).get('total_entries', 0)}")
-    print(f"Embedding model: {status.get('embedding_info', {}).get('model_name', 'Unknown')}")
-    print()
+    logger.info(f"System initialized: {status.get('persona_name', 'Unknown')} ({status.get('nickname', 'Unknown')})")
+    logger.info(f"Memory entries: {status.get('memory_stats', {}).get('total_entries', 0)}")
+    logger.info(f"Embedding model: {status.get('embedding_info', {}).get('model_name', 'Unknown')}")
+    logger.info()
     
     # Chat loop
     while True:
@@ -269,37 +271,37 @@ def main():
             user_input = input("You: ").strip()
             
             if user_input.lower() == 'quit':
-                print("Goodbye! 👋")
+                logger.info("Goodbye! 👋")
                 break
             elif user_input.lower() == 'status':
                 status = chat_system.get_system_status()
-                print(f"\nSystem Status:")
-                print(f"   Session ID: {status.get('session_id', 'Unknown')}")
-                print(f"   Chat History: {status.get('chat_history_length', 0)} exchanges")
-                print(f"   Memory Entries: {status.get('memory_stats', {}).get('total_entries', 0)}")
-                print(f"   Embedding Model: {status.get('embedding_info', {}).get('model_name', 'Unknown')}")
-                print(f"   Device: {status.get('embedding_info', {}).get('device', 'Unknown')}")
-                print()
+                logger.info(f"\nSystem Status:")
+                logger.info(f"   Session ID: {status.get('session_id', 'Unknown')}")
+                logger.info(f"   Chat History: {status.get('chat_history_length', 0)} exchanges")
+                logger.info(f"   Memory Entries: {status.get('memory_stats', {}).get('total_entries', 0)}")
+                logger.info(f"   Embedding Model: {status.get('embedding_info', {}).get('model_name', 'Unknown')}")
+                logger.info(f"   Device: {status.get('embedding_info', {}).get('device', 'Unknown')}")
+                logger.info()
                 continue
             elif user_input.lower() == 'clear':
                 chat_system.clear_chat_history()
-                print("Chat history cleared! 🗑️")
-                print()
+                logger.info("Chat history cleared! 🗑️")
+                logger.info()
                 continue
             elif not user_input:
                 continue
             
             # Get response
             response = chat_system.chat(user_input)
-            print(f"Deanna: {response}")
-            print()
+            logger.info(f"Deanna: {response}")
+            logger.info()
             
         except KeyboardInterrupt:
-            print("\nGoodbye! 👋")
+            logger.info("\nGoodbye! 👋")
             break
         except Exception as e:
-            print(f"Error: {e}")
-            print("Please try again.")
+            logger.info(f"Error: {e}")
+            logger.info("Please try again.")
 
 if __name__ == "__main__":
     main() 

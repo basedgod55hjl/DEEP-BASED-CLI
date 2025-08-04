@@ -1,3 +1,5 @@
+import logging
+logger = logging.getLogger(__name__)
 #!/usr/bin/env python3
 """
 Core Features Test
@@ -40,7 +42,7 @@ class CoreFeaturesTester:
     
     async def test_configuration(self):
         """Test configuration system"""
-        self.console.print("\n[bold green]Testing Configuration System...[/bold green]")
+        self.console.logger.info("\n[bold green]Testing Configuration System...[/bold green]")
         
         try:
             # Test config retrieval
@@ -50,9 +52,9 @@ class CoreFeaturesTester:
             required_sections = ['database', 'llm', 'persona', 'rag', 'memory']
             for section in required_sections:
                 if hasattr(config, section):
-                    self.console.print(f"✅ {section} configuration available")
+                    self.console.logger.info(f"✅ {section} configuration available")
                 else:
-                    self.console.print(f"❌ {section} configuration missing")
+                    self.console.logger.info(f"❌ {section} configuration missing")
             
             self.test_results.append({
                 "test": "Configuration System",
@@ -61,7 +63,7 @@ class CoreFeaturesTester:
             })
             
         except Exception as e:
-            self.console.print(f"❌ Configuration test failed: {str(e)}")
+            self.console.logger.info(f"❌ Configuration test failed: {str(e)}")
             self.test_results.append({
                 "test": "Configuration System",
                 "status": "FAIL",
@@ -70,7 +72,7 @@ class CoreFeaturesTester:
     
     async def test_simple_embeddings(self):
         """Test simple embedding system"""
-        self.console.print("\n[bold green]Testing Simple Embedding System...[/bold green]")
+        self.console.logger.info("\n[bold green]Testing Simple Embedding System...[/bold green]")
         
         try:
             # Test basic embedding
@@ -83,8 +85,8 @@ class CoreFeaturesTester:
             result = await self.embedding_tool.embed_texts(test_texts)
             
             if result.success:
-                self.console.print(f"✅ Simple embedding successful: {result.data['total_generated']} embeddings")
-                self.console.print(f"   Dimension: {result.data['embedding_dimension']}")
+                self.console.logger.info(f"✅ Simple embedding successful: {result.data['total_generated']} embeddings")
+                self.console.logger.info(f"   Dimension: {result.data['embedding_dimension']}")
                 
                 # Test similarity
                 embeddings = result.data['embeddings']
@@ -95,9 +97,9 @@ class CoreFeaturesTester:
                     )
                     
                     if similarity_result.success:
-                        self.console.print(f"✅ Similarity computation: {similarity_result.data['similarity']:.4f}")
+                        self.console.logger.info(f"✅ Similarity computation: {similarity_result.data['similarity']:.4f}")
                     else:
-                        self.console.print(f"❌ Similarity computation failed")
+                        self.console.logger.info(f"❌ Similarity computation failed")
                 
                 self.test_results.append({
                     "test": "Simple Embedding System",
@@ -105,7 +107,7 @@ class CoreFeaturesTester:
                     "message": f"Generated {result.data['total_generated']} embeddings successfully"
                 })
             else:
-                self.console.print(f"❌ Simple embedding failed: {result.message}")
+                self.console.logger.info(f"❌ Simple embedding failed: {result.message}")
                 self.test_results.append({
                     "test": "Simple Embedding System",
                     "status": "FAIL",
@@ -113,7 +115,7 @@ class CoreFeaturesTester:
                 })
                 
         except Exception as e:
-            self.console.print(f"❌ Simple embedding test failed: {str(e)}")
+            self.console.logger.info(f"❌ Simple embedding test failed: {str(e)}")
             self.test_results.append({
                 "test": "Simple Embedding System",
                 "status": "FAIL",
@@ -122,7 +124,7 @@ class CoreFeaturesTester:
     
     async def test_sql_database(self):
         """Test SQL database functionality"""
-        self.console.print("\n[bold green]Testing SQL Database System...[/bold green]")
+        self.console.logger.info("\n[bold green]Testing SQL Database System...[/bold green]")
         
         try:
             # Test persona storage
@@ -140,7 +142,7 @@ class CoreFeaturesTester:
             )
             
             if result.success:
-                self.console.print(f"✅ Persona storage successful")
+                self.console.logger.info(f"✅ Persona storage successful")
                 
                 # Test persona retrieval
                 retrieve_result = await self.sql_db.execute(
@@ -149,21 +151,21 @@ class CoreFeaturesTester:
                 )
                 
                 if retrieve_result.success:
-                    self.console.print(f"✅ Persona retrieval successful")
+                    self.console.logger.info(f"✅ Persona retrieval successful")
                     self.test_results.append({
                         "test": "SQL Database System",
                         "status": "PASS",
                         "message": "Persona storage and retrieval working"
                     })
                 else:
-                    self.console.print(f"❌ Persona retrieval failed: {retrieve_result.message}")
+                    self.console.logger.info(f"❌ Persona retrieval failed: {retrieve_result.message}")
                     self.test_results.append({
                         "test": "SQL Database System",
                         "status": "FAIL",
                         "message": retrieve_result.message
                     })
             else:
-                self.console.print(f"❌ Persona storage failed: {result.message}")
+                self.console.logger.info(f"❌ Persona storage failed: {result.message}")
                 self.test_results.append({
                     "test": "SQL Database System",
                     "status": "FAIL",
@@ -171,7 +173,7 @@ class CoreFeaturesTester:
                 })
                 
         except Exception as e:
-            self.console.print(f"❌ SQL database test failed: {str(e)}")
+            self.console.logger.info(f"❌ SQL database test failed: {str(e)}")
             self.test_results.append({
                 "test": "SQL Database System",
                 "status": "FAIL",
@@ -180,7 +182,7 @@ class CoreFeaturesTester:
     
     async def test_fim_completion(self):
         """Test FIM completion functionality"""
-        self.console.print("\n[bold green]Testing FIM Completion...[/bold green]")
+        self.console.logger.info("\n[bold green]Testing FIM Completion...[/bold green]")
         
         try:
             # Test Python FIM completion
@@ -194,15 +196,15 @@ class CoreFeaturesTester:
             )
             
             if result.success:
-                self.console.print(f"✅ FIM completion successful")
-                self.console.print(f"   Generated: {result.data['completion'][:50]}...")
+                self.console.logger.info(f"✅ FIM completion successful")
+                self.console.logger.info(f"   Generated: {result.data['completion'][:50]}...")
                 self.test_results.append({
                     "test": "FIM Completion",
                     "status": "PASS",
                     "message": "FIM completion working correctly"
                 })
             else:
-                self.console.print(f"❌ FIM completion failed: {result.message}")
+                self.console.logger.info(f"❌ FIM completion failed: {result.message}")
                 self.test_results.append({
                     "test": "FIM Completion",
                     "status": "FAIL",
@@ -210,7 +212,7 @@ class CoreFeaturesTester:
                 })
                 
         except Exception as e:
-            self.console.print(f"❌ FIM completion test failed: {str(e)}")
+            self.console.logger.info(f"❌ FIM completion test failed: {str(e)}")
             self.test_results.append({
                 "test": "FIM Completion",
                 "status": "FAIL",
@@ -219,7 +221,7 @@ class CoreFeaturesTester:
     
     async def test_prefix_completion(self):
         """Test prefix completion functionality"""
-        self.console.print("\n[bold green]Testing Prefix Completion...[/bold green]")
+        self.console.logger.info("\n[bold green]Testing Prefix Completion...[/bold green]")
         
         try:
             # Test text prefix completion
@@ -231,15 +233,15 @@ class CoreFeaturesTester:
             )
             
             if result.success:
-                self.console.print(f"✅ Prefix completion successful")
-                self.console.print(f"   Generated: {result.data['completion'][:50]}...")
+                self.console.logger.info(f"✅ Prefix completion successful")
+                self.console.logger.info(f"   Generated: {result.data['completion'][:50]}...")
                 self.test_results.append({
                     "test": "Prefix Completion",
                     "status": "PASS",
                     "message": "Prefix completion working correctly"
                 })
             else:
-                self.console.print(f"❌ Prefix completion failed: {result.message}")
+                self.console.logger.info(f"❌ Prefix completion failed: {result.message}")
                 self.test_results.append({
                     "test": "Prefix Completion",
                     "status": "FAIL",
@@ -247,7 +249,7 @@ class CoreFeaturesTester:
                 })
                 
         except Exception as e:
-            self.console.print(f"❌ Prefix completion test failed: {str(e)}")
+            self.console.logger.info(f"❌ Prefix completion test failed: {str(e)}")
             self.test_results.append({
                 "test": "Prefix Completion",
                 "status": "FAIL",
@@ -256,7 +258,7 @@ class CoreFeaturesTester:
     
     def print_summary(self):
         """Print test summary"""
-        self.console.print("\n[bold cyan]Test Summary[/bold cyan]")
+        self.console.logger.info("\n[bold cyan]Test Summary[/bold cyan]")
         
         table = Table(title="Core Features Test Results")
         table.add_column("Test", style="cyan")
@@ -279,17 +281,17 @@ class CoreFeaturesTester:
             else:
                 failed += 1
         
-        self.console.print(table)
-        self.console.print(f"\n[bold]Results: {passed} passed, {failed} failed[/bold]")
+        self.console.logger.info(table)
+        self.console.logger.info(f"\n[bold]Results: {passed} passed, {failed} failed[/bold]")
         
         if failed == 0:
-            self.console.print("\n[bold green]🎉 All core features working correctly![/bold green]")
+            self.console.logger.info("\n[bold green]🎉 All core features working correctly![/bold green]")
         else:
-            self.console.print(f"\n[bold yellow]⚠️ {failed} tests failed, but core system is functional[/bold yellow]")
+            self.console.logger.info(f"\n[bold yellow]⚠️ {failed} tests failed, but core system is functional[/bold yellow]")
     
     async def run_all_tests(self):
         """Run all core feature tests"""
-        self.console.print(Panel(
+        self.console.logger.info(Panel(
             "[bold cyan]Core Features Test Suite[/bold cyan]\n"
             "Testing core functionality without external dependencies",
             title="[bold cyan]Core Features Test[/bold cyan]",
@@ -310,7 +312,7 @@ async def main():
     """Main test function"""
     console = Console()
     
-    console.print(Panel(
+    console.logger.info(Panel(
         "[bold cyan]Core Features Test Suite[/bold cyan]\n"
         "Testing core functionality without external dependencies",
         title="[bold cyan]Core Features Test[/bold cyan]",
@@ -321,7 +323,7 @@ async def main():
     tester = CoreFeaturesTester()
     await tester.run_all_tests()
     
-    console.print("\n[bold green]Core features test completed![/bold green]")
+    console.logger.info("\n[bold green]Core features test completed![/bold green]")
 
 if __name__ == "__main__":
     asyncio.run(main()) 

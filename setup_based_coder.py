@@ -1,3 +1,5 @@
+import logging
+logger = logging.getLogger(__name__)
 #!/usr/bin/env python3
 """
 🚀 BASED CODER Setup Script
@@ -63,7 +65,7 @@ class BasedCoderSetup:
 ║                                                                              ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
         """
-        print(banner)
+        logger.info(banner)
     
     def check_python_version(self) -> bool:
         """Check if Python version is compatible"""
@@ -435,23 +437,23 @@ python "%DIR%based_coder_cli.py" %*
     
     def print_setup_summary(self):
         """Print setup summary"""
-        print("\n" + "="*80)
-        print("🚀 BASED CODER Setup Summary")
-        print("="*80)
+        logger.info("\n" + "="*80)
+        logger.info("🚀 BASED CODER Setup Summary")
+        logger.info("="*80)
         
         for step, status in self.setup_status.items():
             icon = "✅" if status else "❌"
             step_name = step.replace('_', ' ').title()
-            print(f"{icon} {step_name}")
+            logger.info(f"{icon} {step_name}")
         
-        print("\n" + "="*80)
-        print("🎯 Quick Start Commands:")
-        print("="*80)
-        print("Python CLI:  python based_coder_cli.py")
-        print("Node.js CLI: node dist/cli/BasedCoderCLI.js")
-        print("Shell:       ./run_based_coder.sh")
-        print("Windows:     run_based_coder.bat")
-        print("\n" + "="*80)
+        logger.info("\n" + "="*80)
+        logger.info("🎯 Quick Start Commands:")
+        logger.info("="*80)
+        logger.info("Python CLI:  python based_coder_cli.py")
+        logger.info("Node.js CLI: node dist/cli/BasedCoderCLI.js")
+        logger.info("Shell:       ./run_based_coder.sh")
+        logger.info("Windows:     run_based_coder.bat")
+        logger.info("\n" + "="*80)
     
     async def run_complete_setup(self):
         """Run complete setup process"""
@@ -523,10 +525,10 @@ async def main():
     success = await setup.run_complete_setup()
     
     if success:
-        print("\n🎉 Setup completed successfully! You can now use BASED CODER CLI.")
-        print("💡 Try: python based_coder_cli.py")
+        logger.info("\n🎉 Setup completed successfully! You can now use BASED CODER CLI.")
+        logger.info("💡 Try: python based_coder_cli.py")
     else:
-        print("\n❌ Setup failed. Please check the logs and try again.")
+        logger.info("\n❌ Setup failed. Please check the logs and try again.")
         sys.exit(1)
 
 if __name__ == "__main__":

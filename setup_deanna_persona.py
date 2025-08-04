@@ -1,3 +1,5 @@
+import logging
+logger = logging.getLogger(__name__)
 #!/usr/bin/env python3
 """
 Setup Deanna Persona from DEANNA_MEMORY.JSON
@@ -14,16 +16,16 @@ def load_deanna_memory():
     json_path = "data/DEANNA_MEMORY.JSON"
     
     if not os.path.exists(json_path):
-        print(f"Error: {json_path} not found!")
+        logger.info(f"Error: {json_path} not found!")
         return None
     
     try:
         with open(json_path, 'r', encoding='utf-8') as f:
             deanna_data = json.load(f)
-        print(f"Successfully loaded {json_path}")
+        logger.info(f"Successfully loaded {json_path}")
         return deanna_data
     except Exception as e:
-        print(f"Error loading {json_path}: {e}")
+        logger.info(f"Error loading {json_path}: {e}")
         return None
 
 def setup_database():
@@ -102,7 +104,7 @@ def insert_deanna_persona(conn, cursor, deanna_data):
     ))
     
     persona_id = cursor.lastrowid
-    print(f"Deanna persona configured with ID: {persona_id}")
+    logger.info(f"Deanna persona configured with ID: {persona_id}")
     
     return persona_id
 
@@ -162,11 +164,11 @@ def insert_memory_entries(conn, cursor, persona_id, deanna_data):
             'responses,preferences'
         ))
     
-    print("Memory entries inserted successfully")
+    logger.info("Memory entries inserted successfully")
 
 def main():
     """Main function to set up Deanna persona"""
-    print("Setting up Deanna persona from DEANNA_MEMORY.JSON...")
+    logger.info("Setting up Deanna persona from DEANNA_MEMORY.JSON...")
     
     # Load the JSON data
     deanna_data = load_deanna_memory()
@@ -186,13 +188,13 @@ def main():
         # Commit changes
         conn.commit()
         
-        print("✅ Deanna persona successfully configured!")
-        print(f"📊 Persona ID: {persona_id}")
-        print("🎭 Using original DEANNA_MEMORY.JSON configuration")
-        print("💾 All data stored in deepcli_database.db")
+        logger.info("✅ Deanna persona successfully configured!")
+        logger.info(f"📊 Persona ID: {persona_id}")
+        logger.info("🎭 Using original DEANNA_MEMORY.JSON configuration")
+        logger.info("💾 All data stored in deepcli_database.db")
         
     except Exception as e:
-        print(f"❌ Error setting up persona: {e}")
+        logger.info(f"❌ Error setting up persona: {e}")
         conn.rollback()
     finally:
         conn.close()

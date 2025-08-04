@@ -1,3 +1,5 @@
+import logging
+logger = logging.getLogger(__name__)
 """
 SQL Database Tool - SQLite Integration for DEEP-CLI
 Provides persistent storage for conversations, personas, memory, and more
@@ -196,7 +198,7 @@ class SQLDatabaseTool(BaseTool):
                 self._initialized = True
                 
         except Exception as e:
-            self.console.print(f"[red]Database initialization failed: {str(e)}[/red]")
+            self.console.logger.info(f"[red]Database initialization failed: {str(e)}[/red]")
             self._initialized = False
     
     async def _create_deanna_persona(self, db):
@@ -240,10 +242,10 @@ class SQLDatabaseTool(BaseTool):
                       deanna.knowledge_base, deanna.conversation_style, deanna.created_at, deanna.updated_at))
                 
                 await db.commit()
-                self.console.print("[green]Created Deanna persona[/green]")
+                self.console.logger.info("[green]Created Deanna persona[/green]")
                 
         except Exception as e:
-            self.console.print(f"[yellow]Failed to create Deanna persona: {str(e)}[/yellow]")
+            self.console.logger.info(f"[yellow]Failed to create Deanna persona: {str(e)}[/yellow]")
     
     async def execute(self, **kwargs) -> ToolResponse:
         """Execute database operations"""
@@ -340,7 +342,7 @@ class SQLDatabaseTool(BaseTool):
             )
             
         except Exception as e:
-            self.console.print(f"[red]Failed to store conversation: {str(e)}[/red]")
+            self.console.logger.info(f"[red]Failed to store conversation: {str(e)}[/red]")
             return ToolResponse(
                 success=False,
                 data={"error": str(e)},
@@ -399,7 +401,7 @@ class SQLDatabaseTool(BaseTool):
                 )
                 
         except Exception as e:
-            self.console.print(f"[red]Failed to get conversation: {str(e)}[/red]")
+            self.console.logger.info(f"[red]Failed to get conversation: {str(e)}[/red]")
             return ToolResponse(
                 success=False,
                 data={"error": str(e)},
@@ -448,7 +450,7 @@ class SQLDatabaseTool(BaseTool):
                 )
                 
         except Exception as e:
-            self.console.print(f"[red]Failed to list conversations: {str(e)}[/red]")
+            self.console.logger.info(f"[red]Failed to list conversations: {str(e)}[/red]")
             return ToolResponse(
                 success=False,
                 data={"error": str(e)},
@@ -478,7 +480,7 @@ class SQLDatabaseTool(BaseTool):
             )
             
         except Exception as e:
-            self.console.print(f"[red]Failed to delete conversation: {str(e)}[/red]")
+            self.console.logger.info(f"[red]Failed to delete conversation: {str(e)}[/red]")
             return ToolResponse(
                 success=False,
                 data={"error": str(e)},

@@ -1,3 +1,5 @@
+import logging
+logger = logging.getLogger(__name__)
 #!/usr/bin/env python3
 """
 🚀 DeepSeek Coder Demo - Advanced Code Generation & Analysis
@@ -64,7 +66,7 @@ def calculate_fibonacci(n):
 
 # Test the function
 result = calculate_fibonacci(5)
-print(f"Fibonacci of 5 is: {result}")
+logger.info(f"Fibonacci of 5 is: {result}")
 """,
                     "language": "python",
                     "error_message": "RecursionError: maximum recursion depth exceeded"
@@ -84,7 +86,7 @@ def read_file(filename):
 
 # Usage
 data = read_file('test.txt')
-print(data)
+logger.info(data)
 """,
                     "language": "python"
                 }
@@ -105,7 +107,7 @@ def process_data(data_list):
 # Test
 data = [1, 2, 3, 4, 5]
 result = process_data(data)
-print(result)
+logger.info(result)
 """,
                     "language": "python"
                 }
@@ -147,7 +149,7 @@ def bubble_sort(arr):
 # Test
 numbers = [64, 34, 25, 12, 22, 11, 90]
 sorted_numbers = bubble_sort(numbers)
-print(sorted_numbers)
+logger.info(sorted_numbers)
 """,
                     "language": "python"
                 }
@@ -175,7 +177,7 @@ def binary_search(arr, target):
 # Test
 sorted_array = [1, 3, 5, 7, 9, 11, 13, 15]
 result = binary_search(sorted_array, 7)
-print(f"Found at index: {result}")
+logger.info(f"Found at index: {result}")
 """,
                     "language": "python"
                 }
@@ -213,7 +215,7 @@ async def fetch_multiple_urls(urls):
 # Usage
 urls = ['https://httpbin.org/delay/1', 'https://httpbin.org/delay/2']
 results = asyncio.run(fetch_multiple_urls(urls))
-print(f"Fetched {len(results)} pages")
+logger.info(f"Fetched {len(results)} pages")
 """,
                     "language": "python",
                     "description": "Async web scraping with aiohttp",
@@ -281,9 +283,9 @@ radius = 5
 area = calculate_circle_area(radius)
 circumference = calculate_circle_circumference(radius)
 
-print(f"Circle with radius {radius}:")
-print(f"Area: {area:.2f}")
-print(f"Circumference: {circumference:.2f}")
+logger.info(f"Circle with radius {radius}:")
+logger.info(f"Area: {area:.2f}")
+logger.info(f"Circumference: {circumference:.2f}")
 """,
                     "language": "python"
                 }
@@ -313,22 +315,22 @@ print(f"Circumference: {circumference:.2f}")
 ║                                                                              ║
 ╚══════════════════════════════════════════════════════════════════════════════╝{Style.RESET_ALL}
         """
-        print(banner)
+        logger.info(banner)
     
     async def run_demo(self):
         """Run the DeepSeek Coder demo"""
         self.print_demo_banner()
         
-        print(f"{Fore.GREEN}🎯 Initializing DeepSeek Coder Tool...{Style.RESET_ALL}")
+        logger.info(f"{Fore.GREEN}🎯 Initializing DeepSeek Coder Tool...{Style.RESET_ALL}")
         await self.coder_tool.initialize()
         
-        print(f"{Fore.GREEN}✅ DeepSeek Coder Tool initialized successfully!{Style.RESET_ALL}")
-        print(f"{Fore.YELLOW}🚀 Starting demo...{Style.RESET_ALL}\n")
+        logger.info(f"{Fore.GREEN}✅ DeepSeek Coder Tool initialized successfully!{Style.RESET_ALL}")
+        logger.info(f"{Fore.YELLOW}🚀 Starting demo...{Style.RESET_ALL}\n")
         
         # Run demo examples
         for i, example in enumerate(self.demo_examples, 1):
-            print(f"{Fore.CYAN}📋 Demo {i}/{len(self.demo_examples)}: {example['title']}{Style.RESET_ALL}")
-            print(f"{Fore.YELLOW}📝 {example['description']}{Style.RESET_ALL}")
+            logger.info(f"{Fore.CYAN}📋 Demo {i}/{len(self.demo_examples)}: {example['title']}{Style.RESET_ALL}")
+            logger.info(f"{Fore.YELLOW}📝 {example['description']}{Style.RESET_ALL}")
             
             try:
                 # Execute the operation
@@ -338,95 +340,95 @@ print(f"Circumference: {circumference:.2f}")
                 )
                 
                 # Display results
-                print(f"{Fore.GREEN}✅ Operation completed successfully!{Style.RESET_ALL}")
+                logger.info(f"{Fore.GREEN}✅ Operation completed successfully!{Style.RESET_ALL}")
                 
                 if result.success:
                     # Format output based on operation type
                     if example['operation'] == 'code_generation':
-                        print(f"{Fore.WHITE}Generated Code:{Style.RESET_ALL}")
-                        print(f"{Fore.WHITE}{result.data.get('code', '')}{Style.RESET_ALL}")
+                        logger.info(f"{Fore.WHITE}Generated Code:{Style.RESET_ALL}")
+                        logger.info(f"{Fore.WHITE}{result.data.get('code', '')}{Style.RESET_ALL}")
                     
                     elif example['operation'] == 'code_debugging':
-                        print(f"{Fore.WHITE}Fixed Code:{Style.RESET_ALL}")
-                        print(f"{Fore.WHITE}{result.data.get('fixed_code', '')}{Style.RESET_ALL}")
+                        logger.info(f"{Fore.WHITE}Fixed Code:{Style.RESET_ALL}")
+                        logger.info(f"{Fore.WHITE}{result.data.get('fixed_code', '')}{Style.RESET_ALL}")
                     
                     elif example['operation'] == 'self_healing':
-                        print(f"{Fore.WHITE}Self-Healed Code:{Style.RESET_ALL}")
-                        print(f"{Fore.WHITE}{result.data.get('healed_code', '')}{Style.RESET_ALL}")
+                        logger.info(f"{Fore.WHITE}Self-Healed Code:{Style.RESET_ALL}")
+                        logger.info(f"{Fore.WHITE}{result.data.get('healed_code', '')}{Style.RESET_ALL}")
                     
                     elif example['operation'] == 'fim_completion':
-                        print(f"{Fore.WHITE}FIM Completion:{Style.RESET_ALL}")
-                        print(f"{Fore.WHITE}{result.data.get('completion', '')}{Style.RESET_ALL}")
+                        logger.info(f"{Fore.WHITE}FIM Completion:{Style.RESET_ALL}")
+                        logger.info(f"{Fore.WHITE}{result.data.get('completion', '')}{Style.RESET_ALL}")
                     
                     elif example['operation'] == 'web_search':
                         results = result.data.get('results', [])
-                        print(f"{Fore.WHITE}Search Results:{Style.RESET_ALL}")
+                        logger.info(f"{Fore.WHITE}Search Results:{Style.RESET_ALL}")
                         for j, res in enumerate(results[:3], 1):
-                            print(f"{Fore.WHITE}  {j}. {res.title}{Style.RESET_ALL}")
-                            print(f"{Fore.WHITE}     {res.url}{Style.RESET_ALL}")
-                            print(f"{Fore.WHITE}     {res.snippet[:100]}...{Style.RESET_ALL}\n")
+                            logger.info(f"{Fore.WHITE}  {j}. {res.title}{Style.RESET_ALL}")
+                            logger.info(f"{Fore.WHITE}     {res.url}{Style.RESET_ALL}")
+                            logger.info(f"{Fore.WHITE}     {res.snippet[:100]}...{Style.RESET_ALL}\n")
                     
                     elif example['operation'] == 'web_scraping':
                         data = result.data.get('scraped_data', {})
-                        print(f"{Fore.WHITE}Scraped Data:{Style.RESET_ALL}")
+                        logger.info(f"{Fore.WHITE}Scraped Data:{Style.RESET_ALL}")
                         if 'text' in data:
-                            print(f"{Fore.WHITE}Text: {data['text'][:200]}...{Style.RESET_ALL}")
+                            logger.info(f"{Fore.WHITE}Text: {data['text'][:200]}...{Style.RESET_ALL}")
                         if 'links' in data:
-                            print(f"{Fore.WHITE}Links found: {len(data['links'])}{Style.RESET_ALL}")
+                            logger.info(f"{Fore.WHITE}Links found: {len(data['links'])}{Style.RESET_ALL}")
                     
                     elif example['operation'] == 'code_analysis':
                         analysis = result.data.get('analysis', {})
-                        print(f"{Fore.WHITE}Code Analysis:{Style.RESET_ALL}")
-                        print(f"{Fore.WHITE}Language: {analysis.language}{Style.RESET_ALL}")
-                        print(f"{Fore.WHITE}Complexity: {analysis.complexity}{Style.RESET_ALL}")
+                        logger.info(f"{Fore.WHITE}Code Analysis:{Style.RESET_ALL}")
+                        logger.info(f"{Fore.WHITE}Language: {analysis.language}{Style.RESET_ALL}")
+                        logger.info(f"{Fore.WHITE}Complexity: {analysis.complexity}{Style.RESET_ALL}")
                         if analysis.issues:
-                            print(f"{Fore.WHITE}Issues: {', '.join(analysis.issues)}{Style.RESET_ALL}")
+                            logger.info(f"{Fore.WHITE}Issues: {', '.join(analysis.issues)}{Style.RESET_ALL}")
                         if analysis.suggestions:
-                            print(f"{Fore.WHITE}Suggestions: {', '.join(analysis.suggestions)}{Style.RESET_ALL}")
+                            logger.info(f"{Fore.WHITE}Suggestions: {', '.join(analysis.suggestions)}{Style.RESET_ALL}")
                     
                     elif example['operation'] == 'logic_analysis':
-                        print(f"{Fore.WHITE}Logic Analysis:{Style.RESET_ALL}")
-                        print(f"{Fore.WHITE}{result.data.get('analysis', '')}{Style.RESET_ALL}")
+                        logger.info(f"{Fore.WHITE}Logic Analysis:{Style.RESET_ALL}")
+                        logger.info(f"{Fore.WHITE}{result.data.get('analysis', '')}{Style.RESET_ALL}")
                     
                     elif example['operation'] == 'store_idea':
-                        print(f"{Fore.WHITE}Idea stored with ID: {result.data.get('idea_id', '')}{Style.RESET_ALL}")
+                        logger.info(f"{Fore.WHITE}Idea stored with ID: {result.data.get('idea_id', '')}{Style.RESET_ALL}")
                     
                     elif example['operation'] == 'store_code':
-                        print(f"{Fore.WHITE}Code stored with ID: {result.data.get('example_id', '')}{Style.RESET_ALL}")
+                        logger.info(f"{Fore.WHITE}Code stored with ID: {result.data.get('example_id', '')}{Style.RESET_ALL}")
                     
                     elif example['operation'] == 'learn_from_code':
-                        print(f"{Fore.WHITE}Learning Insights:{Style.RESET_ALL}")
-                        print(f"{Fore.WHITE}{result.data.get('insights', '')}{Style.RESET_ALL}")
+                        logger.info(f"{Fore.WHITE}Learning Insights:{Style.RESET_ALL}")
+                        logger.info(f"{Fore.WHITE}{result.data.get('insights', '')}{Style.RESET_ALL}")
                     
                     elif example['operation'] == 'run_code':
-                        print(f"{Fore.WHITE}Code Execution Result:{Style.RESET_ALL}")
-                        print(f"{Fore.WHITE}STDOUT: {result.data.get('stdout', '')}{Style.RESET_ALL}")
+                        logger.info(f"{Fore.WHITE}Code Execution Result:{Style.RESET_ALL}")
+                        logger.info(f"{Fore.WHITE}STDOUT: {result.data.get('stdout', '')}{Style.RESET_ALL}")
                         if result.data.get('stderr'):
-                            print(f"{Fore.WHITE}STDERR: {result.data.get('stderr', '')}{Style.RESET_ALL}")
+                            logger.info(f"{Fore.WHITE}STDERR: {result.data.get('stderr', '')}{Style.RESET_ALL}")
                     
                     else:
-                        print(f"{Fore.WHITE}Result: {json.dumps(result.data, indent=2)}{Style.RESET_ALL}")
+                        logger.info(f"{Fore.WHITE}Result: {json.dumps(result.data, indent=2)}{Style.RESET_ALL}")
                 
                 else:
-                    print(f"{Fore.RED}❌ Operation failed: {result.message}{Style.RESET_ALL}")
+                    logger.info(f"{Fore.RED}❌ Operation failed: {result.message}{Style.RESET_ALL}")
                 
             except Exception as e:
-                print(f"{Fore.RED}❌ Error: {str(e)}{Style.RESET_ALL}")
+                logger.info(f"{Fore.RED}❌ Error: {str(e)}{Style.RESET_ALL}")
             
-            print(f"{Fore.BLUE}{'='*80}{Style.RESET_ALL}\n")
+            logger.info(f"{Fore.BLUE}{'='*80}{Style.RESET_ALL}\n")
             
             # Small delay between demos
             await asyncio.sleep(2)
         
-        print(f"{Fore.GREEN}🎉 DeepSeek Coder Demo completed successfully!{Style.RESET_ALL}")
-        print(f"{Fore.YELLOW}💡 Try using these features in the main CLI: python based_coder_cli.py{Style.RESET_ALL}")
+        logger.info(f"{Fore.GREEN}🎉 DeepSeek Coder Demo completed successfully!{Style.RESET_ALL}")
+        logger.info(f"{Fore.YELLOW}💡 Try using these features in the main CLI: python based_coder_cli.py{Style.RESET_ALL}")
         
         # Show tool capabilities
         schema = self.coder_tool.get_schema()
-        print(f"\n{Fore.CYAN}🔧 DeepSeek Coder Capabilities:{Style.RESET_ALL}")
-        print(f"{Fore.WHITE}Supported Languages: {', '.join(schema['supported_languages'][:10])}...{Style.RESET_ALL}")
-        print(f"{Fore.WHITE}Search Engines: {', '.join(schema['search_engines'])}{Style.RESET_ALL}")
-        print(f"{Fore.WHITE}Operations: {', '.join(schema['operations'])}{Style.RESET_ALL}")
+        logger.info(f"\n{Fore.CYAN}🔧 DeepSeek Coder Capabilities:{Style.RESET_ALL}")
+        logger.info(f"{Fore.WHITE}Supported Languages: {', '.join(schema['supported_languages'][:10])}...{Style.RESET_ALL}")
+        logger.info(f"{Fore.WHITE}Search Engines: {', '.join(schema['search_engines'])}{Style.RESET_ALL}")
+        logger.info(f"{Fore.WHITE}Operations: {', '.join(schema['operations'])}{Style.RESET_ALL}")
 
 async def main():
     """Main demo function"""

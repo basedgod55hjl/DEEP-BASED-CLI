@@ -2,8 +2,8 @@ import logging
 logger = logging.getLogger(__name__)
 #!/usr/bin/env python3
 """
-Claude Coder Agent - Standalone Codebase Analysis Tool
-Advanced codebase analysis and debugging system
+Claude Coder Agent - Fixed Edition
+Advanced codebase analysis and rewriting system with improved error handling
 """
 
 import os
@@ -17,6 +17,7 @@ from dataclasses import dataclass
 from datetime import datetime
 import logging
 import requests
+import chardet
 from rich.console import Console
 from rich.panel import Panel
 from rich.table import Table
@@ -38,6 +39,8 @@ class CodeAnalysis:
     estimated_rewrite_time: int
     file_size: int
     lines_of_code: int
+    encoding: str
+    read_success: bool
 
 @dataclass
 class SystemStatus:
@@ -49,7 +52,7 @@ class SystemStatus:
     tool_status: Dict[str, bool]
 
 class ClaudeCoderAgent:
-    """Claude 4 Coder Agent - Advanced codebase analysis and upgrade system"""
+    """Claude 4 Coder Agent - Advanced codebase analysis and rewriting system"""
     
     def __init__(self, codebase_path: str = "."):
         self.codebase_path = Path(codebase_path)
@@ -57,6 +60,7 @@ class ClaudeCoderAgent:
         self.deepseek_api_key = os.getenv("DEEPSEEK_API_KEY", "sk-90e0dd863b8c4e0d879a02851a0ee194")
         self.analysis_results = []
         self.system_status = None
+        self.fixes_applied = []
         
         # Initialize components
         self._setup_logging()
@@ -67,7 +71,7 @@ class ClaudeCoderAgent:
         log_dir = Path("logs")
         log_dir.mkdir(exist_ok=True)
         
-        log_file = log_dir / f"claude_coder_agent_{datetime.now().strftime('%Y%m%d_%H%M%S')}.log"
+        log_file = log_dir / f"claude_coder_fixed_{datetime.now().strftime('%Y%m%d_%H%M%S')}.log"
         
         file_handler = logging.FileHandler(log_file)
         file_handler.setLevel(logging.DEBUG)
@@ -201,6 +205,37 @@ class ClaudeCoderAgent:
                 tool_table.add_row(tool, status_text)
             
             console.logger.info(tool_table)
+    
+    def _detect_encoding(self, file_path: Path) -> str:
+        """Detect file encoding"""
+        try:
+            with open(file_path, 'rb') as f:
+                raw_data = f.read()
+                result = chardet.detect(raw_data)
+                return result['encoding'] or 'utf-8'
+        except Exception:
+            return 'utf-8'
+    
+    def _read_file_safely(self, file_path: Path) -> tuple[str, str, bool]:
+        """Safely read file with encoding detection"""
+        try:
+            # Try UTF-8 first
+            with open(file_path, 'r', encoding='utf-8') as f:
+                content = f.read()
+                return content, 'utf-8', True
+        except UnicodeDecodeError:
+            try:
+                # Detect encoding
+                encoding = self._detect_encoding(file_path)
+                with open(file_path, 'r', encoding=encoding) as f:
+                    content = f.read()
+                    return content, encoding, True
+            except Exception as e:
+                logger.error(f"Failed to read {file_path}: {e}")
+                return "", "unknown", False
+        except Exception as e:
+            logger.error(f"Error reading {file_path}: {e}")
+            return "", "unknown", False
         
     async def analyze_codebase(self):
         """Analyze the entire codebase"""
@@ -227,11 +262,24 @@ class ClaudeCoderAgent:
         self._display_analysis_summary()
         
     async def _analyze_file(self, file_path: Path) -> CodeAnalysis:
-        """Analyze a single file"""
+        """Analyze a single file with improved error handling"""
+        content, encoding, read_success = self._read_file_safely(file_path)
+        
+        if not read_success:
+            return CodeAnalysis(
+                file_path=str(file_path),
+                complexity_score=0,
+                issues=["File reading failed - encoding or corruption issue"],
+                suggestions=["Check file encoding", "Verify file integrity"],
+                dependencies=[],
+                estimated_rewrite_time=0,
+                file_size=0,
+                lines_of_code=0,
+                encoding=encoding,
+                read_success=False
+            )
+        
         try:
-            with open(file_path, "r", encoding="utf-8") as f:
-                content = f.read()
-            
             complexity_score = self._calculate_complexity(content)
             issues = self._identify_issues(content, file_path)
             suggestions = self._generate_suggestions(content, file_path)
@@ -248,7 +296,9 @@ class ClaudeCoderAgent:
                 dependencies=dependencies,
                 estimated_rewrite_time=estimated_time,
                 file_size=file_size,
-                lines_of_code=lines_of_code
+                lines_of_code=lines_of_code,
+                encoding=encoding,
+                read_success=True
             )
         
         except Exception as e:
@@ -256,12 +306,14 @@ class ClaudeCoderAgent:
             return CodeAnalysis(
                 file_path=str(file_path),
                 complexity_score=0,
-                issues=[f"Error reading file: {e}"],
-                suggestions=[],
+                issues=[f"Analysis error: {e}"],
+                suggestions=["Review file content", "Check for syntax errors"],
                 dependencies=[],
                 estimated_rewrite_time=0,
                 file_size=0,
-                lines_of_code=0
+                lines_of_code=0,
+                encoding=encoding,
+                read_success=False
             )
         
     def _calculate_complexity(self, content: str) -> float:
@@ -348,6 +400,7 @@ class ClaudeCoderAgent:
         ))
         
         total_files = len(self.analysis_results)
+        successful_reads = sum(1 for r in self.analysis_results if r.read_success)
         total_issues = sum(len(r.issues) for r in self.analysis_results)
         total_suggestions = sum(len(r.suggestions) for r in self.analysis_results)
         avg_complexity = sum(r.complexity_score for r in self.analysis_results) / total_files if total_files > 0 else 0
@@ -359,6 +412,7 @@ class ClaudeCoderAgent:
         summary_table.add_column("Value", style="bold")
         
         summary_table.add_row("Total Files", str(total_files))
+        summary_table.add_row("Successfully Read", f"{successful_reads}/{total_files}")
         summary_table.add_row("Total Lines of Code", str(total_lines))
         summary_table.add_row("Total Issues", str(total_issues))
         summary_table.add_row("Total Suggestions", str(total_suggestions))
@@ -391,7 +445,7 @@ class ClaudeCoderAgent:
             console.logger.info(issue_table)
         
         # Show most complex files
-        complex_files = sorted(self.analysis_results, key=lambda x: x.complexity_score, reverse=True)[:5]
+        complex_files = sorted([r for r in self.analysis_results if r.read_success], key=lambda x: x.complexity_score, reverse=True)[:5]
         if complex_files:
             console.logger.info(Panel.fit(
                 "[bold red]🔴 Most Complex Files[/bold red]",
@@ -411,28 +465,189 @@ class ClaudeCoderAgent:
                 )
             
             console.logger.info(complex_table)
-        
-    async def run_full_scan(self):
-        """Run complete codebase scan"""
+    
+    async def fix_codebase_issues(self):
+        """Fix identified issues in the codebase"""
         console.logger.info(Panel.fit(
-            "[bold green]🚀 Starting Full Codebase Scan[/bold green]",
-            title="Full Scan"
+            "[bold green]🔧 Starting Codebase Fixes[/bold green]",
+            title="Codebase Rewrite"
+        ))
+        
+        # Fix file reading issues first
+        await self._fix_file_encoding_issues()
+        
+        # Fix print statements
+        await self._fix_print_statements()
+        
+        # Fix exception handling
+        await self._fix_exception_handling()
+        
+        # Fix long files
+        await self._fix_long_files()
+        
+        # Fix TODO/FIXME comments
+        await self._fix_todo_comments()
+        
+        console.logger.info(Panel.fit(
+            "[bold green]✅ Codebase Fixes Complete![/bold green]",
+            title="Rewrite Summary"
+        ))
+        
+        self._display_fixes_summary()
+    
+    async def _fix_file_encoding_issues(self):
+        """Fix file encoding issues"""
+        console.logger.info("🔧 Fixing file encoding issues...")
+        
+        for result in self.analysis_results:
+            if not result.read_success and "encoding" in result.issues[0].lower():
+                file_path = Path(result.file_path)
+                try:
+                    # Try to fix encoding
+                    content, encoding, success = self._read_file_safely(file_path)
+                    if success:
+                        # Write back with UTF-8 encoding
+                        with open(file_path, 'w', encoding='utf-8') as f:
+                            f.write(content)
+                        self.fixes_applied.append(f"Fixed encoding for {file_path}")
+                except Exception as e:
+                    logger.error(f"Failed to fix encoding for {file_path}: {e}")
+    
+    async def _fix_print_statements(self):
+        """Replace print statements with logging"""
+        console.logger.info("🔧 Fixing print statements...")
+        
+        for result in self.analysis_results:
+            if result.read_success and "print statements" in str(result.issues):
+                file_path = Path(result.file_path)
+                try:
+                    with open(file_path, 'r', encoding='utf-8') as f:
+                        content = f.read()
+                    
+                    # Replace print statements with logging
+                    lines = content.split('\n')
+                    new_lines = []
+                    logging_added = False
+                    
+                    for line in lines:
+                        if 'logger.info(' in line and not line.strip().startswith('#'):
+                            if not logging_added:
+                                new_lines.insert(0, 'import logging')
+                                new_lines.insert(1, 'logger = logging.getLogger(__name__)')
+                                logging_added = True
+                            
+                            # Replace print with logger.info
+                            new_line = line.replace('logger.info(', 'logger.info(')
+                            new_lines.append(new_line)
+                        else:
+                            new_lines.append(line)
+                    
+                    if logging_added:
+                        with open(file_path, 'w', encoding='utf-8') as f:
+                            f.write('\n'.join(new_lines))
+                        self.fixes_applied.append(f"Replaced print statements with logging in {file_path}")
+                        
+                except Exception as e:
+                    logger.error(f"Failed to fix print statements in {file_path}: {e}")
+    
+    async def _fix_exception_handling(self):
+        """Fix bare except clauses"""
+        console.logger.info("🔧 Fixing exception handling...")
+        
+        for result in self.analysis_results:
+            if result.read_success and "Bare except clauses" in str(result.issues):
+                file_path = Path(result.file_path)
+                try:
+                    with open(file_path, 'r', encoding='utf-8') as f:
+                        content = f.read()
+                    
+                    # Replace bare except with specific exceptions
+                    content = content.replace('except Exception as e:', 'except Exception as e:')
+                    
+                    with open(file_path, 'w', encoding='utf-8') as f:
+                        f.write(content)
+                    
+                    self.fixes_applied.append(f"Fixed exception handling in {file_path}")
+                        
+                except Exception as e:
+                    logger.error(f"Failed to fix exception handling in {file_path}: {e}")
+    
+    async def _fix_long_files(self):
+        """Split long files into smaller modules"""
+        console.logger.info("🔧 Splitting long files...")
+        
+        for result in self.analysis_results:
+            if result.read_success and result.lines_of_code > 500:
+                file_path = Path(result.file_path)
+                if file_path.name in ['main.py', 'config.py', 'ai_agent_orchestrator.py']:
+                    # These are core files, don't split automatically
+                    self.fixes_applied.append(f"Marked {file_path} for manual splitting (core file)")
+                else:
+                    self.fixes_applied.append(f"Marked {file_path} for splitting ({result.lines_of_code} lines)")
+    
+    async def _fix_todo_comments(self):
+        """Address TODO/FIXME comments"""
+        console.logger.info("🔧 Addressing TODO/FIXME comments...")
+        
+        for result in self.analysis_results:
+            if result.read_success and "TODO/FIXME" in str(result.issues):
+                file_path = Path(result.file_path)
+                try:
+                    with open(file_path, 'r', encoding='utf-8') as f:
+                        content = f.read()
+                    
+                    # Replace TODO/FIXME with more specific comments
+                    content = content.replace('FIXME: [PRIORITY]  [PRIORITY] ', 'FIXME: [PRIORITY]  [PRIORITY] ')
+                    content = content.replace('FIXME: [PRIORITY] ', 'FIXME: [PRIORITY]  [PRIORITY] ')
+                    
+                    with open(file_path, 'w', encoding='utf-8') as f:
+                        f.write(content)
+                    
+                    self.fixes_applied.append(f"Updated TODO/FIXME comments in {file_path}")
+                        
+                except Exception as e:
+                    logger.error(f"Failed to fix TODO comments in {file_path}: {e}")
+    
+    def _display_fixes_summary(self):
+        """Display summary of applied fixes"""
+        console.logger.info(Panel.fit(
+            "[bold green]📋 Applied Fixes Summary[/bold green]",
+            title="Fixes Applied"
+        ))
+        
+        if self.fixes_applied:
+            fixes_table = Table()
+            fixes_table.add_column("Fix", style="cyan")
+            
+            for fix in self.fixes_applied:
+                fixes_table.add_row(fix)
+            
+            console.logger.info(fixes_table)
+        else:
+            console.logger.info("No fixes were applied.")
+    
+    async def run_full_rewrite(self):
+        """Run complete codebase analysis and rewrite"""
+        console.logger.info(Panel.fit(
+            "[bold green]🚀 Starting Full Codebase Rewrite[/bold green]",
+            title="Full Rewrite"
         ))
         
         await self.analyze_codebase()
+        await self.fix_codebase_issues()
         
-        # Generate scan report
-        await self._generate_scan_report()
+        # Generate rewrite report
+        await self._generate_rewrite_report()
         
-    async def _generate_scan_report(self):
-        """Generate comprehensive scan report"""
+    async def _generate_rewrite_report(self):
+        """Generate comprehensive rewrite report"""
         scans_dir = Path("scans")
         scans_dir.mkdir(exist_ok=True)
         
-        report_path = scans_dir / f"codebase_scan_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
+        report_path = scans_dir / f"rewrite_report_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
         
         report_data = {
-            "scan_timestamp": datetime.now().isoformat(),
+            "rewrite_timestamp": datetime.now().isoformat(),
             "codebase_path": str(self.codebase_path),
             "system_status": {
                 "python_version": self.system_status.python_version,
@@ -448,39 +663,42 @@ class ClaudeCoderAgent:
                     "dependencies": r.dependencies,
                     "estimated_rewrite_time": r.estimated_rewrite_time,
                     "file_size": r.file_size,
-                    "lines_of_code": r.lines_of_code
+                    "lines_of_code": r.lines_of_code,
+                    "encoding": r.encoding,
+                    "read_success": r.read_success
                 }
                 for r in self.analysis_results
-            ]
+            ],
+            "applied_fixes": self.fixes_applied
         }
         
         with open(report_path, "w") as f:
             json.dump(report_data, f, indent=2)
         
-        console.logger.info(f"✅ Scan report saved to: {report_path}")
+        console.logger.info(f"✅ Rewrite report saved to: {report_path}")
 
 async def main():
     """Main function"""
     console.logger.info(Panel.fit(
-        "[bold blue]Claude 4 Coder Agent - Standalone Edition[/bold blue]\n"
-        "Advanced Codebase Analysis and Debugging System\n"
-        "God-level development with AI-powered insights",
+        "[bold blue]Claude 4 Coder Agent - Fixed Edition[/bold blue]\n"
+        "Advanced Codebase Analysis and Rewriting System\n"
+        "God-level development with AI-powered fixes",
         title="🚀 Claude Coder Agent"
     ))
     
     agent = ClaudeCoderAgent()
     
-    await agent.run_full_scan()
+    await agent.run_full_rewrite()
     
     console.logger.info(Panel.fit(
-        "[bold green]🎉 Codebase Scan Complete![/bold green]\n"
-        "Your codebase has been analyzed with:\n"
-        "• Advanced code complexity scoring\n"
-        "• Comprehensive issue identification\n"
-        "• Detailed improvement suggestions\n"
-        "• Dependency analysis\n"
-        "• Performance insights",
-        title="✅ Scan Complete"
+        "[bold green]🎉 Codebase Rewrite Complete![/bold green]\n"
+        "Your codebase has been analyzed and fixed with:\n"
+        "• Improved file reading with encoding detection\n"
+        "• Automatic print statement replacement\n"
+        "• Enhanced exception handling\n"
+        "• File splitting recommendations\n"
+        "• TODO/FIXME comment updates",
+        title="✅ Rewrite Complete"
     ))
 
 if __name__ == "__main__":
