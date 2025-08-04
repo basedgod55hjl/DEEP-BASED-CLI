@@ -52,6 +52,7 @@ from tools.sub_agent_architecture import SubAgentSystem, AgentType, TaskPriority
 from config import get_config, validate_deepseek_key, validate_huggingface_token
 from tools.unified_agent_system import UnifiedAgentSystem
 from tools.simple_embedding_tool import SimpleEmbeddingTool
+from tools.qwen_embedding_tool import QwenEmbeddingTool
 from tools.sql_database_tool import SQLDatabaseTool
 from tools.llm_query_tool import LLMQueryTool
 from tools.fim_completion_tool import FIMCompletionTool
@@ -59,6 +60,7 @@ from tools.prefix_completion_tool import PrefixCompletionTool
 from tools.rag_pipeline_tool import RAGPipelineTool
 from tools.reasoning_engine import FastReasoningEngine as ReasoningEngine
 from tools.memory_tool import MemoryTool
+from tools.json_memory_tool import JSONMemoryTool
 from tools.vector_database_tool import VectorDatabaseTool
 from tools.deepseek_coder_tool import DeepSeekCoderTool
 from tools.tool_manager import ToolManager
@@ -89,6 +91,7 @@ class EnhancedBasedCoderCLI:
         self.tool_manager = None
         self.llm_tool = None
         self.memory_tool = None
+        self.json_memory_tool = None
         self.sql_tool = None
         self.rag_tool = None
         self.reasoning_engine = None
@@ -96,6 +99,7 @@ class EnhancedBasedCoderCLI:
         self.prefix_tool = None
         self.unified_agent = None
         self.embedding_tool = None
+        self.qwen_embedding_tool = None
         self.vector_tool = None
         self.coder_tool = None
         
@@ -132,9 +136,16 @@ class EnhancedBasedCoderCLI:
             progress.update(task1, description="Initializing SQL database tool...")
             self.sql_tool = SQLDatabaseTool()
             
-            # Initialize embedding tool
-            progress.update(task1, description="Initializing embedding tool...")
+            # Initialize embedding tools
+            progress.update(task1, description="Initializing simple embedding tool...")
             self.embedding_tool = SimpleEmbeddingTool()
+            
+            progress.update(task1, description="Initializing Qwen embedding tool...")
+            self.qwen_embedding_tool = QwenEmbeddingTool()
+            
+            # Initialize memory tools
+            progress.update(task1, description="Initializing JSON memory tool...")
+            self.json_memory_tool = JSONMemoryTool()
             
             # Initialize FIM completion tool
             progress.update(task1, description="Initializing FIM completion tool...")
@@ -246,6 +257,8 @@ class EnhancedBasedCoderCLI:
         table.add_row("Sub-Agent System", "✅ Active" if self.sub_agent_system else "⚠️ Limited", "Ready" if self.sub_agent_system else "Not available")
         table.add_row("Unified Agent", "✅ Active" if self.unified_agent else "❌ No", "Ready" if self.unified_agent else "Not available")
         table.add_row("LLM Tool", "✅ Active" if self.llm_tool else "❌ No", "Ready" if self.llm_tool else "Not available")
+        table.add_row("Qwen Embedding", "✅ Active" if self.qwen_embedding_tool else "⚠️ Limited", "Ready" if self.qwen_embedding_tool else "Not available")
+        table.add_row("JSON Memory", "✅ Active" if self.json_memory_tool else "⚠️ Limited", "Ready" if self.json_memory_tool else "Not available")
         table.add_row("RAG Pipeline", "✅ Active" if self.rag_tool else "⚠️ Limited", "Ready" if self.rag_tool else "Not available")
         
         self.console.print(table)
@@ -267,6 +280,8 @@ Enhanced Features:
   /cache-stats       - Show prompt cache statistics
   /sub-agents        - Show sub-agent system status
   /complex-task      - Execute complex multi-agent task
+  /qwen-embed        - Use Qwen for embeddings
+  /json-memory       - JSON memory operations
 
 Code Operations:
   /generate <desc>   - Generate code from description
@@ -418,6 +433,79 @@ Setup & Configuration:
         except Exception as e:
             return f"❌ Complex task error: {str(e)}"
     
+    async def handle_qwen_embedding(self, text: str):
+        """Handle Qwen embedding operations"""
+        if not self.qwen_embedding_tool:
+            return "❌ Qwen embedding tool not available"
+        
+        try:
+            response = await self.qwen_embedding_tool.embed_text(text)
+            if response.success:
+                embedding = response.data["embedding"]
+                return f"✅ Qwen embedding generated. Dimension: {len(embedding)}"
+            else:
+                return f"❌ Qwen embedding failed: {response.message}"
+        except Exception as e:
+            return f"❌ Qwen embedding error: {str(e)}"
+    
+    async def handle_json_memory(self, operation: str, **kwargs):
+        """Handle JSON memory operations"""
+        if not self.json_memory_tool:
+            return "❌ JSON memory tool not available"
+        
+        try:
+            if operation == "store":
+                content = kwargs.get("content", "")
+                category = kwargs.get("category", "general")
+                tags = kwargs.get("tags", [])
+                importance = kwargs.get("importance", 1.0)
+                
+                response = await self.json_memory_tool.store(
+                    content=content,
+                    category=category,
+                    tags=tags,
+                    importance=importance
+                )
+                
+                if response.success:
+                    return f"✅ Memory stored. ID: {response.data['entry_id']}"
+                else:
+                    return f"❌ Memory storage failed: {response.message}"
+                    
+            elif operation == "search":
+                query = kwargs.get("query", "")
+                category = kwargs.get("category")
+                tags = kwargs.get("tags", [])
+                limit = kwargs.get("limit", 5)
+                
+                response = await self.json_memory_tool.search(
+                    query=query,
+                    category=category,
+                    tags=tags,
+                    limit=limit
+                )
+                
+                if response.success:
+                    results = response.data["results"]
+                    return f"✅ Found {len(results)} memory entries"
+                else:
+                    return f"❌ Memory search failed: {response.message}"
+                    
+            elif operation == "analytics":
+                response = await self.json_memory_tool.get_analytics()
+                
+                if response.success:
+                    analytics = response.data
+                    return f"✅ Memory analytics: {analytics['total_entries']} total entries"
+                else:
+                    return f"❌ Memory analytics failed: {response.message}"
+                    
+            else:
+                return f"❌ Unknown JSON memory operation: {operation}"
+                
+        except Exception as e:
+            return f"❌ JSON memory error: {str(e)}"
+    
     async def interactive_mode(self):
         """Enhanced interactive mode"""
         await self.initialize_system()
@@ -463,6 +551,49 @@ Setup & Configuration:
                     elif command == 'complex-task':
                         response = await self.handle_complex_task(args)
                         self.console.print(response)
+                    elif command == 'qwen-embed':
+                        response = await self.handle_qwen_embedding(args)
+                        self.console.print(response)
+                    elif command == 'json-memory':
+                        # Parse JSON memory command: /json-memory store "content" category tags importance
+                        # or /json-memory search "query" category tags limit
+                        # or /json-memory analytics
+                        parts = args.split(' ', 1) if args else ['analytics']
+                        sub_op = parts[0]
+                        
+                        if sub_op == 'store' and len(parts) > 1:
+                            # Parse store command
+                            store_args = parts[1].split('"')
+                            if len(store_args) >= 3:
+                                content = store_args[1]
+                                remaining = store_args[2].strip().split()
+                                category = remaining[0] if remaining else "general"
+                                tags = remaining[1].split(',') if len(remaining) > 1 else []
+                                importance = float(remaining[2]) if len(remaining) > 2 else 1.0
+                                
+                                response = await self.handle_json_memory("store", content=content, category=category, tags=tags, importance=importance)
+                                self.console.print(response)
+                            else:
+                                self.console.print("❌ Invalid store format. Use: /json-memory store \"content\" category tags importance")
+                        elif sub_op == 'search' and len(parts) > 1:
+                            # Parse search command
+                            search_args = parts[1].split('"')
+                            if len(search_args) >= 3:
+                                query = search_args[1]
+                                remaining = search_args[2].strip().split()
+                                category = remaining[0] if remaining else None
+                                tags = remaining[1].split(',') if len(remaining) > 1 else []
+                                limit = int(remaining[2]) if len(remaining) > 2 else 5
+                                
+                                response = await self.handle_json_memory("search", query=query, category=category, tags=tags, limit=limit)
+                                self.console.print(response)
+                            else:
+                                self.console.print("❌ Invalid search format. Use: /json-memory search \"query\" category tags limit")
+                        elif sub_op == 'analytics':
+                            response = await self.handle_json_memory("analytics")
+                            self.console.print(response)
+                        else:
+                            self.console.print("❌ Invalid JSON memory command. Use: /json-memory [store|search|analytics]")
                     else:
                         self.console.print(f"❓ Unknown command: {command}. Type /help for available commands.")
                 else:

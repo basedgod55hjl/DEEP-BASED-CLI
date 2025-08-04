@@ -7,6 +7,7 @@ Modular tool architecture inspired by Agent Zero
 
 from .base_tool import BaseTool, ToolResponse
 from .memory_tool import MemoryTool
+from .json_memory_tool import JSONMemoryTool
 from .llm_query_tool import LLMQueryTool
 from .reasoning_engine import FastReasoningEngine
 from .tool_manager import ToolManager
@@ -17,6 +18,7 @@ from .vector_database_tool import VectorDatabaseTool
 from .sql_database_tool import SQLDatabaseTool
 from .rag_pipeline_tool import RAGPipelineTool
 from .simple_embedding_tool import SimpleEmbeddingTool
+from .qwen_embedding_tool import QwenEmbeddingTool
 from .deepseek_coder_tool import DeepSeekCoderTool
 
 # Enhanced tools (new)
