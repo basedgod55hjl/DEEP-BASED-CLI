@@ -34,6 +34,7 @@ class SimpleEmbeddingTool(BaseTool):
                  embedding_dimension: int = 384,
                  use_tfidf: bool = True,
                  use_hash_features: bool = True):
+    """__init__ function."""
         """Initialize Simple Embedding Tool"""
         super().__init__(
             name="Simple Embedding",

@@ -37,6 +37,7 @@ class BaseTool(ABC):
     """
     
     def __init__(self, name: str, description: str, capabilities: List[str] = None):
+    """__init__ function."""
         self.name = name
         self.description = description
         self.capabilities = capabilities or []

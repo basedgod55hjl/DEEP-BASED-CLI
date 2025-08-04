@@ -56,6 +56,7 @@ class ReasoningAgent:
     """Advanced reasoning agent with Chain of Thought capabilities"""
     
     def __init__(self, claude_api_key: str):
+    """__init__ function."""
         self.claude_api_key = claude_api_key
         self.thinking_chain = []
         
@@ -221,10 +222,10 @@ Provide your reasoning chain step by step.
         """Identify areas for improvement"""
         improvements = []
         
-        if code.count('except:') > 0:
+        if code.count('except Exception:') > 0:
             improvements.append("Replace bare except clauses with specific exception types")
         
-        if code.count('print(') > 5:
+        if code.count('logging.info(') > 5:
             improvements.append("Replace print statements with proper logging")
         
         if code.count('import *') > 0:
@@ -244,7 +245,7 @@ Provide your reasoning chain step by step.
 class CodebaseAgent:
     """Agent for analyzing and understanding the codebase structure"""
     
-    def __init__(self):
+    def __init__(self) -> Any:
         self.codebase_structure = {}
         self.dependency_graph = {}
         self.architectural_patterns = []
@@ -358,12 +359,13 @@ class RewriteAgent:
     """Agent for planning and executing code rewrites"""
     
     def __init__(self, reasoning_agent: ReasoningAgent):
+    """__init__ function."""
         self.reasoning_agent = reasoning_agent
         self.rewrite_plans = {}
         
     async def create_rewrite_plan(self, file_path: str, analysis: CodeAnalysis) -> Dict[str, Any]:
         """Create a comprehensive rewrite plan for a file"""
-        console.print(f"[yellow]📝 Creating rewrite plan for {file_path}[/yellow]")
+        console.logging.info(f"[yellow]📝 Creating rewrite plan for {file_path}[/yellow]")
         
         problem = f"Create a comprehensive rewrite plan for {file_path} based on the analysis"
         context = f"""
@@ -457,6 +459,7 @@ class AdvancedClaudeCoderAgent:
     """Advanced Claude Coder Agent with reasoning, agents, and CoT loops"""
     
     def __init__(self, codebase_path: str = "."):
+    """__init__ function."""
         self.codebase_path = Path(codebase_path)
         self.claude_api_key = os.getenv("CLAUDE_API_KEY", "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")
         self.deepseek_api_key = os.getenv("DEEPSEEK_API_KEY", "sk-90e0dd863b8c4e0d879a02851a0ee194")
@@ -474,7 +477,7 @@ class AdvancedClaudeCoderAgent:
         self._setup_logging()
         self._check_system_status()
         
-    def _setup_logging(self):
+    def _setup_logging(self) -> Any:
         """Setup advanced logging"""
         log_dir = Path("logs")
         log_dir.mkdir(exist_ok=True)
@@ -491,7 +494,7 @@ class AdvancedClaudeCoderAgent:
         
         logger.addHandler(file_handler)
         
-    def _check_system_status(self):
+    def _check_system_status(self) -> Any:
         """Check enhanced system status"""
         console.print(Panel.fit(
             "[bold blue]🔍 Checking Advanced System Status[/bold blue]",
@@ -592,6 +595,7 @@ class AdvancedClaudeCoderAgent:
         return tools
         
     def _display_system_status(self, status: SystemStatus):
+    """_display_system_status function."""
         """Display enhanced system status"""
         table = Table(title="Advanced System Status")
         table.add_column("Component", style="cyan")
@@ -602,7 +606,7 @@ class AdvancedClaudeCoderAgent:
         table.add_row("DeepSeek API", "✅ Working" if status.deepseek_api_working else "❌ Failed")
         table.add_row("Database", status.database_status)
         
-        console.print(table)
+        console.logging.info(table)
         
         # Display reasoning capabilities
         console.print(Panel.fit(
@@ -620,9 +624,9 @@ class AdvancedClaudeCoderAgent:
                 status_text = "✅ Available" if available else "❌ Missing"
                 tool_table.add_row(tool, status_text)
             
-            console.print(tool_table)
+            console.logging.info(tool_table)
     
-    async def run_comprehensive_analysis(self):
+    async def run_comprehensive_analysis(self) -> Any:
         """Run comprehensive codebase analysis with reasoning"""
         console.print(Panel.fit(
             "[bold green]🚀 Starting Comprehensive Codebase Analysis[/bold green]",
@@ -641,7 +645,7 @@ class AdvancedClaudeCoderAgent:
         # Step 4: Generate comprehensive report
         await self._generate_comprehensive_report()
         
-    async def _analyze_files_with_reasoning(self):
+    async def _analyze_files_with_reasoning(self) -> Any:
         """Analyze files with advanced reasoning"""
         console.print(Panel.fit(
             "[bold blue]🧠 Analyzing Files with Advanced Reasoning[/bold blue]",
@@ -777,7 +781,7 @@ class AdvancedClaudeCoderAgent:
         
         return insights
     
-    async def _create_rewrite_plans(self):
+    async def _create_rewrite_plans(self) -> Any:
         """Create comprehensive rewrite plans"""
         console.print(Panel.fit(
             "[bold blue]📝 Creating Comprehensive Rewrite Plans[/bold blue]",
@@ -788,8 +792,8 @@ class AdvancedClaudeCoderAgent:
         total_plans = len(self.rewrite_agent.rewrite_plans)
         high_priority = sum(1 for plan in self.rewrite_agent.rewrite_plans.values() if plan["priority"] == "HIGH")
         
-        console.print(f"✅ Created {total_plans} rewrite plans")
-        console.print(f"🔴 {high_priority} high priority files identified")
+        console.logging.info(f"✅ Created {total_plans} rewrite plans")
+        console.logging.info(f"🔴 {high_priority} high priority files identified")
     
     def _calculate_complexity(self, content: str) -> float:
         """Calculate code complexity score"""
@@ -818,10 +822,10 @@ class AdvancedClaudeCoderAgent:
         if "TODO" in content or "FIXME" in content:
             issues.append("Contains TODO/FIXME comments")
         
-        if content.count("print(") > 5:
+        if content.count("logging.info(") > 5:
             issues.append("Too many print statements - consider logging")
         
-        if content.count("except:") > 0:
+        if content.count("except Exception:") > 0:
             issues.append("Bare except clauses - specify exception types")
         
         if content.count("import *") > 0:
@@ -867,7 +871,7 @@ class AdvancedClaudeCoderAgent:
         
         return dependencies
     
-    def _display_enhanced_analysis_summary(self):
+    def _display_enhanced_analysis_summary(self) -> Any:
         """Display enhanced analysis summary"""
         console.print(Panel.fit(
             "[bold blue]📊 Enhanced Analysis Summary[/bold blue]",
@@ -893,7 +897,7 @@ class AdvancedClaudeCoderAgent:
         summary_table.add_row("Estimated Rewrite Time", f"{total_rewrite_time} minutes")
         summary_table.add_row("High Priority Files", str(len([r for r in self.analysis_results if r.rewrite_plan.get("priority") == "HIGH"])))
         
-        console.print(summary_table)
+        console.logging.info(summary_table)
         
         # Display architectural insights
         if self.codebase_structure:
@@ -903,7 +907,7 @@ class AdvancedClaudeCoderAgent:
                 title="Architecture Insights"
             ))
     
-    async def _generate_comprehensive_report(self):
+    async def _generate_comprehensive_report(self) -> Any:
         """Generate comprehensive analysis report"""
         console.print(Panel.fit(
             "[bold blue]📄 Generating Comprehensive Report[/bold blue]",
@@ -947,9 +951,9 @@ class AdvancedClaudeCoderAgent:
         with open(report_path, "w") as f:
             json.dump(report_data, f, indent=2)
         
-        console.print(f"✅ Comprehensive report saved to: {report_path}")
+        console.logging.info(f"✅ Comprehensive report saved to: {report_path}")
 
-async def main():
+async def main() -> None:
     """Main function"""
     console.print(Panel.fit(
         "[bold blue]Advanced Claude 4 Coder Agent - Enhanced Edition[/bold blue]\n"

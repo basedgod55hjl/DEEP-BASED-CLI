@@ -80,6 +80,7 @@ class SQLDatabaseTool(BaseTool):
     """
     
     def __init__(self, db_path: str = "data/deepcli_database.db"):
+    """__init__ function."""
         """Initialize SQL Database Tool"""
         super().__init__(
             name="SQL Database",
@@ -105,7 +106,7 @@ class SQLDatabaseTool(BaseTool):
         # Initialize database
         asyncio.create_task(self._initialize_database())
     
-    async def _initialize_database(self):
+    async def _initialize_database(self) -> Any:
         """Initialize database with tables"""
         try:
             async with aiosqlite.connect(self.db_path) as db:
@@ -201,7 +202,7 @@ class SQLDatabaseTool(BaseTool):
             self.console.logger.info(f"[red]Database initialization failed: {str(e)}[/red]")
             self._initialized = False
     
-    async def _create_deanna_persona(self, db):
+    async def _create_deanna_persona(self, db) -> Any:
         """Create the default Deanna persona"""
         try:
             # Check if Deanna already exists

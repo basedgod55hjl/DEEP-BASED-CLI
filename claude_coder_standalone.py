@@ -52,6 +52,7 @@ class ClaudeCoderAgent:
     """Claude 4 Coder Agent - Advanced codebase analysis and upgrade system"""
     
     def __init__(self, codebase_path: str = "."):
+    """__init__ function."""
         self.codebase_path = Path(codebase_path)
         self.claude_api_key = os.getenv("CLAUDE_API_KEY", "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")
         self.deepseek_api_key = os.getenv("DEEPSEEK_API_KEY", "sk-90e0dd863b8c4e0d879a02851a0ee194")
@@ -62,7 +63,7 @@ class ClaudeCoderAgent:
         self._setup_logging()
         self._check_system_status()
         
-    def _setup_logging(self):
+    def _setup_logging(self) -> Any:
         """Setup advanced logging"""
         log_dir = Path("logs")
         log_dir.mkdir(exist_ok=True)
@@ -79,7 +80,7 @@ class ClaudeCoderAgent:
         
         logger.addHandler(file_handler)
         
-    def _check_system_status(self):
+    def _check_system_status(self) -> Any:
         """Check system status and dependencies"""
         console.print(Panel.fit(
             "[bold blue]🔍 Checking System Status[/bold blue]",
@@ -179,6 +180,7 @@ class ClaudeCoderAgent:
         return tools
         
     def _display_system_status(self, status: SystemStatus):
+    """_display_system_status function."""
         """Display system status"""
         table = Table(title="System Status")
         table.add_column("Component", style="cyan")
@@ -189,7 +191,7 @@ class ClaudeCoderAgent:
         table.add_row("DeepSeek API", "✅ Working" if status.deepseek_api_working else "❌ Failed")
         table.add_row("Database", status.database_status)
         
-        console.print(table)
+        console.logging.info(table)
         
         if status.tool_status:
             tool_table = Table(title="Tool Status")
@@ -200,9 +202,9 @@ class ClaudeCoderAgent:
                 status_text = "✅ Available" if available else "❌ Missing"
                 tool_table.add_row(tool, status_text)
             
-            console.print(tool_table)
+            console.logging.info(tool_table)
         
-    async def analyze_codebase(self):
+    async def analyze_codebase(self) -> Any:
         """Analyze the entire codebase"""
         console.print(Panel.fit(
             "[bold blue]🔍 Analyzing Codebase[/bold blue]",
@@ -357,7 +359,7 @@ class ClaudeCoderAgent:
         
         return dependencies
         
-    def _display_analysis_summary(self):
+    def _display_analysis_summary(self) -> Any:
         """Display analysis summary"""
         console.print(Panel.fit(
             "[bold blue]📊 Analysis Summary[/bold blue]",
@@ -382,7 +384,7 @@ class ClaudeCoderAgent:
         summary_table.add_row("Average Complexity", f"{avg_complexity:.1f}")
         summary_table.add_row("Estimated Rewrite Time", f"{total_rewrite_time} minutes")
         
-        console.print(summary_table)
+        console.logging.info(summary_table)
         
         if total_issues > 0:
             console.print(Panel.fit(
@@ -405,7 +407,7 @@ class ClaudeCoderAgent:
             for issue, count in sorted(issue_counts.items(), key=lambda x: x[1], reverse=True)[:5]:
                 issue_table.add_row(issue, str(count))
             
-            console.print(issue_table)
+            console.logging.info(issue_table)
         
         # Show most complex files
         complex_files = sorted(self.analysis_results, key=lambda x: x.complexity_score, reverse=True)[:5]
@@ -427,9 +429,9 @@ class ClaudeCoderAgent:
                     str(file_analysis.lines_of_code)
                 )
             
-            console.print(complex_table)
+            console.logging.info(complex_table)
         
-    async def run_full_scan(self):
+    async def run_full_scan(self) -> Any:
         """Run complete codebase scan"""
         console.print(Panel.fit(
             "[bold green]🚀 Starting Full Codebase Scan[/bold green]",
@@ -441,7 +443,7 @@ class ClaudeCoderAgent:
         # Generate scan report
         await self._generate_scan_report()
         
-    async def _generate_scan_report(self):
+    async def _generate_scan_report(self) -> Any:
         """Generate comprehensive scan report"""
         scans_dir = Path("scans")
         scans_dir.mkdir(exist_ok=True)
@@ -474,9 +476,9 @@ class ClaudeCoderAgent:
         with open(report_path, "w") as f:
             json.dump(report_data, f, indent=2)
         
-        console.print(f"✅ Scan report saved to: {report_path}")
+        console.logging.info(f"✅ Scan report saved to: {report_path}")
 
-async def main():
+async def main() -> None:
     """Main function"""
     console.print(Panel.fit(
         "[bold blue]Claude 4 Coder Agent - Standalone Edition[/bold blue]\n"

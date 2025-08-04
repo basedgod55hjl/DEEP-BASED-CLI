@@ -55,6 +55,7 @@ class ClaudeCoderAgent:
     """Claude 4 Coder Agent - Advanced codebase analysis and rewriting system"""
     
     def __init__(self, codebase_path: str = "."):
+    """__init__ function."""
         self.codebase_path = Path(codebase_path)
         self.claude_api_key = os.getenv("CLAUDE_API_KEY", "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")
         self.deepseek_api_key = os.getenv("DEEPSEEK_API_KEY", "sk-90e0dd863b8c4e0d879a02851a0ee194")
@@ -66,7 +67,7 @@ class ClaudeCoderAgent:
         self._setup_logging()
         self._check_system_status()
         
-    def _setup_logging(self):
+    def _setup_logging(self) -> Any:
         """Setup advanced logging"""
         log_dir = Path("logs")
         log_dir.mkdir(exist_ok=True)
@@ -83,7 +84,7 @@ class ClaudeCoderAgent:
         
         logger.addHandler(file_handler)
         
-    def _check_system_status(self):
+    def _check_system_status(self) -> Any:
         """Check system status and dependencies"""
         console.logger.info(Panel.fit(
             "[bold blue]🔍 Checking System Status[/bold blue]",
@@ -183,6 +184,7 @@ class ClaudeCoderAgent:
         return tools
         
     def _display_system_status(self, status: SystemStatus):
+    """_display_system_status function."""
         """Display system status"""
         table = Table(title="System Status")
         table.add_column("Component", style="cyan")
@@ -237,7 +239,7 @@ class ClaudeCoderAgent:
             logger.error(f"Error reading {file_path}: {e}")
             return "", "unknown", False
         
-    async def analyze_codebase(self):
+    async def analyze_codebase(self) -> Any:
         """Analyze the entire codebase"""
         console.logger.info(Panel.fit(
             "[bold blue]🔍 Analyzing Codebase[/bold blue]",
@@ -392,7 +394,7 @@ class ClaudeCoderAgent:
         
         return dependencies
         
-    def _display_analysis_summary(self):
+    def _display_analysis_summary(self) -> Any:
         """Display analysis summary"""
         console.logger.info(Panel.fit(
             "[bold blue]📊 Analysis Summary[/bold blue]",
@@ -466,7 +468,7 @@ class ClaudeCoderAgent:
             
             console.logger.info(complex_table)
     
-    async def fix_codebase_issues(self):
+    async def fix_codebase_issues(self) -> Any:
         """Fix identified issues in the codebase"""
         console.logger.info(Panel.fit(
             "[bold green]🔧 Starting Codebase Fixes[/bold green]",
@@ -495,7 +497,7 @@ class ClaudeCoderAgent:
         
         self._display_fixes_summary()
     
-    async def _fix_file_encoding_issues(self):
+    async def _fix_file_encoding_issues(self) -> Any:
         """Fix file encoding issues"""
         console.logger.info("🔧 Fixing file encoding issues...")
         
@@ -513,7 +515,7 @@ class ClaudeCoderAgent:
                 except Exception as e:
                     logger.error(f"Failed to fix encoding for {file_path}: {e}")
     
-    async def _fix_print_statements(self):
+    async def _fix_print_statements(self) -> Any:
         """Replace print statements with logging"""
         console.logger.info("🔧 Fixing print statements...")
         
@@ -550,7 +552,7 @@ class ClaudeCoderAgent:
                 except Exception as e:
                     logger.error(f"Failed to fix print statements in {file_path}: {e}")
     
-    async def _fix_exception_handling(self):
+    async def _fix_exception_handling(self) -> Any:
         """Fix bare except clauses"""
         console.logger.info("🔧 Fixing exception handling...")
         
@@ -572,7 +574,7 @@ class ClaudeCoderAgent:
                 except Exception as e:
                     logger.error(f"Failed to fix exception handling in {file_path}: {e}")
     
-    async def _fix_long_files(self):
+    async def _fix_long_files(self) -> Any:
         """Split long files into smaller modules"""
         console.logger.info("🔧 Splitting long files...")
         
@@ -585,7 +587,7 @@ class ClaudeCoderAgent:
                 else:
                     self.fixes_applied.append(f"Marked {file_path} for splitting ({result.lines_of_code} lines)")
     
-    async def _fix_todo_comments(self):
+    async def _fix_todo_comments(self) -> Any:
         """Address TODO/FIXME comments"""
         console.logger.info("🔧 Addressing TODO/FIXME comments...")
         
@@ -608,7 +610,7 @@ class ClaudeCoderAgent:
                 except Exception as e:
                     logger.error(f"Failed to fix TODO comments in {file_path}: {e}")
     
-    def _display_fixes_summary(self):
+    def _display_fixes_summary(self) -> Any:
         """Display summary of applied fixes"""
         console.logger.info(Panel.fit(
             "[bold green]📋 Applied Fixes Summary[/bold green]",
@@ -626,7 +628,7 @@ class ClaudeCoderAgent:
         else:
             console.logger.info("No fixes were applied.")
     
-    async def run_full_rewrite(self):
+    async def run_full_rewrite(self) -> Any:
         """Run complete codebase analysis and rewrite"""
         console.logger.info(Panel.fit(
             "[bold green]🚀 Starting Full Codebase Rewrite[/bold green]",
@@ -639,7 +641,7 @@ class ClaudeCoderAgent:
         # Generate rewrite report
         await self._generate_rewrite_report()
         
-    async def _generate_rewrite_report(self):
+    async def _generate_rewrite_report(self) -> Any:
         """Generate comprehensive rewrite report"""
         scans_dir = Path("scans")
         scans_dir.mkdir(exist_ok=True)
@@ -677,7 +679,7 @@ class ClaudeCoderAgent:
         
         console.logger.info(f"✅ Rewrite report saved to: {report_path}")
 
-async def main():
+async def main() -> None:
     """Main function"""
     console.logger.info(Panel.fit(
         "[bold blue]Claude 4 Coder Agent - Fixed Edition[/bold blue]\n"

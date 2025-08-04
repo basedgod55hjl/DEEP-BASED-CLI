@@ -71,12 +71,12 @@ class SwarmResult:
 class GPUManager:
     """Manages GPU resources for AI agents"""
     
-    def __init__(self):
+    def __init__(self) -> Any:
         self.gpus = []
         self.gpu_queues = {}
         self._initialize_gpus()
     
-    def _initialize_gpus(self):
+    def _initialize_gpus(self) -> Any:
         """Initialize available GPUs"""
         try:
             gpus = GPUtil.getGPUs()
@@ -91,9 +91,9 @@ class GPUManager:
                     'temperature': gpu.temperature
                 })
                 self.gpu_queues[i] = queue.Queue()
-            console.print(f"✅ Initialized {len(self.gpus)} GPUs")
+            console.logging.info(f"✅ Initialized {len(self.gpus)} GPUs")
         except Exception as e:
-            console.print(f"⚠️ GPU initialization failed: {e}")
+            console.logging.info(f"⚠️ GPU initialization failed: {e}")
             self.gpus = []
     
     def get_available_gpu(self) -> Optional[int]:
@@ -112,17 +112,19 @@ class GPUManager:
         return None
     
     def release_gpu(self, gpu_id: int, agent_id: int):
+    """release_gpu function."""
         """Release GPU from agent"""
         try:
             if not self.gpu_queues[gpu_id].empty():
                 self.gpu_queues[gpu_id].get()
-        except:
+        except Exception:
             pass
 
 class AIAgent:
     """Individual AI agent for swarm processing"""
     
     def __init__(self, config: AgentConfig, gpu_manager: GPUManager):
+    """__init__ function."""
         self.config = config
         self.gpu_manager = gpu_manager
         self.gpu_id = None
@@ -131,23 +133,23 @@ class AIAgent:
         self.result_queue = queue.Queue()
         self.thread = None
         
-    def start(self):
+    def start(self) -> Any:
         """Start the agent thread"""
         self.is_running = True
         self.thread = threading.Thread(target=self._run_agent)
         self.thread.start()
-        console.print(f"🚀 Started Agent {self.config.agent_id} ({self.config.agent_type})")
+        console.logging.info(f"🚀 Started Agent {self.config.agent_id} ({self.config.agent_type})")
     
-    def stop(self):
+    def stop(self) -> Any:
         """Stop the agent"""
         self.is_running = False
         if self.gpu_id is not None:
             self.gpu_manager.release_gpu(self.gpu_id, self.config.agent_id)
         if self.thread:
             self.thread.join()
-        console.print(f"🛑 Stopped Agent {self.config.agent_id}")
+        console.logging.info(f"🛑 Stopped Agent {self.config.agent_id}")
     
-    def _run_agent(self):
+    def _run_agent(self) -> Any:
         """Main agent processing loop"""
         while self.is_running:
             try:
@@ -366,10 +368,10 @@ Provide the complete rewritten code.
             issues = []
             
             # Check for common issues
-            if content.count('except:') > 0:
+            if content.count('except Exception:') > 0:
                 issues.append("Bare except clauses found")
             
-            if content.count('print(') > 5:
+            if content.count('logging.info(') > 5:
                 issues.append("Too many print statements")
             
             if content.count('import *') > 0:
@@ -418,7 +420,7 @@ Provide the complete rewritten code.
                 spec = importlib.util.spec_from_file_location(module_name, file_path)
                 if spec is not None:
                     test_results["import_test"] = True
-            except:
+            except Exception:
                 pass
             
             # Test syntax
@@ -427,7 +429,7 @@ Provide the complete rewritten code.
                     content = f.read()
                 compile(content, file_path, 'exec')
                 test_results["syntax_test"] = True
-            except:
+            except Exception:
                 pass
             
             # Basic functionality test (simplified)
@@ -456,6 +458,7 @@ class SwarmOrchestrator:
     """Orchestrates the AI swarm system"""
     
     def __init__(self, codebase_path: str = "."):
+    """__init__ function."""
         self.codebase_path = Path(codebase_path)
         self.gpu_manager = GPUManager()
         self.agents = []
@@ -471,10 +474,11 @@ class SwarmOrchestrator:
         self.cpu_cores = multiprocessing.cpu_count()
         self.total_memory = psutil.virtual_memory().total / 1024 / 1024  # MB
         
-        console.print(f"🖥️ System: {self.cpu_cores} CPU cores, {self.total_memory:.0f}MB RAM")
-        console.print(f"🎮 GPUs: {len(self.gpu_manager.gpus)} available")
+        console.logging.info(f"🖥️ System: {self.cpu_cores} CPU cores, {self.total_memory:.0f}MB RAM")
+        console.logging.info(f"🎮 GPUs: {len(self.gpu_manager.gpus)} available")
     
     def create_swarm(self, agent_count: int = 190):
+    """create_swarm function."""
         """Create the AI swarm with specified number of agents"""
         console.print(Panel.fit(
             f"[bold blue]Creating AI Swarm with {agent_count} Agents[/bold blue]",
@@ -509,10 +513,10 @@ class SwarmOrchestrator:
                 self.agents.append(agent)
                 agent_id += 1
         
-        console.print(f"✅ Created {len(self.agents)} AI agents")
-        console.print(f"📊 Distribution: {agents_per_type} agents per type")
+        console.logging.info(f"✅ Created {len(self.agents)} AI agents")
+        console.logging.info(f"📊 Distribution: {agents_per_type} agents per type")
     
-    def start_swarm(self):
+    def start_swarm(self) -> Any:
         """Start all agents in the swarm"""
         console.print(Panel.fit(
             "[bold green]Starting AI Swarm[/bold green]",
@@ -525,9 +529,9 @@ class SwarmOrchestrator:
         for agent in self.agents:
             agent.start()
         
-        console.print(f"🚀 Started {len(self.agents)} agents")
+        console.logging.info(f"🚀 Started {len(self.agents)} agents")
     
-    def stop_swarm(self):
+    def stop_swarm(self) -> Any:
         """Stop all agents in the swarm"""
         console.print(Panel.fit(
             "[bold red]Stopping AI Swarm[/bold red]",
@@ -540,9 +544,9 @@ class SwarmOrchestrator:
         for agent in self.agents:
             agent.stop()
         
-        console.print(f"🛑 Stopped {len(self.agents)} agents")
+        console.logging.info(f"🛑 Stopped {len(self.agents)} agents")
     
-    def create_tasks(self):
+    def create_tasks(self) -> Any:
         """Create tasks for the swarm to process"""
         console.print(Panel.fit(
             "[bold blue]Creating Swarm Tasks[/bold blue]",
@@ -572,9 +576,9 @@ class SwarmOrchestrator:
                 self.tasks.append(task)
                 task_id += 1
         
-        console.print(f"📋 Created {len(self.tasks)} tasks")
+        console.logging.info(f"📋 Created {len(self.tasks)} tasks")
     
-    def distribute_tasks(self):
+    def distribute_tasks(self) -> Any:
         """Distribute tasks to agents"""
         console.print(Panel.fit(
             "[bold blue]Distributing Tasks to Agents[/bold blue]",
@@ -607,9 +611,9 @@ class SwarmOrchestrator:
                 agent.task_queue.put(task)
                 task_index += 1
         
-        console.print(f"📤 Distributed {len(self.tasks)} tasks to agents")
+        console.logging.info(f"📤 Distributed {len(self.tasks)} tasks to agents")
     
-    async def monitor_swarm(self):
+    async def monitor_swarm(self) -> Any:
         """Monitor swarm progress"""
         console.print(Panel.fit(
             "[bold blue]Monitoring AI Swarm[/bold blue]",
@@ -643,9 +647,9 @@ class SwarmOrchestrator:
                 
                 await asyncio.sleep(1)
         
-        console.print(f"✅ Completed {completed_tasks} tasks")
+        console.logging.info(f"✅ Completed {completed_tasks} tasks")
     
-    def generate_swarm_report(self):
+    def generate_swarm_report(self) -> Any:
         """Generate comprehensive swarm report"""
         console.print(Panel.fit(
             "[bold blue]Generating Swarm Report[/bold blue]",
@@ -712,7 +716,7 @@ class SwarmOrchestrator:
         with open(report_path, 'w') as f:
             json.dump(report, f, indent=2)
         
-        console.print(f"📄 Swarm report saved to: {report_path}")
+        console.logging.info(f"📄 Swarm report saved to: {report_path}")
         
         # Display summary
         summary_table = Table(title="Swarm Performance Summary")
@@ -728,11 +732,11 @@ class SwarmOrchestrator:
         summary_table.add_row("Average GPU Usage", f"{avg_gpu_usage:.1%}")
         summary_table.add_row("Average Memory Usage", f"{avg_memory_usage:.1f}MB")
         
-        console.print(summary_table)
+        console.logging.info(summary_table)
         
         return report
 
-async def main():
+async def main() -> None:
     """Main function"""
     console.print(Panel.fit(
         "[bold blue]AI Swarm System - 190 AI Agents[/bold blue]\n"

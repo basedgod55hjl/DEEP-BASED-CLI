@@ -64,7 +64,7 @@ class PersonaConfig:
     adaptation_threshold: float = 0.7
     max_persona_history: int = 50
     
-    def __post_init__(self):
+    def __post_init__(self) -> Any:
         if self.personas is None:
             self.personas = {
                 "enhanced_assistant": {
@@ -258,7 +258,7 @@ class EnhancedConfig:
     last_updated: datetime = None
     environment: str = "development"
     
-    def __post_init__(self):
+    def __post_init__(self) -> Any:
         if self.created_at is None:
             self.created_at = datetime.now()
         if self.last_updated is None:
@@ -272,13 +272,14 @@ class ConfigManager:
     """Unified configuration manager"""
     
     def __init__(self, config_path: Optional[str] = None):
+    """__init__ function."""
         self.config_path = config_path or "config/enhanced_config.json"
         self.config_dir = Path(self.config_path).parent
         self.config_dir.mkdir(parents=True, exist_ok=True)
         self._config = None
         self._load_config()
     
-    def _load_config(self):
+    def _load_config(self) -> Any:
         """Load configuration from file or create default"""
         try:
             if Path(self.config_path).exists():
@@ -347,7 +348,7 @@ class ConfigManager:
             models=ModelConfig()
         )
     
-    def _save_config(self):
+    def _save_config(self) -> Any:
         """Save configuration to file"""
         config_dict = self._config_to_dict(self._config)
         with open(self.config_path, 'w') as f:
@@ -368,6 +369,7 @@ class ConfigManager:
         return self._config
     
     def update_config(self, updates: Dict[str, Any]):
+    """update_config function."""
         """Update configuration with new values"""
         for section, values in updates.items():
             if hasattr(self._config, section):
@@ -424,6 +426,7 @@ def validate_huggingface_token(token: str) -> bool:
     return True
 
 def update_api_keys(deepseek_key: str = None, huggingface_token: str = None):
+    """update_api_keys function."""
     """Update API keys in configuration and environment"""
     config = get_config()
     
@@ -442,13 +445,13 @@ def update_api_keys(deepseek_key: str = None, huggingface_token: str = None):
         'models': {'huggingface_token': config.models.huggingface_token}
     })
 
-def print_api_status():
+def print_api_status() -> None:
     """Print current API key status"""
     config = get_config()
     
-    print("🔑 API Keys Status:")
-    print(f"  DeepSeek: {'✅ Valid' if validate_deepseek_key(config.llm.api_key) else '❌ Invalid/Missing'}")
-    print(f"  HuggingFace: {'✅ Valid' if validate_huggingface_token(config.models.huggingface_token) else '❌ Invalid/Missing'}")
+    logging.info("🔑 API Keys Status:")
+    logging.info(f"  DeepSeek: {'✅ Valid' if validate_deepseek_key(config.llm.api_key) else '❌ Invalid/Missing'}")
+    logging.info(f"  HuggingFace: {'✅ Valid' if validate_huggingface_token(config.models.huggingface_token) else '❌ Invalid/Missing'}")
 
 def is_deepseek_key_valid() -> bool:
     """Check if DeepSeek API key is valid"""
@@ -476,6 +479,7 @@ def get_config_manager() -> ConfigManager:
     return _config_manager
 
 def update_config(updates: Dict[str, Any]):
+    """update_config function."""
     """Update global configuration"""
     config_manager = get_config_manager()
     config_manager.update_config(updates)
@@ -506,6 +510,7 @@ def export_config(format: str = "json") -> str:
         raise ValueError(f"Unsupported format: {format}")
 
 def import_config(config_data: str, format: str = "json"):
+    """import_config function."""
     """Import configuration from string"""
     if format.lower() == "json":
         config_dict = json.loads(config_data)
@@ -563,6 +568,7 @@ def create_config_backup() -> str:
     return backup_path
 
 def restore_config_backup(backup_path: str):
+    """restore_config_backup function."""
     """Restore configuration from backup"""
     config_manager = get_config_manager()
     
@@ -579,7 +585,7 @@ def restore_config_backup(backup_path: str):
 # INITIALIZATION
 # ============================================================================
 
-def initialize_config():
+def initialize_config() -> None:
     """Initialize configuration system"""
     try:
         config = get_config()

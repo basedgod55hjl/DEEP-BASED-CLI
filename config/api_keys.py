@@ -5,6 +5,8 @@ Centralized configuration for all API keys used in the Enhanced BASED GOD CLI
 """
 
 import os
+import logging
+
 from typing import Optional
 from dotenv import load_dotenv
 
@@ -36,22 +38,23 @@ def get_deepseek_config() -> dict:
     }
 
 def update_deepseek_api_key(new_key: str):
+    """update_deepseek_api_key function."""
     """Update DeepSeek API key"""
     global DEEPSEEK_API_KEY
     DEEPSEEK_API_KEY = new_key
     os.environ["DEEPSEEK_API_KEY"] = new_key
-    print(f"✅ DeepSeek API key updated")
+    logging.info(f"✅ DeepSeek API key updated")
 
 def is_deepseek_key_valid() -> bool:
     """Check if DeepSeek API key is valid (basic validation)"""
     return DEEPSEEK_API_KEY.startswith("sk-") and len(DEEPSEEK_API_KEY) > 20
 
-def print_api_status():
+def print_api_status() -> None:
     """Print status of all API keys"""
-    print("🔑 API Keys Status:")
-    print(f"   DeepSeek: {'✅ Valid' if is_deepseek_key_valid() else '❌ Invalid/Expired'}")
-    print(f"   HuggingFace: {'✅ Set' if HUGGINGFACE_API_KEY else '❌ Not set'}")
-    print(f"   Qdrant: {'✅ Configured' if QDRANT_HOST else '❌ Not configured'}")
+    logging.info("🔑 API Keys Status:")
+    logging.info(f"   DeepSeek: {'✅ Valid' if is_deepseek_key_valid() else '❌ Invalid/Expired'}")
+    logging.info(f"   HuggingFace: {'✅ Set' if HUGGINGFACE_API_KEY else '❌ Not set'}")
+    logging.info(f"   Qdrant: {'✅ Configured' if QDRANT_HOST else '❌ Not configured'}")
 
 if __name__ == "__main__":
     print_api_status() 

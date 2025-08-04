@@ -24,6 +24,7 @@ class LocalEmbeddingSystem:
     """Local embedding system using llama.cpp with CUDA"""
     
     def __init__(self, model_path: str = None, embedding_dim: int = 1024):
+    """__init__ function."""
         self.embedding_dim = embedding_dim
         self.model_path = model_path or self._download_model()
         self.llama_cpp_path = self._find_llama_cpp()
@@ -55,7 +56,7 @@ class LocalEmbeddingSystem:
             result = subprocess.run(["which", "llama-cpp"], capture_output=True, text=True)
             if result.returncode == 0:
                 return result.stdout.strip()
-        except:
+        except Exception:
             pass
         
         logger.warning("llama.cpp not found, will attempt to use Python bindings")
@@ -323,21 +324,21 @@ class LocalEmbeddingSystem:
 # Global instance
 local_embedding_system = None
 
-def initialize_local_embedding_system():
+def initialize_local_embedding_system() -> None:
     """Initialize the global local embedding system"""
     global local_embedding_system
     local_embedding_system = LocalEmbeddingSystem()
     return local_embedding_system
 
 if __name__ == "__main__":
-    print("Testing Local Embedding System...")
+    logging.info("Testing Local Embedding System...")
     
     # Initialize system
     embedding_system = LocalEmbeddingSystem()
     
     # Test embedding
     if embedding_system.test_embedding():
-        print("✅ Local embedding system is working!")
+        logging.info("✅ Local embedding system is working!")
         
         # Test similarity
         text1 = "Hello world"
@@ -351,12 +352,12 @@ if __name__ == "__main__":
         sim12 = embedding_system.compute_similarity(emb1, emb2)
         sim13 = embedding_system.compute_similarity(emb1, emb3)
         
-        print(f"Similarity between '{text1}' and '{text2}': {sim12:.4f}")
-        print(f"Similarity between '{text1}' and '{text3}': {sim13:.4f}")
+        logging.info(f"Similarity between '{text1}' and '{text2}': {sim12:.4f}")
+        logging.info(f"Similarity between '{text1}' and '{text3}': {sim13:.4f}")
         
         # Get model info
         info = embedding_system.get_model_info()
-        print(f"Model info: {info}")
+        logging.info(f"Model info: {info}")
         
     else:
-        print("❌ Local embedding system failed!") 
+        logging.info("❌ Local embedding system failed!") 

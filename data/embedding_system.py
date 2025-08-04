@@ -23,6 +23,7 @@ class DeannaEmbeddingSystem:
     """Advanced embedding system for Deanna memory"""
     
     def __init__(self, memory_manager, embedding_dim: int = 384):
+    """__init__ function."""
         self.memory_manager = memory_manager
         self.embedding_dim = embedding_dim
         self.tfidf_vectorizer = TfidfVectorizer(
@@ -36,7 +37,7 @@ class DeannaEmbeddingSystem:
         
         logger.info(f"Embedding system initialized with dimension {embedding_dim}")
     
-    def _initialize_vectorizer(self):
+    def _initialize_vectorizer(self) -> Any:
         """Initialize TF-IDF vectorizer with sample text"""
         sample_texts = [
             "Deanna is a flirtatious and provocative AI companion",
@@ -238,7 +239,7 @@ class DeannaEmbeddingSystem:
         
         return self.create_embedding(persona_text)
     
-    def update_memory_embeddings(self):
+    def update_memory_embeddings(self) -> Any:
         """Update embeddings for all memory entries"""
         conn = sqlite3.connect(self.memory_manager.db_path)
         cursor = conn.cursor()
@@ -288,6 +289,7 @@ class DeannaEmbeddingSystem:
         }
     
     def export_embeddings(self, export_path: str):
+    """export_embeddings function."""
         """Export all embeddings to file"""
         export_data = {
             'export_timestamp': str(datetime.now()),
@@ -310,7 +312,7 @@ class DeannaEmbeddingSystem:
 # Global instance
 embedding_system = None
 
-def initialize_embedding_system(memory_manager):
+def initialize_embedding_system(memory_manager) -> Any:
     """Initialize the global embedding system"""
     global embedding_system
     embedding_system = DeannaEmbeddingSystem(memory_manager)
@@ -320,7 +322,7 @@ if __name__ == "__main__":
     # Test the embedding system
     from memory_manager import memory_manager
     
-    print("Testing DeannaEmbeddingSystem...")
+    logging.info("Testing DeannaEmbeddingSystem...")
     
     # Initialize embedding system
     embedding_system = DeannaEmbeddingSystem(memory_manager)
@@ -328,14 +330,14 @@ if __name__ == "__main__":
     # Test embedding creation
     test_text = "Deanna is a flirtatious and provocative AI companion"
     embedding = embedding_system.create_embedding(test_text)
-    print(f"Created embedding with dimension: {len(embedding)}")
+    logging.info(f"Created embedding with dimension: {len(embedding)}")
     
     # Test similarity search
     results = embedding_system.search_similar_memory("personality traits", limit=5)
-    print(f"Found {len(results)} similar memories")
+    logging.info(f"Found {len(results)} similar memories")
     
     # Get stats
     stats = embedding_system.get_embedding_stats()
-    print(f"Embedding stats: {stats}")
+    logging.info(f"Embedding stats: {stats}")
     
-    print("Embedding system test completed!") 
+    logging.info("Embedding system test completed!") 

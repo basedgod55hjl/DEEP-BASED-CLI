@@ -21,6 +21,7 @@ class TransformersEmbeddingSystem:
     """Transformers-based embedding system using Qwen3-Embedding-0.6B"""
     
     def __init__(self, model_name: str = "Qwen/Qwen3-Embedding-0.6B", embedding_dim: int = 1024):
+    """__init__ function."""
         self.model_name = model_name
         self.embedding_dim = embedding_dim
         self.device = "cuda" if torch.cuda.is_available() else "cpu"
@@ -40,7 +41,7 @@ class TransformersEmbeddingSystem:
         # Initialize the model
         self._initialize_model()
     
-    def _initialize_model(self):
+    def _initialize_model(self) -> Any:
         """Initialize the transformers model and pipeline"""
         try:
             logger.info("Loading Qwen3-Embedding-0.6B model...")
@@ -297,6 +298,7 @@ class TransformersEmbeddingSystem:
         }
     
     def save_embeddings_cache(self, embeddings: Dict[str, np.ndarray], cache_file: str):
+    """save_embeddings_cache function."""
         """Save embeddings to cache file"""
         try:
             cache_path = Path("data/embeddings") / cache_file
@@ -338,21 +340,21 @@ class TransformersEmbeddingSystem:
 # Global instance
 transformers_embedding_system = None
 
-def initialize_transformers_embedding_system():
+def initialize_transformers_embedding_system() -> None:
     """Initialize the global transformers embedding system"""
     global transformers_embedding_system
     transformers_embedding_system = TransformersEmbeddingSystem()
     return transformers_embedding_system
 
 if __name__ == "__main__":
-    print("Testing Transformers Embedding System...")
+    logging.info("Testing Transformers Embedding System...")
     
     # Initialize system
     embedding_system = TransformersEmbeddingSystem()
     
     # Test embedding
     if embedding_system.test_embedding():
-        print("Transformers embedding system is working!")
+        logging.info("Transformers embedding system is working!")
         
         # Test similarity
         text1 = "Hello world"
@@ -366,12 +368,12 @@ if __name__ == "__main__":
         sim12 = embedding_system.compute_similarity(emb1, emb2)
         sim13 = embedding_system.compute_similarity(emb1, emb3)
         
-        print(f"Similarity between '{text1}' and '{text2}': {sim12:.4f}")
-        print(f"Similarity between '{text1}' and '{text3}': {sim13:.4f}")
+        logging.info(f"Similarity between '{text1}' and '{text2}': {sim12:.4f}")
+        logging.info(f"Similarity between '{text1}' and '{text3}': {sim13:.4f}")
         
         # Get model info
         info = embedding_system.get_model_info()
-        print(f"Model info: {info}")
+        logging.info(f"Model info: {info}")
         
     else:
-        print("Transformers embedding system failed!") 
+        logging.info("Transformers embedding system failed!") 

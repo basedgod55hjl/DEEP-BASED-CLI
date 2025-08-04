@@ -17,7 +17,7 @@ try:
     QDRANT_AVAILABLE = True
 except ImportError:
     QDRANT_AVAILABLE = False
-    print("⚠️ Qdrant not available. Install with: pip install qdrant-client")
+    logging.info("⚠️ Qdrant not available. Install with: pip install qdrant-client")
 
 from .base_tool import BaseTool, ToolResponse
 from .simple_embedding_tool import SimpleEmbeddingTool
@@ -42,6 +42,7 @@ class VectorDatabaseTool(BaseTool):
                  api_key: Optional[str] = None,
                  collection_name: str = "deepcli_vectors",
                  embedding_model: str = "all-MiniLM-L6-v2"):
+    """__init__ function."""
         """Initialize Vector Database Tool"""
         super().__init__(
             name="Vector Database",
@@ -73,7 +74,7 @@ class VectorDatabaseTool(BaseTool):
         else:
             self.logger.warning("Qdrant not available - vector database features disabled")
     
-    def _initialize_components(self):
+    def _initialize_components(self) -> Any:
         """Initialize Qdrant client and local embedding model"""
         try:
             # Initialize Qdrant client
@@ -102,7 +103,7 @@ class VectorDatabaseTool(BaseTool):
             self.client = None
             self.embedding_tool = None
     
-    def _ensure_collection_exists(self):
+    def _ensure_collection_exists(self) -> Any:
         """Ensure the collection exists with proper configuration"""
         try:
             collections = self.client.get_collections()

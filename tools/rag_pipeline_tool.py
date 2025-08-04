@@ -41,6 +41,7 @@ class RAGPipelineTool(BaseTool):
     def __init__(self, 
                  vector_db_config: Optional[Dict[str, Any]] = None,
                  sql_db_path: str = "deepcli_database.db"):
+    """__init__ function."""
         """Initialize RAG Pipeline Tool"""
         super().__init__(
             name="RAG Pipeline",
@@ -582,6 +583,7 @@ Please provide a comprehensive and helpful response."""
     
     async def _store_interaction(self, session_id: str, query: str, response: str, 
                                context: RAGContext, persona_id: Optional[int]):
+    """_store_interaction function."""
         """Store the interaction in database"""
         # Store conversation
         await self.sql_tool.execute(

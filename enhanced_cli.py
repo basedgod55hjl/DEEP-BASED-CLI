@@ -5,6 +5,8 @@ Uses the downloaded Qwen3 embedding model for high-quality embeddings
 """
 
 import asyncio
+from typing import List, Dict, Any, Optional, Tuple
+
 import logging
 import hashlib
 import numpy as np
@@ -19,12 +21,12 @@ logger = logging.getLogger(__name__)
 class QwenEmbeddingSystem:
     """Qwen3 embedding system using the downloaded model"""
     
-    def __init__(self):
+    def __init__(self) -> Any:
         self.embedding_dim = 1024
         self.model = None
         self.initialize_model()
     
-    def initialize_model(self):
+    def initialize_model(self) -> Any:
         """Initialize the Qwen3 embedding model"""
         try:
             from sentence_transformers import SentenceTransformer
@@ -101,13 +103,14 @@ class QwenEmbeddingSystem:
 class EnhancedDatabaseSystem:
     """Enhanced database system with embeddings"""
     
-    def __init__(self):
+    def __init__(self) -> Any:
         self.data_dir = Path("data")
         self.data_dir.mkdir(exist_ok=True)
         self.db_file = self.data_dir / "enhanced_db.json"
         self.embedding_system = QwenEmbeddingSystem()
     
     def store_persona(self, persona_data: dict):
+    """store_persona function."""
         """Store persona with embedding"""
         try:
             # Load existing data
@@ -140,7 +143,7 @@ class EnhancedDatabaseSystem:
             logger.error(f"❌ Failed to store persona: {e}")
             return False
     
-    def get_personas(self):
+    def get_personas(self) -> Any:
         """Get all personas"""
         try:
             if self.db_file.exists():
@@ -154,6 +157,7 @@ class EnhancedDatabaseSystem:
             return []
     
     def find_similar_personas(self, query: str, top_k: int = 3):
+    """find_similar_personas function."""
         """Find personas similar to the query"""
         try:
             personas = self.get_personas()
@@ -183,11 +187,11 @@ class EnhancedDatabaseSystem:
 class EnhancedCLI:
     """Enhanced CLI with Qwen3 embeddings"""
     
-    def __init__(self):
+    def __init__(self) -> Any:
         self.embedding_system = QwenEmbeddingSystem()
         self.database_system = EnhancedDatabaseSystem()
     
-    async def test_system(self):
+    async def test_system(self) -> Any:
         """Test the enhanced system"""
         logger.info("🚀 Testing Enhanced DEEP-CLI with Qwen3...")
         
@@ -229,7 +233,7 @@ class EnhancedCLI:
         logger.info("✅ Enhanced system test passed!")
         return True
     
-    async def interactive_mode(self):
+    async def interactive_mode(self) -> Any:
         """Run interactive mode"""
         logger.info("🤖 Enhanced DEEP-CLI Interactive Mode")
         logger.info("Type 'quit' to exit, 'help' for commands")
@@ -297,7 +301,7 @@ class EnhancedCLI:
             except Exception as e:
                 logger.error(f"Error: {e}")
     
-    def show_help(self):
+    def show_help(self) -> Any:
         """Show available commands"""
         help_text = """
 Available Commands:
@@ -311,7 +315,7 @@ Available Commands:
         """
         logger.info(help_text)
 
-async def main():
+async def main() -> None:
     """Main function"""
     cli = EnhancedCLI()
     

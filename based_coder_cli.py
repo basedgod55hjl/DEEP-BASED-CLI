@@ -68,7 +68,7 @@ console = Console()
 class SystemAccessTool:
     """Tool for full PC access and OS operations"""
     
-    def __init__(self):
+    def __init__(self) -> Any:
         self.system_info = self._get_system_info()
     
     def _get_system_info(self) -> Dict[str, Any]:
@@ -143,7 +143,7 @@ class SystemAccessTool:
                             "size": stat.st_size if item.is_file() else None,
                             "modified": datetime.fromtimestamp(stat.st_mtime).isoformat()
                         })
-                    except:
+                    except Exception:
                         continue
                 return {"success": True, "items": items}
             else:
@@ -206,7 +206,7 @@ class SystemAccessTool:
             for proc in psutil.process_iter(['pid', 'name', 'cpu_percent', 'memory_percent']):
                 try:
                     processes.append(proc.info)
-                except:
+                except Exception:
                     continue
             return {"success": True, "processes": processes}
         except Exception as e:
@@ -228,7 +228,7 @@ class SystemAccessTool:
 class RainbowCLI:
     """Rainbow CLI interface with colorful agents and enhanced features"""
     
-    def __init__(self):
+    def __init__(self) -> Any:
         self.console = console
         self.tool_manager = ToolManager()
         self.agent_system = None
@@ -303,12 +303,12 @@ class RainbowCLI:
             "/setup": "setup_api_keys"
         }
         
-    async def initialize_system(self):
+    async def initialize_system(self) -> Any:
         """Initialize the complete BASED CODER system"""
         # Check for API keys first
         if not self._check_api_keys():
-            print(f"{Fore.YELLOW}⚠️ API keys not found or invalid.{Style.RESET_ALL}")
-            print(f"{Fore.CYAN}🔧 Running API keys setup...{Style.RESET_ALL}")
+            logging.info(f"{Fore.YELLOW}⚠️ API keys not found or invalid.{Style.RESET_ALL}")
+            logging.info(f"{Fore.CYAN}🔧 Running API keys setup...{Style.RESET_ALL}")
             self._run_api_setup()
         
         with Progress(
@@ -370,7 +370,7 @@ class RainbowCLI:
             self.session_id = f"session_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
             progress.advance(task)
     
-    def print_banner(self):
+    def print_banner(self) -> Any:
         """Print the rainbow BASED CODER banner"""
         banner_text = """
 ╔══════════════════════════════════════════════════════════════════════════════╗
@@ -393,16 +393,16 @@ class RainbowCLI:
         lines = banner_text.strip().split('\n')
         for i, line in enumerate(lines):
             color = self.rainbow_colors[i % len(self.rainbow_colors)]
-            print(f"{color}{line}{Style.RESET_ALL}")
+            logging.info(f"{color}{line}{Style.RESET_ALL}")
         
-        print(f"\n{Fore.CYAN}🎯 Session ID: {self.session_id}{Style.RESET_ALL}")
-        print(f"{Fore.GREEN}🌟 Active Persona: {self.active_persona}{Style.RESET_ALL}")
-        print(f"{Fore.YELLOW}🔧 Tools Loaded: {len(self.tool_manager.tools) + 2}{Style.RESET_ALL}")
-        print(f"{Fore.MAGENTA}💻 System Access: Full PC Control Enabled{Style.RESET_ALL}")
-        print(f"{Fore.BLUE}🚀 DeepSeek Coder: Advanced Code Generation & Analysis{Style.RESET_ALL}")
-        print()
+        logging.info(f"\n{Fore.CYAN}🎯 Session ID: {self.session_id}{Style.RESET_ALL}")
+        logging.info(f"{Fore.GREEN}🌟 Active Persona: {self.active_persona}{Style.RESET_ALL}")
+        logging.info(f"{Fore.YELLOW}🔧 Tools Loaded: {len(self.tool_manager.tools) + 2}{Style.RESET_ALL}")
+        logging.info(f"{Fore.MAGENTA}💻 System Access: Full PC Control Enabled{Style.RESET_ALL}")
+        logging.info(f"{Fore.BLUE}🚀 DeepSeek Coder: Advanced Code Generation & Analysis{Style.RESET_ALL}")
+        logging.info()
     
-    def print_help(self):
+    def print_help(self) -> Any:
         """Print colorful help menu"""
         help_text = f"""
 {Fore.CYAN}🎯 BASED CODER CLI Commands:{Style.RESET_ALL}
@@ -486,7 +486,7 @@ class RainbowCLI:
   /persona <name>          - Quick persona switch
   /personas                - Quick personas list
 """
-        print(help_text)
+        logging.info(help_text)
     
     def _check_api_keys(self) -> bool:
         """Check if API keys are properly configured"""
@@ -512,10 +512,10 @@ class RainbowCLI:
             return True
             
         except Exception as e:
-            print(f"{Fore.RED}❌ Error checking API keys: {str(e)}{Style.RESET_ALL}")
+            logging.info(f"{Fore.RED}❌ Error checking API keys: {str(e)}{Style.RESET_ALL}")
             return False
     
-    def _run_api_setup(self):
+    def _run_api_setup(self) -> Any:
         """Run the API keys setup script"""
         try:
             import subprocess
@@ -523,25 +523,25 @@ class RainbowCLI:
             
             setup_script = Path("setup_api_keys.py")
             if setup_script.exists():
-                print(f"{Fore.CYAN}🔧 Running API keys setup script...{Style.RESET_ALL}")
+                logging.info(f"{Fore.CYAN}🔧 Running API keys setup script...{Style.RESET_ALL}")
                 result = subprocess.run([sys.executable, str(setup_script)], 
                                       capture_output=False, text=True)
                 
                 if result.returncode == 0:
-                    print(f"{Fore.GREEN}✅ API keys setup completed successfully!{Style.RESET_ALL}")
+                    logging.info(f"{Fore.GREEN}✅ API keys setup completed successfully!{Style.RESET_ALL}")
                     # Reload environment variables
                     from dotenv import load_dotenv
                     load_dotenv()
                 else:
-                    print(f"{Fore.RED}❌ API keys setup failed. Please run 'python setup_api_keys.py' manually.{Style.RESET_ALL}")
+                    logging.info(f"{Fore.RED}❌ API keys setup failed. Please run 'python setup_api_keys.py' manually.{Style.RESET_ALL}")
                     sys.exit(1)
             else:
-                print(f"{Fore.RED}❌ API keys setup script not found. Please run 'python setup_api_keys.py' manually.{Style.RESET_ALL}")
+                logging.info(f"{Fore.RED}❌ API keys setup script not found. Please run 'python setup_api_keys.py' manually.{Style.RESET_ALL}")
                 sys.exit(1)
                 
         except Exception as e:
-            print(f"{Fore.RED}❌ Error running API setup: {str(e)}{Style.RESET_ALL}")
-            print(f"{Fore.YELLOW}💡 Please run 'python setup_api_keys.py' manually to configure your API keys.{Style.RESET_ALL}")
+            logging.info(f"{Fore.RED}❌ Error running API setup: {str(e)}{Style.RESET_ALL}")
+            logging.info(f"{Fore.YELLOW}💡 Please run 'python setup_api_keys.py' manually to configure your API keys.{Style.RESET_ALL}")
             sys.exit(1)
     
     def parse_prefix_command(self, user_input: str) -> tuple:
@@ -883,6 +883,7 @@ class RainbowCLI:
             return f"❌ Error executing coder command: {str(e)}"
     
     async def handle_chat(self, message: str):
+    """handle_chat function."""
         """Handle chat conversation with context caching"""
         try:
             # Get context from cache and history
@@ -943,7 +944,7 @@ class RainbowCLI:
                 limit=5
             )
             context["relevant_memories"] = memories.data.get("memories", [])
-        except:
+        except Exception:
             context["relevant_memories"] = []
         
         # Add RAG results
@@ -954,12 +955,13 @@ class RainbowCLI:
                 limit=3
             )
             context["rag_context"] = rag_results.data.get("results", [])
-        except:
+        except Exception:
             context["rag_context"] = []
         
         return context
     
     async def handle_fim_completion(self, prefix: str, suffix: str):
+    """handle_fim_completion function."""
         """Handle FIM (Fill-in-Middle) completion"""
         try:
             result = await self.fim_tool.execute(
@@ -971,6 +973,7 @@ class RainbowCLI:
             return f"Error in FIM completion: {str(e)}"
     
     async def handle_prefix_completion(self, prefix: str):
+    """handle_prefix_completion function."""
         """Handle prefix completion"""
         try:
             result = await self.prefix_tool.execute(
@@ -981,6 +984,7 @@ class RainbowCLI:
             return f"Error in prefix completion: {str(e)}"
     
     async def handle_rag_query(self, query: str):
+    """handle_rag_query function."""
         """Handle RAG pipeline query"""
         try:
             result = await self.rag_tool.execute(
@@ -993,6 +997,7 @@ class RainbowCLI:
             return f"Error in RAG query: {str(e)}"
     
     async def handle_reasoning(self, question: str):
+    """handle_reasoning function."""
         """Handle reasoning engine query"""
         try:
             result = await self.reasoning_engine.execute(
@@ -1004,6 +1009,7 @@ class RainbowCLI:
             return f"Error in reasoning: {str(e)}"
     
     async def handle_memory_operation(self, operation: str, **kwargs):
+    """handle_memory_operation function."""
         """Handle memory operations"""
         try:
             result = await self.memory_tool.execute(
@@ -1014,7 +1020,7 @@ class RainbowCLI:
         except Exception as e:
             return f"Error in memory operation: {str(e)}"
     
-    def print_status(self):
+    def print_status(self) -> Any:
         """Print colorful system status"""
         status_table = Table(title="🚀 BASED CODER System Status")
         status_table.add_column("Component", style="cyan")
@@ -1033,9 +1039,9 @@ class RainbowCLI:
         status_table.add_row("Prefix Commands", "✅ Active", f"{len(self.prefix_commands)} commands available")
         status_table.add_row("DeepSeek Coder", "✅ Active", "Advanced Code Generation & Analysis")
         
-        self.console.print(status_table)
+        self.console.logging.info(status_table)
     
-    async def interactive_mode(self):
+    async def interactive_mode(self) -> Any:
         """Run interactive CLI mode"""
         self.print_banner()
         
@@ -1048,7 +1054,7 @@ class RainbowCLI:
                 )
                 
                 if user_input.lower() in ['exit', 'quit', 'q']:
-                    print(f"{Fore.YELLOW}👋 Goodbye! Thanks for using BASED CODER!{Style.RESET_ALL}")
+                    logging.info(f"{Fore.YELLOW}👋 Goodbye! Thanks for using BASED CODER!{Style.RESET_ALL}")
                     break
                 
                 # Check for prefix commands first
@@ -1059,18 +1065,18 @@ class RainbowCLI:
                                        "get_file_info"]:
                         # Handle system commands
                         response = await self.handle_system_command(prefix_command, prefix_args)
-                        print(f"{Fore.CYAN}💻 {response}{Style.RESET_ALL}")
+                        logging.info(f"{Fore.CYAN}💻 {response}{Style.RESET_ALL}")
                         continue
                     elif prefix_command in ["generate_code", "debug_code", "self_heal_code", "fim_code_completion",
                                        "web_search", "web_scrape", "analyze_code", "analyze_logic",
                                        "store_idea", "store_code", "learn_from_code", "run_code"]:
                         # Handle DeepSeek Coder commands
                         response = await self.handle_coder_command(prefix_command, prefix_args)
-                        print(f"{Fore.BLUE}🚀 {response}{Style.RESET_ALL}")
+                        logging.info(f"{Fore.BLUE}🚀 {response}{Style.RESET_ALL}")
                         continue
                     elif prefix_command == "setup_api_keys":
                         # Handle API setup command
-                        print(f"{Fore.CYAN}🔧 Running API keys setup...{Style.RESET_ALL}")
+                        logging.info(f"{Fore.CYAN}🔧 Running API keys setup...{Style.RESET_ALL}")
                         self._run_api_setup()
                         continue
                     else:
@@ -1092,95 +1098,95 @@ class RainbowCLI:
                     else:
                         message = " ".join(args)
                     
-                    print(f"{Fore.CYAN}🤖 Processing...{Style.RESET_ALL}")
+                    logging.info(f"{Fore.CYAN}🤖 Processing...{Style.RESET_ALL}")
                     response = await self.handle_chat(message)
-                    print(f"{Fore.GREEN}💬 Response: {response}{Style.RESET_ALL}")
+                    logging.info(f"{Fore.GREEN}💬 Response: {response}{Style.RESET_ALL}")
                 
                 elif command == "fim":
                     if len(args) < 2:
-                        print(f"{Fore.RED}❌ Usage: fim <prefix> <suffix>{Style.RESET_ALL}")
+                        logging.info(f"{Fore.RED}❌ Usage: fim <prefix> <suffix>{Style.RESET_ALL}")
                         continue
                     
                     prefix = args[0]
                     suffix = args[1]
                     result = await self.handle_fim_completion(prefix, suffix)
-                    print(f"{Fore.MAGENTA}🔧 FIM Result: {result}{Style.RESET_ALL}")
+                    logging.info(f"{Fore.MAGENTA}🔧 FIM Result: {result}{Style.RESET_ALL}")
                 
                 elif command == "prefix":
                     if not args:
-                        print(f"{Fore.RED}❌ Usage: prefix <text>{Style.RESET_ALL}")
+                        logging.info(f"{Fore.RED}❌ Usage: prefix <text>{Style.RESET_ALL}")
                         continue
                     
                     prefix_text = " ".join(args)
                     result = await self.handle_prefix_completion(prefix_text)
-                    print(f"{Fore.MAGENTA}🔧 Prefix Result: {result}{Style.RESET_ALL}")
+                    logging.info(f"{Fore.MAGENTA}🔧 Prefix Result: {result}{Style.RESET_ALL}")
                 
                 elif command == "rag":
                     if not args:
-                        print(f"{Fore.RED}❌ Usage: rag <query>{Style.RESET_ALL}")
+                        logging.info(f"{Fore.RED}❌ Usage: rag <query>{Style.RESET_ALL}")
                         continue
                     
                     query = " ".join(args)
                     result = await self.handle_rag_query(query)
-                    print(f"{Fore.BLUE}🔍 RAG Result: {result}{Style.RESET_ALL}")
+                    logging.info(f"{Fore.BLUE}🔍 RAG Result: {result}{Style.RESET_ALL}")
                 
                 elif command == "reason":
                     if not args:
-                        print(f"{Fore.RED}❌ Usage: reason <question>{Style.RESET_ALL}")
+                        logging.info(f"{Fore.RED}❌ Usage: reason <question>{Style.RESET_ALL}")
                         continue
                     
                     question = " ".join(args)
                     result = await self.handle_reasoning(question)
-                    print(f"{Fore.YELLOW}🧠 Reasoning: {result}{Style.RESET_ALL}")
+                    logging.info(f"{Fore.YELLOW}🧠 Reasoning: {result}{Style.RESET_ALL}")
                 
                 elif command == "remember":
                     if not args:
-                        print(f"{Fore.RED}❌ Usage: remember <information>{Style.RESET_ALL}")
+                        logging.info(f"{Fore.RED}❌ Usage: remember <information>{Style.RESET_ALL}")
                         continue
                     
                     info = " ".join(args)
                     result = await self.handle_memory_operation("store", content=info)
-                    print(f"{Fore.GREEN}💾 Memory stored: {result}{Style.RESET_ALL}")
+                    logging.info(f"{Fore.GREEN}💾 Memory stored: {result}{Style.RESET_ALL}")
                 
                 elif command == "recall":
                     if not args:
-                        print(f"{Fore.RED}❌ Usage: recall <query>{Style.RESET_ALL}")
+                        logging.info(f"{Fore.RED}❌ Usage: recall <query>{Style.RESET_ALL}")
                         continue
                     
                     query = " ".join(args)
                     result = await self.handle_memory_operation("search", query=query)
-                    print(f"{Fore.CYAN}🔍 Memory search: {result}{Style.RESET_ALL}")
+                    logging.info(f"{Fore.CYAN}🔍 Memory search: {result}{Style.RESET_ALL}")
                 
                 elif command == "status":
                     self.print_status()
                 
                 elif command == "history":
                     if self.conversation_history:
-                        print(f"{Fore.CYAN}📜 Conversation History:{Style.RESET_ALL}")
+                        logging.info(f"{Fore.CYAN}📜 Conversation History:{Style.RESET_ALL}")
                         for i, conv in enumerate(self.conversation_history[-5:], 1):
-                            print(f"{Fore.YELLOW}{i}. User: {conv['user'][:50]}...{Style.RESET_ALL}")
-                            print(f"{Fore.GREEN}   Assistant: {conv['assistant'][:50]}...{Style.RESET_ALL}")
+                            logging.info(f"{Fore.YELLOW}{i}. User: {conv['user'][:50]}...{Style.RESET_ALL}")
+                            logging.info(f"{Fore.GREEN}   Assistant: {conv['assistant'][:50]}...{Style.RESET_ALL}")
                     else:
-                        print(f"{Fore.YELLOW}📜 No conversation history yet.{Style.RESET_ALL}")
+                        logging.info(f"{Fore.YELLOW}📜 No conversation history yet.{Style.RESET_ALL}")
                 
                 elif command == "clear":
                     self.conversation_history = []
                     self.context_cache = {}
-                    print(f"{Fore.GREEN}🧹 Conversation history and cache cleared.{Style.RESET_ALL}")
+                    logging.info(f"{Fore.GREEN}🧹 Conversation history and cache cleared.{Style.RESET_ALL}")
                 
                 else:
-                    print(f"{Fore.RED}❌ Unknown command: {command}{Style.RESET_ALL}")
-                    print(f"{Fore.YELLOW}💡 Type 'help' for available commands.{Style.RESET_ALL}")
+                    logging.info(f"{Fore.RED}❌ Unknown command: {command}{Style.RESET_ALL}")
+                    logging.info(f"{Fore.YELLOW}💡 Type 'help' for available commands.{Style.RESET_ALL}")
                 
-                print()  # Add spacing between commands
+                logging.info()  # Add spacing between commands
                 
             except KeyboardInterrupt:
-                print(f"\n{Fore.YELLOW}👋 Goodbye! Thanks for using BASED CODER!{Style.RESET_ALL}")
+                logging.info(f"\n{Fore.YELLOW}👋 Goodbye! Thanks for using BASED CODER!{Style.RESET_ALL}")
                 break
             except Exception as e:
-                print(f"{Fore.RED}❌ Error: {str(e)}{Style.RESET_ALL}")
+                logging.info(f"{Fore.RED}❌ Error: {str(e)}{Style.RESET_ALL}")
 
-async def main():
+async def main() -> None:
     """Main entry point for BASED CODER CLI"""
     parser = argparse.ArgumentParser(description="🚀 BASED CODER CLI - Enhanced AI-Powered Command Line Interface")
     parser.add_argument("--init", action="store_true", help="Initialize the system")
@@ -1208,42 +1214,42 @@ async def main():
     
     if args.chat:
         response = await cli.handle_chat(args.chat)
-        print(f"Response: {response}")
+        logging.info(f"Response: {response}")
         return
     
     if args.fim:
         result = await cli.handle_fim_completion(args.fim[0], args.fim[1])
-        print(f"FIM Result: {result}")
+        logging.info(f"FIM Result: {result}")
         return
     
     if args.prefix:
         result = await cli.handle_prefix_completion(args.prefix)
-        print(f"Prefix Result: {result}")
+        logging.info(f"Prefix Result: {result}")
         return
     
     if args.rag:
         result = await cli.handle_rag_query(args.rag)
-        print(f"RAG Result: {result}")
+        logging.info(f"RAG Result: {result}")
         return
     
     if args.reason:
         result = await cli.handle_reasoning(args.reason)
-        print(f"Reasoning: {result}")
+        logging.info(f"Reasoning: {result}")
         return
     
     if args.exec:
         result = await cli.handle_system_command("execute_command", [args.exec])
-        print(result)
+        logging.info(result)
         return
     
     if args.ls:
         result = await cli.handle_system_command("list_directory", [args.ls])
-        print(result)
+        logging.info(result)
         return
     
     if args.cat:
         result = await cli.handle_system_command("read_file", [args.cat])
-        print(result)
+        logging.info(result)
         return
     
     # Interactive mode

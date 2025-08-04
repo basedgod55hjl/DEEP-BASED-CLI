@@ -26,6 +26,7 @@ class EnhancedLogger:
     """Enhanced logging system with error tracking and monitoring"""
     
     def __init__(self, name: str = "BASED_CODER_CLI", log_dir: str = "data/logs"):
+    """__init__ function."""
         self.name = name
         self.log_dir = Path(log_dir)
         self.log_dir.mkdir(parents=True, exist_ok=True)
@@ -51,7 +52,7 @@ class EnhancedLogger:
         # Thread safety
         self.lock = threading.Lock()
     
-    def setup_handlers(self):
+    def setup_handlers(self) -> Any:
         """Setup various logging handlers"""
         
         # Create timestamped log file
@@ -99,6 +100,7 @@ class EnhancedLogger:
         self.logger.addHandler(console_handler)
     
     def log_error(self, error: Exception, context: str = "", extra_data: Dict = None):
+    """log_error function."""
         """Log error with context and tracking"""
         with self.lock:
             self.error_count += 1
@@ -128,6 +130,7 @@ class EnhancedLogger:
             self.save_error_report(error_info)
     
     def log_warning(self, message: str, context: str = "", extra_data: Dict = None):
+    """log_warning function."""
         """Log warning with tracking"""
         with self.lock:
             self.warning_count += 1
@@ -142,6 +145,7 @@ class EnhancedLogger:
             self.logger.warning(f"Warning in {context}: {message}")
     
     def log_performance(self, operation: str, duration: float, success: bool = True):
+    """log_performance function."""
         """Log performance metrics"""
         with self.lock:
             if operation not in self.performance_metrics:
@@ -166,6 +170,7 @@ class EnhancedLogger:
                 metrics['failure_count'] += 1
     
     def save_error_report(self, error_info: Dict):
+    """save_error_report function."""
         """Save error report to file"""
         error_report_file = self.log_dir / "error_reports.json"
         
@@ -219,7 +224,7 @@ class EnhancedLogger:
                     }
             return summary
     
-    def display_log_summary(self):
+    def display_log_summary(self) -> Any:
         """Display logging summary in rich format"""
         error_summary = self.get_error_summary()
         performance_summary = self.get_performance_summary()
@@ -235,7 +240,7 @@ class EnhancedLogger:
         for error_type, count in error_summary['error_types'].items():
             error_table.add_row(f"Error Type: {error_type}", str(count))
         
-        console.print(error_table)
+        console.logging.info(error_table)
         
         # Performance summary table
         if performance_summary:
@@ -253,9 +258,10 @@ class EnhancedLogger:
                     f"{metrics['success_rate']:.1%}"
                 )
             
-            console.print(perf_table)
+            console.logging.info(perf_table)
     
     def cleanup_old_logs(self, days: int = 30):
+    """cleanup_old_logs function."""
         """Clean up old log files"""
         cutoff_date = datetime.now() - timedelta(days=days)
         deleted_count = 0
@@ -272,10 +278,12 @@ class EnhancedLogger:
         self.logger.info(f"Deleted {deleted_count} old log files")
 
 def error_handler(logger: EnhancedLogger, context: str = ""):
+    """error_handler function."""
     """Decorator for error handling and logging"""
     def decorator(func: Callable):
+    """decorator function."""
         @wraps(func)
-        def wrapper(*args, **kwargs):
+        def wrapper(*args, **kwargs) -> Any:
             start_time = datetime.now()
             try:
                 result = func(*args, **kwargs)
@@ -294,10 +302,12 @@ def error_handler(logger: EnhancedLogger, context: str = ""):
     return decorator
 
 def performance_monitor(logger: EnhancedLogger, operation: str):
+    """performance_monitor function."""
     """Decorator for performance monitoring"""
     def decorator(func: Callable):
+    """decorator function."""
         @wraps(func)
-        def wrapper(*args, **kwargs):
+        def wrapper(*args, **kwargs) -> Any:
             start_time = datetime.now()
             try:
                 result = func(*args, **kwargs)
@@ -318,7 +328,7 @@ def get_logger() -> EnhancedLogger:
     """Get the global enhanced logger instance"""
     return enhanced_logger
 
-def main():
+def main() -> None:
     """Test the enhanced logging system"""
     logger = get_logger()
     

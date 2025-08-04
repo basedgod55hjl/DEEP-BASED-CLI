@@ -60,7 +60,7 @@ class DeepSeekCoderTool(BaseTool):
     Advanced DeepSeek Coder Tool with comprehensive code capabilities
     """
     
-    def __init__(self):
+    def __init__(self) -> Any:
         """Initialize DeepSeek Coder Tool"""
         super().__init__(
             name="DeepSeek Coder",
@@ -113,7 +113,7 @@ class DeepSeekCoderTool(BaseTool):
         self.session = None
         self.is_initialized = False
     
-    async def initialize(self):
+    async def initialize(self) -> Any:
         """Initialize the tool"""
         try:
             # Create aiohttp session for web requests
@@ -951,6 +951,7 @@ Learning insights:
             )
     
     async def _store_debugging_pattern(self, original_code: str, fixed_code: str, error_message: str, language: str):
+    """_store_debugging_pattern function."""
         """Store debugging patterns for learning"""
         pattern_id = f"debug_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
         
@@ -976,7 +977,7 @@ Learning insights:
         
         return issues
     
-    async def _load_code_examples(self):
+    async def _load_code_examples(self) -> Any:
         """Load code examples from file"""
         try:
             examples_file = Path("data/code_examples.json")
@@ -986,7 +987,7 @@ Learning insights:
         except Exception as e:
             logging.warning(f"Could not load code examples: {str(e)}")
     
-    async def _save_code_examples(self):
+    async def _save_code_examples(self) -> Any:
         """Save code examples to file"""
         try:
             examples_file = Path("data/code_examples.json")
@@ -996,7 +997,7 @@ Learning insights:
         except Exception as e:
             logging.error(f"Could not save code examples: {str(e)}")
     
-    async def _load_ideas_database(self):
+    async def _load_ideas_database(self) -> Any:
         """Load ideas database from file"""
         try:
             ideas_file = Path("data/ideas_database.json")
@@ -1006,7 +1007,7 @@ Learning insights:
         except Exception as e:
             logging.warning(f"Could not load ideas database: {str(e)}")
     
-    async def _save_ideas_database(self):
+    async def _save_ideas_database(self) -> Any:
         """Save ideas database to file"""
         try:
             ideas_file = Path("data/ideas_database.json")
@@ -1016,7 +1017,7 @@ Learning insights:
         except Exception as e:
             logging.error(f"Could not save ideas database: {str(e)}")
     
-    async def _save_debugging_patterns(self):
+    async def _save_debugging_patterns(self) -> Any:
         """Save debugging patterns to file"""
         try:
             patterns_file = Path("data/debugging_patterns.json")

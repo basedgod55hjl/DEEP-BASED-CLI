@@ -26,18 +26,19 @@ DEEPSEEK_BASE_URL = os.getenv("DEEPSEEK_BASE_URL", "https://api.deepseek.com/v1"
 HUGGINGFACE_API_KEY = os.getenv("HUGGINGFACE_API_KEY", "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")
 
 def update_api_keys(deepseek_key: str = None, huggingface_token: str = None):
+    """update_api_keys function."""
     """Update API keys"""
     global DEEPSEEK_API_KEY, HUGGINGFACE_API_KEY
     
     if deepseek_key:
         DEEPSEEK_API_KEY = deepseek_key
         os.environ["DEEPSEEK_API_KEY"] = deepseek_key
-        print(f"✅ DeepSeek API key updated")
+        logging.info(f"✅ DeepSeek API key updated")
     
     if huggingface_token:
         HUGGINGFACE_API_KEY = huggingface_token
         os.environ["HUGGINGFACE_API_KEY"] = huggingface_token
-        print(f"✅ HuggingFace token updated")
+        logging.info(f"✅ HuggingFace token updated")
 
 def validate_deepseek_key(key: str = None) -> bool:
     """Check if DeepSeek API key is valid"""
@@ -88,7 +89,7 @@ class PersonaConfig:
     adaptation_threshold: float = 0.7
     max_persona_history: int = 50
     
-    def __post_init__(self):
+    def __post_init__(self) -> Any:
         if self.personas is None:
             self.personas = {
                 "enhanced_assistant": {
@@ -270,7 +271,7 @@ class EnhancedConfig:
     last_updated: datetime = None
     environment: str = "development"
     
-    def __post_init__(self):
+    def __post_init__(self) -> Any:
         if self.created_at is None:
             self.created_at = datetime.now()
         if self.last_updated is None:
@@ -280,12 +281,13 @@ class ConfigManager:
     """Enhanced configuration manager with dynamic loading and validation"""
     
     def __init__(self, config_path: Optional[str] = None):
+    """__init__ function."""
         """Initialize configuration manager"""
         self.config_path = config_path or "config/enhanced_config.json"
         self.config: Optional[EnhancedConfig] = None
         self._load_config()
     
-    def _load_config(self):
+    def _load_config(self) -> Any:
         """Load configuration from file or create default"""
         try:
             if Path(self.config_path).exists():
@@ -368,7 +370,7 @@ class ConfigManager:
             features=FeatureFlags()
         )
     
-    def _save_config(self):
+    def _save_config(self) -> Any:
         """Save configuration to file"""
         try:
             # Ensure directory exists
@@ -406,6 +408,7 @@ class ConfigManager:
         return self.config
     
     def update_config(self, updates: Dict[str, Any]):
+    """update_config function."""
         """Update configuration with new values"""
         try:
             # Update nested configurations
@@ -517,6 +520,7 @@ class ConfigManager:
             return ""
     
     def import_config(self, config_data: str, format: str = "json"):
+    """import_config function."""
         """Import configuration from string"""
         try:
             if format.lower() == "yaml":
@@ -577,6 +581,7 @@ class ConfigManager:
             return ""
     
     def restore_backup(self, backup_path: str):
+    """restore_backup function."""
         """Restore configuration from backup"""
         try:
             if not Path(backup_path).exists():
@@ -618,6 +623,7 @@ def get_config_manager() -> ConfigManager:
     return _config_manager
 
 def update_config(updates: Dict[str, Any]):
+    """update_config function."""
     """Update global configuration"""
     config_manager = get_config_manager()
     config_manager.update_config(updates)
@@ -662,6 +668,7 @@ def export_config(format: str = "json") -> str:
     return config_manager.export_config(format)
 
 def import_config(config_data: str, format: str = "json"):
+    """import_config function."""
     """Import configuration"""
     config_manager = get_config_manager()
     config_manager.import_config(config_data, format)
@@ -673,6 +680,7 @@ def create_config_backup() -> str:
     return config_manager.create_backup()
 
 def restore_config_backup(backup_path: str):
+    """restore_config_backup function."""
     """Restore configuration from backup"""
     config_manager = get_config_manager()
     config_manager.restore_backup(backup_path)

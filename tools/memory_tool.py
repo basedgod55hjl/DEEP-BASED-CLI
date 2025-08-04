@@ -4,6 +4,8 @@ Persistent memory and learning system inspired by Agent Zero
 """
 
 import json
+import logging
+
 import os
 from datetime import datetime
 from typing import Any, Dict, List, Optional
@@ -17,6 +19,7 @@ class MemoryTool(BaseTool):
     """
     
     def __init__(self, memory_file: str = "based_god_memory.json"):
+    """__init__ function."""
         super().__init__(
             name="Memory Tool",
             description="Persistent memory and learning system for storing conversations, patterns, and insights",
@@ -369,7 +372,7 @@ class MemoryTool(BaseTool):
                 with open(self.memory_file, 'r', encoding='utf-8') as f:
                     return json.load(f)
             except Exception as e:
-                print(f"Error loading memory file: {e}")
+                logging.info(f"Error loading memory file: {e}")
         
         # Return default structure
         return {
@@ -381,7 +384,7 @@ class MemoryTool(BaseTool):
             }
         }
     
-    def _save_memory(self):
+    def _save_memory(self) -> Any:
         """Save memory data to file"""
         
         self.memory_data["stats"]["last_updated"] = datetime.now().isoformat()
@@ -390,7 +393,7 @@ class MemoryTool(BaseTool):
             with open(self.memory_file, 'w', encoding='utf-8') as f:
                 json.dump(self.memory_data, f, indent=2, ensure_ascii=False)
         except Exception as e:
-            print(f"Error saving memory file: {e}")
+            logging.info(f"Error saving memory file: {e}")
     
     def _generate_memory_id(self) -> str:
         """Generate unique memory ID"""

@@ -33,7 +33,7 @@ logger = logging.getLogger(__name__)
 class DeannaChatSystem:
     """Complete chat system for Deanna persona"""
     
-    def __init__(self):
+    def __init__(self) -> Any:
         self.persona_name = "DEANNA"
         self.nickname = "DEEDEE"
         
@@ -162,6 +162,7 @@ class DeannaChatSystem:
             return "I'm experiencing some technical difficulties. Please try again later."
     
     def store_chat_exchange(self, user_message: str, assistant_message: str):
+    """store_chat_exchange function."""
         """Store chat exchange in history and database"""
         try:
             # Add to chat history
@@ -222,7 +223,7 @@ class DeannaChatSystem:
             logger.error(f"Error getting chat history: {e}")
             return []
     
-    def clear_chat_history(self):
+    def clear_chat_history(self) -> Any:
         """Clear current chat history"""
         try:
             self.chat_history = []
@@ -248,7 +249,7 @@ class DeannaChatSystem:
             logger.error(f"Error getting system status: {e}")
             return {}
 
-def main():
+def main() -> None:
     """Main chat interface"""
     logger.info("🎭 Deanna Chat System")
     logger.info("=" * 50)

@@ -24,6 +24,7 @@ class SimpleEmbeddingSystem:
     """Simple embedding system using TF-IDF"""
     
     def __init__(self, embedding_dim: int = 512):
+    """__init__ function."""
         self.embedding_dim = embedding_dim
         self.vectorizer = TfidfVectorizer(
             max_features=embedding_dim,
@@ -38,7 +39,7 @@ class SimpleEmbeddingSystem:
         
         logger.info(f"Simple embedding system initialized with dimension {embedding_dim}")
     
-    def _initialize_vectorizer(self):
+    def _initialize_vectorizer(self) -> Any:
         """Initialize TF-IDF vectorizer with Deanna-specific sample text"""
         sample_texts = [
             "Deanna is a flirtatious and provocative AI companion from Cincinnati",

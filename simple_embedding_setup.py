@@ -5,6 +5,8 @@ Uses sentence-transformers for local embeddings
 """
 
 import os
+from typing import List, Dict, Any, Optional, Tuple
+
 import sys
 from pathlib import Path
 import logging
@@ -20,7 +22,7 @@ logger = logging.getLogger(__name__)
 class SimpleEmbeddingSystem:
     """Simple embedding system using sentence-transformers"""
     
-    def __init__(self, model_name="all-MiniLM-L6-v2"):
+    def __init__(self, model_name="all-MiniLM-L6-v2") -> Any:
         self.model_name = model_name
         self.model = None
         self.embedding_dim = 384  # Default for all-MiniLM-L6-v2
@@ -34,7 +36,7 @@ class SimpleEmbeddingSystem:
         for dir_path in [self.data_dir, self.models_dir, self.embeddings_dir, self.cache_dir]:
             dir_path.mkdir(parents=True, exist_ok=True)
     
-    def initialize_model(self):
+    def initialize_model(self) -> Any:
         """Initialize the sentence transformer model"""
         try:
             logger.info(f"Loading model: {self.model_name}")
@@ -136,6 +138,7 @@ class SimpleEmbeddingSystem:
             return False
     
     def save_embeddings(self, embeddings: list, filename: str):
+    """save_embeddings function."""
         """Save embeddings to file"""
         filepath = self.embeddings_dir / filename
         np.save(filepath, np.array(embeddings))
@@ -152,7 +155,7 @@ class SimpleEmbeddingSystem:
             logger.error(f"Embeddings file not found: {filepath}")
             return np.array([])
 
-def setup_embedding_system():
+def setup_embedding_system() -> None:
     """Set up the embedding system"""
     logger.info("Setting up embedding system...")
     

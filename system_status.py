@@ -5,6 +5,8 @@ Comprehensive system monitoring and status reporting
 """
 
 import os
+import logging
+
 import sys
 import platform
 import psutil
@@ -28,7 +30,7 @@ logger = get_logger()
 class SystemStatus:
     """Comprehensive system status monitoring"""
     
-    def __init__(self):
+    def __init__(self) -> Any:
         self.base_dir = Path(".")
         self.data_dir = self.base_dir / "data"
         self.config_dir = self.base_dir / "config"
@@ -190,8 +192,9 @@ class SystemStatus:
             return {'tools_error': str(e)}
     
     def display_system_info(self, system_info: Dict[str, Any]):
+    """display_system_info function."""
         """Display system information"""
-        console.print(Panel.fit("System Information", title="System Info"))
+        console.logging.info(Panel.fit("System Information", title="System Info"))
         
         table = Table(title="System Details")
         table.add_column("Metric", style="cyan")
@@ -226,11 +229,12 @@ class SystemStatus:
         # Uptime
         table.add_row("System Uptime", system_info['uptime'])
         
-        console.print(table)
+        console.logging.info(table)
     
     def display_database_status(self, db_status: Dict[str, Any]):
+    """display_database_status function."""
         """Display database status"""
-        console.print(Panel.fit("Database Status", title="Database Status"))
+        console.logging.info(Panel.fit("Database Status", title="Database Status"))
         
         # Main database
         if db_status.get('main_db_exists', True):
@@ -247,9 +251,9 @@ class SystemStatus:
                 size_mb = db_status['main_db_size'] / (1024**2)
                 table.add_row("Database Size", f"{size_mb:.2f} MB")
             
-            console.print(table)
+            console.logging.info(table)
         else:
-            console.print("‚ùå Main database not found")
+            console.logging.info("‚ùå Main database not found")
         
         # Memory database
         if db_status.get('memory_db_exists', True):
@@ -266,13 +270,14 @@ class SystemStatus:
                 size_mb = db_status['memory_db_size'] / (1024**2)
                 table.add_row("Database Size", f"{size_mb:.2f} MB")
             
-            console.print(table)
+            console.logging.info(table)
         else:
-            console.print("‚ùå Memory database not found")
+            console.logging.info("‚ùå Memory database not found")
     
     def display_file_system_status(self, fs_status: Dict[str, Any]):
+    """display_file_system_status function."""
         """Display file system status"""
-        console.print(Panel.fit("File System Status", title="File System"))
+        console.logging.info(Panel.fit("File System Status", title="File System"))
         
         table = Table(title="Directory Status")
         table.add_column("Directory", style="cyan")
@@ -306,11 +311,11 @@ class SystemStatus:
                 size_str
             )
         
-        console.print(table)
+        console.logging.info(table)
     
-    def display_logging_status(self):
+    def display_logging_status(self) -> Any:
         """Display logging status"""
-        console.print(Panel.fit("Logging Status", title="Logging"))
+        console.logging.info(Panel.fit("Logging Status", title="Logging"))
         
         # Get logger status
         error_summary = logger.get_error_summary()
@@ -327,7 +332,7 @@ class SystemStatus:
         for error_type, count in error_summary['error_types'].items():
             error_table.add_row(f"Error Type: {error_type}", str(count))
         
-        console.print(error_table)
+        console.logging.info(error_table)
         
         # Performance summary
         if performance_summary:
@@ -345,9 +350,9 @@ class SystemStatus:
                     f"{metrics['success_rate']:.1%}"
                 )
             
-            console.print(perf_table)
+            console.logging.info(perf_table)
     
-    def run_full_status_check(self):
+    def run_full_status_check(self) -> Any:
         """Run complete system status check"""
         console.print(Panel.fit(
             "[bold blue]BASED CODER CLI - System Status Check[/bold blue]\n"
@@ -407,7 +412,7 @@ class SystemStatus:
             title="Status Complete"
         ))
 
-def main():
+def main() -> None:
     """Main function"""
     status_checker = SystemStatus()
     status_checker.run_full_status_check()

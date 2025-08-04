@@ -39,6 +39,7 @@ class LLMQueryTool(BaseTool):
                  api_key: str = None,
                  base_url: str = None,
                  default_model: str = "deepseek-chat"):
+    """__init__ function."""
         """Initialize Enhanced LLM Query Tool"""
         super().__init__(
             name="Enhanced LLM Query",
@@ -112,7 +113,7 @@ class LLMQueryTool(BaseTool):
         # Logging
         self.logger = logging.getLogger(__name__)
         
-    def _initialize_providers(self):
+    def _initialize_providers(self) -> Any:
         """Initialize LangChain providers with enhanced configurations"""
         # DeepSeek Chat model (primary)
         self.providers["deepseek_chat"] = ChatOpenAI(
@@ -437,7 +438,7 @@ class LLMQueryTool(BaseTool):
         
         return completion.strip()
     
-    async def _stream_completion(self, provider, messages, temperature, max_tokens):
+    async def _stream_completion(self, provider, messages, temperature, max_tokens) -> Any:
         """Handle streaming completion"""
         try:
             response = await provider.ainvoke(messages)
@@ -532,7 +533,7 @@ class LLMQueryTool(BaseTool):
             }
         }
     
-    def clear_history(self):
+    def clear_history(self) -> Any:
         """Clear conversation history"""
         self.conversation_history = []
     
@@ -541,6 +542,7 @@ class LLMQueryTool(BaseTool):
         return self.conversation_history.copy()
     
     def add_to_history(self, role: str, content: str):
+    """add_to_history function."""
         """Add message to conversation history"""
         if role == "user":
             self.conversation_history.append(HumanMessage(content=content))

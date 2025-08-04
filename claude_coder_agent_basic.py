@@ -48,6 +48,7 @@ class ClaudeCoderAgent:
     """Claude 4 Coder Agent - Advanced codebase analysis and upgrade system"""
     
     def __init__(self, codebase_path: str = "."):
+    """__init__ function."""
         self.codebase_path = Path(codebase_path)
         self.claude_api_key = "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"
         self.deepseek_api_key = "sk-90e0dd863b8c4e0d879a02851a0ee194"
@@ -58,7 +59,7 @@ class ClaudeCoderAgent:
         self._setup_logging()
         self._check_system_status()
         
-    def _setup_logging(self):
+    def _setup_logging(self) -> Any:
         """Setup advanced logging"""
         log_dir = Path("logs")
         log_dir.mkdir(exist_ok=True)
@@ -75,7 +76,7 @@ class ClaudeCoderAgent:
         
         logger.addHandler(file_handler)
         
-    def _check_system_status(self):
+    def _check_system_status(self) -> Any:
         """Check system status and dependencies"""
         console.print(Panel.fit(
             "[bold blue]üîç Checking System Status[/bold blue]",
@@ -190,6 +191,7 @@ class ClaudeCoderAgent:
         return tools
         
     def _display_system_status(self, status: SystemStatus):
+    """_display_system_status function."""
         """Display system status"""
         table = Table(title="System Status")
         table.add_column("Component", style="cyan")
@@ -201,7 +203,7 @@ class ClaudeCoderAgent:
         table.add_row("DeepSeek API", "‚úÖ Working" if status.deepseek_api_working else "‚ùå Failed")
         table.add_row("Database", status.database_status)
         
-        console.print(table)
+        console.logging.info(table)
         
         if status.tool_status:
             tool_table = Table(title="Tool Status")
@@ -212,9 +214,9 @@ class ClaudeCoderAgent:
                 status_text = "‚úÖ Available" if available else "‚ùå Missing"
                 tool_table.add_row(tool, status_text)
                 
-            console.print(tool_table)
+            console.logging.info(tool_table)
             
-    async def analyze_codebase(self):
+    async def analyze_codebase(self) -> Any:
         """Analyze the entire codebase"""
         console.print(Panel.fit(
             "[bold blue]üîç Analyzing Codebase[/bold blue]",
@@ -297,10 +299,10 @@ class ClaudeCoderAgent:
         if 'TODO' in content or 'FIXME' in content:
             issues.append("Contains TODO/FIXME comments")
             
-        if content.count('print(') > 5:
+        if content.count('logging.info(') > 5:
             issues.append("Too many print statements - consider logging")
             
-        if content.count('except:') > 0:
+        if content.count('except Exception:') > 0:
             issues.append("Bare except clauses - specify exception types")
             
         if content.count('import *') > 0:
@@ -346,7 +348,7 @@ class ClaudeCoderAgent:
                     
         return dependencies
         
-    def _display_analysis_summary(self):
+    def _display_analysis_summary(self) -> Any:
         """Display analysis summary"""
         console.print(Panel.fit(
             "[bold blue]üìä Analysis Summary[/bold blue]",
@@ -369,7 +371,7 @@ class ClaudeCoderAgent:
         summary_table.add_row("Average Complexity", f"{avg_complexity:.1f}")
         summary_table.add_row("Estimated Rewrite Time", f"{total_rewrite_time} minutes")
         
-        console.print(summary_table)
+        console.logging.info(summary_table)
         
         if total_issues > 0:
             console.print(Panel.fit(
@@ -392,9 +394,9 @@ class ClaudeCoderAgent:
             for issue, count in sorted(issue_counts.items(), key=lambda x: x[1], reverse=True)[:5]:
                 issue_table.add_row(issue, str(count))
                 
-            console.print(issue_table)
+            console.logging.info(issue_table)
             
-    async def upgrade_codebase(self):
+    async def upgrade_codebase(self) -> Any:
         """Upgrade the codebase with advanced features"""
         console.print(Panel.fit(
             "[bold green]üöÄ Upgrading Codebase[/bold green]",
@@ -447,6 +449,7 @@ class ClaudeCoderAgent:
         return plan
         
     async def _execute_upgrades(self, plan: Dict[str, Any]):
+    """_execute_upgrades function."""
         """Execute the upgrade plan"""
         with Progress(
             SpinnerColumn(),
@@ -459,7 +462,7 @@ class ClaudeCoderAgent:
             
             for section_name, section in plan.items():
                 if section["enabled"]:
-                    console.print(f"\n[bold blue]üîß {section_name.title()}[/bold blue]")
+                    console.logging.info(f"\n[bold blue]üîß {section_name.title()}[/bold blue]")
                     
                     for action in section["actions"]:
                         progress.update(task, description=f"Executing: {action}")
@@ -472,6 +475,7 @@ class ClaudeCoderAgent:
                             progress.advance(task)
                             
     async def _execute_action(self, section: str, action: str):
+    """_execute_action function."""
         """Execute a specific upgrade action"""
         if section == "mcp_integration":
             await self._setup_mcp_integration()
@@ -484,7 +488,7 @@ class ClaudeCoderAgent:
             
 
         
-    async def _setup_mcp_integration(self):
+    async def _setup_mcp_integration(self) -> Any:
         """Setup MCP integration"""
         mcp_config = {
             "mcpServers": {
@@ -499,21 +503,21 @@ class ClaudeCoderAgent:
         with open("mcp-config.json", 'w') as f:
             json.dump(mcp_config, f, indent=2)
             
-        console.print("‚úÖ MCP integration setup complete")
+        console.logging.info("‚úÖ MCP integration setup complete")
         
-    async def _enhance_apis(self):
+    async def _enhance_apis(self) -> Any:
         """Enhance API integrations"""
-        console.print("‚úÖ API enhancements complete")
+        console.logging.info("‚úÖ API enhancements complete")
         
-    async def _improve_code(self):
+    async def _improve_code(self) -> Any:
         """Improve code quality"""
-        console.print("‚úÖ Code improvements complete")
+        console.logging.info("‚úÖ Code improvements complete")
         
-    async def _enhance_debugging(self):
+    async def _enhance_debugging(self) -> Any:
         """Enhance debugging capabilities"""
-        console.print("‚úÖ Debugging enhancements complete")
+        console.logging.info("‚úÖ Debugging enhancements complete")
         
-    async def run_full_system(self):
+    async def run_full_system(self) -> Any:
         """Run the full upgraded system"""
         console.print(Panel.fit(
             "[bold green]üöÄ Starting Full System[/bold green]",
@@ -527,26 +531,26 @@ class ClaudeCoderAgent:
         
 
             
-    async def _initialize_mcp(self):
+    async def _initialize_mcp(self) -> Any:
         """Initialize MCP client"""
-        console.print("üîß Initializing MCP...")
+        console.logging.info("üîß Initializing MCP...")
         
         try:
-            console.print("‚úÖ MCP initialized")
+            console.logging.info("‚úÖ MCP initialized")
         except Exception as e:
-            console.print(f"‚ùå Failed to initialize MCP: {e}")
+            console.logging.info(f"‚ùå Failed to initialize MCP: {e}")
             
-    async def _start_main_application(self):
+    async def _start_main_application(self) -> Any:
         """Start the main application"""
-        console.print("üéØ Starting main application...")
+        console.logging.info("üéØ Starting main application...")
         
         try:
             import main
-            console.print("‚úÖ Main application ready")
+            console.logging.info("‚úÖ Main application ready")
         except Exception as e:
-            console.print(f"‚ùå Failed to start main application: {e}")
+            console.logging.info(f"‚ùå Failed to start main application: {e}")
 
-async def main():
+async def main() -> None:
     """Main function"""
     console.print(Panel.fit(
         "[bold blue]Claude 4 Coder Agent[/bold blue]\n"

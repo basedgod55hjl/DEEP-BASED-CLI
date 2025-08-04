@@ -4,6 +4,8 @@ Centralized tool management and orchestration inspired by Agent Zero
 """
 
 import asyncio
+import logging
+
 from typing import Any, Dict, List, Optional
 from datetime import datetime
 
@@ -32,13 +34,13 @@ class ToolManager:
     Manages tool registration, execution, and orchestration
     """
     
-    def __init__(self):
+    def __init__(self) -> Any:
         self.tools: Dict[str, BaseTool] = {}
         self.execution_history: List[Dict[str, Any]] = []
         self.tool_dependencies: Dict[str, List[str]] = {}
         self._register_default_tools()
     
-    def _register_default_tools(self):
+    def _register_default_tools(self) -> Any:
         """Register all default tools"""
         
         # Create LLM tool first so reasoning engine can reference it
@@ -63,16 +65,16 @@ class ToolManager:
         try:
             vector_db_tool = VectorDatabaseTool()
             default_tools.append(vector_db_tool)
-            print("✅ Vector database tool registered")
+            logging.info("✅ Vector database tool registered")
         except Exception as e:
-            print(f"⚠️ Vector database tool not available: {str(e)}")
+            logging.info(f"⚠️ Vector database tool not available: {str(e)}")
         
         try:
             rag_tool = RAGPipelineTool()
             default_tools.append(rag_tool)
-            print("✅ RAG pipeline tool registered")
+            logging.info("✅ RAG pipeline tool registered")
         except Exception as e:
-            print(f"⚠️ RAG pipeline tool not available: {str(e)}")
+            logging.info(f"⚠️ RAG pipeline tool not available: {str(e)}")
         
         for tool in default_tools:
             self.register_tool(tool)
@@ -83,10 +85,10 @@ class ToolManager:
         tool_name = tool.name.lower().replace(" ", "_")
         
         if tool_name in self.tools:
-            print(f"Warning: Tool '{tool_name}' already registered, replacing...")
+            logging.info(f"Warning: Tool '{tool_name}' already registered, replacing...")
         
         self.tools[tool_name] = tool
-        print(f"✅ Registered tool: {tool.name}")
+        logging.info(f"✅ Registered tool: {tool.name}")
         return True
     
     def unregister_tool(self, tool_name: str) -> bool:
@@ -96,7 +98,7 @@ class ToolManager:
         
         if tool_name in self.tools:
             del self.tools[tool_name]
-            print(f"❌ Unregistered tool: {tool_name}")
+            logging.info(f"❌ Unregistered tool: {tool_name}")
             return True
         
         return False
@@ -299,7 +301,7 @@ class ToolManager:
         from .base_tool import BaseTool, ToolResponse
         
         class DynamicTool(BaseTool):
-            def __init__(self, name, description, function):
+            def __init__(self, name, description, function) -> Any:
                 super().__init__(name, description)
                 self.function = function
             
@@ -406,6 +408,7 @@ class ToolManager:
         return str(uuid.uuid4())[:8]
     
     async def _wait_for_dependencies(self, depends_on: List[str], results: List[ToolResponse]):
+    """_wait_for_dependencies function."""
         """Wait for workflow dependencies"""
         
         # Simple implementation - in production, this would be more sophisticated

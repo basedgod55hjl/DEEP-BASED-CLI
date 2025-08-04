@@ -26,6 +26,7 @@ class ConfigManager:
     """Comprehensive configuration manager"""
     
     def __init__(self, base_dir: str = "."):
+    """__init__ function."""
         self.base_dir = Path(base_dir)
         self.config_dir = self.base_dir / "config"
         self.data_dir = self.base_dir / "data"
@@ -133,6 +134,7 @@ class ConfigManager:
         return env_vars
     
     def display_config_summary(self, configs: Dict[str, Any]):
+    """display_config_summary function."""
         """Display configuration summary"""
         console.logger.info(Panel.fit("Configuration Summary", title="Config Summary"))
         
@@ -166,6 +168,7 @@ class ConfigManager:
         console.logger.info(table)
     
     def display_model_configs(self, configs: Dict[str, Any]):
+    """display_model_configs function."""
         """Display model-specific configurations"""
         console.logger.info(Panel.fit("Model Configurations", title="Model Configs"))
         
@@ -271,7 +274,7 @@ class ConfigManager:
         console.logger.info(f"📦 Backup completed: {backed_up_files} files backed up")
         return backup_dir
     
-    def clean_configs(self):
+    def clean_configs(self) -> Any:
         """Clean and optimize configuration files"""
         console.logger.info(Panel.fit("Cleaning Configuration Files", title="Config Cleanup"))
         
@@ -326,7 +329,7 @@ class ConfigManager:
         console.logger.info(f"📊 Configuration report saved: {report_file}")
         return report
     
-    def run_full_analysis(self):
+    def run_full_analysis(self) -> Any:
         """Run complete configuration analysis"""
         console.logger.info(Panel.fit(
             "[bold blue]BASED CODER CLI - Configuration Analysis[/bold blue]\n"
@@ -364,7 +367,7 @@ class ConfigManager:
             title="Analysis Complete"
         ))
 
-def main():
+def main() -> None:
     """Main function"""
     config_manager = ConfigManager()
     config_manager.run_full_analysis()

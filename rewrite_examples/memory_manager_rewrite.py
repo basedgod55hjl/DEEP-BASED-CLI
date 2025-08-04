@@ -57,6 +57,7 @@ class EnhancedMemoryManager:
     """
     
     def __init__(self, data_dir: str = "data", max_cache_size: int = 1000):
+    """__init__ function."""
         self.data_dir = Path(data_dir)
         self.data_dir.mkdir(parents=True, exist_ok=True)
         
@@ -593,7 +594,7 @@ class EnhancedMemoryManager:
             raise
 
 # Example usage and testing
-async def main():
+async def main() -> None:
     """Example usage of the enhanced memory manager"""
     memory_manager = EnhancedMemoryManager()
     
@@ -615,13 +616,13 @@ async def main():
     # Search for entries
     results = await memory_manager.search_memory("python programming", limit=5)
     
-    print(f"Found {len(results)} results:")
+    logging.info(f"Found {len(results)} results:")
     for result in results:
-        print(f"- {result.entry.content[:50]}... (similarity: {result.similarity_score:.3f})")
+        logging.info(f"- {result.entry.content[:50]}... (similarity: {result.similarity_score:.3f})")
     
     # Get statistics
     stats = await memory_manager.get_memory_stats()
-    print(f"\nMemory Stats: {stats}")
+    logging.info(f"\nMemory Stats: {stats}")
 
 if __name__ == "__main__":
     asyncio.run(main()) 

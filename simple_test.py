@@ -5,6 +5,8 @@ Tests basic functionality without complex imports
 """
 
 import asyncio
+from typing import List, Dict, Any, Optional, Tuple
+
 import logging
 import hashlib
 import numpy as np
@@ -18,7 +20,7 @@ logger = logging.getLogger(__name__)
 class SimpleEmbeddingTest:
     """Simple embedding test using hash-based embeddings"""
     
-    def __init__(self):
+    def __init__(self) -> Any:
         self.embedding_dim = 384
         
     def create_embedding(self, text: str) -> np.ndarray:
@@ -55,7 +57,7 @@ class SimpleEmbeddingTest:
         
         return dot_product / (norm1 * norm2)
     
-    def test_embedding(self):
+    def test_embedding(self) -> Any:
         """Test the embedding system"""
         try:
             logger.info("Testing simple embedding system...")
@@ -86,12 +88,13 @@ class SimpleEmbeddingTest:
 class SimpleDatabaseTest:
     """Simple database test using JSON files"""
     
-    def __init__(self):
+    def __init__(self) -> Any:
         self.data_dir = Path("data")
         self.data_dir.mkdir(exist_ok=True)
         self.db_file = self.data_dir / "simple_test_db.json"
     
     def store_persona(self, persona_data: dict):
+    """store_persona function."""
         """Store persona data in JSON file"""
         try:
             # Load existing data
@@ -115,7 +118,7 @@ class SimpleDatabaseTest:
             logger.error(f"❌ Failed to store persona: {e}")
             return False
     
-    def get_personas(self):
+    def get_personas(self) -> Any:
         """Get all personas"""
         try:
             if self.db_file.exists():
@@ -128,7 +131,7 @@ class SimpleDatabaseTest:
             logger.error(f"❌ Failed to get personas: {e}")
             return []
     
-    def test_database(self):
+    def test_database(self) -> Any:
         """Test the database system"""
         try:
             logger.info("Testing simple database system...")
@@ -154,7 +157,7 @@ class SimpleDatabaseTest:
             logger.error(f"❌ Simple database test failed: {e}")
             return False
 
-async def run_simple_tests():
+async def run_simple_tests() -> None:
     """Run simple system tests"""
     logger.info("🚀 Running Simple DEEP-CLI Tests...")
     
@@ -196,7 +199,7 @@ async def run_simple_tests():
     
     return passed == len(tests)
 
-async def interactive_demo():
+async def interactive_demo() -> None:
     """Run interactive demo"""
     logger.info("🤖 Simple DEEP-CLI Interactive Demo")
     logger.info("Type 'quit' to exit, 'help' for commands")
@@ -261,7 +264,7 @@ Available Commands:
         except Exception as e:
             logger.error(f"Error: {e}")
 
-async def main():
+async def main() -> None:
     """Main function"""
     if len(sys.argv) > 1:
         command = sys.argv[1]

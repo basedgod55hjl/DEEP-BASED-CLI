@@ -17,7 +17,7 @@ try:
     SENTENCE_TRANSFORMERS_AVAILABLE = True
 except ImportError:
     SENTENCE_TRANSFORMERS_AVAILABLE = False
-    print("⚠️ Sentence Transformers not available. Install with: pip install sentence-transformers")
+    logging.info("⚠️ Sentence Transformers not available. Install with: pip install sentence-transformers")
 
 from .base_tool import BaseTool, ToolResponse
 
@@ -38,6 +38,7 @@ class LocalEmbeddingTool(BaseTool):
     def __init__(self, 
                  model_name: str = "all-MiniLM-L6-v2",
                  cache_dir: str = "./embeddings_cache"):
+    """__init__ function."""
         """Initialize Local Embedding Tool"""
         super().__init__(
             name="Local Embedding",
@@ -61,7 +62,7 @@ class LocalEmbeddingTool(BaseTool):
         else:
             self.logger.warning("Sentence Transformers not available - local embedding features disabled")
     
-    def _initialize_model(self):
+    def _initialize_model(self) -> Any:
         """Initialize sentence-transformers model"""
         try:
             self.model = SentenceTransformer(self.model_name, cache_folder=self.cache_dir)

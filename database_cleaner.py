@@ -25,6 +25,7 @@ class DatabaseCleaner:
     """Database cleaning and maintenance utility"""
     
     def __init__(self, data_dir: str = "data"):
+    """__init__ function."""
         self.data_dir = Path(data_dir)
         self.data_dir.mkdir(exist_ok=True)
         
@@ -39,7 +40,7 @@ class DatabaseCleaner:
         self.backup_dir = self.data_dir / "backups"
         self.backup_dir.mkdir(exist_ok=True)
     
-    def setup_logging(self):
+    def setup_logging(self) -> Any:
         """Setup comprehensive logging"""
         log_dir = self.data_dir / "logs"
         log_dir.mkdir(exist_ok=True)
@@ -79,7 +80,7 @@ class DatabaseCleaner:
             self.logger.error(f"Failed to create backup: {e}")
             return None
     
-    def clean_main_database(self):
+    def clean_main_database(self) -> Any:
         """Clean the main database"""
         console.logger.info(Panel.fit("Cleaning Main Database", title="Database Cleanup"))
         
@@ -150,7 +151,7 @@ class DatabaseCleaner:
             self.logger.error(f"Error cleaning main database: {e}")
             console.logger.info(f"[red]Error cleaning main database: {e}[/red]")
     
-    def clean_memory_database(self):
+    def clean_memory_database(self) -> Any:
         """Clean the memory database"""
         console.logger.info(Panel.fit("Cleaning Memory Database", title="Database Cleanup"))
         
@@ -238,6 +239,7 @@ class DatabaseCleaner:
         return stats
     
     def display_cleanup_results(self, db_name: str, stats_before: Dict, stats_after: Dict):
+    """display_cleanup_results function."""
         """Display cleanup results in a table"""
         table = Table(title=f"{db_name} Cleanup Results")
         table.add_column("Table", style="cyan")
@@ -260,6 +262,7 @@ class DatabaseCleaner:
         console.logger.info(table)
     
     def optimize_database(self, db_path: Path):
+    """optimize_database function."""
         """Optimize database performance"""
         if not db_path.exists():
             return
@@ -285,6 +288,7 @@ class DatabaseCleaner:
             self.logger.error(f"Error optimizing database {db_path}: {e}")
     
     def clean_old_logs(self, days: int = 30):
+    """clean_old_logs function."""
         """Clean old log files"""
         log_dir = self.data_dir / "logs"
         if not log_dir.exists():
@@ -305,6 +309,7 @@ class DatabaseCleaner:
         self.logger.info(f"Deleted {deleted_count} old log files")
     
     def clean_old_backups(self, days: int = 7):
+    """clean_old_backups function."""
         """Clean old backup files"""
         if not self.backup_dir.exists():
             return
@@ -323,7 +328,7 @@ class DatabaseCleaner:
         
         self.logger.info(f"Deleted {deleted_count} old backup files")
     
-    def clean_cache_files(self):
+    def clean_cache_files(self) -> Any:
         """Clean cache files"""
         cache_dirs = [
             self.data_dir / "cache",
@@ -340,7 +345,7 @@ class DatabaseCleaner:
                 except Exception as e:
                     self.logger.error(f"Error cleaning cache directory {cache_dir}: {e}")
     
-    def run_full_cleanup(self):
+    def run_full_cleanup(self) -> Any:
         """Run complete database cleanup and maintenance"""
         console.logger.info(Panel.fit(
             "[bold blue]BASED CODER CLI - Database Cleanup & Maintenance[/bold blue]\n"
@@ -384,7 +389,7 @@ class DatabaseCleaner:
         
         self.logger.info("Full database cleanup completed")
 
-def main():
+def main() -> None:
     """Main function"""
     cleaner = DatabaseCleaner()
     cleaner.run_full_cleanup()

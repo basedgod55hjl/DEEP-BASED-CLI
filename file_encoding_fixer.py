@@ -20,6 +20,7 @@ class FileEncodingFixer:
     """Tool to fix file encoding issues causing reading errors"""
     
     def __init__(self, codebase_path: str = "."):
+    """__init__ function."""
         self.codebase_path = Path(codebase_path)
         self.fixed_files = []
         self.failed_files = []
@@ -229,29 +230,29 @@ class FileEncodingFixer:
         
         return report
 
-def main():
+def main() -> None:
     """Main function"""
-    print("🔧 File Encoding Fixer")
-    print("=" * 50)
+    logging.info("🔧 File Encoding Fixer")
+    logging.info("=" * 50)
     
     fixer = FileEncodingFixer()
     results = fixer.fix_all_files()
     
-    print(f"\n📊 Results:")
-    print(f"Total files processed: {results['total_files']}")
-    print(f"Successfully fixed: {len(results['fixed_files'])}")
-    print(f"Failed: {len(results['failed_files'])}")
-    print(f"Success rate: {results['success_rate']:.1%}")
+    logging.info(f"\n📊 Results:")
+    logging.info(f"Total files processed: {results['total_files']}")
+    logging.info(f"Successfully fixed: {len(results['fixed_files'])}")
+    logging.info(f"Failed: {len(results['failed_files'])}")
+    logging.info(f"Success rate: {results['success_rate']:.1%}")
     
     if results['fixed_files']:
-        print(f"\n✅ Fixed Files:")
+        logging.info(f"\n✅ Fixed Files:")
         for file_path, encoding in results['fixed_files']:
-            print(f"  - {file_path} (was: {encoding})")
+            logging.info(f"  - {file_path} (was: {encoding})")
     
     if results['failed_files']:
-        print(f"\n❌ Failed Files:")
+        logging.info(f"\n❌ Failed Files:")
         for file_path, error in results['failed_files']:
-            print(f"  - {file_path}: {error}")
+            logging.info(f"  - {file_path}: {error}")
     
     # Generate and save report
     report = fixer.generate_report(results)
@@ -259,8 +260,8 @@ def main():
     with open(report_path, 'w') as f:
         f.write(report)
     
-    print(f"\n📄 Report saved to: {report_path}")
-    print(f"💾 Backups saved to: {fixer.backup_dir}")
+    logging.info(f"\n📄 Report saved to: {report_path}")
+    logging.info(f"💾 Backups saved to: {fixer.backup_dir}")
     
     return results
 
