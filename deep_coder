@@ -1,0 +1,324 @@
+#!/usr/bin/env python3
+"""
+DEEP-BASED-CODER - Main Executable
+Advanced AI-Powered Development Assistant
+Inspired by Claude Code architecture but powered by DeepSeek exclusively
+"""
+
+import sys
+import os
+import asyncio
+import argparse
+from pathlib import Path
+
+# Add current directory to Python path
+sys.path.insert(0, str(Path(__file__).parent))
+
+try:
+    from deep_based_coder_cli import cli as basic_cli
+    from deep_based_coder_ide import DeepBasedCoderIDE, main as ide_main
+    from rich.console import Console
+    from rich.panel import Panel
+    from rich.table import Table
+    from rich.text import Text
+    import click
+except ImportError as e:
+    print(f"❌ Missing dependencies: {e}")
+    print("Please install required packages:")
+    print("pip install -r requirements_deep_based_coder.txt")
+    sys.exit(1)
+
+console = Console(color_system="auto", force_terminal=True)
+
+def show_banner():
+    """Show DEEP-BASED-CODER banner"""
+    banner = """
+    ████████╗██╗  ██╗███████╗    ██████╗ ███████╗███████╗██████╗ 
+    ╚══██╔══╝██║  ██║██╔════╝    ██╔══██╗██╔════╝██╔════╝██╔══██╗
+       ██║   ███████║█████╗      ██║  ██║█████╗  █████╗  ██████╔╝
+       ██║   ██╔══██║██╔══╝      ██║  ██║██╔══╝  ██╔══╝  ██╔═══╝ 
+       ██║   ██║  ██║███████╗    ██████╔╝███████╗███████╗██║     
+       ╚═╝   ╚═╝  ╚═╝╚══════╝    ╚═════╝ ╚══════╝╚══════╝╚═╝     
+                                                                  
+    ██████╗  █████╗ ███████╗███████╗██████╗      ██████╗ ██████╗ ██████╗ ███████╗██████╗ 
+    ██╔══██╗██╔══██╗██╔════╝██╔════╝██╔══██╗    ██╔════╝██╔═══██╗██╔══██╗██╔════╝██╔══██╗
+    ██████╔╝███████║███████╗█████╗  ██║  ██║    ██║     ██║   ██║██║  ██║█████╗  ██████╔╝
+    ██╔══██╗██╔══██║╚════██║██╔══╝  ██║  ██║    ██║     ██║   ██║██║  ██║██╔══╝  ██╔══██╗
+    ██████╔╝██║  ██║███████║███████╗██████╔╝    ╚██████╗╚██████╔╝██████╔╝███████╗██║  ██║
+    ╚═════╝ ╚═╝  ╚═╝╚══════╝╚══════╝╚═════╝      ╚═════╝ ╚═════╝ ╚═════╝ ╚══════╝╚═╝  ╚═╝
+    """
+    
+    console.print(Panel.fit(
+        f"[bold blue]{banner}[/bold blue]\n"
+        "[bold cyan]Advanced AI-Powered Development Assistant[/bold cyan]\n"
+        "[dim]Powered by DeepSeek & Qwen 3 • Inspired by Claude Code[/dim]\n"
+        "[dim]Terminal-native • IDE-integrated • Git-aware[/dim]",
+        border_style="blue",
+        title="🚀 Welcome"
+    ))
+
+def show_help():
+    """Show comprehensive help"""
+    help_table = Table(title="🔧 DEEP-BASED-CODER Commands", show_header=True, header_style="bold blue")
+    help_table.add_column("Mode", style="cyan", width=15)
+    help_table.add_column("Command", style="green", width=25)
+    help_table.add_column("Description", style="white")
+    
+    # Basic CLI commands
+    help_table.add_row("Basic CLI", "deep-coder start -i", "Start interactive mode")
+    help_table.add_row("", "deep-coder start -f file.py", "Analyze specific file")
+    help_table.add_row("", "deep-coder start -g 'description'", "Generate code")
+    help_table.add_row("", "deep-coder config", "Configure API keys")
+    
+    # IDE commands
+    help_table.add_row("IDE Mode", "deep-coder ide", "Start IDE integration mode")
+    help_table.add_row("", "/analyze file.py", "Analyze code quality")
+    help_table.add_row("", "/generate description", "Generate code")
+    help_table.add_row("", "/refactor file.py", "Refactor code")
+    help_table.add_row("", "/explain", "Explain code")
+    help_table.add_row("", "/debug", "Debug code issues")
+    help_table.add_row("", "/test file.py", "Generate tests")
+    help_table.add_row("", "/docs file.py", "Generate documentation")
+    help_table.add_row("", "/search query", "Semantic code search")
+    help_table.add_row("", "/commit", "Generate commit message")
+    
+    # Advanced features
+    help_table.add_row("Advanced", "deep-coder --version", "Show version")
+    help_table.add_row("", "deep-coder --install", "Install system integration")
+    help_table.add_row("", "deep-coder --benchmark", "Run performance benchmark")
+    
+    console.print(help_table)
+    
+    console.print("\n[bold yellow]💡 Quick Start:[/bold yellow]")
+    console.print("1. Configure API keys: [cyan]deep-coder config[/cyan]")
+    console.print("2. Start interactive mode: [cyan]deep-coder start -i[/cyan]")
+    console.print("3. Or use IDE mode: [cyan]deep-coder ide[/cyan]")
+    
+    console.print("\n[bold yellow]🔑 Environment Variables:[/bold yellow]")
+    console.print("• [green]DEEPSEEK_API_KEY[/green] - Your DeepSeek API key")
+    console.print("• [green]QWEN_API_KEY[/green] - Your Qwen API key (optional)")
+    console.print("• [green]DEEP_CODER_CONFIG[/green] - Custom config file path")
+
+def show_status():
+    """Show system status"""
+    try:
+        from deep_based_coder_cli import DeepBasedCoderCore
+        
+        core = DeepBasedCoderCore()
+        
+        status_table = Table(title="📊 System Status", show_header=True, header_style="bold blue")
+        status_table.add_column("Component", style="cyan")
+        status_table.add_column("Status", style="white")
+        status_table.add_column("Details", style="dim")
+        
+        # Check API keys
+        deepseek_status = "✅ Configured" if core.deepseek_config.api_key else "❌ Not configured"
+        qwen_status = "✅ Configured" if core.qwen_config.api_key else "⚠️ Optional"
+        
+        status_table.add_row("DeepSeek API", deepseek_status, core.deepseek_config.base_url)
+        status_table.add_row("Qwen Embeddings", qwen_status, core.qwen_config.base_url)
+        
+        # Check system capabilities
+        import subprocess
+        
+        git_available = "✅ Available" if subprocess.run(["git", "--version"], capture_output=True).returncode == 0 else "❌ Not found"
+        status_table.add_row("Git Integration", git_available, "Required for commit messages")
+        
+        # Check Python environment
+        python_version = f"{sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro}"
+        status_table.add_row("Python Version", f"✅ {python_version}", "Compatible")
+        
+        # Check config directory
+        config_dir = Path.home() / ".deep-based-coder"
+        config_status = "✅ Created" if config_dir.exists() else "⚠️ Will be created"
+        status_table.add_row("Config Directory", config_status, str(config_dir))
+        
+        console.print(status_table)
+        
+    except Exception as e:
+        console.print(f"[red]❌ Error checking status: {e}[/red]")
+
+async def run_benchmark():
+    """Run performance benchmark"""
+    console.print("[bold yellow]🏃‍♂️ Running DEEP-BASED-CODER Benchmark...[/bold yellow]")
+    
+    try:
+        from deep_based_coder_ide import DeepBasedCoderIDE
+        import time
+        
+        ide = DeepBasedCoderIDE()
+        
+        # Test code analysis
+        start_time = time.time()
+        test_code = """
+def fibonacci(n):
+    if n <= 1:
+        return n
+    return fibonacci(n-1) + fibonacci(n-2)
+        """
+        
+        result = await ide.reasoning_engine.analyze_code(test_code, "python", "Benchmark test")
+        analysis_time = time.time() - start_time
+        
+        # Test embedding
+        start_time = time.time()
+        embeddings = await ide.embedding_engine.create_embeddings(["test code", "benchmark"])
+        embedding_time = time.time() - start_time
+        
+        # Show results
+        benchmark_table = Table(title="⚡ Performance Benchmark", show_header=True, header_style="bold green")
+        benchmark_table.add_column("Operation", style="cyan")
+        benchmark_table.add_column("Time (seconds)", style="yellow")
+        benchmark_table.add_column("Status", style="white")
+        
+        benchmark_table.add_row("Code Analysis", f"{analysis_time:.2f}s", "✅ Success" if result.success else "❌ Failed")
+        benchmark_table.add_row("Embedding Generation", f"{embedding_time:.2f}s", f"✅ Generated {len(embeddings)} embeddings")
+        
+        console.print(benchmark_table)
+        
+    except Exception as e:
+        console.print(f"[red]❌ Benchmark failed: {e}[/red]")
+
+def install_system_integration():
+    """Install system-wide integration"""
+    console.print("[bold yellow]📦 Installing DEEP-BASED-CODER System Integration...[/bold yellow]")
+    
+    # Create desktop entry for Linux
+    if sys.platform.startswith('linux'):
+        desktop_entry = f"""[Desktop Entry]
+Name=DEEP-BASED-CODER
+Comment=Advanced AI-Powered Development Assistant
+Exec={sys.executable} {Path(__file__).absolute()} ide
+Icon=terminal
+Terminal=true
+Type=Application
+Categories=Development;IDE;
+"""
+        
+        desktop_dir = Path.home() / ".local/share/applications"
+        desktop_dir.mkdir(parents=True, exist_ok=True)
+        
+        desktop_file = desktop_dir / "deep-based-coder.desktop"
+        with open(desktop_file, 'w') as f:
+            f.write(desktop_entry)
+            
+        console.print(f"✅ Desktop entry created: {desktop_file}")
+    
+    # Create shell alias
+    shell_alias = f"""
+# DEEP-BASED-CODER Aliases
+alias deep-coder='{sys.executable} {Path(__file__).absolute()}'
+alias dbc='{sys.executable} {Path(__file__).absolute()}'
+"""
+    
+    console.print("\n[bold yellow]🐚 Add this to your shell configuration:[/bold yellow]")
+    console.print(f"[dim]{shell_alias}[/dim]")
+    
+    # Create VS Code extension integration
+    vscode_dir = Path.home() / ".vscode/extensions"
+    if vscode_dir.exists():
+        console.print("✅ VS Code detected - Integration available")
+    else:
+        console.print("⚠️ VS Code not found - Terminal integration only")
+
+def main():
+    """Main entry point"""
+    parser = argparse.ArgumentParser(
+        prog="deep-coder",
+        description="DEEP-BASED-CODER - Advanced AI-Powered Development Assistant",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="""
+Examples:
+  deep-coder start -i                    Start interactive mode
+  deep-coder start -f main.py            Analyze specific file
+  deep-coder start -g "create a web app" Generate code
+  deep-coder ide                         Start IDE integration mode
+  deep-coder config                      Configure API keys
+  deep-coder --status                    Show system status
+  deep-coder --benchmark                 Run performance benchmark
+        """
+    )
+    
+    parser.add_argument("--version", action="version", version="DEEP-BASED-CODER 1.0.0")
+    parser.add_argument("--status", action="store_true", help="Show system status")
+    parser.add_argument("--benchmark", action="store_true", help="Run performance benchmark")
+    parser.add_argument("--install", action="store_true", help="Install system integration")
+    parser.add_argument("--help-full", action="store_true", help="Show comprehensive help")
+    
+    subparsers = parser.add_subparsers(dest="mode", help="Available modes")
+    
+    # Basic CLI mode
+    start_parser = subparsers.add_parser("start", help="Start basic CLI mode")
+    start_parser.add_argument("-i", "--interactive", action="store_true", help="Interactive mode")
+    start_parser.add_argument("-f", "--file", help="Analyze specific file")
+    start_parser.add_argument("-g", "--generate", help="Generate code")
+    
+    # IDE mode
+    ide_parser = subparsers.add_parser("ide", help="Start IDE integration mode")
+    
+    # Config mode
+    config_parser = subparsers.add_parser("config", help="Configure settings")
+    
+    args = parser.parse_args()
+    
+    # Show banner
+    if not any([args.status, args.benchmark, args.install, args.help_full]):
+        show_banner()
+    
+    # Handle special flags
+    if args.help_full:
+        show_help()
+        return
+        
+    if args.status:
+        show_status()
+        return
+        
+    if args.benchmark:
+        asyncio.run(run_benchmark())
+        return
+        
+    if args.install:
+        install_system_integration()
+        return
+    
+    # Handle modes
+    if args.mode == "start":
+        # Use the basic CLI
+        sys.argv = ["deep-coder"]  # Reset argv for click
+        if args.interactive:
+            sys.argv.extend(["start", "--interactive"])
+        elif args.file:
+            sys.argv.extend(["start", "--file", args.file])
+        elif args.generate:
+            sys.argv.extend(["start", "--generate", args.generate])
+        else:
+            sys.argv.extend(["start", "--interactive"])  # Default to interactive
+            
+        basic_cli()
+        
+    elif args.mode == "ide":
+        # Use the IDE integration
+        asyncio.run(ide_main())
+        
+    elif args.mode == "config":
+        # Use the basic CLI config
+        sys.argv = ["deep-coder", "config"]
+        basic_cli()
+        
+    else:
+        # Default to interactive mode
+        console.print("[yellow]💡 No mode specified, starting interactive mode...[/yellow]")
+        sys.argv = ["deep-coder", "start", "--interactive"]
+        basic_cli()
+
+if __name__ == "__main__":
+    try:
+        main()
+    except KeyboardInterrupt:
+        console.print("\n[yellow]👋 Goodbye![/yellow]")
+    except Exception as e:
+        console.print(f"\n[red]❌ Fatal error: {e}[/red]")
+        import traceback
+        console.print(f"[dim]{traceback.format_exc()}[/dim]")
+        sys.exit(1)
