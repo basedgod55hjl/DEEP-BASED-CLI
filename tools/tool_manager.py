@@ -56,16 +56,16 @@ class ToolManager:
         try:
             vector_db_tool = VectorDatabaseTool()
             default_tools.append(vector_db_tool)
-            logging.info("✅ Vector database tool registered")
+            logging.info("[SUCCESS] Vector database tool registered")
         except Exception as e:
-            logging.info(f"⚠️ Vector database tool not available: {str(e)}")
+            logging.info(f"[WARNING] Vector database tool not available: {str(e)}")
         
         try:
             rag_tool = RAGPipelineTool()
             default_tools.append(rag_tool)
-            logging.info("✅ RAG pipeline tool registered")
+            logging.info("[SUCCESS] RAG pipeline tool registered")
         except Exception as e:
-            logging.info(f"⚠️ RAG pipeline tool not available: {str(e)}")
+            logging.info(f"[WARNING] RAG pipeline tool not available: {str(e)}")
         
 
         
@@ -81,7 +81,7 @@ class ToolManager:
             logging.info(f"Warning: Tool '{tool_name}' already registered, replacing...")
         
         self.tools[tool_name] = tool
-        logging.info(f"✅ Registered tool: {tool.name}")
+        logging.info(f"[SUCCESS] Registered tool: {tool.name}")
         return True
     
     def unregister_tool(self, tool_name: str) -> bool:
@@ -91,7 +91,7 @@ class ToolManager:
         
         if tool_name in self.tools:
             del self.tools[tool_name]
-            logging.info(f"❌ Unregistered tool: {tool_name}")
+            logging.info(f"[ERROR] Unregistered tool: {tool_name}")
             return True
         
         return False

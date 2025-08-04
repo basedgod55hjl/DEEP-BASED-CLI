@@ -46,9 +46,9 @@ class PrefixCompletionTool(BaseTool):
                 api_key=deepseek_api_key,
                 base_url=deepseek_base_url
             )
-            logging.info("✅ Prefix Completion Tool initialized successfully")
+            logging.info("[SUCCESS] Prefix Completion Tool initialized successfully")
         except Exception as e:
-            logging.info(f"❌ Prefix Completion Tool initialization failed: {str(e)}")
+            logging.info(f"[ERROR] Prefix Completion Tool initialization failed: {str(e)}")
             self.client = None
     
     async def execute(self, **kwargs) -> ToolResponse:

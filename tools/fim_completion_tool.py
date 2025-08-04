@@ -44,9 +44,9 @@ class FIMCompletionTool(BaseTool):
                 api_key=deepseek_api_key,
                 base_url=deepseek_base_url
             )
-            logging.info("✅ FIM Completion Tool initialized successfully")
+            logging.info("[SUCCESS] FIM Completion Tool initialized successfully")
         except Exception as e:
-            logging.info(f"❌ FIM Completion Tool initialization failed: {str(e)}")
+            logging.info(f"[ERROR] FIM Completion Tool initialization failed: {str(e)}")
             self.client = None
     
     async def execute(self, **kwargs) -> ToolResponse:
