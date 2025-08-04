@@ -1,0 +1,206 @@
+# Node.js DeepSeek-Reasoner Brain System
+
+## Project Overview
+The DeepSeek-Reasoner Brain System is a sophisticated AI agent platform built with Node.js, featuring DeepSeek-Reasoner as the main brain with Qwen tools, streaming capabilities, and multi-agent coordination. The system includes a web interface, desktop IDE, and comprehensive tool ecosystem.
+
+## Core Architecture
+
+### Main Entry Point
+- [src/index.js](mdc:src/index.js) - Main server entry point with Express and Socket.IO
+- [package.json](mdc:package.json) - Project configuration and dependencies
+
+### Core Systems
+- [src/core/DeepSeekReasonerBrain.js](mdc:src/core/DeepSeekReasonerBrain.js) - Main brain coordinating reasoning and tool calling
+- [src/core/PersonaSystem.js](mdc:src/core/PersonaSystem.js) - Persona management with DEANNA as default
+- [src/core/MemoryStore.js](mdc:src/core/MemoryStore.js) - Advanced memory storage and retrieval
+- [src/core/ToolManager.js](mdc:src/core/ToolManager.js) - Tool orchestration and management
+- [src/core/StreamingManager.js](mdc:src/core/StreamingManager.js) - Real-time token streaming
+- [src/core/ConversationManager.js](mdc:src/core/ConversationManager.js) - Multi-conversation management
+- [src/core/ThoughtStorage.js](mdc:src/core/ThoughtStorage.js) - Chain-of-thought reasoning storage
+
+### Tool Ecosystem
+- [src/tools/WebScraperTool.js](mdc:src/tools/WebScraperTool.js) - Advanced web scraping with Puppeteer
+- [src/tools/QwenEmbeddingTool.js](mdc:src/tools/QwenEmbeddingTool.js) - Qwen embedding generation
+- [src/utils/Logger.js](mdc:src/utils/Logger.js) - Centralized logging system
+
+### Infrastructure
+- [Dockerfile](mdc:Dockerfile) - Containerization for consistent deployment
+- [requirements.txt](mdc:requirements.txt) - Python dependencies for hybrid system
+- [enhanced_based_god_cli.py](mdc:enhanced_based_god_cli.py) - Python CLI integration
+
+## Development Patterns
+
+### DeepSeek Integration
+1. **API Configuration**: Use DeepSeek base URL `https://api.deepseek.com`
+2. **Model Selection**: 
+   - `deepseek-reasoner` for chain-of-thought reasoning
+   - `deepseek-chat` for dynamic conversation
+   - `deepseek-coder` for code generation
+3. **Streaming**: Implement token streaming for real-time feedback
+4. **Tool Calling**: Enable function calling for external tool integration
+
+### Persona System
+1. **DEANNA Persona**: Default persona for all interactions
+2. **Persona Switching**: Dynamic persona swapping capabilities
+3. **Memory Integration**: Persona-specific memory and context
+4. **Thought Storage**: Chain-of-thought reasoning preservation
+
+### Tool Development
+1. **Tool Registration**: Register tools in ToolManager
+2. **Async Operations**: All tools must be async/await compatible
+3. **Error Handling**: Comprehensive error handling and logging
+4. **Streaming Support**: Tools should support streaming responses
+5. **Memory Integration**: Tools should integrate with memory store
+
+### Web Scraping Integration
+1. **Puppeteer**: Use for dynamic content scraping
+2. **Cheerio**: Use for static HTML parsing
+3. **Osmosis**: Use for advanced data extraction
+4. **Rate Limiting**: Implement proper rate limiting
+5. **Error Recovery**: Handle network failures gracefully
+
+### Memory Management
+1. **JSON Storage**: Use structured JSON for memory entries
+2. **Vector Search**: Implement semantic search capabilities
+3. **Caching**: Use Redis for high-performance caching
+4. **Persistence**: SQLite for persistent storage
+5. **Analytics**: Track memory usage and access patterns
+
+## API Endpoints
+
+### Core Endpoints
+- `GET /health` - System health check
+- `GET /brain/status` - Brain system status
+- `POST /chat` - Main chat endpoint with streaming support
+- `POST /tools/call` - Tool calling endpoint
+- `POST /memory/store` - Memory storage
+- `GET /memory/search` - Memory search
+- `POST /scrape` - Web scraping
+- `POST /embed` - Embedding generation
+- `POST /reason` - Chain-of-thought reasoning
+- `POST /fim` - Fill-in-middle completion
+- `POST /prefix` - Prefix completion
+
+### WebSocket Events
+- `connect` - Client connection
+- `disconnect` - Client disconnection
+- `chat_message` - Real-time chat
+- `tool_call` - Tool execution
+- `stream_token` - Token streaming
+- `brain_status` - Brain status updates
+
+## Integration Guidelines
+
+### MCP (Model Context Protocol) Integration
+1. **MCP Server**: Implement MCP server for tool integration
+2. **Tool Registry**: Register tools with MCP protocol
+3. **Resource Management**: Handle MCP resources properly
+4. **Error Handling**: Implement MCP error responses
+
+### GitHub Integration
+1. **Repository Management**: Pull and update repositories
+2. **Issue Tracking**: Create and manage GitHub issues
+3. **Dataset Creation**: Use GitHub as dataset source
+4. **Bot Integration**: Implement GitHub bot functionality
+
+### IDE Integration
+1. **Desktop IDE**: Build desktop application with Electron
+2. **Web IDE**: Create web-based development environment
+3. **Codebox Integration**: Integrate with Codebox IDE
+4. **GraphQL Editor**: Add GraphQL schema editing capabilities
+
+### Testing Framework
+1. **Jest**: Use Jest for unit testing
+2. **Demo CI**: Integrate with demo-ci for testing
+3. **HRM**: Use HRM for human resource management testing
+4. **End-to-End**: Implement comprehensive E2E testing
+
+### Build System
+1. **Parcel**: Use Parcel for bundling
+2. **Webpack**: Use Webpack for advanced bundling
+3. **Axios**: Use Axios for HTTP requests
+4. **HTTP Parser**: Use Node.js HTTP parser for performance
+
+## Development Workflow
+
+### Environment Setup
+1. **Node.js 18+**: Required for modern features
+2. **Docker**: Use for consistent development environment
+3. **Environment Variables**: Configure via .env file
+4. **Dependencies**: Install with `npm install`
+
+### Development Commands
+- `npm start` - Start production server
+- `npm run dev` - Start development server with nodemon
+- `npm test` - Run Jest tests
+- `npm run build` - Build with Webpack
+- `npm run lint` - Run ESLint
+- `npm run format` - Format with Prettier
+
+### Debugging
+1. **Logging**: Use Winston for structured logging
+2. **Error Tracking**: Implement comprehensive error tracking
+3. **Performance Monitoring**: Monitor system performance
+4. **Memory Profiling**: Profile memory usage
+
+### Deployment
+1. **Docker**: Use Docker for containerized deployment
+2. **Environment Variables**: Configure production environment
+3. **Health Checks**: Implement health check endpoints
+4. **Monitoring**: Set up monitoring and alerting
+
+## Best Practices
+
+### Code Quality
+1. **ESLint**: Use ESLint for code quality
+2. **Prettier**: Use Prettier for code formatting
+3. **TypeScript**: Consider migrating to TypeScript
+4. **Documentation**: Maintain comprehensive documentation
+
+### Security
+1. **Helmet**: Use Helmet for security headers
+2. **CORS**: Configure CORS properly
+3. **Rate Limiting**: Implement rate limiting
+4. **Input Validation**: Validate all inputs
+
+### Performance
+1. **Compression**: Use compression middleware
+2. **Caching**: Implement proper caching strategies
+3. **Database Optimization**: Optimize database queries
+4. **Memory Management**: Monitor memory usage
+
+### Scalability
+1. **Horizontal Scaling**: Design for horizontal scaling
+2. **Load Balancing**: Implement load balancing
+3. **Database Sharding**: Consider database sharding
+4. **Microservices**: Consider microservices architecture
+
+## Integration with External Systems
+
+### AI/ML Integration
+1. **TensorFlow.js**: Use for client-side ML
+2. **Dialogflow**: Integrate with Google Dialogflow
+3. **CrewAI**: Use for multi-agent coordination
+4. **Raga AI**: Integrate with Raga AI platform
+
+### Cloud Services
+1. **Google Cloud**: Integrate with Google Cloud services
+2. **AWS**: Consider AWS integration
+3. **Azure**: Consider Azure integration
+4. **Redis Cloud**: Use Redis Cloud for caching
+
+### Social Media Integration
+1. **Instagram**: Integrate with Instagram API
+2. **Telegram**: Integrate with Telegram bot API
+3. **Twitter**: Consider Twitter integration
+4. **Discord**: Consider Discord integration
+
+### Development Tools
+1. **GitHub**: Full GitHub integration
+2. **GitLab**: Consider GitLab integration
+3. **Bitbucket**: Consider Bitbucket integration
+4. **CI/CD**: Implement comprehensive CI/CD pipeline
+description:
+globs:
+alwaysApply: false
+---

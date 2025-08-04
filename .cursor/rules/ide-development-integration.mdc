@@ -1,0 +1,238 @@
+# IDE Development and Integration
+
+## IDE Architecture Overview
+
+### Desktop IDE (Electron-based)
+- **Framework**: Electron for cross-platform desktop application
+- **UI Framework**: React/Vue.js for modern UI components
+- **Code Editor**: Monaco Editor (VS Code's editor)
+- **File System**: Node.js fs module for file operations
+- **Terminal**: Node.js pty for integrated terminal
+- **Debugging**: Chrome DevTools integration
+
+### Web IDE (Browser-based)
+- **Framework**: React/Vue.js with TypeScript
+- **Code Editor**: Monaco Editor or CodeMirror
+- **File System**: WebDAV or custom file system API
+- **Terminal**: WebSocket-based terminal emulator
+- **Collaboration**: WebRTC for real-time collaboration
+- **PWA**: Progressive Web App capabilities
+
+### Codebox Integration
+- **API Integration**: RESTful API for Codebox IDE
+- **Plugin System**: Extensible plugin architecture
+- **Theme Support**: Custom theme integration
+- **Extension API**: Extension development framework
+- **Workspace Management**: Multi-workspace support
+
+### GraphQL Editor
+- **Schema Editor**: Visual GraphQL schema editor
+- **Query Builder**: Drag-and-drop query builder
+- **Documentation**: Auto-generated documentation
+- **Validation**: Real-time schema validation
+- **Testing**: GraphQL query testing interface
+
+## Development Patterns
+
+### Electron Desktop IDE
+```javascript
+// Main process
+const { app, BrowserWindow } = require('electron');
+const path = require('path');
+
+function createWindow() {
+    const mainWindow = new BrowserWindow({
+        width: 1200,
+        height: 800,
+        webPreferences: {
+            nodeIntegration: true,
+            contextIsolation: false
+        }
+    });
+    
+    mainWindow.loadFile('index.html');
+}
+
+app.whenReady().then(createWindow);
+```
+
+### Web IDE Components
+```javascript
+// Monaco Editor integration
+import * as monaco from 'monaco-editor';
+
+const editor = monaco.editor.create(document.getElementById('editor'), {
+    value: '// Your code here',
+    language: 'javascript',
+    theme: 'vs-dark'
+});
+```
+
+### Codebox Plugin Development
+```javascript
+// Codebox plugin structure
+class MyCodeboxPlugin {
+    constructor() {
+        this.name = 'my-plugin';
+        this.version = '1.0.0';
+    }
+    
+    activate(context) {
+        // Register commands, views, etc.
+    }
+    
+    deactivate() {
+        // Cleanup
+    }
+}
+```
+
+### GraphQL Editor Features
+```javascript
+// GraphQL schema editor
+class GraphQLEditor {
+    constructor() {
+        this.schema = null;
+        this.queries = [];
+    }
+    
+    loadSchema(schema) {
+        this.schema = schema;
+        this.renderSchema();
+    }
+    
+    buildQuery(fields) {
+        // Build GraphQL query from selected fields
+    }
+}
+```
+
+## Integration Guidelines
+
+### DeepSeek Integration in IDE
+1. **Code Completion**: Integrate DeepSeek-Coder for intelligent code completion
+2. **Code Analysis**: Use DeepSeek-Reasoner for code analysis and suggestions
+3. **Chat Interface**: Embed chat interface for AI assistance
+4. **Tool Calling**: Enable tool calling from within the IDE
+
+### File System Integration
+1. **Local Files**: Read/write local files
+2. **Remote Files**: Support for remote file systems
+3. **Version Control**: Git integration
+4. **File Watching**: Real-time file change detection
+
+### Terminal Integration
+1. **Integrated Terminal**: Built-in terminal emulator
+2. **Command Execution**: Execute commands from IDE
+3. **Output Capture**: Capture and display command output
+4. **Environment Management**: Manage different environments
+
+### Debugging Integration
+1. **Debugger Support**: Integrated debugging capabilities
+2. **Breakpoints**: Set and manage breakpoints
+3. **Variable Inspection**: Inspect variables during debugging
+4. **Call Stack**: View call stack information
+
+## UI/UX Guidelines
+
+### Design System
+1. **Consistent Theming**: Maintain consistent theme across all components
+2. **Responsive Design**: Ensure responsive design for different screen sizes
+3. **Accessibility**: Implement accessibility features
+4. **Performance**: Optimize for performance and smooth interactions
+
+### User Experience
+1. **Intuitive Navigation**: Easy-to-use navigation system
+2. **Keyboard Shortcuts**: Comprehensive keyboard shortcuts
+3. **Customization**: Allow user customization
+4. **Help System**: Integrated help and documentation
+
+### Collaboration Features
+1. **Real-time Editing**: Collaborative real-time editing
+2. **User Presence**: Show other users' cursors and selections
+3. **Comments**: Inline comments and discussions
+4. **Version History**: Track changes and history
+
+## Testing Strategy
+
+### Unit Testing
+1. **Component Testing**: Test individual components
+2. **Integration Testing**: Test component integration
+3. **Mock Services**: Mock external services for testing
+4. **Test Coverage**: Maintain high test coverage
+
+### End-to-End Testing
+1. **User Workflows**: Test complete user workflows
+2. **Cross-browser Testing**: Test across different browsers
+3. **Performance Testing**: Test performance under load
+4. **Accessibility Testing**: Test accessibility features
+
+### Automated Testing
+1. **CI/CD Integration**: Integrate with CI/CD pipeline
+2. **Automated Deployment**: Automated deployment process
+3. **Quality Gates**: Quality gates for deployment
+4. **Monitoring**: Monitor application performance
+
+## Performance Optimization
+
+### Code Splitting
+1. **Lazy Loading**: Implement lazy loading for components
+2. **Bundle Optimization**: Optimize bundle sizes
+3. **Tree Shaking**: Remove unused code
+4. **Caching**: Implement effective caching strategies
+
+### Memory Management
+1. **Memory Leaks**: Prevent memory leaks
+2. **Garbage Collection**: Optimize garbage collection
+3. **Resource Cleanup**: Proper resource cleanup
+4. **Memory Profiling**: Profile memory usage
+
+### Network Optimization
+1. **Request Optimization**: Optimize network requests
+2. **Caching**: Implement network caching
+3. **Compression**: Use compression for network traffic
+4. **CDN**: Use CDN for static assets
+
+## Security Considerations
+
+### Code Security
+1. **Input Validation**: Validate all inputs
+2. **XSS Prevention**: Prevent cross-site scripting
+3. **CSRF Protection**: Protect against CSRF attacks
+4. **Content Security Policy**: Implement CSP
+
+### File System Security
+1. **Path Validation**: Validate file paths
+2. **Permission Checks**: Check file permissions
+3. **Sandboxing**: Sandbox file operations
+4. **Audit Logging**: Log file operations
+
+### Network Security
+1. **HTTPS**: Use HTTPS for all communications
+2. **Authentication**: Implement proper authentication
+3. **Authorization**: Implement proper authorization
+4. **Encryption**: Encrypt sensitive data
+
+## Deployment and Distribution
+
+### Desktop IDE Distribution
+1. **Electron Builder**: Use Electron Builder for packaging
+2. **Auto-updater**: Implement auto-update functionality
+3. **Code Signing**: Sign applications for distribution
+4. **App Stores**: Distribute through app stores
+
+### Web IDE Deployment
+1. **Static Hosting**: Deploy to static hosting services
+2. **CDN**: Use CDN for global distribution
+3. **SSL Certificates**: Configure SSL certificates
+4. **Monitoring**: Set up monitoring and alerting
+
+### Plugin Distribution
+1. **Plugin Registry**: Create plugin registry
+2. **Version Management**: Manage plugin versions
+3. **Dependency Management**: Manage plugin dependencies
+4. **Security Scanning**: Scan plugins for security issues
+description:
+globs:
+alwaysApply: false
+---

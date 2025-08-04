@@ -1,0 +1,1157 @@
+# Testing and CI/CD Integration
+
+## Testing Strategy Overview
+
+### Testing Pyramid
+1. **Unit Tests**: Test individual functions and components
+2. **Integration Tests**: Test component interactions
+3. **End-to-End Tests**: Test complete user workflows
+4. **Performance Tests**: Test system performance under load
+5. **Security Tests**: Test security vulnerabilities
+
+### Testing Tools
+- **Jest**: Primary testing framework
+- **Supertest**: HTTP testing for Express apps
+- **Puppeteer**: Browser automation for E2E tests
+- **demo-ci**: Continuous integration testing
+- **HRM**: Human resource management testing
+
+## Jest Configuration
+
+### Basic Jest Setup
+```javascript
+// jest.config.js
+module.exports = {
+    testEnvironment: 'node',
+    roots: ['<rootDir>/src', '<rootDir>/tests'],
+    testMatch: [
+        '**/__tests__/**/*.js',
+        '**/?(*.)+(spec|test).js'
+    ],
+    collectCoverageFrom: [
+        'src/**/*.js',
+        '!src/**/*.test.js',
+        '!src/**/*.spec.js'
+    ],
+    coverageDirectory: 'coverage',
+    coverageReporters: ['text', 'lcov', 'html'],
+    setupFilesAfterEnv: ['<rootDir>/tests/setup.js'],
+    testTimeout: 10000,
+    verbose: true
+};
+```
+
+### Test Setup File
+```javascript
+// tests/setup.js
+import { MongoMemoryServer } from 'mongodb-memory-server';
+import { config } from 'dotenv';
+
+// Load test environment variables
+config({ path: '.env.test' });
+
+// Global test setup
+beforeAll(async () => {
+    // Start in-memory database
+    global.mongoServer = await MongoMemoryServer.create();
+    global.mongoUri = global.mongoServer.getUri();
+    
+    // Setup test environment
+    process.env.NODE_ENV = 'test';
+    process.env.DEEPSEEK_API_KEY = 'test-key';
+});
+
+// Global test cleanup
+afterAll(async () => {
+    // Cleanup in-memory database
+    if (global.mongoServer) {
+        await global.mongoServer.stop();
+    }
+});
+
+// Global test utilities
+global.testUtils = {
+    createTestUser: () => ({
+        id: 'test-user-id',
+        name: 'Test User',
+        email: 'test@example.com'
+    }),
+    
+    createTestConversation: () => ({
+        id: 'test-conversation-id',
+        userId: 'test-user-id',
+        messages: []
+    }),
+    
+    mockDeepSeekResponse: (response) => {
+        return {
+            choices: [{
+                message: {
+                    content: response,
+                    reasoning_content: 'Test reasoning'
+                }
+            }]
+        };
+    }
+};
+```
+
+## Unit Testing
+
+### Core System Tests
+
+#### DeepSeekReasonerBrain Tests
+```javascript
+// tests/core/DeepSeekReasonerBrain.test.js
+import { DeepSeekReasonerBrain } from '../../src/core/DeepSeekReasonerBrain.js';
+import { MemoryStore } from '../../src/core/MemoryStore.js';
+import { PersonaSystem } from '../../src/core/PersonaSystem.js';
+
+describe('DeepSeekReasonerBrain', () => {
+    let brain;
+    let memory;
+    let persona;
+    
+    beforeEach(async () => {
+        memory = new MemoryStore();
+        persona = new PersonaSystem();
+        
+        brain = new DeepSeekReasonerBrain({
+            memory,
+            persona,
+            tools: {},
+            streaming: {},
+            conversation: {},
+            thoughts: {}
+        });
+        
+        await brain.initialize();
+    });
+    
+    afterEach(async () => {
+        await brain.shutdown();
+    });
+    
+    describe('initialization', () => {
+        test('should initialize successfully', () => {
+            expect(brain.isInitialized).toBe(true);
+            expect(brain.currentPersona).toBeDefined();
+        });
+        
+        test('should load default persona', () => {
+            expect(brain.currentPersona.name).toBe('DEANNA');
+        });
+    });
+    
+    describe('chat functionality', () => {
+        test('should process chat messages', async () => {
+            const message = 'Hello, how are you?';
+            const response = await brain.chat(message);
+            
+            expect(response).toBeDefined();
+            expect(response.success).toBe(true);
+            expect(response.message).toBeDefined();
+        });
+        
+        test('should handle streaming responses', async () => {
+            const message = 'Tell me a story';
+            const stream = await brain.chatWithStreaming(message);
+            
+            expect(stream).toBeDefined();
+            expect(typeof stream.read).toBe('function');
+        });
+    });
+    
+    describe('reasoning functionality', () => {
+        test('should perform chain-of-thought reasoning', async () => {
+            const question = 'What is 2 + 2?';
+            const context = 'Basic arithmetic';
+            
+            const result = await brain.reason(question, context);
+            
+            expect(result).toBeDefined();
+            expect(result.reasoning).toBeDefined();
+            expect(result.answer).toBeDefined();
+        });
+    });
+    
+    describe('tool calling', () => {
+        test('should call tools through reasoning', async () => {
+            const question = 'Scrape the website https://example.com';
+            
+            const result = await brain.reason(question);
+            
+            expect(result).toBeDefined();
+            expect(result.toolCalls).toBeDefined();
+            expect(result.toolCalls.length).toBeGreaterThan(0);
+        });
+    });
+});
+```
+
+#### MemoryStore Tests
+```javascript
+// tests/core/MemoryStore.test.js
+import { MemoryStore } from '../../src/core/MemoryStore.js';
+
+describe('MemoryStore', () => {
+    let memoryStore;
+    
+    beforeEach(async () => {
+        memoryStore = new MemoryStore();
+        await memoryStore.initialize();
+    });
+    
+    afterEach(async () => {
+        await memoryStore.cleanup();
+    });
+    
+    describe('memory operations', () => {
+        test('should store and retrieve memories', async () => {
+            const content = 'Test memory content';
+            const category = 'test';
+            const tags = ['test', 'memory'];
+            
+            const stored = await memoryStore.store(content, category, tags);
+            expect(stored.success).toBe(true);
+            expect(stored.id).toBeDefined();
+            
+            const retrieved = await memoryStore.get(stored.id);
+            expect(retrieved.content).toBe(content);
+            expect(retrieved.category).toBe(category);
+        });
+        
+        test('should search memories by query', async () => {
+            await memoryStore.store('Python programming', 'coding', ['python']);
+            await memoryStore.store('JavaScript development', 'coding', ['javascript']);
+            
+            const results = await memoryStore.search('programming');
+            expect(results.length).toBeGreaterThan(0);
+            expect(results[0].content).toContain('Python');
+        });
+        
+        test('should search by category and tags', async () => {
+            await memoryStore.store('Test memory 1', 'test', ['tag1']);
+            await memoryStore.store('Test memory 2', 'test', ['tag2']);
+            
+            const results = await memoryStore.search('', 'test', ['tag1']);
+            expect(results.length).toBe(1);
+            expect(results[0].content).toBe('Test memory 1');
+        });
+    });
+    
+    describe('vector operations', () => {
+        test('should generate embeddings', async () => {
+            const content = 'Test content for embedding';
+            const embedding = await memoryStore.generateEmbedding(content);
+            
+            expect(embedding).toBeDefined();
+            expect(Array.isArray(embedding)).toBe(true);
+            expect(embedding.length).toBeGreaterThan(0);
+        });
+        
+        test('should find similar memories', async () => {
+            await memoryStore.store('Machine learning basics', 'ai', ['ml']);
+            await memoryStore.store('Deep learning concepts', 'ai', ['dl']);
+            
+            const similar = await memoryStore.findSimilar('artificial intelligence');
+            expect(similar.length).toBeGreaterThan(0);
+        });
+    });
+});
+```
+
+#### ToolManager Tests
+```javascript
+// tests/core/ToolManager.test.js
+import { ToolManager } from '../../src/core/ToolManager.js';
+import { WebScraperTool } from '../../src/tools/WebScraperTool.js';
+import { QwenEmbeddingTool } from '../../src/tools/QwenEmbeddingTool.js';
+
+describe('ToolManager', () => {
+    let toolManager;
+    
+    beforeEach(() => {
+        toolManager = new ToolManager();
+    });
+    
+    describe('tool registration', () => {
+        test('should register tools', () => {
+            const webScraper = new WebScraperTool();
+            const qwenEmbedding = new QwenEmbeddingTool();
+            
+            toolManager.registerTool(webScraper);
+            toolManager.registerTool(qwenEmbedding);
+            
+            const tools = toolManager.getTools();
+            expect(tools.length).toBe(2);
+            expect(tools.map(t => t.name)).toContain('web_scraper');
+            expect(tools.map(t => t.name)).toContain('qwen_embedding');
+        });
+        
+        test('should prevent duplicate tool registration', () => {
+            const tool1 = new WebScraperTool();
+            const tool2 = new WebScraperTool();
+            
+            toolManager.registerTool(tool1);
+            expect(() => toolManager.registerTool(tool2)).toThrow();
+        });
+    });
+    
+    describe('tool execution', () => {
+        test('should execute registered tools', async () => {
+            const webScraper = new WebScraperTool();
+            toolManager.registerTool(webScraper);
+            
+            const result = await toolManager.callTool('web_scraper', {
+                url: 'https://example.com',
+                selectors: { title: 'h1' }
+            });
+            
+            expect(result).toBeDefined();
+            expect(result.success).toBe(true);
+        });
+        
+        test('should handle tool execution errors', async () => {
+            const result = await toolManager.callTool('nonexistent_tool', {});
+            
+            expect(result.success).toBe(false);
+            expect(result.error).toBeDefined();
+        });
+    });
+});
+```
+
+## Integration Testing
+
+### API Endpoint Tests
+```javascript
+// tests/integration/api.test.js
+import request from 'supertest';
+import { DeepSeekReasonerServer } from '../../src/index.js';
+
+describe('API Endpoints', () => {
+    let server;
+    let app;
+    
+    beforeAll(async () => {
+        server = new DeepSeekReasonerServer();
+        await server.initializeSystems();
+        app = server.app;
+    });
+    
+    afterAll(async () => {
+        await server.shutdown();
+    });
+    
+    describe('Health Check', () => {
+        test('GET /health should return healthy status', async () => {
+            const response = await request(app)
+                .get('/health')
+                .expect(200);
+            
+            expect(response.body.status).toBe('healthy');
+            expect(response.body.brain).toBe('active');
+        });
+    });
+    
+    describe('Chat Endpoint', () => {
+        test('POST /chat should process messages', async () => {
+            const response = await request(app)
+                .post('/chat')
+                .send({
+                    message: 'Hello, how are you?',
+                    persona: 'DEANNA'
+                })
+                .expect(200);
+            
+            expect(response.body.success).toBe(true);
+            expect(response.body.message).toBeDefined();
+        });
+        
+        test('POST /chat should handle streaming', async () => {
+            const response = await request(app)
+                .post('/chat')
+                .send({
+                    message: 'Tell me a story',
+                    persona: 'DEANNA',
+                    stream: true
+                })
+                .expect(200);
+            
+            expect(response.headers['content-type']).toContain('text/plain');
+        });
+    });
+    
+    describe('Tool Endpoints', () => {
+        test('POST /tools/call should execute tools', async () => {
+            const response = await request(app)
+                .post('/tools/call')
+                .send({
+                    tool: 'web_scraper',
+                    params: {
+                        url: 'https://example.com',
+                        selectors: { title: 'h1' }
+                    }
+                })
+                .expect(200);
+            
+            expect(response.body.success).toBe(true);
+        });
+        
+        test('POST /scrape should scrape websites', async () => {
+            const response = await request(app)
+                .post('/scrape')
+                .send({
+                    url: 'https://example.com',
+                    selectors: { title: 'h1', content: 'p' }
+                })
+                .expect(200);
+            
+            expect(response.body.success).toBe(true);
+            expect(response.body.data).toBeDefined();
+        });
+    });
+    
+    describe('Memory Endpoints', () => {
+        test('POST /memory/store should store memories', async () => {
+            const response = await request(app)
+                .post('/memory/store')
+                .send({
+                    content: 'Test memory content',
+                    category: 'test',
+                    tags: ['test'],
+                    importance: 1.0
+                })
+                .expect(200);
+            
+            expect(response.body.success).toBe(true);
+            expect(response.body.id).toBeDefined();
+        });
+        
+        test('GET /memory/search should search memories', async () => {
+            const response = await request(app)
+                .get('/memory/search')
+                .query({
+                    query: 'test',
+                    category: 'test',
+                    limit: 10
+                })
+                .expect(200);
+            
+            expect(response.body.success).toBe(true);
+            expect(Array.isArray(response.body.results)).toBe(true);
+        });
+    });
+});
+```
+
+### WebSocket Tests
+```javascript
+// tests/integration/websocket.test.js
+import { io as Client } from 'socket.io-client';
+import { DeepSeekReasonerServer } from '../../src/index.js';
+
+describe('WebSocket Integration', () => {
+    let server;
+    let client;
+    
+    beforeAll(async () => {
+        server = new DeepSeekReasonerServer();
+        await server.initializeSystems();
+        await server.start();
+        
+        client = Client(`http://localhost:${server.port}`);
+    });
+    
+    afterAll(async () => {
+        client.close();
+        await server.shutdown();
+    });
+    
+    test('should connect to WebSocket', (done) => {
+        client.on('connect', () => {
+            expect(client.connected).toBe(true);
+            done();
+        });
+    });
+    
+    test('should receive brain status updates', (done) => {
+        client.emit('get_brain_status');
+        
+        client.on('brain_status', (status) => {
+            expect(status).toBeDefined();
+            expect(status.isInitialized).toBe(true);
+            done();
+        });
+    });
+    
+    test('should handle chat messages', (done) => {
+        const message = 'Hello, test message';
+        
+        client.emit('chat_message', { message, persona: 'DEANNA' });
+        
+        client.on('chat_response', (response) => {
+            expect(response).toBeDefined();
+            expect(response.success).toBe(true);
+            done();
+        });
+    });
+    
+    test('should handle tool calls', (done) => {
+        const toolCall = {
+            tool: 'web_scraper',
+            params: { url: 'https://example.com' }
+        };
+        
+        client.emit('tool_call', toolCall);
+        
+        client.on('tool_result', (result) => {
+            expect(result).toBeDefined();
+            expect(result.tool).toBe('web_scraper');
+            done();
+        });
+    });
+});
+```
+
+## End-to-End Testing
+
+### Puppeteer E2E Tests
+```javascript
+// tests/e2e/browser.test.js
+import puppeteer from 'puppeteer';
+
+describe('Browser E2E Tests', () => {
+    let browser;
+    let page;
+    
+    beforeAll(async () => {
+        browser = await puppeteer.launch({
+            headless: true,
+            args: ['--no-sandbox', '--disable-setuid-sandbox']
+        });
+    });
+    
+    afterAll(async () => {
+        await browser.close();
+    });
+    
+    beforeEach(async () => {
+        page = await browser.newPage();
+        await page.goto('http://localhost:3000');
+    });
+    
+    afterEach(async () => {
+        await page.close();
+    });
+    
+    test('should load the web interface', async () => {
+        const title = await page.title();
+        expect(title).toContain('DeepSeek-Reasoner Brain');
+        
+        const chatInput = await page.$('#chat-input');
+        expect(chatInput).toBeDefined();
+    });
+    
+    test('should send chat messages', async () => {
+        await page.type('#chat-input', 'Hello, test message');
+        await page.click('#send-button');
+        
+        // Wait for response
+        await page.waitForSelector('.chat-message', { timeout: 10000 });
+        
+        const messages = await page.$$('.chat-message');
+        expect(messages.length).toBeGreaterThan(0);
+    });
+    
+    test('should use tools through interface', async () => {
+        await page.type('#chat-input', 'Scrape https://example.com');
+        await page.click('#send-button');
+        
+        // Wait for tool execution
+        await page.waitForSelector('.tool-result', { timeout: 15000 });
+        
+        const toolResults = await page.$$('.tool-result');
+        expect(toolResults.length).toBeGreaterThan(0);
+    });
+    
+    test('should switch personas', async () => {
+        await page.select('#persona-selector', 'DEANNA');
+        
+        const selectedPersona = await page.$eval('#persona-selector', el => el.value);
+        expect(selectedPersona).toBe('DEANNA');
+    });
+});
+```
+
+## Performance Testing
+
+### Load Testing
+```javascript
+// tests/performance/load.test.js
+import autocannon from 'autocannon';
+
+describe('Performance Tests', () => {
+    test('should handle concurrent chat requests', async () => {
+        const result = await autocannon({
+            url: 'http://localhost:3000/chat',
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify({
+                message: 'Test message',
+                persona: 'DEANNA'
+            }),
+            connections: 10,
+            duration: 10,
+            pipelining: 1
+        });
+        
+        expect(result.errors).toBe(0);
+        expect(result.timeouts).toBe(0);
+        expect(result.latency.p99).toBeLessThan(5000); // 5 seconds
+    });
+    
+    test('should handle memory operations under load', async () => {
+        const result = await autocannon({
+            url: 'http://localhost:3000/memory/store',
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify({
+                content: 'Test memory content',
+                category: 'test',
+                tags: ['test']
+            }),
+            connections: 5,
+            duration: 10
+        });
+        
+        expect(result.errors).toBe(0);
+        expect(result.requests.average).toBeGreaterThan(10); // 10 req/sec
+    });
+});
+```
+
+## demo-ci Integration
+
+### demo-ci Configuration
+```javascript
+// demo-ci.config.js
+module.exports = {
+    name: 'DeepSeek-Reasoner Brain System',
+    description: 'AI agent platform with DeepSeek integration',
+    
+    environments: {
+        development: {
+            url: 'http://localhost:3000',
+            healthCheck: '/health'
+        },
+        staging: {
+            url: 'https://staging.deepseek-brain.com',
+            healthCheck: '/health'
+        },
+        production: {
+            url: 'https://deepseek-brain.com',
+            healthCheck: '/health'
+        }
+    },
+    
+    tests: {
+        unit: {
+            command: 'npm test',
+            coverage: true
+        },
+        integration: {
+            command: 'npm run test:integration',
+            timeout: 300000 // 5 minutes
+        },
+        e2e: {
+            command: 'npm run test:e2e',
+            timeout: 600000 // 10 minutes
+        },
+        performance: {
+            command: 'npm run test:performance',
+            threshold: {
+                responseTime: 2000,
+                throughput: 100
+            }
+        }
+    },
+    
+    deployment: {
+        stages: ['development', 'staging', 'production'],
+        rollback: true,
+        healthChecks: true
+    },
+    
+    monitoring: {
+        metrics: ['response_time', 'error_rate', 'throughput'],
+        alerts: {
+            errorRate: 5, // 5% error rate threshold
+            responseTime: 5000 // 5 second response time threshold
+        }
+    }
+};
+```
+
+### demo-ci Test Runner
+```javascript
+// scripts/demo-ci-runner.js
+import { DemoCI } from 'demo-ci';
+
+class DeepSeekBrainTestRunner {
+    constructor() {
+        this.demoCI = new DemoCI();
+        this.config = require('../demo-ci.config.js');
+    }
+    
+    async runFullTestSuite() {
+        console.log('🚀 Starting DeepSeek-Reasoner Brain test suite...');
+        
+        try {
+            // Run unit tests
+            await this.runUnitTests();
+            
+            // Run integration tests
+            await this.runIntegrationTests();
+            
+            // Run E2E tests
+            await this.runE2ETests();
+            
+            // Run performance tests
+            await this.runPerformanceTests();
+            
+            console.log('✅ All tests passed!');
+            
+        } catch (error) {
+            console.error('❌ Test suite failed:', error);
+            process.exit(1);
+        }
+    }
+    
+    async runUnitTests() {
+        console.log('🧪 Running unit tests...');
+        
+        const result = await this.demoCI.runTest({
+            type: 'unit',
+            config: this.config.tests.unit
+        });
+        
+        if (!result.success) {
+            throw new Error('Unit tests failed');
+        }
+        
+        console.log(`✅ Unit tests passed (${result.coverage}% coverage)`);
+    }
+    
+    async runIntegrationTests() {
+        console.log('🔗 Running integration tests...');
+        
+        const result = await this.demoCI.runTest({
+            type: 'integration',
+            config: this.config.tests.integration
+        });
+        
+        if (!result.success) {
+            throw new Error('Integration tests failed');
+        }
+        
+        console.log('✅ Integration tests passed');
+    }
+    
+    async runE2ETests() {
+        console.log('🌐 Running E2E tests...');
+        
+        const result = await this.demoCI.runTest({
+            type: 'e2e',
+            config: this.config.tests.e2e
+        });
+        
+        if (!result.success) {
+            throw new Error('E2E tests failed');
+        }
+        
+        console.log('✅ E2E tests passed');
+    }
+    
+    async runPerformanceTests() {
+        console.log('⚡ Running performance tests...');
+        
+        const result = await this.demoCI.runTest({
+            type: 'performance',
+            config: this.config.tests.performance
+        });
+        
+        if (!result.success) {
+            throw new Error('Performance tests failed');
+        }
+        
+        console.log('✅ Performance tests passed');
+    }
+}
+
+// Run the test suite
+const runner = new DeepSeekBrainTestRunner();
+runner.runFullTestSuite();
+```
+
+## HRM Integration
+
+### HRM Test Configuration
+```javascript
+// hrm.config.js
+module.exports = {
+    project: {
+        name: 'DeepSeek-Reasoner Brain System',
+        description: 'AI agent platform with advanced reasoning capabilities',
+        version: '1.0.0'
+    },
+    
+    resources: {
+        human: {
+            testers: [
+                {
+                    name: 'Test User 1',
+                    role: 'QA Engineer',
+                    expertise: ['AI/ML', 'Web Development', 'Testing']
+                },
+                {
+                    name: 'Test User 2',
+                    role: 'Product Manager',
+                    expertise: ['Product Management', 'User Experience', 'Business Analysis']
+                }
+            ]
+        },
+        
+        automated: {
+            tools: ['Jest', 'Puppeteer', 'demo-ci', 'autocannon'],
+            environments: ['Development', 'Staging', 'Production']
+        }
+    },
+    
+    testScenarios: [
+        {
+            name: 'Chat Functionality',
+            description: 'Test basic chat functionality with different personas',
+            steps: [
+                'Open web interface',
+                'Select DEANNA persona',
+                'Send chat message',
+                'Verify response',
+                'Switch to different persona',
+                'Send another message',
+                'Verify persona-specific response'
+            ],
+            expectedResults: [
+                'Chat interface loads correctly',
+                'Messages are sent and received',
+                'Persona switching works',
+                'Responses are appropriate for selected persona'
+            ]
+        },
+        {
+            name: 'Tool Integration',
+            description: 'Test tool calling and execution',
+            steps: [
+                'Request web scraping',
+                'Request embedding generation',
+                'Request GitHub operations',
+                'Verify tool results'
+            ],
+            expectedResults: [
+                'Tools are called correctly',
+                'Results are returned',
+                'Error handling works',
+                'Performance is acceptable'
+            ]
+        },
+        {
+            name: 'Memory Operations',
+            description: 'Test memory storage and retrieval',
+            steps: [
+                'Store new memory',
+                'Search for memories',
+                'Update existing memory',
+                'Delete memory'
+            ],
+            expectedResults: [
+                'Memories are stored correctly',
+                'Search returns relevant results',
+                'Updates are applied',
+                'Deletions work properly'
+            ]
+        }
+    ],
+    
+    qualityGates: {
+        codeCoverage: 80,
+        performanceThreshold: 2000, // 2 seconds
+        errorRate: 1, // 1%
+        userSatisfaction: 4.5 // 4.5/5
+    }
+};
+```
+
+## CI/CD Pipeline
+
+### GitHub Actions Workflow
+```yaml
+# .github/workflows/ci-cd.yml
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    services:
+      redis:
+        image: redis
+        ports:
+          - 6379:6379
+      mongodb:
+        image: mongo:4.4
+        ports:
+          - 27017:27017
+    
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Run linting
+        run: npm run lint
+      
+      - name: Run unit tests
+        run: npm test
+      
+      - name: Run integration tests
+        run: npm run test:integration
+        env:
+          NODE_ENV: test
+          REDIS_URL: redis://localhost:6379
+          MONGODB_URL: mongodb://localhost:27017/test
+      
+      - name: Run E2E tests
+        run: npm run test:e2e
+      
+      - name: Upload coverage
+        uses: codecov/codecov-action@v3
+        with:
+          file: ./coverage/lcov.info
+      
+      - name: Run demo-ci tests
+        run: npm run test:demo-ci
+      
+      - name: Run HRM tests
+        run: npm run test:hrm
+
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Build application
+        run: npm run build
+      
+      - name: Build Docker image
+        run: docker build -t deepseek-reasoner-brain .
+      
+      - name: Push to registry
+        run: |
+          echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
+          docker tag deepseek-reasoner-brain ${{ secrets.DOCKER_REGISTRY }}/deepseek-reasoner-brain:${{ github.sha }}
+          docker push ${{ secrets.DOCKER_REGISTRY }}/deepseek-reasoner-brain:${{ github.sha }}
+
+  deploy-staging:
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    environment: staging
+    
+    steps:
+      - name: Deploy to staging
+        run: |
+          # Deploy to staging environment
+          echo "Deploying to staging..."
+
+  deploy-production:
+    needs: deploy-staging
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    environment: production
+    
+    steps:
+      - name: Deploy to production
+        run: |
+          # Deploy to production environment
+          echo "Deploying to production..."
+```
+
+### Docker Compose for Testing
+```yaml
+# docker-compose.test.yml
+version: '3.8'
+
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=test
+      - REDIS_URL=redis://redis:6379
+      - MONGODB_URL=mongodb://mongodb:27017/test
+    depends_on:
+      - redis
+      - mongodb
+    command: npm run test:integration
+
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+
+  mongodb:
+    image: mongo:4.4
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_DATABASE=test
+
+  test-runner:
+    build: .
+    environment:
+      - NODE_ENV=test
+    volumes:
+      - ./tests:/app/tests
+      - ./coverage:/app/coverage
+    command: npm run test:e2e
+    depends_on:
+      - app
+```
+
+## Test Scripts
+
+### Package.json Scripts
+```json
+{
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "test:integration": "jest --config jest.integration.config.js",
+    "test:e2e": "jest --config jest.e2e.config.js",
+    "test:performance": "jest --config jest.performance.config.js",
+    "test:demo-ci": "node scripts/demo-ci-runner.js",
+    "test:hrm": "node scripts/hrm-runner.js",
+    "test:all": "npm run test && npm run test:integration && npm run test:e2e",
+    "lint": "eslint src/",
+    "lint:fix": "eslint src/ --fix",
+    "format": "prettier --write src/",
+    "build": "webpack --mode production",
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js"
+  }
+}
+```
+
+## Monitoring and Alerting
+
+### Test Monitoring
+```javascript
+// scripts/test-monitor.js
+import { Logger } from '../src/utils/Logger.js';
+
+class TestMonitor {
+    constructor() {
+        this.logger = new Logger();
+        this.metrics = {
+            testRuns: 0,
+            passedTests: 0,
+            failedTests: 0,
+            averageDuration: 0,
+            lastRun: null
+        };
+    }
+    
+    recordTestRun(result) {
+        this.metrics.testRuns++;
+        this.metrics.lastRun = new Date();
+        
+        if (result.success) {
+            this.metrics.passedTests++;
+        } else {
+            this.metrics.failedTests++;
+        }
+        
+        this.metrics.averageDuration = 
+            (this.metrics.averageDuration * (this.metrics.testRuns - 1) + result.duration) / 
+            this.metrics.testRuns;
+        
+        this.logger.info('Test run recorded', this.metrics);
+        
+        // Check for alerts
+        this.checkAlerts();
+    }
+    
+    checkAlerts() {
+        const failureRate = this.metrics.failedTests / this.metrics.testRuns;
+        
+        if (failureRate > 0.1) { // 10% failure rate
+            this.logger.error('High test failure rate detected', {
+                failureRate: failureRate * 100,
+                totalRuns: this.metrics.testRuns
+            });
+        }
+        
+        if (this.metrics.averageDuration > 30000) { // 30 seconds
+            this.logger.warn('Slow test execution detected', {
+                averageDuration: this.metrics.averageDuration
+            });
+        }
+    }
+    
+    getMetrics() {
+        return {
+            ...this.metrics,
+            failureRate: this.metrics.failedTests / this.metrics.testRuns,
+            successRate: this.metrics.passedTests / this.metrics.testRuns
+        };
+    }
+}
+
+export { TestMonitor };
+```
+description:
+globs:
+alwaysApply: false
+---

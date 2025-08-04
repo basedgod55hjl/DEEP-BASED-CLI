@@ -1,0 +1,675 @@
+# MCP Integration and Tool Development
+
+## MCP (Model Context Protocol) Overview
+
+### What is MCP?
+MCP (Model Context Protocol) is a protocol that enables AI models to interact with external tools and resources. It provides a standardized way for AI assistants to:
+- Access file systems
+- Execute commands
+- Interact with databases
+- Use external APIs
+- Manage resources
+
+### MCP Architecture
+1. **MCP Client**: The AI model or assistant
+2. **MCP Server**: Provides tools and resources
+3. **MCP Protocol**: Standardized communication protocol
+4. **Resources**: Files, databases, APIs, etc.
+
+## MCP Server Implementation
+
+### Basic MCP Server Structure
+```javascript
+import { Server } from '@modelcontextprotocol/sdk/server/index.js';
+import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
+
+class DeepSeekMCPServer {
+    constructor() {
+        this.server = new Server(
+            {
+                name: 'deepseek-mcp-server',
+                version: '1.0.0'
+            },
+            {
+                capabilities: {
+                    tools: {},
+                    resources: {}
+                }
+            }
+        );
+        
+        this.transport = new StdioServerTransport();
+        this.setupTools();
+        this.setupResources();
+    }
+    
+    setupTools() {
+        // Register tools
+        this.server.setRequestHandler('tools/list', async () => {
+            return {
+                tools: [
+                    {
+                        name: 'web_scraper',
+                        description: 'Web scraping tool',
+                        inputSchema: {
+                            type: 'object',
+                            properties: {
+                                url: { type: 'string' },
+                                selectors: { type: 'object' }
+                            }
+                        }
+                    }
+                ]
+            };
+        });
+        
+        this.server.setRequestHandler('tools/call', async (request) => {
+            const { name, arguments: args } = request.params;
+            
+            switch (name) {
+                case 'web_scraper':
+                    return await this.handleWebScraper(args);
+                default:
+                    throw new Error(`Unknown tool: ${name}`);
+            }
+        });
+    }
+    
+    setupResources() {
+        // Register resources
+        this.server.setRequestHandler('resources/list', async () => {
+            return {
+                resources: [
+                    {
+                        uri: 'file:///path/to/file',
+                        name: 'file',
+                        description: 'File resource',
+                        mimeType: 'text/plain'
+                    }
+                ]
+            };
+        });
+    }
+    
+    async start() {
+        await this.server.connect(this.transport);
+        console.log('MCP Server started');
+    }
+}
+```
+
+### Tool Implementation Patterns
+
+#### Web Scraper Tool
+```javascript
+class WebScraperTool {
+    constructor() {
+        this.name = 'web_scraper';
+        this.description = 'Advanced web scraping with Puppeteer and Cheerio';
+    }
+    
+    async execute(args) {
+        const { url, selectors, config = {} } = args;
+        
+        try {
+            // Use Puppeteer for dynamic content
+            const browser = await puppeteer.launch(config.browser || {});
+            const page = await browser.newPage();
+            
+            await page.goto(url, { waitUntil: 'networkidle0' });
+            
+            // Extract data using selectors
+            const data = await page.evaluate((sel) => {
+                const results = {};
+                for (const [key, selector] of Object.entries(sel)) {
+                    const elements = document.querySelectorAll(selector);
+                    results[key] = Array.from(elements).map(el => el.textContent);
+                }
+                return results;
+            }, selectors);
+            
+            await browser.close();
+            
+            return {
+                success: true,
+                data,
+                metadata: {
+                    url,
+                    timestamp: new Date().toISOString(),
+                    selectors: Object.keys(selectors)
+                }
+            };
+        } catch (error) {
+            return {
+                success: false,
+                error: error.message
+            };
+        }
+    }
+}
+```
+
+#### Qwen Embedding Tool
+```javascript
+class QwenEmbeddingTool {
+    constructor() {
+        this.name = 'qwen_embedding';
+        this.description = 'Generate embeddings using Qwen models';
+        this.model = null;
+    }
+    
+    async initialize() {
+        // Initialize Qwen model
+        this.model = await this.loadQwenModel();
+    }
+    
+    async execute(args) {
+        const { text, model = 'qwen3-embedding' } = args;
+        
+        try {
+            const embedding = await this.generateEmbedding(text, model);
+            
+            return {
+                success: true,
+                embedding,
+                metadata: {
+                    model,
+                    textLength: text.length,
+                    embeddingDimension: embedding.length
+                }
+            };
+        } catch (error) {
+            return {
+                success: false,
+                error: error.message
+            };
+        }
+    }
+    
+    async generateEmbedding(text, model) {
+        // Implementation for Qwen embedding generation
+        // This would integrate with the actual Qwen model
+    }
+}
+```
+
+#### GitHub Integration Tool
+```javascript
+class GitHubTool {
+    constructor() {
+        this.name = 'github_integration';
+        this.description = 'GitHub repository management and dataset creation';
+        this.octokit = null;
+    }
+    
+    async initialize(token) {
+        this.octokit = new Octokit({ auth: token });
+    }
+    
+    async execute(args) {
+        const { action, ...params } = args;
+        
+        switch (action) {
+            case 'clone_repo':
+                return await this.cloneRepository(params);
+            case 'create_issue':
+                return await this.createIssue(params);
+            case 'update_repo':
+                return await this.updateRepository(params);
+            case 'create_dataset':
+                return await this.createDataset(params);
+            default:
+                throw new Error(`Unknown action: ${action}`);
+        }
+    }
+    
+    async cloneRepository({ owner, repo, path }) {
+        // Clone repository to local path
+        const { data } = await this.octokit.repos.get({ owner, repo });
+        
+        // Use git clone command
+        const { execSync } = require('child_process');
+        execSync(`git clone ${data.clone_url} ${path}`);
+        
+        return {
+            success: true,
+            repository: data,
+            localPath: path
+        };
+    }
+    
+    async createDataset({ name, description, files }) {
+        // Create dataset from repository files
+        const dataset = {
+            name,
+            description,
+            files: [],
+            metadata: {
+                created: new Date().toISOString(),
+                source: 'github'
+            }
+        };
+        
+        // Process files and add to dataset
+        for (const file of files) {
+            const content = await this.readFile(file.path);
+            dataset.files.push({
+                path: file.path,
+                content,
+                size: content.length
+            });
+        }
+        
+        return {
+            success: true,
+            dataset
+        };
+    }
+}
+```
+
+## Integration with DeepSeek-Reasoner Brain
+
+### Tool Registration in Brain System
+```javascript
+class DeepSeekReasonerBrain {
+    constructor() {
+        this.mcpServer = null;
+        this.tools = new Map();
+    }
+    
+    async initializeMCPServer() {
+        this.mcpServer = new DeepSeekMCPServer();
+        await this.mcpServer.start();
+        
+        // Register tools with the brain
+        this.registerTools();
+    }
+    
+    registerTools() {
+        // Register MCP tools
+        this.tools.set('web_scraper', new WebScraperTool());
+        this.tools.set('qwen_embedding', new QwenEmbeddingTool());
+        this.tools.set('github_integration', new GitHubTool());
+        
+        // Register with MCP server
+        this.mcpServer.registerTools(Array.from(this.tools.values()));
+    }
+    
+    async callTool(toolName, args) {
+        const tool = this.tools.get(toolName);
+        if (!tool) {
+            throw new Error(`Tool not found: ${toolName}`);
+        }
+        
+        return await tool.execute(args);
+    }
+}
+```
+
+### Tool Calling from DeepSeek
+```javascript
+class ToolCallingManager {
+    constructor(brain) {
+        this.brain = brain;
+    }
+    
+    async handleToolCall(reasoningContent) {
+        // Parse tool calls from reasoning content
+        const toolCalls = this.parseToolCalls(reasoningContent);
+        
+        const results = [];
+        for (const toolCall of toolCalls) {
+            try {
+                const result = await this.brain.callTool(
+                    toolCall.name,
+                    toolCall.arguments
+                );
+                results.push({
+                    tool: toolCall.name,
+                    result
+                });
+            } catch (error) {
+                results.push({
+                    tool: toolCall.name,
+                    error: error.message
+                });
+            }
+        }
+        
+        return results;
+    }
+    
+    parseToolCalls(content) {
+        // Parse tool calls from reasoning content
+        // This would extract tool calls from the AI's reasoning
+        const toolCallRegex = /tool_call:\s*(\w+)\s*\((.*?)\)/g;
+        const toolCalls = [];
+        
+        let match;
+        while ((match = toolCallRegex.exec(content)) !== null) {
+            toolCalls.push({
+                name: match[1],
+                arguments: JSON.parse(match[2])
+            });
+        }
+        
+        return toolCalls;
+    }
+}
+```
+
+## Resource Management
+
+### File System Resources
+```javascript
+class FileSystemResource {
+    constructor() {
+        this.name = 'file_system';
+        this.description = 'File system access';
+    }
+    
+    async readFile(path) {
+        const fs = require('fs').promises;
+        const content = await fs.readFile(path, 'utf8');
+        
+        return {
+            content,
+            metadata: {
+                path,
+                size: content.length,
+                lastModified: new Date().toISOString()
+            }
+        };
+    }
+    
+    async writeFile(path, content) {
+        const fs = require('fs').promises;
+        await fs.writeFile(path, content);
+        
+        return {
+            success: true,
+            path,
+            size: content.length
+        };
+    }
+    
+    async listDirectory(path) {
+        const fs = require('fs').promises;
+        const entries = await fs.readdir(path, { withFileTypes: true });
+        
+        return {
+            entries: entries.map(entry => ({
+                name: entry.name,
+                type: entry.isDirectory() ? 'directory' : 'file',
+                path: `${path}/${entry.name}`
+            }))
+        };
+    }
+}
+```
+
+### Database Resources
+```javascript
+class DatabaseResource {
+    constructor() {
+        this.name = 'database';
+        this.description = 'Database access';
+        this.connections = new Map();
+    }
+    
+    async connect(connectionString) {
+        const connection = await this.createConnection(connectionString);
+        this.connections.set(connectionString, connection);
+        
+        return {
+            success: true,
+            connectionId: connectionString
+        };
+    }
+    
+    async query(connectionString, query, params = []) {
+        const connection = this.connections.get(connectionString);
+        if (!connection) {
+            throw new Error('Connection not found');
+        }
+        
+        const result = await connection.query(query, params);
+        
+        return {
+            success: true,
+            result,
+            rowCount: result.length
+        };
+    }
+}
+```
+
+## Error Handling and Logging
+
+### MCP Error Handling
+```javascript
+class MCPErrorHandler {
+    static handleError(error, context) {
+        const errorResponse = {
+            error: {
+                code: error.code || 'UNKNOWN_ERROR',
+                message: error.message,
+                details: error.details || {},
+                context
+            }
+        };
+        
+        // Log error
+        console.error('MCP Error:', errorResponse);
+        
+        return errorResponse;
+    }
+    
+    static validateToolCall(toolName, args) {
+        const tool = this.getTool(toolName);
+        if (!tool) {
+            throw new Error(`Tool not found: ${toolName}`);
+        }
+        
+        // Validate arguments against schema
+        const validation = this.validateSchema(args, tool.inputSchema);
+        if (!validation.valid) {
+            throw new Error(`Invalid arguments: ${validation.errors.join(', ')}`);
+        }
+    }
+}
+```
+
+### Logging and Monitoring
+```javascript
+class MCPLogger {
+    constructor() {
+        this.logger = winston.createLogger({
+            level: 'info',
+            format: winston.format.combine(
+                winston.format.timestamp(),
+                winston.format.json()
+            ),
+            transports: [
+                new winston.transports.File({ filename: 'mcp-server.log' }),
+                new winston.transports.Console()
+            ]
+        });
+    }
+    
+    logToolCall(toolName, args, result) {
+        this.logger.info('Tool Call', {
+            tool: toolName,
+            arguments: args,
+            result: result.success ? 'success' : 'error',
+            timestamp: new Date().toISOString()
+        });
+    }
+    
+    logError(error, context) {
+        this.logger.error('MCP Error', {
+            error: error.message,
+            stack: error.stack,
+            context,
+            timestamp: new Date().toISOString()
+        });
+    }
+}
+```
+
+## Testing and Validation
+
+### MCP Server Testing
+```javascript
+class MCPServerTester {
+    constructor(server) {
+        this.server = server;
+    }
+    
+    async testToolCall(toolName, args) {
+        try {
+            const result = await this.server.callTool(toolName, args);
+            console.log(`✅ Tool call successful: ${toolName}`);
+            return result;
+        } catch (error) {
+            console.error(`❌ Tool call failed: ${toolName}`, error);
+            throw error;
+        }
+    }
+    
+    async testResourceAccess(resourceName, action, params) {
+        try {
+            const result = await this.server.accessResource(resourceName, action, params);
+            console.log(`✅ Resource access successful: ${resourceName}`);
+            return result;
+        } catch (error) {
+            console.error(`❌ Resource access failed: ${resourceName}`, error);
+            throw error;
+        }
+    }
+    
+    async runIntegrationTests() {
+        const tests = [
+            () => this.testToolCall('web_scraper', { url: 'https://example.com' }),
+            () => this.testToolCall('qwen_embedding', { text: 'Hello world' }),
+            () => this.testResourceAccess('file_system', 'read', { path: '/tmp/test.txt' })
+        ];
+        
+        for (const test of tests) {
+            await test();
+        }
+        
+        console.log('✅ All integration tests passed');
+    }
+}
+```
+
+## Performance Optimization
+
+### Tool Caching
+```javascript
+class ToolCache {
+    constructor() {
+        this.cache = new Map();
+        this.maxSize = 100;
+    }
+    
+    async getCachedResult(toolName, args) {
+        const key = this.generateKey(toolName, args);
+        const cached = this.cache.get(key);
+        
+        if (cached && !this.isExpired(cached)) {
+            return cached.result;
+        }
+        
+        return null;
+    }
+    
+    setCachedResult(toolName, args, result, ttl = 3600000) {
+        const key = this.generateKey(toolName, args);
+        
+        this.cache.set(key, {
+            result,
+            timestamp: Date.now(),
+            ttl
+        });
+        
+        // Evict old entries if cache is full
+        if (this.cache.size > this.maxSize) {
+            this.evictOldest();
+        }
+    }
+    
+    generateKey(toolName, args) {
+        return `${toolName}:${JSON.stringify(args)}`;
+    }
+    
+    isExpired(cached) {
+        return Date.now() - cached.timestamp > cached.ttl;
+    }
+    
+    evictOldest() {
+        let oldest = null;
+        let oldestKey = null;
+        
+        for (const [key, value] of this.cache.entries()) {
+            if (!oldest || value.timestamp < oldest.timestamp) {
+                oldest = value;
+                oldestKey = key;
+            }
+        }
+        
+        if (oldestKey) {
+            this.cache.delete(oldestKey);
+        }
+    }
+}
+```
+
+### Connection Pooling
+```javascript
+class ConnectionPool {
+    constructor(maxConnections = 10) {
+        this.maxConnections = maxConnections;
+        this.connections = [];
+        this.available = [];
+    }
+    
+    async getConnection() {
+        if (this.available.length > 0) {
+            return this.available.pop();
+        }
+        
+        if (this.connections.length < this.maxConnections) {
+            const connection = await this.createConnection();
+            this.connections.push(connection);
+            return connection;
+        }
+        
+        // Wait for a connection to become available
+        return new Promise(resolve => {
+            const checkAvailable = () => {
+                if (this.available.length > 0) {
+                    resolve(this.available.pop());
+                } else {
+                    setTimeout(checkAvailable, 100);
+                }
+            };
+            checkAvailable();
+        });
+    }
+    
+    releaseConnection(connection) {
+        this.available.push(connection);
+    }
+    
+    async createConnection() {
+        // Implementation for creating new connections
+    }
+}
+```
+description:
+globs:
+alwaysApply: false
+---

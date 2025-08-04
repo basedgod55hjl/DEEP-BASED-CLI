@@ -1,0 +1,183 @@
+# Dataset and GitHub Integration
+
+## Dataset Management
+
+### Hugging Face Dataset Integration
+```javascript
+// src/datasets/DatasetManager.js
+import { load_dataset } from 'datasets';
+
+class DatasetManager {
+    constructor() {
+        this.datasets = new Map();
+        this.memory = null;
+    }
+    
+    async loadHackapromptDataset() {
+        try {
+            const ds = await load_dataset("hackaprompt/hackaprompt-dataset");
+            this.datasets.set('hackaprompt', ds);
+            
+            // Store in memory
+            await this.storeDatasetInMemory(ds, 'hackaprompt');
+            
+            return {
+                success: true,
+                dataset: ds,
+                size: ds.length
+            };
+        } catch (error) {
+            return {
+                success: false,
+                error: error.message
+            };
+        }
+    }
+    
+    async storeDatasetInMemory(dataset, name) {
+        const entries = [];
+        
+        for (const item of dataset) {
+            entries.push({
+                content: JSON.stringify(item),
+                category: 'dataset',
+                tags: [name, 'huggingface'],
+                importance: 1.0
+            });
+        }
+        
+        await this.memory.batchStore(entries);
+    }
+}
+```
+
+### GitHub Bot Integration
+```javascript
+// src/github/GitHubBot.js
+import { Octokit } from '@octokit/rest';
+
+class GitHubBot {
+    constructor(token) {
+        this.octokit = new Octokit({ auth: token });
+        this.memory = null;
+    }
+    
+    async cloneRepository(owner, repo, path) {
+        const { data } = await this.octokit.repos.get({ owner, repo });
+        
+        // Clone to local path
+        const { execSync } = require('child_process');
+        execSync(`git clone ${data.clone_url} ${path}`);
+        
+        return {
+            success: true,
+            repository: data,
+            localPath: path
+        };
+    }
+    
+    async createDatasetFromRepo(owner, repo, name) {
+        const path = `/tmp/${owner}-${repo}`;
+        await this.cloneRepository(owner, repo, path);
+        
+        const dataset = {
+            name,
+            source: `github:${owner}/${repo}`,
+            files: [],
+            metadata: {
+                created: new Date().toISOString(),
+                owner,
+                repo
+            }
+        };
+        
+        // Process repository files
+        const files = await this.scanRepository(path);
+        dataset.files = files;
+        
+        // Store in memory
+        await this.storeDatasetInMemory(dataset);
+        
+        return dataset;
+    }
+    
+    async scanRepository(path) {
+        const fs = require('fs').promises;
+        const files = [];
+        
+        const scanDir = async (dir) => {
+            const entries = await fs.readdir(dir, { withFileTypes: true });
+            
+            for (const entry of entries) {
+                const fullPath = `${dir}/${entry.name}`;
+                
+                if (entry.isDirectory()) {
+                    await scanDir(fullPath);
+                } else {
+                    const content = await fs.readFile(fullPath, 'utf8');
+                    files.push({
+                        path: fullPath.replace(path, ''),
+                        content,
+                        size: content.length
+                    });
+                }
+            }
+        };
+        
+        await scanDir(path);
+        return files;
+    }
+}
+```
+
+## Memory Integration
+
+### Dataset Memory Storage
+```javascript
+// src/memory/DatasetMemory.js
+class DatasetMemory {
+    constructor(memoryStore) {
+        this.memory = memoryStore;
+    }
+    
+    async storeDataset(dataset) {
+        const entries = dataset.files.map(file => ({
+            content: file.content,
+            category: 'dataset',
+            tags: [dataset.name, 'github', 'code'],
+            metadata: {
+                source: dataset.source,
+                path: file.path,
+                size: file.size
+            }
+        }));
+        
+        return await this.memory.batchStore(entries);
+    }
+    
+    async searchDatasets(query, tags = []) {
+        return await this.memory.search(query, 'dataset', tags);
+    }
+}
+```
+
+## Integration with DeepSeek Brain
+
+### Tool Registration
+```javascript
+// src/core/DeepSeekReasonerBrain.js
+class DeepSeekReasonerBrain {
+    async initializeDatasetTools() {
+        this.datasetManager = new DatasetManager();
+        this.githubBot = new GitHubBot(process.env.GITHUB_TOKEN);
+        
+        // Register tools
+        this.tools.set('load_dataset', this.datasetManager);
+        this.tools.set('github_bot', this.githubBot);
+    }
+}
+```
+description:
+globs:
+alwaysApply: false
+---
