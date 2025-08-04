@@ -100,4 +100,18 @@ node tools/website_mapper_server.js
 Then open [http://localhost:3001](http://localhost:3001) and enter a URL to
 see the discovered links and button labels.
 
+### Replit-Style CLI Web UI
+
+A web interface to run CLI commands.
+
+```bash
+# build the C++ bridge
+g++ tools/cli_bridge.cpp -o tools/cli_bridge
+
+# start the web UI server
+node tools/cli_webui_server.js
+```
+
+Open [http://localhost:3002](http://localhost:3002) to execute CLI commands from your browser.
+
 ## Made by @Lucariolucario55 on Telegram
