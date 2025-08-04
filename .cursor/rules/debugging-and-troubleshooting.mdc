@@ -1,0 +1,262 @@
+# Debugging and Troubleshooting Guide
+
+## Common Issues and Solutions
+
+### Unicode Encoding Errors (Windows)
+**Problem**: `UnicodeEncodeError: 'charmap' codec can't encode character '\u2705'`
+
+**Solution**: Replace emoji characters in logging messages:
+```python
+# Instead of: logging.info("✅ Tool initialized")
+# Use: logging.info("[SUCCESS] Tool initialized")
+```
+
+**Files to check**:
+- [tools/fim_completion_tool.py](mdc:tools/fim_completion_tool.py)
+- [tools/prefix_completion_tool.py](mdc:tools/prefix_completion_tool.py)
+- [tools/tool_manager.py](mdc:tools/tool_manager.py)
+
+### Vector Database Connection Issues
+**Problem**: `[WinError 10061] No connection could be made because the target machine actively refused it`
+
+**Solution**: 
+1. Install and configure Qdrant or Chroma
+2. Update configuration in [config/enhanced_config.json](mdc:config/enhanced_config.json)
+3. Or disable vector database features temporarily
+
+**Files to check**:
+- [tools/vector_database_tool.py](mdc:tools/vector_database_tool.py)
+- [config/enhanced_config.json](mdc:config/enhanced_config.json)
+
+### Import Errors
+**Problem**: `ModuleNotFoundError` or `ImportError`
+
+**Solution**:
+1. Check [tools/__init__.py](mdc:tools/__init__.py) for correct imports
+2. Verify all dependencies in [requirements.txt](mdc:requirements.txt)
+3. Ensure Python path includes project root
+
+### Database Lock Issues
+**Problem**: `database is locked` or `database table is locked`
+
+**Solution**:
+1. Check for multiple processes accessing [data/deepcli_database.db](mdc:data/deepcli_database.db)
+2. Ensure proper connection closing
+3. Use connection pooling in [tools/sql_database_tool.py](mdc:tools/sql_database_tool.py)
+
+## Debugging Commands
+
+### System Status Check
+```bash
+python enhanced_based_god_cli.py --status
+```
+
+### Debug Mode
+```bash
+python enhanced_based_god_cli.py --debug
+```
+
+### Verbose Logging
+```bash
+python enhanced_based_god_cli.py --verbose
+```
+
+### Test Individual Tools
+```bash
+python -c "
+import asyncio
+from tools.memory_tool import MemoryTool
+async def test():
+    tool = MemoryTool()
+    result = await tool.execute(operation='store', content='test')
+    print(result)
+asyncio.run(test())
+"
+```
+
+## Logging and Monitoring
+
+### Enable Debug Logging
+Update [config/enhanced_config.json](mdc:config/enhanced_config.json):
+```json
+{
+  "logging": {
+    "log_level": "DEBUG",
+    "enable_console_logging": true,
+    "enable_file_logging": true
+  }
+}
+```
+
+### Check Log Files
+- Main logs: `logs/enhanced_deepcli.log`
+- Tool-specific logs: Check individual tool files
+
+### Performance Monitoring
+Use [tools/prompt_caching_system.py](mdc:tools/prompt_caching_system.py) for cache statistics:
+```python
+from tools.prompt_caching_system import PromptCache
+cache = PromptCache()
+stats = cache.get_statistics()
+print(stats)
+```
+
+## Tool-Specific Debugging
+
+### LLM Tool Issues
+**Check**: [tools/llm_query_tool.py](mdc:tools/llm_query_tool.py)
+- Verify API key in configuration
+- Check network connectivity
+- Monitor rate limits
+
+### Memory Tool Issues
+**Check**: [tools/memory_tool.py](mdc:tools/memory_tool.py)
+- Verify file permissions for memory files
+- Check JSON format of stored data
+- Monitor memory file size
+
+### RAG Pipeline Issues
+**Check**: [tools/rag_pipeline_tool.py](mdc:tools/rag_pipeline_tool.py)
+- Verify vector database connection
+- Check embedding generation
+- Monitor search performance
+
+### Database Tool Issues
+**Check**: [tools/sql_database_tool.py](mdc:tools/sql_database_tool.py)
+- Verify database file permissions
+- Check SQL query syntax
+- Monitor connection pool
+
+## Configuration Debugging
+
+### Validate Configuration
+```python
+from config import validate_config
+issues = validate_config()
+if issues:
+    print("Configuration issues:", issues)
+```
+
+### Check API Keys
+```python
+from config import validate_deepseek_key
+is_valid = validate_deepseek_key()
+print(f"DeepSeek API key valid: {is_valid}")
+```
+
+### Export Configuration
+```python
+from config import export_config
+config_json = export_config()
+print(config_json)
+```
+
+## Performance Debugging
+
+### Monitor Tool Execution
+Use [tools/tool_manager.py](mdc:tools/tool_manager.py) for execution statistics:
+```python
+from tools.tool_manager import ToolManager
+manager = ToolManager()
+stats = manager.get_system_statistics()
+print(stats)
+```
+
+### Cache Performance
+Check [tools/prompt_caching_system.py](mdc:tools/prompt_caching_system.py):
+```python
+from tools.prompt_caching_system import PromptCache
+cache = PromptCache()
+db_stats = cache.get_database_statistics()
+print(db_stats)
+```
+
+### Memory Usage
+Monitor memory consumption:
+```python
+import psutil
+process = psutil.Process()
+memory_info = process.memory_info()
+print(f"Memory usage: {memory_info.rss / 1024 / 1024:.2f} MB")
+```
+
+## Error Recovery
+
+### Tool Failure Recovery
+Tools should implement graceful failure:
+```python
+async def execute(self, **kwargs) -> ToolResponse:
+    try:
+        # Tool logic
+        return ToolResponse(success=True, ...)
+    except Exception as e:
+        logging.error(f"Tool failed: {e}")
+        return ToolResponse(success=False, message=str(e))
+```
+
+### System Recovery
+The CLI implements automatic recovery:
+- Failed tools are logged but don't crash the system
+- Optional tools can fail without affecting core functionality
+- Database connections are automatically retried
+
+## Testing and Validation
+
+### Tool Testing
+Test individual tools:
+```python
+async def test_tool():
+    tool = MyTool()
+    response = await tool.execute(test_param="value")
+    assert response.success
+    assert response.data is not None
+```
+
+### Integration Testing
+Test tool interactions:
+```python
+async def test_integration():
+    manager = ToolManager()
+    response = await manager.execute_tool("my_tool", {"param": "value"})
+    assert response.success
+```
+
+### End-to-End Testing
+Test complete workflows:
+```python
+async def test_workflow():
+    cli = EnhancedBasedCoderCLI()
+    await cli.initialize_system()
+    result = await cli.handle_chat("Hello, how are you?")
+    assert result is not None
+```
+
+## Common Debugging Patterns
+
+### 1. Check Tool Registration
+Verify tools are properly registered in [tools/tool_manager.py](mdc:tools/tool_manager.py)
+
+### 2. Validate Configuration
+Check [config/enhanced_config.json](mdc:config/enhanced_config.json) for correct settings
+
+### 3. Monitor Logs
+Check log files for detailed error information
+
+### 4. Test Components
+Test individual components before testing integration
+
+### 5. Check Dependencies
+Verify all required packages are installed
+
+### 6. Database Integrity
+Check database files for corruption or permission issues
+
+### 7. Network Connectivity
+Verify external API connections (DeepSeek, vector databases)
+
+### 8. Resource Usage
+Monitor CPU, memory, and disk usage during operation
+description:
+globs:
+alwaysApply: false
+---

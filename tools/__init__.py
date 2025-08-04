@@ -6,10 +6,6 @@ Modular tool architecture inspired by Agent Zero
 """
 
 from .base_tool import BaseTool, ToolResponse
-from .web_scraper_tool import WebScraperTool
-from .code_generator_tool import CodeGeneratorTool
-from .data_analyzer_tool import DataAnalyzerTool
-from .file_processor_tool import FileProcessorTool
 from .memory_tool import MemoryTool
 from .llm_query_tool import LLMQueryTool
 from .reasoning_engine import FastReasoningEngine
@@ -21,14 +17,17 @@ from .vector_database_tool import VectorDatabaseTool
 from .sql_database_tool import SQLDatabaseTool
 from .rag_pipeline_tool import RAGPipelineTool
 from .simple_embedding_tool import SimpleEmbeddingTool
+from .deepseek_coder_tool import DeepSeekCoderTool
+
+# Enhanced tools (new)
+from .enhanced_tool_integration import EnhancedToolManager, ToolDefinition, ToolType
+from .json_mode_support import JSONModeManager, JSONModeLLMIntegration, CommonSchemas
+from .prompt_caching_system import PromptCache, CachedLLMClient, CacheStrategy
+from .sub_agent_architecture import SubAgentSystem, AgentType, TaskPriority
 
 __all__ = [
     'BaseTool',
     'ToolResponse', 
-    'WebScraperTool',
-    'CodeGeneratorTool',
-    'DataAnalyzerTool',
-    'FileProcessorTool',
     'MemoryTool',
     'LLMQueryTool',
     'FastReasoningEngine',
@@ -41,5 +40,20 @@ __all__ = [
     'VectorDatabaseTool',
     'SQLDatabaseTool',
     'RAGPipelineTool',
-    'SimpleEmbeddingTool'
+    'SimpleEmbeddingTool',
+    'DeepSeekCoderTool',
+    
+    # Enhanced tools
+    'EnhancedToolManager',
+    'ToolDefinition', 
+    'ToolType',
+    'JSONModeManager',
+    'JSONModeLLMIntegration',
+    'CommonSchemas',
+    'PromptCache',
+    'CachedLLMClient',
+    'CacheStrategy',
+    'SubAgentSystem',
+    'AgentType',
+    'TaskPriority'
 ]

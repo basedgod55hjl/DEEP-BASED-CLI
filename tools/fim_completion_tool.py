@@ -3,9 +3,8 @@ FIM Completion Tool - Enhanced BASED GOD CLI
 Fill-in-Middle completion for code using DeepSeek
 """
 
-from typing import
+from typing import Any, Dict, Optional
 import logging
- Any, Dict, Optional
 import openai
 from .base_tool import BaseTool, ToolResponse, ToolStatus
 from config.api_keys import get_deepseek_config

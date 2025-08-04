@@ -1,0 +1,198 @@
+# Tool Development Guidelines
+
+## Base Tool Pattern
+All tools must inherit from [tools/base_tool.py](mdc:tools/base_tool.py) and follow this structure:
+
+```python
+from .base_tool import BaseTool, ToolResponse, ToolStatus
+
+class MyTool(BaseTool):
+    def __init__(self):
+        super().__init__(
+            name="My Tool",
+            description="Description of what this tool does",
+            capabilities=["capability1", "capability2"]
+        )
+    
+    async def execute(self, **kwargs) -> ToolResponse:
+        try:
+            # Tool logic here
+            return ToolResponse(
+                success=True,
+                message="Operation completed successfully",
+                data={"result": "data"},
+                status=ToolStatus.SUCCESS
+            )
+        except Exception as e:
+            return ToolResponse(
+                success=False,
+                message=f"Error: {str(e)}",
+                status=ToolStatus.FAILED
+            )
+    
+    def get_schema(self) -> Dict[str, Any]:
+        return {
+            "name": self.name,
+            "description": self.description,
+            "parameters": {
+                "param1": {"type": "string", "description": "Parameter description"},
+                "param2": {"type": "integer", "description": "Another parameter"}
+            }
+        }
+```
+
+## Required Methods
+
+### execute()
+- Must be async
+- Accept **kwargs for flexibility
+- Return ToolResponse object
+- Include proper error handling
+- Use ToolStatus enum for status
+
+### get_schema()
+- Return parameter schema
+- Include type information
+- Provide clear descriptions
+- Document all parameters
+
+## Error Handling
+- Always wrap main logic in try/catch
+- Return meaningful error messages
+- Use appropriate ToolStatus values
+- Log errors for debugging
+
+## Tool Registration
+Register new tools in [tools/tool_manager.py](mdc:tools/tool_manager.py):
+
+```python
+# In _register_default_tools method
+default_tools = [
+    # ... existing tools
+    MyTool(),
+]
+```
+
+## Best Practices
+
+1. **Naming**: Use descriptive names ending with "Tool"
+2. **Documentation**: Include docstrings for all methods
+3. **Validation**: Validate inputs in execute method
+4. **Logging**: Use logging for debugging and monitoring
+5. **Testing**: Test tools individually before integration
+6. **Performance**: Consider async operations for I/O
+7. **Security**: Validate and sanitize all inputs
+
+## Integration with Enhanced Features
+
+### JSON Mode Support
+Use [tools/json_mode_support.py](mdc:tools/json_mode_support.py) for structured outputs:
+
+```python
+from .json_mode_support import JSONModeManager
+
+json_manager = JSONModeManager()
+# Use for structured responses
+```
+
+### Prompt Caching
+Use [tools/prompt_caching_system.py](mdc:tools/prompt_caching_system.py) for caching:
+
+```python
+from .prompt_caching_system import PromptCache
+
+cache = PromptCache()
+# Cache expensive operations
+```
+
+### Enhanced Tool Integration
+Use [tools/enhanced_tool_integration.py](mdc:tools/enhanced_tool_integration.py) for advanced features:
+
+```python
+from .enhanced_tool_integration import ToolDefinition, ToolType
+
+# Define tool with enhanced features
+tool_def = ToolDefinition(
+    name="My Tool",
+    description="Description",
+    tool_type=ToolType.CUSTOM,
+    # ... other parameters
+)
+```
+
+## Common Patterns
+
+### Database Operations
+Use [tools/sql_database_tool.py](mdc:tools/sql_database_tool.py) for database access:
+
+```python
+from .sql_database_tool import SQLDatabaseTool
+
+db_tool = SQLDatabaseTool()
+# Use for database operations
+```
+
+### LLM Integration
+Use [tools/llm_query_tool.py](mdc:tools/llm_query_tool.py) for AI operations:
+
+```python
+from .llm_query_tool import LLMQueryTool
+
+llm_tool = LLMQueryTool()
+# Use for AI completions
+```
+
+### Memory Management
+Use [tools/memory_tool.py](mdc:tools/memory_tool.py) for persistent storage:
+
+```python
+from .memory_tool import MemoryTool
+
+memory_tool = MemoryTool()
+# Use for memory operations
+```
+
+## Testing Tools
+
+### Unit Testing
+Test individual tool methods:
+
+```python
+async def test_my_tool():
+    tool = MyTool()
+    response = await tool.execute(param1="test")
+    assert response.success
+    assert "test" in response.data
+```
+
+### Integration Testing
+Test tool with manager:
+
+```python
+async def test_tool_integration():
+    manager = ToolManager()
+    response = await manager.execute_tool("my_tool", {"param1": "test"})
+    assert response.success
+```
+
+## Performance Considerations
+
+1. **Async Operations**: Use async/await for I/O operations
+2. **Caching**: Cache expensive computations
+3. **Batch Processing**: Process multiple items together
+4. **Resource Management**: Clean up resources properly
+5. **Memory Usage**: Monitor memory consumption
+6. **Timeout Handling**: Set appropriate timeouts
+
+## Security Guidelines
+
+1. **Input Validation**: Validate all inputs
+2. **Output Sanitization**: Sanitize outputs
+3. **Error Messages**: Don't expose sensitive information
+4. **Rate Limiting**: Implement rate limiting for external APIs
+5. **Authentication**: Use proper authentication for external services
+6. **Logging**: Log security-relevant events
+description:
+globs:
+alwaysApply: false
+---

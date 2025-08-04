@@ -1,3 +1,0 @@
-2025-08-03 20:15:58,001 - BASED_CODER_CLI - ERROR - enhanced_logging.py:122 - log_error - Error in test_function: Test error for logging
-2025-08-03 20:17:43,059 - BASED_CODER_CLI - ERROR - enhanced_logging.py:122 - log_error - Error in test_function: Test error for logging
-2025-08-03 20:17:43,485 - BASED_CODER_CLI - ERROR - enhanced_logging.py:122 - log_error - Error in reading_config_main: 'charmap' codec can't encode character '\u2705' in position 0: character maps to <undefined>

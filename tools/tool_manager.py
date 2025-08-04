@@ -10,10 +10,6 @@ from typing import Any, Dict, List, Optional
 from datetime import datetime
 
 from .base_tool import BaseTool, ToolResponse, ToolStatus
-from .web_scraper_tool import WebScraperTool
-from .code_generator_tool import CodeGeneratorTool
-from .data_analyzer_tool import DataAnalyzerTool
-from .file_processor_tool import FileProcessorTool
 from .memory_tool import MemoryTool
 from .llm_query_tool import LLMQueryTool
 from .fim_completion_tool import FIMCompletionTool
@@ -24,11 +20,7 @@ from .sql_database_tool import SQLDatabaseTool
 from .rag_pipeline_tool import RAGPipelineTool
 from .simple_embedding_tool import SimpleEmbeddingTool
 from .reasoning_engine import FastReasoningEngine
-from .vector_database_tool import VectorDatabaseTool
-from .sql_database_tool import SQLDatabaseTool
-from .rag_pipeline_tool import RAGPipelineTool
-from .git_rag_tool import GitRAGTool
-from .deepseek_reasoner_tool import DeepSeekReasonerTool
+from .deepseek_coder_tool import DeepSeekCoderTool
 
 class ToolManager:
     """
@@ -49,10 +41,6 @@ class ToolManager:
         llm_tool = LLMQueryTool()
         
         default_tools = [
-            WebScraperTool(),
-            CodeGeneratorTool(),
-            DataAnalyzerTool(),
-            FileProcessorTool(),
             MemoryTool(),
             llm_tool,
             FastReasoningEngine(llm_tool=llm_tool),  # Pass LLM tool for fast consultations
@@ -60,7 +48,8 @@ class ToolManager:
             FIMCompletionTool(),
             PrefixCompletionTool(),
             UnifiedAgentSystem(),
-            SimpleEmbeddingTool()
+            SimpleEmbeddingTool(),
+            DeepSeekCoderTool()
         ]
         
         # Add optional tools that might fail to initialize
@@ -78,19 +67,7 @@ class ToolManager:
         except Exception as e:
             logging.info(f"⚠️ RAG pipeline tool not available: {str(e)}")
         
-        try:
-            git_rag_tool = GitRAGTool()
-            default_tools.append(git_rag_tool)
-            logging.info("✅ Git RAG tool registered")
-        except Exception as e:
-            logging.info(f"⚠️ Git RAG tool not available: {str(e)}")
-        
-        try:
-            deepseek_reasoner_tool = DeepSeekReasonerTool()
-            default_tools.append(deepseek_reasoner_tool)
-            logging.info("✅ DeepSeek Reasoner tool registered")
-        except Exception as e:
-            logging.info(f"⚠️ DeepSeek Reasoner tool not available: {str(e)}")
+
         
         for tool in default_tools:
             self.register_tool(tool)

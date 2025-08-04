@@ -1,0 +1,161 @@
+# Enhanced BASED GOD CLI - Development Guide
+
+## Project Overview
+The Enhanced BASED GOD CLI is a sophisticated AI assistant built with Python, featuring advanced tool integration inspired by the Anthropic Cookbook. The main entry point is [enhanced_based_god_cli.py](mdc:enhanced_based_god_cli.py).
+
+## Core Architecture
+
+### Main Entry Point
+- [enhanced_based_god_cli.py](mdc:enhanced_based_god_cli.py) - Main CLI application with enhanced features
+- [main.py](mdc:main.py) - Original CLI entry point (legacy)
+
+### Configuration System
+- [config/enhanced_config.json](mdc:config/enhanced_config.json) - Main configuration file
+- [config/deepcli_config.py](mdc:config/deepcli_config.py) - Configuration management system
+- [config/api_keys.py](mdc:config/api_keys.py) - API key management
+
+### Tool System Architecture
+All tools inherit from [tools/base_tool.py](mdc:tools/base_tool.py) and follow the BaseTool pattern.
+
+#### Core Tools (Essential)
+- [tools/tool_manager.py](mdc:tools/tool_manager.py) - Central tool orchestration
+- [tools/llm_query_tool.py](mdc:tools/llm_query_tool.py) - DeepSeek API integration
+- [tools/unified_agent_system.py](mdc:tools/unified_agent_system.py) - Advanced agent system
+- [tools/deepseek_coder_tool.py](mdc:tools/deepseek_coder_tool.py) - Code generation and analysis
+- [tools/sql_database_tool.py](mdc:tools/sql_database_tool.py) - Database operations
+- [tools/rag_pipeline_tool.py](mdc:tools/rag_pipeline_tool.py) - RAG implementation
+- [tools/reasoning_engine.py](mdc:tools/reasoning_engine.py) - Fast reasoning engine
+- [tools/memory_tool.py](mdc:tools/memory_tool.py) - Memory management
+- [tools/simple_embedding_tool.py](mdc:tools/simple_embedding_tool.py) - Embedding generation
+- [tools/vector_database_tool.py](mdc:tools/vector_database_tool.py) - Vector operations
+
+#### Completion Tools
+- [tools/fim_completion_tool.py](mdc:tools/fim_completion_tool.py) - Fill-in-middle completion
+- [tools/prefix_completion_tool.py](mdc:tools/prefix_completion_tool.py) - Prefix completion
+
+#### Enhanced Features (New)
+- [tools/enhanced_tool_integration.py](mdc:tools/enhanced_tool_integration.py) - Advanced tool registry with validation
+- [tools/json_mode_support.py](mdc:tools/json_mode_support.py) - Structured JSON output with validation
+- [tools/prompt_caching_system.py](mdc:tools/prompt_caching_system.py) - Multi-strategy caching system
+- [tools/sub_agent_architecture.py](mdc:tools/sub_agent_architecture.py) - Hierarchical sub-agent system
+
+### Data Storage
+- [data/deepcli_database.db](mdc:data/deepcli_database.db) - Main SQLite database
+- [data/unified_agent.db](mdc:data/unified_agent.db) - Unified agent database
+- [data/prompt_cache.db](mdc:data/prompt_cache.db) - Prompt caching database
+- [data/memory_manager.py](mdc:data/memory_manager.py) - Memory management system
+
+### TypeScript/Node.js Components
+- [src/cli/BasedCoderCLI.ts](mdc:src/cli/BasedCoderCLI.ts) - TypeScript CLI interface
+- [src/ToolManager.ts](mdc:src/ToolManager.ts) - TypeScript tool management
+- [src/tools/](mdc:src/tools/) - TypeScript tool implementations
+
+## Development Patterns
+
+### Tool Development
+1. All tools must inherit from BaseTool
+2. Implement `execute()` and `get_schema()` methods
+3. Use ToolResponse for standardized responses
+4. Include proper error handling and logging
+5. Register tools in [tools/tool_manager.py](mdc:tools/tool_manager.py)
+
+### Configuration Management
+1. Use [config/deepcli_config.py](mdc:config/deepcli_config.py) for configuration
+2. Store sensitive data in [config/api_keys.py](mdc:config/api_keys.py)
+3. Update [config/enhanced_config.json](mdc:config/enhanced_config.json) for new features
+
+### Database Operations
+1. Use [tools/sql_database_tool.py](mdc:tools/sql_database_tool.py) for SQLite operations
+2. Use [tools/vector_database_tool.py](mdc:tools/vector_database_tool.py) for vector operations
+3. Follow the established schema patterns
+
+### LLM Integration
+1. Use [tools/llm_query_tool.py](mdc:tools/llm_query_tool.py) for DeepSeek API calls
+2. Configure models in [config/enhanced_config.json](mdc:config/enhanced_config.json)
+3. Use JSON mode support for structured outputs
+
+## Key Features
+
+### Enhanced Tool Integration
+- Schema validation for all tool inputs/outputs
+- Rate limiting and performance monitoring
+- Error handling and recovery mechanisms
+- Tool categorization and registry management
+
+### JSON Mode Support
+- Structured JSON output with validation
+- Multiple predefined schemas
+- Real-time validation and error recovery
+- Dynamic prompt generation
+
+### Prompt Caching System
+- Multiple eviction strategies (LRU, LFU, TTL, Hybrid)
+- Data compression and persistent storage
+- Background cleanup and intelligent eviction
+- Performance monitoring and statistics
+
+### Sub-Agent Architecture
+- Hierarchical task delegation
+- Specialized agents (Coder, Analyzer, Researcher, etc.)
+- Task prioritization and performance tracking
+- Factory pattern for agent creation
+
+### RAG Pipeline
+- Hybrid search (vector + keyword + semantic)
+- Persona-aware responses
+- Dynamic context management
+- Intelligent relevance scoring
+
+## Running and Debugging
+
+### Start the CLI
+```bash
+python enhanced_based_god_cli.py
+```
+
+### Check System Status
+```bash
+python enhanced_based_god_cli.py --status
+```
+
+### Debug Mode
+```bash
+python enhanced_based_god_cli.py --debug
+```
+
+### Interactive Mode
+```bash
+python enhanced_based_god_cli.py --interactive
+```
+
+## Important Notes
+
+1. **DeepSeek API**: Hardcoded API key in [tools/llm_query_tool.py](mdc:tools/llm_query_tool.py)
+2. **Vector Database**: Requires Qdrant/Chroma setup for full functionality
+3. **Unicode Issues**: Windows may show encoding warnings for emoji characters
+4. **Backup System**: Removed tools are backed up in [tools_backup/](mdc:tools_backup/)
+5. **Configuration**: All settings in [config/enhanced_config.json](mdc:config/enhanced_config.json)
+
+## File Organization
+
+### Essential Files (Never Delete)
+- [enhanced_based_god_cli.py](mdc:enhanced_based_god_cli.py) - Main entry point
+- [tools/base_tool.py](mdc:tools/base_tool.py) - Base tool class
+- [tools/tool_manager.py](mdc:tools/tool_manager.py) - Tool management
+- [config/enhanced_config.json](mdc:config/enhanced_config.json) - Configuration
+- [data/deepcli_database.db](mdc:data/deepcli_database.db) - Main database
+
+### Enhanced Features (New)
+- [tools/enhanced_tool_integration.py](mdc:tools/enhanced_tool_integration.py)
+- [tools/json_mode_support.py](mdc:tools/json_mode_support.py)
+- [tools/prompt_caching_system.py](mdc:tools/prompt_caching_system.py)
+- [tools/sub_agent_architecture.py](mdc:tools/sub_agent_architecture.py)
+
+### Legacy/Backup
+- [tools_backup/](mdc:tools_backup/) - Removed tools backup
+- [main.py](mdc:main.py) - Original CLI (legacy)
+- [src/](mdc:src/) - TypeScript components (alternative interface)
+description:
+globs:
+alwaysApply: false
+---

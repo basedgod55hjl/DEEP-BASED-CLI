@@ -1,0 +1,401 @@
+# Configuration Management Guide
+
+## Configuration Files
+
+### Main Configuration
+- [config/enhanced_config.json](mdc:config/enhanced_config.json) - Primary configuration file
+- [config/deepcli_config.py](mdc:config/deepcli_config.py) - Configuration management system
+- [config/api_keys.py](mdc:config/api_keys.py) - API key management
+
+### Configuration Structure
+The configuration is organized into logical sections:
+
+#### Database Configuration
+```json
+{
+  "database": {
+    "sqlite_path": "data/deepcli_database.db",
+    "vector_db_host": "localhost",
+    "vector_db_port": 6333,
+    "vector_db_api_key": null,
+    "vector_collection_name": "deepcli_vectors",
+    "max_connections": 10,
+    "connection_timeout": 30,
+    "enable_migrations": true,
+    "backup_enabled": true,
+    "backup_interval_hours": 24
+  }
+}
+```
+
+#### LLM Configuration
+```json
+{
+  "llm": {
+    "api_key": "sk-9af038dd3bdd46258c4a9d02850c9a6d",
+    "base_url": "https://api.deepseek.com",
+    "default_model": "deepseek-chat",
+    "max_tokens": 4000,
+    "temperature": 0.7,
+    "timeout_seconds": 60,
+    "retry_attempts": 3,
+    "retry_delay": 1.0,
+    "enable_streaming": true,
+    "enable_function_calling": true,
+    "enable_fim_completion": true,
+    "enable_prefix_completion": true
+  }
+}
+```
+
+#### Persona Configuration
+```json
+{
+  "persona": {
+    "default_persona": "enhanced_assistant",
+    "personas": {
+      "enhanced_assistant": {
+        "name": "Enhanced AI Assistant",
+        "personality": "helpful, intelligent, and adaptive",
+        "expertise": ["general assistance", "problem solving", "learning"],
+        "communication_style": "clear, friendly, and professional",
+        "learning_preferences": "continuous improvement and adaptation",
+        "emotional_intelligence": "high",
+        "reasoning_capabilities": "advanced"
+      }
+    }
+  }
+}
+```
+
+## Configuration Management Functions
+
+### Load Configuration
+```python
+from config import get_config
+
+config = get_config()
+print(f"Default model: {config.llm.default_model}")
+```
+
+### Update Configuration
+```python
+from config import update_config
+
+update_config({
+    "llm": {
+        "temperature": 0.8,
+        "max_tokens": 5000
+    }
+})
+```
+
+### Validate Configuration
+```python
+from config import validate_config
+
+issues = validate_config()
+if issues:
+    print("Configuration issues:", issues)
+```
+
+### Export Configuration
+```python
+from config import export_config
+
+config_json = export_config()
+print(config_json)
+```
+
+## Environment-Specific Configuration
+
+### Development Configuration
+```python
+from config import get_development_config
+
+dev_config = get_development_config()
+# Development-specific settings
+```
+
+### Production Configuration
+```python
+from config import get_production_config
+
+prod_config = get_production_config()
+# Production-specific settings
+```
+
+### Testing Configuration
+```python
+from config import get_testing_config
+
+test_config = get_testing_config()
+# Testing-specific settings
+```
+
+## API Key Management
+
+### DeepSeek API Key
+```python
+from config import validate_deepseek_key, update_api_keys
+
+# Validate current key
+is_valid = validate_deepseek_key()
+
+# Update API key
+update_api_keys(deepseek_key="new-api-key-here")
+```
+
+### HuggingFace Token
+```python
+from config import validate_huggingface_token, update_api_keys
+
+# Validate token
+is_valid = validate_huggingface_token()
+
+# Update token
+update_api_keys(huggingface_token="new-token-here")
+```
+
+## Configuration Backup and Restore
+
+### Create Backup
+```python
+from config import create_config_backup
+
+backup_path = create_config_backup()
+print(f"Backup created: {backup_path}")
+```
+
+### Restore Backup
+```python
+from config import restore_config_backup
+
+restore_config_backup("config/backup/enhanced_config_backup_20250803_065242.json")
+```
+
+## Feature Flags
+
+### Enable/Disable Features
+```json
+{
+  "features": {
+    "enable_fim_completion": true,
+    "enable_prefix_completion": true,
+    "enable_streaming": true,
+    "enable_unified_agent": true,
+    "enable_rag_pipeline": true,
+    "enable_vector_database": true,
+    "enable_sql_database": true,
+    "enable_advanced_reasoning": true,
+    "enable_emotional_intelligence": true,
+    "enable_predictive_analytics": true,
+    "enable_multi_modal_support": true,
+    "enable_real_time_learning": true,
+    "enable_autonomous_planning": true,
+    "enable_relationship_mapping": true,
+    "enable_context_awareness": true
+  }
+}
+```
+
+## Performance Configuration
+
+### Caching Settings
+```json
+{
+  "performance": {
+    "enable_caching": true,
+    "cache_size_mb": 100,
+    "enable_async_processing": true,
+    "max_async_tasks": 10,
+    "enable_connection_pooling": true,
+    "pool_size": 5,
+    "enable_compression": true,
+    "compression_level": 6,
+    "enable_monitoring": true,
+    "monitoring_interval_seconds": 60,
+    "enable_performance_metrics": true
+  }
+}
+```
+
+### Logging Configuration
+```json
+{
+  "logging": {
+    "log_level": "INFO",
+    "log_file": "logs/enhanced_cli.log",
+    "enable_console_logging": true,
+    "enable_file_logging": true,
+    "enable_structured_logging": true,
+    "log_format": "%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+    "log_rotation": true,
+    "max_log_size_mb": 10,
+    "backup_count": 5,
+    "enable_error_tracking": true,
+    "enable_performance_logging": true
+  }
+}
+```
+
+## Security Configuration
+
+### Security Settings
+```json
+{
+  "security": {
+    "enable_encryption": true,
+    "encryption_algorithm": "AES-256",
+    "enable_api_key_rotation": false,
+    "key_rotation_interval_days": 90,
+    "enable_rate_limiting": true,
+    "rate_limit_requests_per_minute": 60,
+    "enable_input_validation": true,
+    "enable_output_sanitization": true,
+    "enable_audit_logging": true,
+    "audit_log_retention_days": 90
+  }
+}
+```
+
+## RAG Configuration
+
+### RAG Settings
+```json
+{
+  "rag": {
+    "enable_rag": true,
+    "max_context_length": 2000,
+    "similarity_threshold": 0.7,
+    "max_retrieved_documents": 5,
+    "enable_hybrid_search": true,
+    "enable_semantic_search": true,
+    "enable_keyword_search": true,
+    "reranking_enabled": true,
+    "context_window_size": 10,
+    "enable_dynamic_context": true
+  }
+}
+```
+
+## Memory Configuration
+
+### Memory Settings
+```json
+{
+  "memory": {
+    "enable_memory": true,
+    "max_memory_entries": 10000,
+    "memory_retention_days": 365,
+    "enable_memory_compression": true,
+    "compression_threshold": 0.8,
+    "enable_emotional_memory": true,
+    "enable_semantic_memory": true,
+    "enable_episodic_memory": true,
+    "memory_search_limit": 100,
+    "enable_memory_consolidation": true,
+    "consolidation_interval_hours": 24
+  }
+}
+```
+
+## Tool Configuration
+
+### Tool Settings
+```json
+{
+  "tool": {
+    "enable_tool_management": true,
+    "max_concurrent_tools": 5,
+    "tool_execution_timeout": 30,
+    "enable_tool_caching": true,
+    "cache_ttl_seconds": 3600,
+    "enable_tool_analytics": true,
+    "enable_tool_learning": true,
+    "tool_selection_strategy": "intelligent",
+    "enable_tool_orchestration": true,
+    "enable_tool_fallback": true
+  }
+}
+```
+
+## Session Configuration
+
+### Session Settings
+```json
+{
+  "session": {
+    "session_timeout_minutes": 60,
+    "enable_session_persistence": true,
+    "session_file": "data/session_data.json",
+    "max_session_history": 100,
+    "enable_session_analytics": true,
+    "enable_session_learning": true,
+    "session_encryption": true,
+    "enable_session_sharing": false,
+    "session_backup_enabled": true,
+    "session_backup_interval_minutes": 30
+  }
+}
+```
+
+## Configuration Best Practices
+
+### 1. Environment Separation
+- Use different configurations for development, testing, and production
+- Store sensitive data in environment variables
+- Use configuration validation before deployment
+
+### 2. Security
+- Never commit API keys to version control
+- Use encryption for sensitive configuration data
+- Implement proper access controls
+
+### 3. Performance
+- Tune caching settings based on usage patterns
+- Monitor and adjust timeout values
+- Optimize database connection pools
+
+### 4. Monitoring
+- Enable comprehensive logging
+- Set up performance monitoring
+- Track configuration changes
+
+### 5. Backup
+- Regular configuration backups
+- Version control for configuration changes
+- Document configuration changes
+
+## Configuration Validation
+
+### Schema Validation
+The configuration system validates:
+- Required fields
+- Data types
+- Value ranges
+- Dependencies between settings
+
+### Runtime Validation
+- API key validity
+- Database connectivity
+- External service availability
+- File permissions
+
+### Configuration Testing
+```python
+from config import validate_config, get_config
+
+# Test configuration
+config = get_config()
+issues = validate_config()
+
+if not issues:
+    print("Configuration is valid")
+else:
+    print("Configuration issues:", issues)
+```
+description:
+globs:
+alwaysApply: false
+---
