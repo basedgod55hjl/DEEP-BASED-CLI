@@ -1,0 +1,24 @@
+2025-08-03 16:32:23,755 - INFO - DeannaSystemSetup initialized
+2025-08-03 16:32:23,756 - INFO - Starting complete Deanna system setup...
+2025-08-03 16:32:23,758 - INFO - Created directory: data/memory
+2025-08-03 16:32:23,761 - INFO - Created directory: data/embeddings
+2025-08-03 16:32:23,763 - INFO - Created directory: data/chats
+2025-08-03 16:32:23,766 - INFO - Created directory: data/logs
+2025-08-03 16:32:23,768 - INFO - Created directory: data/cache
+2025-08-03 16:32:23,771 - INFO - Created directory: data/models
+2025-08-03 16:32:23,774 - INFO - Created directory: data/temp_embeddings
+2025-08-03 16:32:23,776 - INFO - Created directory: data/exports
+2025-08-03 16:32:23,778 - INFO - Installing Python dependencies...
+2025-08-03 16:32:30,957 - INFO - Installed numpy
+2025-08-03 16:32:37,457 - INFO - Installed scikit-learn
+2025-08-03 16:32:41,799 - INFO - Installed requests
+2025-08-03 16:32:45,289 - INFO - Installed huggingface_hub
+2025-08-03 16:32:48,546 - INFO - Installed llama-cpp-python
+2025-08-03 16:32:51,485 - WARNING - Failed to install sqlite3: Command '['C:\\Users\\BASEDGOD\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\python.exe', '-m', 'pip', 'install', 'sqlite3']' returned non-zero exit status 1.
+2025-08-03 16:32:51,486 - INFO - Setting up llama.cpp...
+2025-08-03 16:32:52,784 - INFO - llama-cpp-python already installed
+2025-08-03 16:32:52,784 - INFO - Downloading Qwen3 embedding model...
+2025-08-03 16:32:56,122 - ERROR - Failed to download model: 404 Client Error. (Request ID: Root=1-688fc778-010279840d3675c9078aecda;7fca09b6-c687-4063-92bf-92ac5fda3b51)
+
+Entry Not Found for url: https://huggingface.co/Qwen/Qwen3-Embedding-0.6B-GGUF/resolve/main/qwen3-embedding-0.6b.gguf.
+2025-08-03 16:32:56,122 - ERROR - Model download failed
