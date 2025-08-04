@@ -1,0 +1,1009 @@
+{
+  "scan_timestamp": "2025-08-03T21:16:00.475184",
+  "codebase_path": ".",
+  "system_status": {
+    "python_version": "3.13.5 (tags/v3.13.5:6cb20a2, Jun 11 2025, 16:15:46) [MSC v.1943 64 bit (AMD64)]",
+    "claude_api_working": true,
+    "deepseek_api_working": false
+  },
+  "analysis_results": [
+    {
+      "file_path": "claude_coder_agent.py",
+      "complexity_score": 0,
+      "issues": [
+        "Error reading file: list index out of range"
+      ],
+      "suggestions": [],
+      "dependencies": [],
+      "estimated_rewrite_time": 0,
+      "file_size": 0,
+      "lines_of_code": 0
+    },
+    {
+      "file_path": "claude_coder_agent_basic.py",
+      "complexity_score": 0,
+      "issues": [
+        "Error reading file: list index out of range"
+      ],
+      "suggestions": [],
+      "dependencies": [],
+      "estimated_rewrite_time": 0,
+      "file_size": 0,
+      "lines_of_code": 0
+    },
+    {
+      "file_path": "claude_coder_agent_fixed.py",
+      "complexity_score": 0,
+      "issues": [
+        "Error reading file: list index out of range"
+      ],
+      "suggestions": [],
+      "dependencies": [],
+      "estimated_rewrite_time": 0,
+      "file_size": 0,
+      "lines_of_code": 0
+    },
+    {
+      "file_path": "claude_coder_agent_simple.py",
+      "complexity_score": 0,
+      "issues": [
+        "Error reading file: list index out of range"
+      ],
+      "suggestions": [],
+      "dependencies": [],
+      "estimated_rewrite_time": 0,
+      "file_size": 0,
+      "lines_of_code": 0
+    },
+    {
+      "file_path": "claude_coder_standalone.py",
+      "complexity_score": 24.22680412371134,
+      "issues": [
+        "Contains TODO/FIXME comments",
+        "Too many print statements - consider logging",
+        "Bare except clauses - specify exception types",
+        "Wildcard imports - import specific modules"
+      ],
+      "suggestions": [],
+      "dependencies": [
+        "os",
+        "sys",
+        "json",
+        "asyncio",
+        "subprocess",
+        "pathlib",
+        "typing",
+        "dataclasses",
+        "datetime",
+        "logging",
+        "requests",
+        "rich.console",
+        "rich.panel",
+        "rich.table",
+        "rich.progress"
+      ],
+      "estimated_rewrite_time": 48,
+      "file_size": 17779,
+      "lines_of_code": 485
+    },
+    {
+      "file_path": "cleanup_redundant_files.py",
+      "complexity_score": 10.087719298245613,
+      "issues": [
+        "Too many print statements - consider logging"
+      ],
+      "suggestions": [],
+      "dependencies": [
+        "os",
+        "shutil",
+        "pathlib",
+        "colorama"
+      ],
+      "estimated_rewrite_time": 20,
+      "file_size": 7961,
+      "lines_of_code": 228
+    },
+    {
+      "file_path": "config.py",
+      "complexity_score": 13.689482470784641,
+      "issues": [
+        "File is very long - consider splitting"
+      ],
+      "suggestions": [],
+      "dependencies": [
+        "os",
+        "json",
+        "logging",
+        "typing",
+        "pathlib",
+        "dataclasses",
+        "datetime",
+        "yaml",
+        "dotenv"
+      ],
+      "estimated_rewrite_time": 27,
+      "file_size": 21744,
+      "lines_of_code": 599
+    },
+    {
+      "file_path": "config_manager.py",
+      "complexity_score": 24.393530997304584,
+      "issues": [
+        "Too many print statements - consider logging",
+        "Bare except clauses - specify exception types"
+      ],
+      "suggestions": [],
+      "dependencies": [
+        "json",
+        "yaml",
+        "os",
+        "shutil",
+        "pathlib",
+        "typing",
+        "datetime",
+        "rich.console",
+        "rich.panel",
+        "rich.table",
+        "rich.tree",
+        "enhanced_logging"
+      ],
+      "estimated_rewrite_time": 48,
+      "file_size": 14204,
+      "lines_of_code": 371
+    },
+    {
+      "file_path": "database_cleaner.py",
+      "complexity_score": 13.682864450127877,
+      "issues": [
+        "Too many print statements - consider logging"
+      ],
+      "suggestions": [],
+      "dependencies": [
+        "sqlite3",
+        "json",
+        "logging",
+        "os",
+        "shutil",
+        "pathlib",
+        "datetime",
+        "typing",
+        "rich.console",
+        "rich.panel",
+        "rich.table",
+        "rich.progress"
+      ],
+      "estimated_rewrite_time": 27,
+      "file_size": 14304,
+      "lines_of_code": 391
+    },
+    {
+      "file_path": "demo.py",
+      "complexity_score": 0,
+      "issues": [
+        "Error reading file: list index out of range"
+      ],
+      "suggestions": [],
+      "dependencies": [],
+      "estimated_rewrite_time": 0,
+      "file_size": 0,
+      "lines_of_code": 0
+    },
+    {
+      "file_path": "download_manager.py",
+      "complexity_score": 0,
+      "issues": [
+        "Error reading file: list index out of range"
+      ],
+      "suggestions": [],
+      "dependencies": [],
+      "estimated_rewrite_time": 0,
+      "file_size": 0,
+      "lines_of_code": 0
+    },
+    {
+      "file_path": "enhanced_logging.py",
+      "complexity_score": 15.070422535211266,
+      "issues": [],
+      "suggestions": [],
+      "dependencies": [
+        "logging",
+        "logging.handlers",
+        "sys",
+        "os",
+        "json",
+        "traceback",
+        "pathlib",
+        "datetime",
+        "typing",
+        "functools",
+        "threading",
+        "rich.console",
+        "rich.panel",
+        "rich.table",
+        "rich.text"
+      ],
+      "estimated_rewrite_time": 30,
+      "file_size": 12751,
+      "lines_of_code": 355
+    },
+    {
+      "file_path": "fix_deepseek_issues.py",
+      "complexity_score": 0,
+      "issues": [
+        "Error reading file: list index out of range"
+      ],
+      "suggestions": [],
+      "dependencies": [],
+      "estimated_rewrite_time": 0,
+      "file_size": 0,
+      "lines_of_code": 0
+    },
+    {
+      "file_path": "init_local_db.py",
+      "complexity_score": 11.507936507936508,
+      "issues": [
+        "Too many print statements - consider logging"
+      ],
+      "suggestions": [
+        "Add type hints to functions"
+      ],
+      "dependencies": [
+        "sqlite3",
+        "os",
+        "pathlib",
+        "rich.console",
+        "rich.panel",
+        "rich.table"
+      ],
+      "estimated_rewrite_time": 23,
+      "file_size": 4040,
+      "lines_of_code": 126
+    },
+    {
+      "file_path": "main.py",
+      "complexity_score": 0,
+      "issues": [
+        "Error reading file: list index out of range"
+      ],
+      "suggestions": [],
+      "dependencies": [],
+      "estimated_rewrite_time": 0,
+      "file_size": 0,
+      "lines_of_code": 0
+    },
+    {
+      "file_path": "run_all_improvements.py",
+      "complexity_score": 22.58064516129032,
+      "issues": [
+        "Too many print statements - consider logging"
+      ],
+      "suggestions": [],
+      "dependencies": [
+        "subprocess",
+        "sys",
+        "pathlib",
+        "rich.console",
+        "rich.panel",
+        "rich.progress",
+        "rich.table"
+      ],
+      "estimated_rewrite_time": 45,
+      "file_size": 4356,
+      "lines_of_code": 124
+    },
+    {
+      "file_path": "setup.py",
+      "complexity_score": 0,
+      "issues": [
+        "Error reading file: list index out of range"
+      ],
+      "suggestions": [],
+      "dependencies": [],
+      "estimated_rewrite_time": 0,
+      "file_size": 0,
+      "lines_of_code": 0
+    },
+    {
+      "file_path": "simple_embedding_setup.py",
+      "complexity_score": 20.92391304347826,
+      "issues": [],
+      "suggestions": [],
+      "dependencies": [
+        "os",
+        "sys",
+        "pathlib",
+        "logging",
+        "numpy",
+        "sentence_transformers",
+        "hashlib",
+        "json"
+      ],
+      "estimated_rewrite_time": 41,
+      "file_size": 6309,
+      "lines_of_code": 184
+    },
+    {
+      "file_path": "system_status.py",
+      "complexity_score": 0,
+      "issues": [
+        "Error reading file: list index out of range"
+      ],
+      "suggestions": [],
+      "dependencies": [],
+      "estimated_rewrite_time": 0,
+      "file_size": 0,
+      "lines_of_code": 0
+    },
+    {
+      "file_path": "test_suite.py",
+      "complexity_score": 0,
+      "issues": [
+        "Error reading file: list index out of range"
+      ],
+      "suggestions": [],
+      "dependencies": [],
+      "estimated_rewrite_time": 0,
+      "file_size": 0,
+      "lines_of_code": 0
+    },
+    {
+      "file_path": "test_tools.py",
+      "complexity_score": 27.918781725888326,
+      "issues": [],
+      "suggestions": [
+        "Add type hints to functions"
+      ],
+      "dependencies": [
+        "asyncio",
+        "sys",
+        "pathlib",
+        "rich.console",
+        "rich.panel",
+        "rich.table",
+        "rich.progress",
+        "tools.base_tool",
+        "tools.sql_database_tool",
+        "tools.simple_embedding_tool",
+        "tools.llm_query_tool",
+        "tools.fim_completion_tool",
+        "tools.prefix_completion_tool",
+        "tools.rag_pipeline_tool",
+        "tools.reasoning_engine",
+        "tools.memory_tool",
+        "tools.vector_database_tool",
+        "tools.deepseek_coder_tool",
+        "tools.tool_manager"
+      ],
+      "estimated_rewrite_time": 55,
+      "file_size": 13033,
+      "lines_of_code": 394
+    },
+    {
+      "file_path": "config\\api_keys.py",
+      "complexity_score": 17.543859649122805,
+      "issues": [],
+      "suggestions": [],
+      "dependencies": [
+        "os",
+        "typing",
+        "dotenv"
+      ],
+      "estimated_rewrite_time": 35,
+      "file_size": 1846,
+      "lines_of_code": 57
+    },
+    {
+      "file_path": "config\\deepcli_config.py",
+      "complexity_score": 16.126656848306332,
+      "issues": [
+        "File is very long - consider splitting"
+      ],
+      "suggestions": [],
+      "dependencies": [
+        "os",
+        "json",
+        "logging",
+        "typing",
+        "pathlib",
+        "dataclasses",
+        "datetime",
+        "yaml",
+        "dotenv"
+      ],
+      "estimated_rewrite_time": 32,
+      "file_size": 25580,
+      "lines_of_code": 679
+    },
+    {
+      "file_path": "config\\__init__.py",
+      "complexity_score": 12.5,
+      "issues": [],
+      "suggestions": [],
+      "dependencies": [
+        ".deepcli_config"
+      ],
+      "estimated_rewrite_time": 25,
+      "file_size": 440,
+      "lines_of_code": 24
+    },
+    {
+      "file_path": "data\\embedding_system.py",
+      "complexity_score": 0,
+      "issues": [
+        "Error reading file: list index out of range"
+      ],
+      "suggestions": [],
+      "dependencies": [],
+      "estimated_rewrite_time": 0,
+      "file_size": 0,
+      "lines_of_code": 0
+    },
+    {
+      "file_path": "data\\local_embedding_system.py",
+      "complexity_score": 0,
+      "issues": [
+        "Error reading file: list index out of range"
+      ],
+      "suggestions": [],
+      "dependencies": [],
+      "estimated_rewrite_time": 0,
+      "file_size": 0,
+      "lines_of_code": 0
+    },
+    {
+      "file_path": "data\\memory_manager.py",
+      "complexity_score": 8.210059171597633,
+      "issues": [
+        "Contains TODO/FIXME comments",
+        "Bare except clauses - specify exception types",
+        "File is very long - consider splitting"
+      ],
+      "suggestions": [],
+      "dependencies": [
+        "json",
+        "sqlite3",
+        "os",
+        "hashlib",
+        "pickle",
+        "datetime",
+        "typing",
+        "numpy",
+        "pathlib",
+        "logging"
+      ],
+      "estimated_rewrite_time": 16,
+      "file_size": 23320,
+      "lines_of_code": 676
+    },
+    {
+      "file_path": "data\\simple_embedding_system.py",
+      "complexity_score": 25.694444444444443,
+      "issues": [
+        "Too many print statements - consider logging"
+      ],
+      "suggestions": [],
+      "dependencies": [
+        "numpy",
+        "hashlib",
+        "json",
+        "pickle",
+        "typing",
+        "pathlib",
+        "logging",
+        "sklearn.feature_extraction.text",
+        "sklearn.metrics.pairwise",
+        "re",
+        "datetime"
+      ],
+      "estimated_rewrite_time": 51,
+      "file_size": 8443,
+      "lines_of_code": 216
+    },
+    {
+      "file_path": "data\\transformers_embedding_system.py",
+      "complexity_score": 0,
+      "issues": [
+        "Error reading file: list index out of range"
+      ],
+      "suggestions": [],
+      "dependencies": [],
+      "estimated_rewrite_time": 0,
+      "file_size": 0,
+      "lines_of_code": 0
+    },
+    {
+      "file_path": "examples.backup\\__init__.py",
+      "complexity_score": 100.0,
+      "issues": [],
+      "suggestions": [],
+      "dependencies": [],
+      "estimated_rewrite_time": 200,
+      "file_size": 31,
+      "lines_of_code": 2
+    },
+    {
+      "file_path": "rewrite_examples\\memory_manager_rewrite.py",
+      "complexity_score": 20.574162679425836,
+      "issues": [
+        "File is very long - consider splitting"
+      ],
+      "suggestions": [],
+      "dependencies": [
+        "asyncio",
+        "json",
+        "logging",
+        "sqlite3",
+        "time",
+        "datetime",
+        "pathlib",
+        "typing",
+        "numpy",
+        "aiosqlite",
+        "dataclasses",
+        "functools",
+        "hashlib"
+      ],
+      "estimated_rewrite_time": 41,
+      "file_size": 25422,
+      "lines_of_code": 627
+    },
+    {
+      "file_path": "tools\\base_tool.py",
+      "complexity_score": 23.03370786516854,
+      "issues": [],
+      "suggestions": [],
+      "dependencies": [
+        "asyncio",
+        "time",
+        "abc",
+        "dataclasses",
+        "datetime",
+        "typing",
+        "enum"
+      ],
+      "estimated_rewrite_time": 46,
+      "file_size": 5766,
+      "lines_of_code": 178
+    },
+    {
+      "file_path": "tools\\code_generator_tool.py",
+      "complexity_score": 0,
+      "issues": [
+        "Error reading file: list index out of range"
+      ],
+      "suggestions": [],
+      "dependencies": [],
+      "estimated_rewrite_time": 0,
+      "file_size": 0,
+      "lines_of_code": 0
+    },
+    {
+      "file_path": "tools\\data_analyzer_tool.py",
+      "complexity_score": 29.518072289156628,
+      "issues": [
+        "Bare except clauses - specify exception types"
+      ],
+      "suggestions": [
+        "Consider using await in async functions"
+      ],
+      "dependencies": [
+        "json",
+        "csv",
+        "io",
+        "re",
+        "typing",
+        "datetime",
+        "statistics",
+        ".base_tool",
+        "collections"
+      ],
+      "estimated_rewrite_time": 59,
+      "file_size": 19212,
+      "lines_of_code": 498
+    },
+    {
+      "file_path": "tools\\deepseek_coder_tool.py",
+      "complexity_score": 20.70754716981132,
+      "issues": [
+        "File is very long - consider splitting"
+      ],
+      "suggestions": [],
+      "dependencies": [
+        "asyncio",
+        "json",
+        "logging",
+        "subprocess",
+        "tempfile",
+        "os",
+        "sys",
+        "re",
+        "pathlib",
+        "typing",
+        "dataclasses",
+        "datetime",
+        "aiohttp",
+        "requests",
+        "bs4",
+        "openai",
+        ".base_tool",
+        "config.api_keys"
+      ],
+      "estimated_rewrite_time": 41,
+      "file_size": 36733,
+      "lines_of_code": 1060
+    },
+    {
+      "file_path": "tools\\file_processor_tool.py",
+      "complexity_score": 0,
+      "issues": [
+        "Error reading file: list index out of range"
+      ],
+      "suggestions": [],
+      "dependencies": [],
+      "estimated_rewrite_time": 0,
+      "file_size": 0,
+      "lines_of_code": 0
+    },
+    {
+      "file_path": "tools\\fim_completion_tool.py",
+      "complexity_score": 25.99009900990099,
+      "issues": [],
+      "suggestions": [],
+      "dependencies": [
+        "typing",
+        "openai",
+        ".base_tool",
+        "config.api_keys"
+      ],
+      "estimated_rewrite_time": 51,
+      "file_size": 7720,
+      "lines_of_code": 202
+    },
+    {
+      "file_path": "tools\\llm_query_tool.py",
+      "complexity_score": 23.646209386281587,
+      "issues": [
+        "File is very long - consider splitting"
+      ],
+      "suggestions": [],
+      "dependencies": [
+        "asyncio",
+        "json",
+        "logging",
+        "typing",
+        "dataclasses",
+        "datetime",
+        "openai",
+        "langchain_openai",
+        "langchain_core.messages",
+        ".base_tool",
+        "config.api_keys"
+      ],
+      "estimated_rewrite_time": 47,
+      "file_size": 21404,
+      "lines_of_code": 554
+    },
+    {
+      "file_path": "tools\\local_embedding_tool.py",
+      "complexity_score": 29.051987767584098,
+      "issues": [],
+      "suggestions": [],
+      "dependencies": [
+        "asyncio",
+        "json",
+        "logging",
+        "typing",
+        "dataclasses",
+        "datetime",
+        "numpy",
+        "sentence_transformers",
+        ".base_tool"
+      ],
+      "estimated_rewrite_time": 58,
+      "file_size": 12830,
+      "lines_of_code": 327
+    },
+    {
+      "file_path": "tools\\memory_tool.py",
+      "complexity_score": 0,
+      "issues": [
+        "Error reading file: list index out of range"
+      ],
+      "suggestions": [],
+      "dependencies": [],
+      "estimated_rewrite_time": 0,
+      "file_size": 0,
+      "lines_of_code": 0
+    },
+    {
+      "file_path": "tools\\nodejs_bridge_tool.py",
+      "complexity_score": 17.91277258566978,
+      "issues": [],
+      "suggestions": [],
+      "dependencies": [
+        "subprocess",
+        "json",
+        "asyncio",
+        "os",
+        "typing",
+        "datetime",
+        ".base_tool"
+      ],
+      "estimated_rewrite_time": 35,
+      "file_size": 11593,
+      "lines_of_code": 321
+    },
+    {
+      "file_path": "tools\\prefix_completion_tool.py",
+      "complexity_score": 25.795053003533567,
+      "issues": [],
+      "suggestions": [],
+      "dependencies": [
+        "typing",
+        "openai",
+        ".base_tool",
+        "config.api_keys"
+      ],
+      "estimated_rewrite_time": 51,
+      "file_size": 11085,
+      "lines_of_code": 283
+    },
+    {
+      "file_path": "tools\\rag_pipeline_tool.py",
+      "complexity_score": 20.15130674002751,
+      "issues": [
+        "File is very long - consider splitting"
+      ],
+      "suggestions": [],
+      "dependencies": [
+        "os",
+        "json",
+        "asyncio",
+        "typing",
+        "dataclasses",
+        "datetime",
+        "rich.console",
+        "rich.panel",
+        "rich.markdown",
+        "tools.base_tool",
+        "tools.vector_database_tool",
+        "tools.sql_database_tool",
+        "tools.llm_query_tool"
+      ],
+      "estimated_rewrite_time": 40,
+      "file_size": 26918,
+      "lines_of_code": 727
+    },
+    {
+      "file_path": "tools\\reasoning_engine.py",
+      "complexity_score": 0,
+      "issues": [
+        "Error reading file: list index out of range"
+      ],
+      "suggestions": [],
+      "dependencies": [],
+      "estimated_rewrite_time": 0,
+      "file_size": 0,
+      "lines_of_code": 0
+    },
+    {
+      "file_path": "tools\\simple_embedding_tool.py",
+      "complexity_score": 27.801268498942918,
+      "issues": [],
+      "suggestions": [],
+      "dependencies": [
+        "asyncio",
+        "json",
+        "logging",
+        "hashlib",
+        "numpy",
+        "typing",
+        "dataclasses",
+        "datetime",
+        "re",
+        ".base_tool"
+      ],
+      "estimated_rewrite_time": 55,
+      "file_size": 17855,
+      "lines_of_code": 473
+    },
+    {
+      "file_path": "tools\\sql_database_tool.py",
+      "complexity_score": 18.75,
+      "issues": [
+        "Too many print statements - consider logging",
+        "File is very long - consider splitting"
+      ],
+      "suggestions": [],
+      "dependencies": [
+        "os",
+        "json",
+        "sqlite3",
+        "asyncio",
+        "typing",
+        "dataclasses",
+        "datetime",
+        "pathlib",
+        "aiosqlite",
+        "rich.console",
+        "rich.table",
+        "rich.panel",
+        "tools.base_tool"
+      ],
+      "estimated_rewrite_time": 37,
+      "file_size": 40483,
+      "lines_of_code": 1000
+    },
+    {
+      "file_path": "tools\\tool_manager.py",
+      "complexity_score": 0,
+      "issues": [
+        "Error reading file: list index out of range"
+      ],
+      "suggestions": [],
+      "dependencies": [],
+      "estimated_rewrite_time": 0,
+      "file_size": 0,
+      "lines_of_code": 0
+    },
+    {
+      "file_path": "tools\\unified_agent_system.py",
+      "complexity_score": 24.345549738219894,
+      "issues": [
+        "File is very long - consider splitting"
+      ],
+      "suggestions": [],
+      "dependencies": [
+        "asyncio",
+        "json",
+        "logging",
+        "sqlite3",
+        "aiosqlite",
+        "typing",
+        "dataclasses",
+        "datetime",
+        "enum",
+        "hashlib",
+        "uuid",
+        "pathlib",
+        ".base_tool",
+        ".llm_query_tool",
+        ".vector_database_tool",
+        ".sql_database_tool"
+      ],
+      "estimated_rewrite_time": 48,
+      "file_size": 45623,
+      "lines_of_code": 1146
+    },
+    {
+      "file_path": "tools\\vector_database_tool.py",
+      "complexity_score": 25.840336134453786,
+      "issues": [],
+      "suggestions": [],
+      "dependencies": [
+        "asyncio",
+        "json",
+        "logging",
+        "typing",
+        "dataclasses",
+        "datetime",
+        "os",
+        "qdrant_client",
+        "qdrant_client.models",
+        ".base_tool",
+        ".simple_embedding_tool"
+      ],
+      "estimated_rewrite_time": 51,
+      "file_size": 18202,
+      "lines_of_code": 476
+    },
+    {
+      "file_path": "tools\\web_scraper_tool.py",
+      "complexity_score": 0,
+      "issues": [
+        "Error reading file: list index out of range"
+      ],
+      "suggestions": [],
+      "dependencies": [],
+      "estimated_rewrite_time": 0,
+      "file_size": 0,
+      "lines_of_code": 0
+    },
+    {
+      "file_path": "tools\\__init__.py",
+      "complexity_score": 37.2093023255814,
+      "issues": [],
+      "suggestions": [],
+      "dependencies": [
+        ".base_tool",
+        ".web_scraper_tool",
+        ".code_generator_tool",
+        ".data_analyzer_tool",
+        ".file_processor_tool",
+        ".memory_tool",
+        ".llm_query_tool",
+        ".reasoning_engine",
+        ".tool_manager",
+        ".fim_completion_tool",
+        ".prefix_completion_tool",
+        ".unified_agent_system",
+        ".vector_database_tool",
+        ".sql_database_tool",
+        ".rag_pipeline_tool",
+        ".simple_embedding_tool"
+      ],
+      "estimated_rewrite_time": 74,
+      "file_size": 1351,
+      "lines_of_code": 43
+    },
+    {
+      "file_path": "src\\tools\\advanced\\ai_agent_orchestrator.py",
+      "complexity_score": 30.0,
+      "issues": [
+        "File is very long - consider splitting"
+      ],
+      "suggestions": [],
+      "dependencies": [
+        "asyncio",
+        "json",
+        "time",
+        "typing",
+        "dataclasses",
+        "enum",
+        "deep_cli.core.tool",
+        "deep_cli.core.response"
+      ],
+      "estimated_rewrite_time": 60,
+      "file_size": 20227,
+      "lines_of_code": 535
+    },
+    {
+      "file_path": "src\\tools\\advanced\\code_architecture_tool.py",
+      "complexity_score": 0,
+      "issues": [
+        "Error reading file: list index out of range"
+      ],
+      "suggestions": [],
+      "dependencies": [],
+      "estimated_rewrite_time": 0,
+      "file_size": 0,
+      "lines_of_code": 0
+    },
+    {
+      "file_path": "config_backups\\backup_20250803_201602\\api_keys_api_keys.py",
+      "complexity_score": 17.543859649122805,
+      "issues": [],
+      "suggestions": [],
+      "dependencies": [
+        "os",
+        "typing",
+        "dotenv"
+      ],
+      "estimated_rewrite_time": 35,
+      "file_size": 1846,
+      "lines_of_code": 57
+    },
+    {
+      "file_path": "config_backups\\backup_20250803_201602\\main_deepcli_config.py",
+      "complexity_score": 16.126656848306332,
+      "issues": [
+        "File is very long - consider splitting"
+      ],
+      "suggestions": [],
+      "dependencies": [
+        "os",
+        "json",
+        "logging",
+        "typing",
+        "pathlib",
+        "dataclasses",
+        "datetime",
+        "yaml",
+        "dotenv"
+      ],
+      "estimated_rewrite_time": 32,
+      "file_size": 25580,
+      "lines_of_code": 679
+    }
+  ]
+}
