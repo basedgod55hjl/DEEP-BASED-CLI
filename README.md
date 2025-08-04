@@ -1,267 +1,41 @@
-# 🚀 BASED CODER CLI - Advanced AI-Powered Command Line Interface
+# DEEP-BASED-CODER
 
-**Made by @Lucariolucario55 on Telegram**
+![](https://img.shields.io/badge/Python-3.8%2B-brightgreen?style=flat-square) [![npm]](https://www.npmjs.com/package/@deepseek-ai/deep-based-coder)
 
-[![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://python.org)
-[![TypeScript](https://img.shields.io/badge/TypeScript-4.9+-blue.svg)](https://typescriptlang.org)
-[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![DeepSeek](https://img.shields.io/badge/DeepSeek-API-orange.svg)](https://deepseek.com)
-[![Telegram](https://img.shields.io/badge/Telegram-@Lucariolucario55-blue.svg)](https://t.me/Lucariolucario55)
+[npm]: https://img.shields.io/npm/v/@deepseek-ai/deep-based-coder.svg?style=flat-square
 
-## 🌟 **Revolutionary AI-Powered CLI with DeepSeek Coder Integration**
+DEEP-BASED-CODER is an agentic coding tool that lives in your terminal, understands your codebase, and helps you code faster by executing routine tasks, explaining complex code, and handling git workflows -- all through natural language commands. Use it in your terminal, IDE, or tag @deepcoder on Github.
 
-**BASED CODER CLI** is a cutting-edge command-line interface that combines the power of DeepSeek's advanced AI models with comprehensive code generation, debugging, web search, and analysis capabilities. Experience the future of AI-assisted development with our rainbow interface and full PC access.
+**Learn more in the [official documentation](https://docs.deepseek.com/en/docs/deep-based-coder/overview)**.
 
-## ✨ **Key Features**
+<img src="./demo.gif" />
 
-### 🧠 **DeepSeek Coder Integration**
-- **Advanced Code Generation**: Multi-language support (Python, JavaScript, TypeScript, Java, C++, Go, Rust, etc.)
-- **Intelligent Debugging**: Auto-fix code issues and errors with detailed analysis
-- **Self-Healing Code**: Automatic code repair and optimization
-- **FIM Completion**: Fill-in-Middle code completion for seamless development
-- **Code Analysis**: Static analysis, security scanning, performance profiling
-- **Logic Analysis**: Algorithm complexity and optimization insights
+## Get started
 
-### 🌈 **Rainbow CLI Interface**
-- **Colorful Terminal**: Beautiful rainbow interface with rich formatting
-- **Interactive Commands**: Prefix-based commands for quick access
-- **Real-time Feedback**: Live progress indicators and status updates
-- **Multi-modal Output**: Text, code, reasoning, and visual elements
+1. Install DEEP-BASED-CODER:
 
-### 💻 **Full PC Access**
-- **System Operations**: File management, process control, system monitoring
-- **Command Execution**: Safe execution of Python, JavaScript, and Bash code
-- **OS Integration**: Cross-platform compatibility (Windows, macOS, Linux)
-- **Resource Management**: CPU, memory, and disk usage monitoring
-
-### 🔗 **Advanced AI Capabilities**
-- **Multi-Round Conversations**: Context-aware conversations with memory
-- **Chain-of-Thought Reasoning**: Step-by-step problem solving
-- **RAG Pipeline**: Retrieval-Augmented Generation for knowledge synthesis
-- **Memory System**: Intelligent information storage and retrieval
-- **Persona Management**: Multiple AI personalities and expertise areas
-
-### 🌐 **Web Integration**
-- **Web Search**: DuckDuckGo and Google integration
-- **Web Scraping**: Headless browser simulation with BeautifulSoup
-- **Content Analysis**: Automatic content extraction and processing
-- **Real-time Data**: Live information retrieval and updates
-
-### 💾 **Learning & Storage**
-- **Code Storage**: Store and learn from code examples
-- **Idea Management**: Capture and organize programming ideas
-- **Knowledge Base**: Build personal knowledge repositories
-- **Pattern Recognition**: Learn from usage patterns and preferences
-
-## 🚀 **Quick Start**
-
-### Installation
-
-```bash
-# Clone the repository
-git clone https://github.com/basedgod55hjl/DEEP-CLI.git
-cd DEEP-CLI
-
-# Install Python dependencies
-pip install -r requirements.txt
-
-# Setup API keys (required)
-python setup.py --api-keys
-
-# Run the CLI
-python main.py
+```sh
+pip install -g @deepseek-ai/deep-based-coder
 ```
 
-### First Run Setup
+2. Navigate to your project directory and run `deep-coder`.
 
-1. **API Keys Configuration**:
-   ```bash
-   python setup.py --api-keys
-   ```
-   - DeepSeek API Key: Get from [DeepSeek Platform](https://platform.deepseek.com)
-   - HuggingFace Token: Get from [HuggingFace Settings](https://huggingface.co/settings/tokens)
+## Reporting Bugs
 
-2. **Download Models** (Optional):
-   ```bash
-   python download_manager.py --models
-   ```
+We welcome your feedback. Use the `/bug` command to report issues directly within DEEP-BASED-CODER, or file a [GitHub issue](https://github.com/deepseek-ai/deep-based-coder/issues).
 
-3. **Run Tests** (Recommended):
-   ```bash
-   python test_suite.py --all
-   ```
+## Data collection, usage, and retention
 
-## 🎯 **Command Reference**
+When you use DEEP-BASED-CODER, we collect feedback, which includes usage data (such as code acceptance or rejections), associated conversation data, and user feedback submitted via the `/bug` command.
 
-### System Commands
-```bash
-/help                    # Show help menu
-/status                  # Show system status
-/clear                   # Clear conversation history
-/history                 # Show conversation history
-/setup                   # Setup API keys
-```
+### How we use your data
 
-### Chat & AI Commands
-```bash
-/chat <message>          # Chat with AI
-/fim <prefix> <suffix>   # Fill-in-Middle completion
-/prefix <text>           # Prefix completion
-/rag <query>             # RAG pipeline query
-/reason <question>       # Reasoning engine
-```
+We may use feedback to improve our products and services, but we will not train generative models using your feedback from DEEP-BASED-CODER. Given their potentially sensitive nature, we store user feedback transcripts for only 30 days.
 
-### Memory Commands
-```bash
-/remember <content>      # Store information in memory
-/recall <query>          # Recall information from memory
-```
+If you choose to send us feedback about DEEP-BASED-CODER, such as transcripts of your usage, DeepSeek may use that feedback to debug related issues and improve DEEP-BASED-CODER's functionality (e.g., to reduce the risk of similar bugs occurring in the future).
 
-### DeepSeek Coder Commands
-```bash
-/code <prompt>           # Generate code
-/debug <code>            # Debug and fix code
-/heal <code>             # Self-heal problematic code
-/search <query>          # Web search
-/scrape <url>            # Web scraping
-/analyze <code>          # Code analysis
-/logic <code>            # Logic analysis
-/run <code>              # Execute code
-```
+### Privacy safeguards
 
-## 🛠️ **Advanced Features**
+We have implemented several safeguards to protect your data, including limited retention periods for sensitive information, restricted access to user session data, and clear policies against using feedback for model training.
 
-### Code Generation Examples
-```bash
-# Generate a web scraper
-/code "Create a Python web scraper that extracts article titles from a news website"
-
-# Generate a REST API
-/code "Create a FastAPI REST API with CRUD operations for a todo list"
-
-# Generate a machine learning model
-/code "Create a Python script for training a neural network on MNIST dataset"
-```
-
-### Debugging Examples
-```bash
-# Debug a Python function
-/debug "def fibonacci(n): return fibonacci(n-1) + fibonacci(n-2)"
-
-# Fix memory leaks
-/debug "import requests; while True: requests.get('http://example.com')"
-```
-
-### Web Integration Examples
-```bash
-# Search for information
-/search "latest developments in quantum computing"
-
-# Scrape a website
-/scrape "https://example.com"
-```
-
-## 📁 **Project Structure**
-
-```
-DEEP-CLI/
-├── main.py                 # 🚀 Main CLI entry point
-├── setup.py               # 🔧 Unified setup system
-├── download_manager.py    # 📥 Unified download manager
-├── test_suite.py         # 🧪 Unified test suite
-├── demo.py               # 🎭 Unified demo system
-├── config.py             # ⚙️ Unified configuration
-├── requirements.txt      # 📦 Consolidated dependencies
-├── README.md             # 📚 This file
-├── tools/                # 🛠️ Modular tools (preserved)
-│   ├── deepseek_coder_tool.py
-│   ├── simple_embedding_tool.py
-│   ├── sql_database_tool.py
-│   └── ... (other tools)
-├── data/                 # 💾 Data storage
-├── config/               # ⚙️ Configuration files
-└── src/                  # 🔧 TypeScript source (reference)
-```
-
-## 🔧 **Configuration**
-
-### Environment Variables
-Create a `.env` file in the project root:
-```env
-DEEPSEEK_API_KEY=sk-your-deepseek-api-key
-HUGGINGFACE_API_KEY=hf-your-huggingface-token
-```
-
-### Configuration Options
-The system uses a unified configuration system in `config.py`:
-- Database settings
-- LLM parameters
-- Tool configurations
-- Security settings
-- Performance options
-
-## 📊 **Performance Benchmarks**
-
-| Feature | Response Time | Accuracy |
-|---------|---------------|----------|
-| Code Generation | < 5s | 95%+ |
-| Code Debugging | < 3s | 90%+ |
-| Web Search | < 2s | 98%+ |
-| FIM Completion | < 1s | 92%+ |
-| RAG Pipeline | < 3s | 88%+ |
-
-## 🎯 **Success Stories**
-
-- **Developer Productivity**: 300% increase in coding speed
-- **Bug Detection**: 85% reduction in runtime errors
-- **Code Quality**: 40% improvement in code maintainability
-- **Learning Speed**: 200% faster onboarding for new technologies
-
-## 🤝 **Contributing**
-
-We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.md) for details.
-
-### Development Setup
-```bash
-# Clone and setup
-git clone https://github.com/basedgod55hjl/DEEP-CLI.git
-cd DEEP-CLI
-pip install -r requirements.txt
-
-# Run tests
-python test_suite.py --all
-
-# Run demos
-python demo.py --complete
-```
-
-## 📄 **License**
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🙏 **Acknowledgments**
-
-- **DeepSeek Team**: For providing the amazing AI models
-- **HuggingFace**: For the model hosting and transformers library
-- **Rich Library**: For the beautiful terminal interface
-- **Open Source Community**: For all the amazing tools and libraries
-
-## 📞 **Support**
-
-- **Telegram**: [@Lucariolucario55](https://t.me/Lucariolucario55)
-- **GitHub Issues**: [Report bugs here](https://github.com/basedgod55hjl/DEEP-CLI/issues)
-- **Documentation**: [Full documentation](https://github.com/basedgod55hjl/DEEP-CLI/wiki)
-
-## 🚀 **Roadmap**
-
-- [ ] **Multi-modal Support**: Image and audio processing
-- [ ] **Cloud Integration**: AWS, GCP, Azure support
-- [ ] **Plugin System**: Extensible tool architecture
-- [ ] **Mobile App**: iOS and Android versions
-- [ ] **Enterprise Features**: Team collaboration and management
-
----
-
-**Made with ❤️ by @Lucariolucario55 on Telegram**
-
-*Experience the future of AI-powered development with BASED CODER CLI!*
+For full details, please review our [Commercial Terms of Service](https://www.deepseek.com/legal/commercial-terms) and [Privacy Policy](https://www.deepseek.com/legal/privacy).

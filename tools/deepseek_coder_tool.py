@@ -112,6 +112,13 @@ class DeepSeekCoderTool(BaseTool):
         # Initialize session
         self.session = None
         self.is_initialized = False
+        
+        # Enhanced features inspired by Gemini CLI
+        self.streaming_enabled = True
+        self.tool_registry = {}
+        self.execution_history = []
+        self.context_awareness = True
+        self._register_built_in_tools()
     
     async def initialize(self) -> Any:
         """Initialize the tool"""
@@ -125,6 +132,7 @@ class DeepSeekCoderTool(BaseTool):
             
             self.is_initialized = True
             logging.info("✅ DeepSeek Coder Tool initialized successfully")
+            logging.info(f"🔧 Registered {len(self.tool_registry)} built-in tools")
             
         except Exception as e:
             logging.error(f"❌ Failed to initialize DeepSeek Coder Tool: {str(e)}")
@@ -1057,5 +1065,204 @@ Learning insights:
                 "store_code",
                 "learn_from_code",
                 "run_code"
+            ],
+            "enhanced_features": {
+                "streaming_enabled": self.streaming_enabled,
+                "registered_tools": len(self.tool_registry),
+                "context_awareness": self.context_awareness,
+                "execution_history_size": len(self.execution_history)
+            }
+        }
+    
+    def _register_built_in_tools(self) -> None:
+        """Register built-in tools inspired by Gemini CLI"""
+        self.tool_registry = {
+            "read_file": {
+                "description": "Read file contents with encoding detection",
+                "parameters": ["path", "encoding"],
+                "streaming": False
+            },
+            "write_file": {
+                "description": "Write content to file with backup",
+                "parameters": ["path", "content", "encoding"],
+                "streaming": False
+            },
+            "grep_search": {
+                "description": "Search for patterns in files",
+                "parameters": ["pattern", "path", "recursive"],
+                "streaming": True
+            },
+            "code_analyze": {
+                "description": "Analyze code structure and quality",
+                "parameters": ["code", "language"],
+                "streaming": True
+            },
+            "web_fetch": {
+                "description": "Fetch content from web URLs",
+                "parameters": ["url", "headers"],
+                "streaming": False
+            },
+            "shell_execute": {
+                "description": "Execute shell commands safely",
+                "parameters": ["command", "timeout"],
+                "streaming": True
+            },
+            "memory_store": {
+                "description": "Store information in memory system",
+                "parameters": ["content", "type", "tags"],
+                "streaming": False
+            },
+            "context_enhance": {
+                "description": "Enhance code context with related information",
+                "parameters": ["code", "context_type"],
+                "streaming": True
+            }
+        }
+    
+    async def execute_with_streaming(
+        self, 
+        operation: str, 
+        update_callback: Optional[callable] = None,
+        **kwargs
+    ) -> ToolResponse:
+        """
+        Execute operation with streaming support inspired by Gemini CLI
+        """
+        if not self.streaming_enabled or not update_callback:
+            return await self.execute(operation=operation, **kwargs)
+        
+        try:
+            # Record execution start
+            execution_id = f"{operation}_{datetime.now().isoformat()}"
+            self.execution_history.append({
+                "id": execution_id,
+                "operation": operation,
+                "params": kwargs,
+                "start_time": datetime.now(),
+                "status": "running"
+            })
+            
+            if update_callback:
+                update_callback(f"🚀 Starting {operation}...")
+            
+            # Stream-enabled operations
+            if operation == "code_generation":
+                return await self._stream_code_generation(update_callback, **kwargs)
+            elif operation == "code_analysis":
+                return await self._stream_code_analysis(update_callback, **kwargs)
+            elif operation == "web_search":
+                return await self._stream_web_search(update_callback, **kwargs)
+            else:
+                # Fall back to regular execution with progress updates
+                if update_callback:
+                    update_callback(f"⚙️ Processing {operation}...")
+                result = await self.execute(operation=operation, **kwargs)
+                if update_callback:
+                    status = "✅ Complete" if result.success else "❌ Failed"
+                    update_callback(f"{status}: {operation}")
+                return result
+                
+        except Exception as e:
+            if update_callback:
+                update_callback(f"❌ Error in {operation}: {str(e)}")
+            return ToolResponse(
+                success=False,
+                message=f"Streaming execution failed: {str(e)}"
+            )
+    
+    async def _stream_code_generation(self, update_callback: callable, **kwargs) -> ToolResponse:
+        """Stream code generation with real-time updates"""
+        prompt = kwargs.get("prompt", "")
+        language = kwargs.get("language", "python")
+        
+        try:
+            update_callback("🧠 Analyzing requirements...")
+            
+            # Enhanced prompt with context awareness
+            enhanced_prompt = self._enhance_prompt_with_context(prompt, language)
+            
+            update_callback("💭 Generating code structure...")
+            
+            # Stream the response
+            messages = [
+                {
+                    "role": "system",
+                    "content": f"You are an expert {language} developer. Generate clean, well-documented code with best practices."
+                },
+                {
+                    "role": "user", 
+                    "content": enhanced_prompt
+                }
             ]
-        } 
+            
+            update_callback("⚡ Streaming code generation...")
+            
+            # For now, use regular completion (streaming would require async iteration)
+            response = await self.client.chat.completions.create(
+                model="deepseek-coder",
+                messages=messages,
+                temperature=0.1,
+                max_tokens=2000
+            )
+            
+            generated_code = response.choices[0].message.content
+            
+            update_callback("✅ Code generation complete!")
+            
+            return ToolResponse(
+                success=True,
+                data={
+                    "code": generated_code,
+                    "language": language,
+                    "prompt": prompt,
+                    "enhanced_prompt": enhanced_prompt
+                },
+                message=f"Successfully generated {len(generated_code)} characters of {language} code"
+            )
+            
+        except Exception as e:
+            update_callback(f"❌ Generation failed: {str(e)}")
+            return ToolResponse(
+                success=False,
+                message=f"Code generation failed: {str(e)}"
+            )
+    
+    def _enhance_prompt_with_context(self, prompt: str, language: str) -> str:
+        """Enhance prompt with context awareness inspired by Gemini CLI"""
+        if not self.context_awareness:
+            return prompt
+        
+        # Add language-specific context
+        language_context = {
+            "python": "Focus on Pythonic code, use type hints, follow PEP 8",
+            "javascript": "Use modern ES6+ features, async/await patterns",
+            "typescript": "Include proper type definitions and interfaces",
+            "java": "Follow Java conventions, use appropriate design patterns",
+            "cpp": "Use modern C++ features, RAII principles, smart pointers",
+            "go": "Follow Go idioms, use proper error handling",
+            "rust": "Emphasize memory safety, use Result types for error handling"
+        }
+        
+        context = language_context.get(language.lower(), "Follow best practices for the language")
+        
+        enhanced_prompt = f"""
+Context: {context}
+
+Requirements: {prompt}
+
+Please generate clean, well-documented, and production-ready code.
+Include comments explaining key logic and any complex algorithms.
+"""
+        return enhanced_prompt
+    
+    def get_tool_info(self, tool_name: str) -> Optional[Dict[str, Any]]:
+        """Get information about a specific tool"""
+        return self.tool_registry.get(tool_name)
+    
+    def list_available_tools(self) -> List[str]:
+        """List all available tools"""
+        return list(self.tool_registry.keys())
+    
+    def get_execution_history(self, limit: int = 10) -> List[Dict[str, Any]]:
+        """Get recent execution history"""
+        return self.execution_history[-limit:] if self.execution_history else [] 

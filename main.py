@@ -251,16 +251,16 @@ class BasedCoderCLI:
                     load_dotenv()
                 else:
                     logger.error("API keys setup failed. Please run 'python setup.py --api-keys' manually.")
-                    console.logging.info(f"{Fore.RED}❌ API keys setup failed. Please run 'python setup.py --api-keys' manually.{Style.RESET_ALL}")
+                    console.print(f"{Fore.RED}❌ API keys setup failed. Please run 'python setup.py --api-keys' manually.{Style.RESET_ALL}")
                     sys.exit(1)
             else:
                 logger.error("Setup script not found. Please run 'python setup.py --api-keys' manually.")
-                console.logging.info(f"{Fore.RED}❌ Setup script not found. Please run 'python setup.py --api-keys' manually.{Style.RESET_ALL}")
+                console.print(f"{Fore.RED}❌ Setup script not found. Please run 'python setup.py --api-keys' manually.{Style.RESET_ALL}")
                 sys.exit(1)
         except Exception as e:
             logger.error(f"Error running API setup: {str(e)}")
-            console.logging.info(f"{Fore.RED}❌ Error running API setup: {str(e)}{Style.RESET_ALL}")
-            console.logging.info(f"{Fore.YELLOW}💡 Please run 'python setup.py --api-keys' manually to configure your API keys.{Style.RESET_ALL}")
+            console.print(f"{Fore.RED}❌ Error running API setup: {str(e)}{Style.RESET_ALL}")
+            console.print(f"{Fore.YELLOW}💡 Please run 'python setup.py --api-keys' manually to configure your API keys.{Style.RESET_ALL}")
             sys.exit(1)
     
     async def initialize_system(self) -> Any:
@@ -270,8 +270,8 @@ class BasedCoderCLI:
         # Check for API keys first
         if not self._check_api_keys():
             logger.warning("API keys not found or invalid")
-            console.logging.info(f"{Fore.YELLOW}⚠️ API keys not found or invalid.{Style.RESET_ALL}")
-            console.logging.info(f"{Fore.CYAN}🔧 Running API keys setup...{Style.RESET_ALL}")
+            console.print(f"{Fore.YELLOW}⚠️ API keys not found or invalid.{Style.RESET_ALL}")
+            console.print(f"{Fore.CYAN}🔧 Running API keys setup...{Style.RESET_ALL}")
             self._run_api_setup()
         
         with Progress(
@@ -288,10 +288,10 @@ class BasedCoderCLI:
                     logger.info("Initializing database")
                     await self.sql_db._initialize_database()
                     logger.info("Database initialized successfully")
-                    console.logging.info(f"{Fore.GREEN}✅ Database initialized{Style.RESET_ALL}")
+                    console.print(f"{Fore.GREEN}✅ Database initialized{Style.RESET_ALL}")
                 except Exception as e:
                     logger.warning(f"Database initialization warning: {e}")
-                    console.logging.info(f"{Fore.YELLOW}⚠️ Database initialization warning: {e}{Style.RESET_ALL}")
+                    console.print(f"{Fore.YELLOW}⚠️ Database initialization warning: {e}{Style.RESET_ALL}")
             
             # Initialize embedding system
             if self.embedding_tool:
@@ -300,10 +300,10 @@ class BasedCoderCLI:
                     # Test embedding creation
                     test_embedding = self.embedding_tool.create_embedding("test")
                     logger.info("Embedding system initialized successfully")
-                    console.logging.info(f"{Fore.GREEN}✅ Embedding system initialized{Style.RESET_ALL}")
+                    console.print(f"{Fore.GREEN}✅ Embedding system initialized{Style.RESET_ALL}")
                 except Exception as e:
                     logger.warning(f"Embedding system warning: {e}")
-                    console.logging.info(f"{Fore.YELLOW}⚠️ Embedding system warning: {e}{Style.RESET_ALL}")
+                    console.print(f"{Fore.YELLOW}⚠️ Embedding system warning: {e}{Style.RESET_ALL}")
             
             # Initialize vector database (optional)
             if self.vector_db:
@@ -311,10 +311,10 @@ class BasedCoderCLI:
                     logger.info("Checking vector database availability")
                     # Vector database is optional, don't fail if not available
                     logger.info("Vector database available")
-                    console.logging.info(f"{Fore.GREEN}✅ Vector database available{Style.RESET_ALL}")
+                    console.print(f"{Fore.GREEN}✅ Vector database available{Style.RESET_ALL}")
                 except Exception as e:
                     logger.warning(f"Vector database not available: {e}")
-                    console.logging.info(f"{Fore.YELLOW}⚠️ Vector database not available: {e}{Style.RESET_ALL}")
+                    console.print(f"{Fore.YELLOW}⚠️ Vector database not available: {e}{Style.RESET_ALL}")
             
             # Initialize tool manager with all tools
             if self.tool_manager:
@@ -323,15 +323,15 @@ class BasedCoderCLI:
                     # Ensure all tools are properly registered
                     available_tools = self.tool_manager.list_tools()
                     logger.info(f"Tool manager initialized with {len(available_tools)} tools")
-                    console.logging.info(f"{Fore.GREEN}✅ Tool manager initialized with {len(available_tools)} tools{Style.RESET_ALL}")
+                    console.print(f"{Fore.GREEN}✅ Tool manager initialized with {len(available_tools)} tools{Style.RESET_ALL}")
                 except Exception as e:
                     logger.warning(f"Tool manager warning: {e}")
-                    console.logging.info(f"{Fore.YELLOW}⚠️ Tool manager warning: {e}{Style.RESET_ALL}")
+                    console.print(f"{Fore.YELLOW}⚠️ Tool manager warning: {e}{Style.RESET_ALL}")
             
             await asyncio.sleep(1)
         
         logger.info("BASED CODER CLI initialized successfully")
-        console.logging.info(f"{Fore.GREEN}✅ BASED CODER CLI initialized successfully!{Style.RESET_ALL}")
+        console.print(f"{Fore.GREEN}✅ BASED CODER CLI initialized successfully!{Style.RESET_ALL}")
         
         # Show system status
         self.show_status()
@@ -727,7 +727,7 @@ class BasedCoderCLI:
         """Run interactive CLI mode"""
         logging.info(f"{Fore.CYAN}🚀 Welcome to BASED CODER CLI!{Style.RESET_ALL}")
         logging.info(f"{Fore.YELLOW}Type /help for available commands or 'exit' to quit.{Style.RESET_ALL}")
-        logging.info()
+        print()
         
         while True:
             try:

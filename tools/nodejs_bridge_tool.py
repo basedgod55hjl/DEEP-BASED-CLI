@@ -47,10 +47,10 @@ class NodeJSBridgeTool(BaseTool):
                 logging.info(f"✅ Node.js detected: {result.stdout.strip()}")
             else:
                 self.node_available = False
-                logging.info("❌ Node.js not found - install Node.js to use bridge features")
+                logging.warning("❌ Node.js not found - install Node.js to use bridge features")
         except (subprocess.TimeoutExpired, FileNotFoundError):
             self.node_available = False
-            logging.info("❌ Node.js not available - install Node.js to use bridge features")
+            logging.warning("❌ Node.js not available - install Node.js to use bridge features")
     
     def get_schema(self) -> Dict[str, Any]:
         """Get the tool's parameter schema"""

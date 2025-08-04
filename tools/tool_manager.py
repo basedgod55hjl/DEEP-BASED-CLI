@@ -24,9 +24,6 @@ from .sql_database_tool import SQLDatabaseTool
 from .rag_pipeline_tool import RAGPipelineTool
 from .simple_embedding_tool import SimpleEmbeddingTool
 from .reasoning_engine import FastReasoningEngine
-from .vector_database_tool import VectorDatabaseTool
-from .sql_database_tool import SQLDatabaseTool
-from .rag_pipeline_tool import RAGPipelineTool
 from .git_rag_tool import GitRAGTool
 from .deepseek_reasoner_tool import DeepSeekReasonerTool
 
@@ -69,28 +66,28 @@ class ToolManager:
             default_tools.append(vector_db_tool)
             logging.info("✅ Vector database tool registered")
         except Exception as e:
-            logging.info(f"⚠️ Vector database tool not available: {str(e)}")
+            logging.warning(f"⚠️ Vector database tool not available: {str(e)}")
         
         try:
             rag_tool = RAGPipelineTool()
             default_tools.append(rag_tool)
             logging.info("✅ RAG pipeline tool registered")
         except Exception as e:
-            logging.info(f"⚠️ RAG pipeline tool not available: {str(e)}")
+            logging.warning(f"⚠️ RAG pipeline tool not available: {str(e)}")
         
         try:
             git_rag_tool = GitRAGTool()
             default_tools.append(git_rag_tool)
             logging.info("✅ Git RAG tool registered")
         except Exception as e:
-            logging.info(f"⚠️ Git RAG tool not available: {str(e)}")
+            logging.warning(f"⚠️ Git RAG tool not available: {str(e)}")
         
         try:
             deepseek_reasoner_tool = DeepSeekReasonerTool()
             default_tools.append(deepseek_reasoner_tool)
             logging.info("✅ DeepSeek Reasoner tool registered")
         except Exception as e:
-            logging.info(f"⚠️ DeepSeek Reasoner tool not available: {str(e)}")
+            logging.warning(f"⚠️ DeepSeek Reasoner tool not available: {str(e)}")
         
         for tool in default_tools:
             self.register_tool(tool)

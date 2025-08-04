@@ -22,3 +22,5 @@ Makefile eol=lf
 *.eot binary
 *.ttf binary
 *.otf binary
+
+demo.gif filter=lfs diff=lfs merge=lfs -text

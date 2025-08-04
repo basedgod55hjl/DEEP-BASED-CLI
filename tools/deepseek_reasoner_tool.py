@@ -1237,4 +1237,8 @@ if __name__ == "__main__":
                 'plan_file': plan_file,
                 'total_phases': len(plan),
                 'total_tasks': sum(len(phase['tasks']) for phase in plan.values())
-            }) 
+            })
+            
+        except Exception as e:
+            logger.error(f"Failed to generate integration plan: {e}")
+            return ToolResponse(False, f"Integration plan generation failed: {str(e)}") 
