@@ -17,7 +17,7 @@ try:
     SENTENCE_TRANSFORMERS_AVAILABLE = True
 except ImportError:
     SENTENCE_TRANSFORMERS_AVAILABLE = False
-    logging.info("⚠️ Sentence Transformers not available. Install with: pip install sentence-transformers")
+    logging.warning("⚠️ Sentence Transformers not available. Install with: pip install sentence-transformers")
 
 from .base_tool import BaseTool, ToolResponse
 

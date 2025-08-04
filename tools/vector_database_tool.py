@@ -17,7 +17,7 @@ try:
     QDRANT_AVAILABLE = True
 except ImportError:
     QDRANT_AVAILABLE = False
-    logging.info("⚠️ Qdrant not available. Install with: pip install qdrant-client")
+    logging.warning("⚠️ Qdrant not available. Install with: pip install qdrant-client")
 
 from .base_tool import BaseTool, ToolResponse
 from .simple_embedding_tool import SimpleEmbeddingTool

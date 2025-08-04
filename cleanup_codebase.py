@@ -6,7 +6,11 @@ Removes demo files, test copies, rewrites, and keeps only essential components
 
 import os
 import shutil
+import logging
 from pathlib import Path
+
+# Setup logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 def cleanup_codebase():
     """Clean up the codebase by removing unnecessary files"""
@@ -148,7 +152,7 @@ def cleanup_codebase():
     deleted_dirs = []
     errors = []
     
-    print("🧹 Starting codebase cleanup...")
+    logging.info("🧹 Starting codebase cleanup...")
     
     # Delete files
     for file_path in files_to_delete:
@@ -157,14 +161,14 @@ def cleanup_codebase():
                 if os.path.isfile(file_path):
                     os.remove(file_path)
                     deleted_files.append(file_path)
-                    print(f"✅ Deleted file: {file_path}")
+                    logging.info(f"✅ Deleted file: {file_path}")
                 elif os.path.isdir(file_path):
                     shutil.rmtree(file_path)
                     deleted_dirs.append(file_path)
-                    print(f"✅ Deleted directory: {file_path}")
+                    logging.info(f"✅ Deleted directory: {file_path}")
             except Exception as e:
                 errors.append(f"Error deleting {file_path}: {e}")
-                print(f"❌ Error deleting {file_path}: {e}")
+                logging.error(f"❌ Error deleting {file_path}: {e}")
     
     # Delete directories
     for dir_path in dirs_to_delete:
@@ -172,10 +176,10 @@ def cleanup_codebase():
             try:
                 shutil.rmtree(dir_path)
                 deleted_dirs.append(dir_path)
-                print(f"✅ Deleted directory: {dir_path}")
+                logging.info(f"✅ Deleted directory: {dir_path}")
             except Exception as e:
                 errors.append(f"Error deleting {dir_path}: {e}")
-                print(f"❌ Error deleting {dir_path}: {e}")
+                logging.error(f"❌ Error deleting {dir_path}: {e}")
     
     # Clean up __pycache__ directories
     for root, dirs, files in os.walk("."):
@@ -184,7 +188,7 @@ def cleanup_codebase():
                 cache_dir = os.path.join(root, "__pycache__")
                 shutil.rmtree(cache_dir)
                 deleted_dirs.append(cache_dir)
-                print(f"✅ Deleted cache: {cache_dir}")
+                logging.info(f"✅ Deleted cache: {cache_dir}")
             except Exception as e:
                 errors.append(f"Error deleting cache {cache_dir}: {e}")
     

@@ -51,7 +51,7 @@ def is_deepseek_key_valid() -> bool:
 
 def print_api_status() -> None:
     """Print status of all API keys"""
-    logging.info("🔑 API Keys Status:")
+    logger.info("🔑 API Keys Status:")
     logging.info(f"   DeepSeek: {'✅ Valid' if is_deepseek_key_valid() else '❌ Invalid/Expired'}")
     logging.info(f"   HuggingFace: {'✅ Set' if HUGGINGFACE_API_KEY else '❌ Not set'}")
     logging.info(f"   Qdrant: {'✅ Configured' if QDRANT_HOST else '❌ Not configured'}")

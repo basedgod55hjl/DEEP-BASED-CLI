@@ -25,20 +25,19 @@ DEEPSEEK_BASE_URL = os.getenv("DEEPSEEK_BASE_URL", "https://api.deepseek.com/v1"
 # HuggingFace API Configuration
 HUGGINGFACE_API_KEY = os.getenv("HUGGINGFACE_API_KEY", "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")
 
-def update_api_keys(deepseek_key: str = None, huggingface_token: str = None):
-    
+def update_api_keys(deepseek_key: str = None, huggingface_token: str = None) -> None:
     """Update API keys"""
     global DEEPSEEK_API_KEY, HUGGINGFACE_API_KEY
     
     if deepseek_key:
         DEEPSEEK_API_KEY = deepseek_key
         os.environ["DEEPSEEK_API_KEY"] = deepseek_key
-        logging.info(f"✅ DeepSeek API key updated")
+        logger.info("✅ DeepSeek API key updated")
     
     if huggingface_token:
         HUGGINGFACE_API_KEY = huggingface_token
         os.environ["HUGGINGFACE_API_KEY"] = huggingface_token
-        logging.info(f"✅ HuggingFace token updated")
+        logger.info("✅ HuggingFace token updated")
 
 def validate_deepseek_key(key: str = None) -> bool:
     """Check if DeepSeek API key is valid"""
@@ -280,8 +279,7 @@ class EnhancedConfig:
 class ConfigManager:
     """Enhanced configuration manager with dynamic loading and validation"""
     
-    def __init__(self, config_path: Optional[str] = None):
-    
+    def __init__(self, config_path: Optional[str] = None) -> None:
         """Initialize configuration manager"""
         self.config_path = config_path or "config/enhanced_config.json"
         self.config: Optional[EnhancedConfig] = None
@@ -407,8 +405,7 @@ class ConfigManager:
         """Get current configuration"""
         return self.config
     
-    def update_config(self, updates: Dict[str, Any]):
-    
+    def update_config(self, updates: Dict[str, Any]) -> None:
         """Update configuration with new values"""
         try:
             # Update nested configurations
@@ -519,8 +516,7 @@ class ConfigManager:
             logger.error(f"Failed to export configuration: {str(e)}")
             return ""
     
-    def import_config(self, config_data: str, format: str = "json"):
-    
+    def import_config(self, config_data: str, format: str = "json") -> None:
         """Import configuration from string"""
         try:
             if format.lower() == "yaml":
@@ -580,8 +576,7 @@ class ConfigManager:
             logger.error(f"Failed to create configuration backup: {str(e)}")
             return ""
     
-    def restore_backup(self, backup_path: str):
-    
+    def restore_backup(self, backup_path: str) -> None:
         """Restore configuration from backup"""
         try:
             if not Path(backup_path).exists():
@@ -622,8 +617,7 @@ def get_config_manager() -> ConfigManager:
         _config_manager = ConfigManager()
     return _config_manager
 
-def update_config(updates: Dict[str, Any]):
-    
+def update_config(updates: Dict[str, Any]) -> None:
     """Update global configuration"""
     config_manager = get_config_manager()
     config_manager.update_config(updates)
@@ -667,8 +661,7 @@ def export_config(format: str = "json") -> str:
     config_manager = get_config_manager()
     return config_manager.export_config(format)
 
-def import_config(config_data: str, format: str = "json"):
-    
+def import_config(config_data: str, format: str = "json") -> None:
     """Import configuration"""
     config_manager = get_config_manager()
     config_manager.import_config(config_data, format)
@@ -679,8 +672,7 @@ def create_config_backup() -> str:
     config_manager = get_config_manager()
     return config_manager.create_backup()
 
-def restore_config_backup(backup_path: str):
-    
+def restore_config_backup(backup_path: str) -> None:
     """Restore configuration from backup"""
     config_manager = get_config_manager()
     config_manager.restore_backup(backup_path)

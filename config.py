@@ -271,8 +271,7 @@ class EnhancedConfig:
 class ConfigManager:
     """Unified configuration manager"""
     
-    def __init__(self, config_path: Optional[str] = None):
-    
+    def __init__(self, config_path: Optional[str] = None) -> None:
         self.config_path = config_path or "config/enhanced_config.json"
         self.config_dir = Path(self.config_path).parent
         self.config_dir.mkdir(parents=True, exist_ok=True)
@@ -368,8 +367,7 @@ class ConfigManager:
         """Get current configuration"""
         return self._config
     
-    def update_config(self, updates: Dict[str, Any]):
-    
+    def update_config(self, updates: Dict[str, Any]) -> None:
         """Update configuration with new values"""
         for section, values in updates.items():
             if hasattr(self._config, section):
@@ -425,8 +423,7 @@ def validate_huggingface_token(token: str) -> bool:
         return False
     return True
 
-def update_api_keys(deepseek_key: str = None, huggingface_token: str = None):
-    
+def update_api_keys(deepseek_key: str = None, huggingface_token: str = None) -> None:
     """Update API keys in configuration and environment"""
     config = get_config()
     
@@ -449,9 +446,9 @@ def print_api_status() -> None:
     """Print current API key status"""
     config = get_config()
     
-    logging.info("🔑 API Keys Status:")
-    logging.info(f"  DeepSeek: {'✅ Valid' if validate_deepseek_key(config.llm.api_key) else '❌ Invalid/Missing'}")
-    logging.info(f"  HuggingFace: {'✅ Valid' if validate_huggingface_token(config.models.huggingface_token) else '❌ Invalid/Missing'}")
+    logger.info("🔑 API Keys Status:")
+    logger.info(f"  DeepSeek: {'✅ Valid' if validate_deepseek_key(config.llm.api_key) else '❌ Invalid/Missing'}")
+    logger.info(f"  HuggingFace: {'✅ Valid' if validate_huggingface_token(config.models.huggingface_token) else '❌ Invalid/Missing'}")
 
 def is_deepseek_key_valid() -> bool:
     """Check if DeepSeek API key is valid"""
@@ -478,8 +475,7 @@ def get_config_manager() -> ConfigManager:
         _config_manager = ConfigManager()
     return _config_manager
 
-def update_config(updates: Dict[str, Any]):
-    
+def update_config(updates: Dict[str, Any]) -> None:
     """Update global configuration"""
     config_manager = get_config_manager()
     config_manager.update_config(updates)
@@ -509,8 +505,7 @@ def export_config(format: str = "json") -> str:
     else:
         raise ValueError(f"Unsupported format: {format}")
 
-def import_config(config_data: str, format: str = "json"):
-    
+def import_config(config_data: str, format: str = "json") -> None:
     """Import configuration from string"""
     if format.lower() == "json":
         config_dict = json.loads(config_data)
@@ -567,8 +562,7 @@ def create_config_backup() -> str:
     
     return backup_path
 
-def restore_config_backup(backup_path: str):
-    
+def restore_config_backup(backup_path: str) -> None:
     """Restore configuration from backup"""
     config_manager = get_config_manager()
     
