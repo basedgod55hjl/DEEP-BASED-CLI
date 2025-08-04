@@ -61,6 +61,17 @@ from tools.tool_manager import ToolManager
 # Set up rich console
 console = Console()
 
+# Set up logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.FileHandler('logs/deepcli.log'),
+        logging.StreamHandler()
+    ]
+)
+logger = logging.getLogger(__name__)
+
 class SystemAccessTool:
     """Tool for full PC access and OS operations"""
     
@@ -239,22 +250,28 @@ class BasedCoderCLI:
                     print(f"{Fore.GREEN}✅ API keys setup completed successfully!{Style.RESET_ALL}")
                     load_dotenv()
                 else:
-                    print(f"{Fore.RED}❌ API keys setup failed. Please run 'python setup.py --api-keys' manually.{Style.RESET_ALL}")
+                    logger.error("API keys setup failed. Please run 'python setup.py --api-keys' manually.")
+                    console.print(f"{Fore.RED}❌ API keys setup failed. Please run 'python setup.py --api-keys' manually.{Style.RESET_ALL}")
                     sys.exit(1)
             else:
-                print(f"{Fore.RED}❌ Setup script not found. Please run 'python setup.py --api-keys' manually.{Style.RESET_ALL}")
+                logger.error("Setup script not found. Please run 'python setup.py --api-keys' manually.")
+                console.print(f"{Fore.RED}❌ Setup script not found. Please run 'python setup.py --api-keys' manually.{Style.RESET_ALL}")
                 sys.exit(1)
         except Exception as e:
-            print(f"{Fore.RED}❌ Error running API setup: {str(e)}{Style.RESET_ALL}")
-            print(f"{Fore.YELLOW}💡 Please run 'python setup.py --api-keys' manually to configure your API keys.{Style.RESET_ALL}")
+            logger.error(f"Error running API setup: {str(e)}")
+            console.print(f"{Fore.RED}❌ Error running API setup: {str(e)}{Style.RESET_ALL}")
+            console.print(f"{Fore.YELLOW}💡 Please run 'python setup.py --api-keys' manually to configure your API keys.{Style.RESET_ALL}")
             sys.exit(1)
     
     async def initialize_system(self):
         """Initialize the complete BASED CODER system"""
+        logger.info("Starting system initialization")
+        
         # Check for API keys first
         if not self._check_api_keys():
-            print(f"{Fore.YELLOW}⚠️ API keys not found or invalid.{Style.RESET_ALL}")
-            print(f"{Fore.CYAN}🔧 Running API keys setup...{Style.RESET_ALL}")
+            logger.warning("API keys not found or invalid")
+            console.print(f"{Fore.YELLOW}⚠️ API keys not found or invalid.{Style.RESET_ALL}")
+            console.print(f"{Fore.CYAN}🔧 Running API keys setup...{Style.RESET_ALL}")
             self._run_api_setup()
         
         with Progress(
@@ -268,40 +285,53 @@ class BasedCoderCLI:
             # Initialize database first
             if self.sql_db:
                 try:
+                    logger.info("Initializing database")
                     await self.sql_db._initialize_database()
-                    print(f"{Fore.GREEN}✅ Database initialized{Style.RESET_ALL}")
+                    logger.info("Database initialized successfully")
+                    console.print(f"{Fore.GREEN}✅ Database initialized{Style.RESET_ALL}")
                 except Exception as e:
-                    print(f"{Fore.YELLOW}⚠️ Database initialization warning: {e}{Style.RESET_ALL}")
+                    logger.warning(f"Database initialization warning: {e}")
+                    console.print(f"{Fore.YELLOW}⚠️ Database initialization warning: {e}{Style.RESET_ALL}")
             
             # Initialize embedding system
             if self.embedding_tool:
                 try:
+                    logger.info("Initializing embedding system")
                     # Test embedding creation
                     test_embedding = self.embedding_tool.create_embedding("test")
-                    print(f"{Fore.GREEN}✅ Embedding system initialized{Style.RESET_ALL}")
+                    logger.info("Embedding system initialized successfully")
+                    console.print(f"{Fore.GREEN}✅ Embedding system initialized{Style.RESET_ALL}")
                 except Exception as e:
-                    print(f"{Fore.YELLOW}⚠️ Embedding system warning: {e}{Style.RESET_ALL}")
+                    logger.warning(f"Embedding system warning: {e}")
+                    console.print(f"{Fore.YELLOW}⚠️ Embedding system warning: {e}{Style.RESET_ALL}")
             
             # Initialize vector database (optional)
             if self.vector_db:
                 try:
+                    logger.info("Checking vector database availability")
                     # Vector database is optional, don't fail if not available
-                    print(f"{Fore.GREEN}✅ Vector database available{Style.RESET_ALL}")
+                    logger.info("Vector database available")
+                    console.print(f"{Fore.GREEN}✅ Vector database available{Style.RESET_ALL}")
                 except Exception as e:
-                    print(f"{Fore.YELLOW}⚠️ Vector database not available: {e}{Style.RESET_ALL}")
+                    logger.warning(f"Vector database not available: {e}")
+                    console.print(f"{Fore.YELLOW}⚠️ Vector database not available: {e}{Style.RESET_ALL}")
             
             # Initialize tool manager with all tools
             if self.tool_manager:
                 try:
+                    logger.info("Initializing tool manager")
                     # Ensure all tools are properly registered
                     available_tools = self.tool_manager.list_tools()
-                    print(f"{Fore.GREEN}✅ Tool manager initialized with {len(available_tools)} tools{Style.RESET_ALL}")
+                    logger.info(f"Tool manager initialized with {len(available_tools)} tools")
+                    console.print(f"{Fore.GREEN}✅ Tool manager initialized with {len(available_tools)} tools{Style.RESET_ALL}")
                 except Exception as e:
-                    print(f"{Fore.YELLOW}⚠️ Tool manager warning: {e}{Style.RESET_ALL}")
+                    logger.warning(f"Tool manager warning: {e}")
+                    console.print(f"{Fore.YELLOW}⚠️ Tool manager warning: {e}{Style.RESET_ALL}")
             
             await asyncio.sleep(1)
         
-        print(f"{Fore.GREEN}✅ BASED CODER CLI initialized successfully!{Style.RESET_ALL}")
+        logger.info("BASED CODER CLI initialized successfully")
+        console.print(f"{Fore.GREEN}✅ BASED CODER CLI initialized successfully!{Style.RESET_ALL}")
         
         # Show system status
         self.show_status()
