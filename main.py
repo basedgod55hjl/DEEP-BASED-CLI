@@ -727,7 +727,7 @@ class BasedCoderCLI:
         """Run interactive CLI mode"""
         logging.info(f"{Fore.CYAN}🚀 Welcome to BASED CODER CLI!{Style.RESET_ALL}")
         logging.info(f"{Fore.YELLOW}Type /help for available commands or 'exit' to quit.{Style.RESET_ALL}")
-        logging.info()
+        print()
         
         while True:
             try:
