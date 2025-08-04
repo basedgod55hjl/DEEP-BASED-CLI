@@ -68,4 +68,21 @@ All configuration is managed through `config/enhanced_config.json` with support 
 
 See `.cursor/rules/` for comprehensive development guidelines and debugging information.
 
+## C++ Website Mapper Example
+
+An example C++ utility is included in `tools/website_mapper.cpp`. It fetches a
+webpage and prints all hyperlinks and button labels it finds.
+
+### Build
+
+```bash
+g++ tools/website_mapper.cpp -o tools/website_mapper -lcurl
+```
+
+### Run
+
+```bash
+tools/website_mapper https://example.com
+```
+
 ## Made by @Lucariolucario55 on Telegram
