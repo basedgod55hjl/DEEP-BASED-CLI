@@ -43,7 +43,6 @@ load_dotenv()
 sys.path.append(str(Path(__file__).parent))
 
 # Import enhanced tools and systems
-from tools.enhanced_tool_integration import EnhancedToolManager, ToolDefinition, ToolType
 from tools.json_mode_support import JSONModeManager, JSONModeLLMIntegration, CommonSchemas
 from tools.prompt_caching_system import PromptCache, CachedLLMClient, CacheStrategy
 from tools.sub_agent_architecture import SubAgentSystem, AgentType, TaskPriority
@@ -63,7 +62,7 @@ from tools.memory_tool import MemoryTool
 from tools.json_memory_tool import JSONMemoryTool
 from tools.vector_database_tool import VectorDatabaseTool
 from tools.deepseek_coder_tool import DeepSeekCoderTool
-from tools.tool_manager import ToolManager
+from tools.unified_tool_manager import UnifiedToolManager
 
 # Set up rich console
 console = Console()
@@ -102,9 +101,8 @@ class EnhancedBasedCoderCLI:
         self.qwen_embedding_tool = None
         self.vector_tool = None
         self.coder_tool = None
-        
+
         # Enhanced systems
-        self.enhanced_tool_manager = None
         self.json_mode_manager = None
         self.prompt_cache = None
         self.sub_agent_system = None
@@ -163,9 +161,9 @@ class EnhancedBasedCoderCLI:
             progress.update(task1, description="Initializing unified agent system...")
             self.unified_agent = UnifiedAgentSystem()
             
-            # Initialize tool manager
-            progress.update(task1, description="Initializing tool manager...")
-            self.tool_manager = ToolManager()
+            # Initialize unified tool manager
+            progress.update(task1, description="Initializing unified tool manager...")
+            self.tool_manager = UnifiedToolManager()
             
             # Initialize optional tools
             task2 = progress.add_task("Setting up optional systems...", total=None)
@@ -190,13 +188,7 @@ class EnhancedBasedCoderCLI:
             
             # Initialize enhanced systems
             task3 = progress.add_task("Setting up enhanced features...", total=None)
-            
-            try:
-                progress.update(task3, description="Initializing enhanced tool integration...")
-                self.enhanced_tool_manager = EnhancedToolManager()
-            except Exception as e:
-                logger.warning(f"Enhanced tool integration not available: {e}")
-                
+
             try:
                 progress.update(task3, description="Initializing JSON mode support...")
                 self.json_mode_manager = JSONModeManager()
@@ -251,7 +243,7 @@ class EnhancedBasedCoderCLI:
         # Core systems
         table.add_row("System Initialized", "✅ Yes" if self.is_initialized else "❌ No", "All systems ready")
         table.add_row("Enhanced Features", "✅ Enabled", "Anthropic Cookbook upgrades active")
-        table.add_row("Enhanced Tool Integration", "✅ Active" if self.enhanced_tool_manager else "⚠️ Limited", "Ready" if self.enhanced_tool_manager else "Not available")
+        table.add_row("Tool Manager", "✅ Active" if self.tool_manager else "❌ No", "Unified tool system")
         table.add_row("JSON Mode Support", "✅ Active" if self.json_mode_manager else "⚠️ Limited", "Ready" if self.json_mode_manager else "Not available")
         table.add_row("Prompt Caching", "✅ Active" if self.prompt_cache else "⚠️ Limited", "Ready" if self.prompt_cache else "Not available")
         table.add_row("Sub-Agent System", "✅ Active" if self.sub_agent_system else "⚠️ Limited", "Ready" if self.sub_agent_system else "Not available")
@@ -275,7 +267,7 @@ Core Commands:
   /exit              - Exit the CLI
 
 Enhanced Features:
-  /enhanced-tools    - Show enhanced tool capabilities
+  /tools             - List available tools
   /json-mode <task>  - Use JSON mode for structured output
   /cache-stats       - Show prompt cache statistics
   /sub-agents        - Show sub-agent system status
@@ -337,23 +329,22 @@ Setup & Configuration:
             logger.error(f"Chat error: {e}")
             return f"❌ Error: {str(e)}"
     
-    async def handle_enhanced_tools(self):
-        """Show enhanced tool capabilities"""
-        if not self.enhanced_tool_manager:
-            return "❌ Enhanced tool integration not available"
-        
-        tools = self.enhanced_tool_manager.get_available_tools()
-        
-        table = Table(title="Enhanced Tool Capabilities")
+    async def handle_tools(self):
+        """Display all available tools from the unified manager."""
+        if not self.tool_manager:
+            return "❌ Tool manager not available"
+
+        tools = self.tool_manager.list_tools()
+
+        table = Table(title="Available Tools")
         table.add_column("Tool", style="cyan")
-        table.add_column("Type", style="green")
         table.add_column("Description", style="white")
-        
+
         for tool in tools:
-            table.add_row(tool["name"], tool["type"], tool["description"])
-        
+            table.add_row(tool["name"], tool["description"])
+
         self.console.print(table)
-        return "Enhanced tools ready for use"
+        return "Tools ready for use"
     
     async def handle_json_mode(self, task: str):
         """Handle JSON mode operations"""
@@ -536,8 +527,8 @@ Setup & Configuration:
                     elif command == 'chat':
                         response = await self.handle_chat(args)
                         self.console.print(f"🤖 {response}")
-                    elif command == 'enhanced-tools':
-                        response = await self.handle_enhanced_tools()
+                    elif command == 'tools':
+                        response = await self.handle_tools()
                         self.console.print(response)
                     elif command == 'json-mode':
                         response = await self.handle_json_mode(args)
