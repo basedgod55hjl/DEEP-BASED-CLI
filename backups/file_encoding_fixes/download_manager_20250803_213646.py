@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-üöÄ BASED CODER CLI - Unified Download Manager
+🚀 BASED CODER CLI - Unified Download Manager
 Made by @Lucariolucario55 on Telegram
 
 Consolidated download management for models, dependencies, and resources
@@ -46,43 +46,43 @@ class DownloadManager:
     def print_banner(self):
         """Print download manager banner"""
         banner = f"""
-‚ïî‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïó
-‚ïë                                                                              ‚ïë
-‚ïë  üì• BASED CODER CLI - UNIFIED DOWNLOAD MANAGER                              ‚ïë
-‚ïë                                                                              ‚ïë
-‚ïë  Features:                                                                   ‚ïë
-‚ïë  ‚úÖ Model Downloads (Qwen, GGUF, etc.)                                       ‚ïë
-‚ïë  ‚úÖ Dependency Management                                                    ‚ïë
-‚ïë  ‚úÖ Progress Tracking & Resume Support                                       ‚ïë
-‚ïë  ‚úÖ Validation & Integrity Checks                                           ‚ïë
-‚ïë  ‚úÖ Cache Management                                                         ‚ïë
-‚ïë                                                                              ‚ïë
-‚ïë  Made by @Lucariolucario55 on Telegram                                      ‚ïë
-‚ïë                                                                              ‚ïë
-‚ïö‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïù
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                                                                              ║
+║  📥 BASED CODER CLI - UNIFIED DOWNLOAD MANAGER                              ║
+║                                                                              ║
+║  Features:                                                                   ║
+║  ✅ Model Downloads (Qwen, GGUF, etc.)                                       ║
+║  ✅ Dependency Management                                                    ║
+║  ✅ Progress Tracking & Resume Support                                       ║
+║  ✅ Validation & Integrity Checks                                           ║
+║  ✅ Cache Management                                                         ║
+║                                                                              ║
+║  Made by @Lucariolucario55 on Telegram                                      ║
+║                                                                              ║
+╚══════════════════════════════════════════════════════════════════════════════╝
         """
         print(banner)
     
     def validate_credentials(self) -> bool:
         """Validate API credentials"""
-        logger.info("üîë Validating API credentials...")
+        logger.info("🔑 Validating API credentials...")
         
         # Check DeepSeek API key
         if not validate_deepseek_key(self.config.llm.api_key):
-            logger.error("‚ùå Invalid DeepSeek API key")
+            logger.error("❌ Invalid DeepSeek API key")
             return False
         
         # Check HuggingFace token
         if not validate_huggingface_token(self.config.models.huggingface_token):
-            logger.error("‚ùå Invalid HuggingFace token")
+            logger.error("❌ Invalid HuggingFace token")
             return False
         
-        logger.info("‚úÖ API credentials validated")
+        logger.info("✅ API credentials validated")
         return True
     
     async def download_qwen_model(self) -> bool:
         """Download Qwen3 embedding model"""
-        logger.info("üì• Downloading Qwen3 embedding model...")
+        logger.info("📥 Downloading Qwen3 embedding model...")
         
         try:
             from transformers import AutoTokenizer, AutoModelForCausalLM
@@ -148,18 +148,18 @@ class DownloadManager:
             with torch.no_grad():
                 outputs = model(**inputs)
             
-            logger.info(f"‚úÖ Qwen3 model downloaded and tested successfully!")
+            logger.info(f"✅ Qwen3 model downloaded and tested successfully!")
             self.download_status["qwen_model"] = True
             return True
             
         except Exception as e:
-            logger.error(f"‚ùå Failed to download Qwen3 model: {e}")
+            logger.error(f"❌ Failed to download Qwen3 model: {e}")
             self.download_status["qwen_model"] = False
             return False
     
     async def download_gguf_models(self) -> bool:
         """Download GGUF models"""
-        logger.info("üì• Downloading GGUF models...")
+        logger.info("📥 Downloading GGUF models...")
         
         try:
             from huggingface_hub import hf_hub_download
@@ -201,17 +201,17 @@ class DownloadManager:
                     local_path = local_dir / model_info["filename"]
                     shutil.copy2(model_path, local_path)
                     
-                    logger.info(f"‚úÖ Downloaded {model_info['filename']}")
+                    logger.info(f"✅ Downloaded {model_info['filename']}")
                     
                 except Exception as e:
-                    logger.error(f"‚ùå Failed to download {model_info['filename']}: {e}")
+                    logger.error(f"❌ Failed to download {model_info['filename']}: {e}")
                     continue
             
             self.download_status["gguf_models"] = True
             return True
             
         except Exception as e:
-            logger.error(f"‚ùå Failed to download GGUF models: {e}")
+            logger.error(f"❌ Failed to download GGUF models: {e}")
             self.download_status["gguf_models"] = False
             return False
     
@@ -221,7 +221,7 @@ class DownloadManager:
             async with aiohttp.ClientSession() as session:
                 async with session.get(url) as response:
                     if response.status != 200:
-                        logger.error(f"‚ùå HTTP {response.status}: {url}")
+                        logger.error(f"❌ HTTP {response.status}: {url}")
                         return False
                     
                     total_size = int(response.headers.get('content-length', 0))
@@ -240,18 +240,18 @@ class DownloadManager:
                     return True
                     
         except Exception as e:
-            logger.error(f"‚ùå Download failed: {e}")
+            logger.error(f"❌ Download failed: {e}")
             return False
     
     async def install_python_dependencies(self) -> bool:
         """Install Python dependencies"""
-        logger.info("üì¶ Installing Python dependencies...")
+        logger.info("📦 Installing Python dependencies...")
         
         try:
             # Read requirements file
             requirements_file = self.project_root / "requirements_enhanced.txt"
             if not requirements_file.exists():
-                logger.error("‚ùå requirements_enhanced.txt not found")
+                logger.error("❌ requirements_enhanced.txt not found")
                 return False
             
             # Install dependencies
@@ -260,76 +260,76 @@ class DownloadManager:
             ], capture_output=True, text=True)
             
             if result.returncode == 0:
-                logger.info("‚úÖ Python dependencies installed successfully")
+                logger.info("✅ Python dependencies installed successfully")
                 self.download_status["python_deps"] = True
                 return True
             else:
-                logger.error(f"‚ùå Failed to install Python dependencies: {result.stderr}")
+                logger.error(f"❌ Failed to install Python dependencies: {result.stderr}")
                 self.download_status["python_deps"] = False
                 return False
                 
         except Exception as e:
-            logger.error(f"‚ùå Error installing Python dependencies: {e}")
+            logger.error(f"❌ Error installing Python dependencies: {e}")
             self.download_status["python_deps"] = False
             return False
     
     async def install_node_dependencies(self) -> bool:
         """Install Node.js dependencies"""
-        logger.info("üì¶ Installing Node.js dependencies...")
+        logger.info("📦 Installing Node.js dependencies...")
         
         try:
             package_json = self.project_root / "package.json"
             if not package_json.exists():
-                logger.warning("‚ö†Ô∏è package.json not found, skipping Node.js dependencies")
+                logger.warning("⚠️ package.json not found, skipping Node.js dependencies")
                 return True
             
             # Install dependencies
             result = subprocess.run(["npm", "install"], capture_output=True, text=True)
             
             if result.returncode == 0:
-                logger.info("‚úÖ Node.js dependencies installed successfully")
+                logger.info("✅ Node.js dependencies installed successfully")
                 self.download_status["node_deps"] = True
                 return True
             else:
-                logger.error(f"‚ùå Failed to install Node.js dependencies: {result.stderr}")
+                logger.error(f"❌ Failed to install Node.js dependencies: {result.stderr}")
                 self.download_status["node_deps"] = False
                 return False
                 
         except Exception as e:
-            logger.error(f"‚ùå Error installing Node.js dependencies: {e}")
+            logger.error(f"❌ Error installing Node.js dependencies: {e}")
             self.download_status["node_deps"] = False
             return False
     
     async def build_typescript(self) -> bool:
         """Build TypeScript files"""
-        logger.info("üî® Building TypeScript files...")
+        logger.info("🔨 Building TypeScript files...")
         
         try:
             tsconfig = self.project_root / "tsconfig.json"
             if not tsconfig.exists():
-                logger.warning("‚ö†Ô∏è tsconfig.json not found, skipping TypeScript build")
+                logger.warning("⚠️ tsconfig.json not found, skipping TypeScript build")
                 return True
             
             # Build TypeScript
             result = subprocess.run(["npx", "tsc"], capture_output=True, text=True)
             
             if result.returncode == 0:
-                logger.info("‚úÖ TypeScript build completed successfully")
+                logger.info("✅ TypeScript build completed successfully")
                 self.download_status["typescript_build"] = True
                 return True
             else:
-                logger.error(f"‚ùå TypeScript build failed: {result.stderr}")
+                logger.error(f"❌ TypeScript build failed: {result.stderr}")
                 self.download_status["typescript_build"] = False
                 return False
                 
         except Exception as e:
-            logger.error(f"‚ùå Error building TypeScript: {e}")
+            logger.error(f"❌ Error building TypeScript: {e}")
             self.download_status["typescript_build"] = False
             return False
     
     def validate_downloads(self) -> Dict[str, bool]:
         """Validate downloaded files"""
-        logger.info("üîç Validating downloads...")
+        logger.info("🔍 Validating downloads...")
         
         validation_results = {}
         
@@ -360,13 +360,13 @@ class DownloadManager:
     def print_download_summary(self):
         """Print download summary"""
         print("\n" + "="*60)
-        print("üìä DOWNLOAD SUMMARY")
+        print("📊 DOWNLOAD SUMMARY")
         print("="*60)
         
         validation_results = self.validate_downloads()
         
         for item, status in validation_results.items():
-            status_icon = "‚úÖ" if status else "‚ùå"
+            status_icon = "✅" if status else "❌"
             print(f"{status_icon} {item}")
         
         print("="*60)
@@ -376,9 +376,9 @@ class DownloadManager:
         total_count = len(validation_results)
         
         if success_count == total_count:
-            print("üéâ All downloads completed successfully!")
+            print("🎉 All downloads completed successfully!")
         else:
-            print(f"‚ö†Ô∏è {success_count}/{total_count} downloads completed successfully")
+            print(f"⚠️ {success_count}/{total_count} downloads completed successfully")
     
     async def run_complete_download(self) -> bool:
         """Run complete download process"""
@@ -386,10 +386,10 @@ class DownloadManager:
         
         # Validate credentials
         if not self.validate_credentials():
-            logger.error("‚ùå Credential validation failed")
+            logger.error("❌ Credential validation failed")
             return False
         
-        logger.info("üöÄ Starting complete download process...")
+        logger.info("🚀 Starting complete download process...")
         
         # Install dependencies
         await self.install_python_dependencies()

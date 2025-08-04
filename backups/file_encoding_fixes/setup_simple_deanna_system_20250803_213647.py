@@ -319,8 +319,8 @@ class SimpleDeannaSetup:
             # Step 8: Export status
             status = self.export_system_status()
             
-            logger.info("‚úÖ Simple Deanna system setup finished!")
-            logger.info(f"üìä System status: {status}")
+            logger.info("✅ Simple Deanna system setup finished!")
+            logger.info(f"📊 System status: {status}")
             
             return True
             
@@ -330,29 +330,29 @@ class SimpleDeannaSetup:
 
 def main():
     """Main setup function"""
-    print("üöÄ Simple Deanna Memory System Setup")
+    print("🚀 Simple Deanna Memory System Setup")
     print("=" * 50)
     
     setup = SimpleDeannaSetup()
     
     if setup.run_simple_setup():
-        print("\n‚úÖ Setup completed successfully!")
-        print("\nüìÅ System components:")
-        print("   ‚Ä¢ Memory Manager: data/memory_manager.py")
-        print("   ‚Ä¢ Simple Embeddings: data/simple_embedding_system.py")
-        print("   ‚Ä¢ Database: data/deanna_memory.db")
-        print("   ‚Ä¢ Config: data/system_config.json")
-        print("   ‚Ä¢ Status: data/system_status.json")
-        print("\nüé≠ Deanna persona is ready to use!")
-        print("\nüîß Features:")
-        print("   ‚Ä¢ Local TF-IDF embeddings")
-        print("   ‚Ä¢ Memory caching and search")
-        print("   ‚Ä¢ DeepSeek API integration")
-        print("   ‚Ä¢ Chat history storage")
-        print("   ‚Ä¢ Persona configuration")
+        print("\n✅ Setup completed successfully!")
+        print("\n📁 System components:")
+        print("   • Memory Manager: data/memory_manager.py")
+        print("   • Simple Embeddings: data/simple_embedding_system.py")
+        print("   • Database: data/deanna_memory.db")
+        print("   • Config: data/system_config.json")
+        print("   • Status: data/system_status.json")
+        print("\n🎭 Deanna persona is ready to use!")
+        print("\n🔧 Features:")
+        print("   • Local TF-IDF embeddings")
+        print("   • Memory caching and search")
+        print("   • DeepSeek API integration")
+        print("   • Chat history storage")
+        print("   • Persona configuration")
         
     else:
-        print("\n‚ùå Setup failed! Check logs for details.")
+        print("\n❌ Setup failed! Check logs for details.")
         sys.exit(1)
 
 if __name__ == "__main__":

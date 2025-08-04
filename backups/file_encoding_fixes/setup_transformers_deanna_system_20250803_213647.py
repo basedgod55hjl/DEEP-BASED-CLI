@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
 """
-Simple Deanna Memory System Setup
-Uses existing components and simple TF-IDF embeddings
+Transformers Deanna Memory System Setup
+Uses Qwen3-Embedding-0.6B with transformers pipeline
 """
 
 import os
 import sys
 import json
+import subprocess
 from pathlib import Path
 import logging
 from datetime import datetime
@@ -16,14 +17,14 @@ logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(levelname)s - %(message)s',
     handlers=[
-        logging.FileHandler('data/simple_setup.log'),
+        logging.FileHandler('data/transformers_setup.log'),
         logging.StreamHandler()
     ]
 )
 logger = logging.getLogger(__name__)
 
-class SimpleDeannaSetup:
-    """Simple setup for Deanna memory system"""
+class TransformersDeannaSetup:
+    """Setup for Deanna memory system using transformers"""
     
     def __init__(self):
         self.data_dir = Path("data")
@@ -33,7 +34,7 @@ class SimpleDeannaSetup:
         self.huggingface_token = "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"
         self.deepseek_token = "sk-90e0dd863b8c4e0d879a02851a0ee194"
         
-        logger.info("SimpleDeannaSetup initialized")
+        logger.info("TransformersDeannaSetup initialized")
     
     def setup_directories(self):
         """Create all necessary directories"""
@@ -43,12 +44,36 @@ class SimpleDeannaSetup:
             "data/chats",
             "data/logs",
             "data/cache",
+            "data/models",
             "data/exports"
         ]
         
         for dir_path in directories:
             Path(dir_path).mkdir(parents=True, exist_ok=True)
             logger.info(f"Created directory: {dir_path}")
+    
+    def install_dependencies(self):
+        """Install required Python dependencies"""
+        requirements = [
+            "numpy",
+            "scikit-learn", 
+            "requests",
+            "huggingface_hub",
+            "transformers>=4.51.0",
+            "torch",
+            "torchvision",
+            "accelerate"
+        ]
+        
+        logger.info("Installing Python dependencies...")
+        
+        for package in requirements:
+            try:
+                subprocess.run([sys.executable, "-m", "pip", "install", package], 
+                             check=True, capture_output=True)
+                logger.info(f"Installed {package}")
+            except subprocess.CalledProcessError as e:
+                logger.warning(f"Failed to install {package}: {e}")
     
     def initialize_memory_manager(self):
         """Initialize the memory manager"""
@@ -68,31 +93,31 @@ class SimpleDeannaSetup:
             logger.error(f"Failed to initialize memory manager: {e}")
             return None
     
-    def initialize_simple_embedding_system(self):
-        """Initialize the simple embedding system"""
-        logger.info("Initializing simple embedding system...")
+    def initialize_transformers_embedding_system(self):
+        """Initialize the transformers embedding system"""
+        logger.info("Initializing transformers embedding system...")
         
         try:
-            from data.simple_embedding_system import SimpleEmbeddingSystem
+            from data.transformers_embedding_system import TransformersEmbeddingSystem
             
-            # Initialize simple embedding system
-            embedding_system = SimpleEmbeddingSystem()
+            # Initialize transformers embedding system
+            embedding_system = TransformersEmbeddingSystem()
             
             # Test the system
             if embedding_system.test_embedding():
-                logger.info("Simple embedding system working")
+                logger.info("Transformers embedding system working")
                 return embedding_system
             else:
-                logger.error("Simple embedding system test failed")
+                logger.error("Transformers embedding system test failed")
                 return None
                 
         except Exception as e:
-            logger.error(f"Failed to initialize embedding system: {e}")
+            logger.error(f"Failed to initialize transformers embedding system: {e}")
             return None
     
     def update_memory_embeddings(self, memory_manager, embedding_system):
         """Update embeddings for all memory entries"""
-        logger.info("Updating memory embeddings...")
+        logger.info("Updating memory embeddings with transformers...")
         
         try:
             # Get all memory entries
@@ -165,11 +190,12 @@ class SimpleDeannaSetup:
                 "memory_file": "data/DEANNA_MEMORY.JSON"
             },
             "embeddings": {
-                "type": "TF-IDF",
-                "dimension": 512,
+                "type": "Transformers",
+                "model": "Qwen/Qwen3-Embedding-0.6B",
+                "dimension": 1024,
                 "local": True,
-                "cuda_enabled": False,
-                "model": "Local TF-IDF"
+                "cuda_enabled": True,
+                "pipeline": True
             },
             "api_keys": {
                 "huggingface": self.huggingface_token,
@@ -188,7 +214,7 @@ class SimpleDeannaSetup:
                 "deepseek_caching": True,
                 "chat_history": True,
                 "persona_config": True,
-                "simple_embeddings": True
+                "transformers_embeddings": True
             }
         }
         
@@ -208,13 +234,14 @@ class SimpleDeannaSetup:
             stats = memory_manager.get_memory_stats()
             logger.info(f"Memory manager test: {stats}")
             
-            # Test simple embedding system
-            from data.simple_embedding_system import simple_embedding_system
+            # Test transformers embedding system
+            from data.transformers_embedding_system import TransformersEmbeddingSystem
+            embedding_system = TransformersEmbeddingSystem()
             
-            if simple_embedding_system.test_embedding():
-                logger.info("Simple embedding system test: PASSED")
+            if embedding_system.test_embedding():
+                logger.info("Transformers embedding system test: PASSED")
             else:
-                logger.error("Simple embedding system test: FAILED")
+                logger.error("Transformers embedding system test: FAILED")
             
             # Test persona config
             persona_config = memory_manager.get_persona_config("DEANNA")
@@ -229,8 +256,12 @@ class SimpleDeannaSetup:
             
             # Test embedding similarity
             test_text = "Deanna personality traits"
-            embedding = simple_embedding_system.create_embedding(test_text)
+            embedding = embedding_system.create_embedding(test_text)
             logger.info(f"Embedding test: {len(embedding)} dimensions")
+            
+            # Get model info
+            model_info = embedding_system.get_model_info()
+            logger.info(f"Model info: {model_info}")
             
             logger.info("System test completed successfully!")
             return True
@@ -271,8 +302,9 @@ class SimpleDeannaSetup:
         
         # Add embedding stats if available
         try:
-            from data.simple_embedding_system import simple_embedding_system
-            status["embedding_info"] = simple_embedding_system.get_system_info()
+            from data.transformers_embedding_system import TransformersEmbeddingSystem
+            embedding_system = TransformersEmbeddingSystem()
+            status["embedding_info"] = embedding_system.get_model_info()
         except:
             status["embedding_info"] = "Not available"
         
@@ -283,44 +315,47 @@ class SimpleDeannaSetup:
         logger.info(f"System status exported to {status_file}")
         return status
     
-    def run_simple_setup(self):
-        """Run the simple setup process"""
-        logger.info("Starting simple Deanna system setup...")
+    def run_transformers_setup(self):
+        """Run the transformers setup process"""
+        logger.info("Starting transformers Deanna system setup...")
         
         try:
             # Step 1: Setup directories
             self.setup_directories()
             
-            # Step 2: Initialize memory manager
+            # Step 2: Install dependencies
+            self.install_dependencies()
+            
+            # Step 3: Initialize memory manager
             memory_manager = self.initialize_memory_manager()
             if not memory_manager:
                 logger.error("Memory manager initialization failed")
                 return False
             
-            # Step 3: Initialize simple embedding system
-            embedding_system = self.initialize_simple_embedding_system()
+            # Step 4: Initialize transformers embedding system
+            embedding_system = self.initialize_transformers_embedding_system()
             if not embedding_system:
-                logger.error("Simple embedding system initialization failed")
+                logger.error("Transformers embedding system initialization failed")
                 return False
             
-            # Step 4: Update memory embeddings
+            # Step 5: Update memory embeddings
             self.update_memory_embeddings(memory_manager, embedding_system)
             
-            # Step 5: Setup DeepSeek integration
+            # Step 6: Setup DeepSeek integration
             self.setup_deepseek_integration()
             
-            # Step 6: Create system config
+            # Step 7: Create system config
             self.create_system_config()
             
-            # Step 7: Test system
+            # Step 8: Test system
             if not self.test_system():
                 logger.warning("System test failed")
             
-            # Step 8: Export status
+            # Step 9: Export status
             status = self.export_system_status()
             
-            logger.info("‚úÖ Simple Deanna system setup finished!")
-            logger.info(f"üìä System status: {status}")
+            logger.info("✅ Transformers Deanna system setup finished!")
+            logger.info(f"📊 System status: {status}")
             
             return True
             
@@ -330,29 +365,30 @@ class SimpleDeannaSetup:
 
 def main():
     """Main setup function"""
-    print("üöÄ Simple Deanna Memory System Setup")
+    print("🚀 Transformers Deanna Memory System Setup")
     print("=" * 50)
     
-    setup = SimpleDeannaSetup()
+    setup = TransformersDeannaSetup()
     
-    if setup.run_simple_setup():
-        print("\n‚úÖ Setup completed successfully!")
-        print("\nüìÅ System components:")
-        print("   ‚Ä¢ Memory Manager: data/memory_manager.py")
-        print("   ‚Ä¢ Simple Embeddings: data/simple_embedding_system.py")
-        print("   ‚Ä¢ Database: data/deanna_memory.db")
-        print("   ‚Ä¢ Config: data/system_config.json")
-        print("   ‚Ä¢ Status: data/system_status.json")
-        print("\nüé≠ Deanna persona is ready to use!")
-        print("\nüîß Features:")
-        print("   ‚Ä¢ Local TF-IDF embeddings")
-        print("   ‚Ä¢ Memory caching and search")
-        print("   ‚Ä¢ DeepSeek API integration")
-        print("   ‚Ä¢ Chat history storage")
-        print("   ‚Ä¢ Persona configuration")
+    if setup.run_transformers_setup():
+        print("\n✅ Setup completed successfully!")
+        print("\n📁 System components:")
+        print("   • Memory Manager: data/memory_manager.py")
+        print("   • Transformers Embeddings: data/transformers_embedding_system.py")
+        print("   • Database: data/deanna_memory.db")
+        print("   • Config: data/system_config.json")
+        print("   • Status: data/system_status.json")
+        print("\n🎭 Deanna persona is ready to use!")
+        print("\n🔧 Features:")
+        print("   • Qwen3-Embedding-0.6B with transformers")
+        print("   • CUDA acceleration (if available)")
+        print("   • Memory caching and search")
+        print("   • DeepSeek API integration")
+        print("   • Chat history storage")
+        print("   • Persona configuration")
         
     else:
-        print("\n‚ùå Setup failed! Check logs for details.")
+        print("\n❌ Setup failed! Check logs for details.")
         sys.exit(1)
 
 if __name__ == "__main__":

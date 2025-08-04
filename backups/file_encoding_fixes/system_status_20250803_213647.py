@@ -249,7 +249,7 @@ class SystemStatus:
             
             console.print(table)
         else:
-            console.print("‚ùå Main database not found")
+            console.print("❌ Main database not found")
         
         # Memory database
         if db_status.get('memory_db_exists', True):
@@ -268,7 +268,7 @@ class SystemStatus:
             
             console.print(table)
         else:
-            console.print("‚ùå Memory database not found")
+            console.print("❌ Memory database not found")
     
     def display_file_system_status(self, fs_status: Dict[str, Any]):
         """Display file system status"""
@@ -301,7 +301,7 @@ class SystemStatus:
             
             table.add_row(
                 dir_name,
-                "‚úÖ" if exists else "‚ùå",
+                "✅" if exists else "❌",
                 str(files),
                 size_str
             )
@@ -400,10 +400,10 @@ class SystemStatus:
         
         console.print(Panel.fit(
             "[bold green]System status check completed![/bold green]\n"
-            f"üìä Report saved: {report_file}\n"
-            f"üíæ Total database records: {sum(v for k, v in db_status.items() if isinstance(v, int) and 'error' not in k)}\n"
-            f"üìÅ Total files: {sum(v for k, v in fs_status.items() if k.endswith('_files') and isinstance(v, int))}\n"
-            f"‚ö†Ô∏è Total errors: {logger.get_error_summary()['total_errors']}",
+            f"📊 Report saved: {report_file}\n"
+            f"💾 Total database records: {sum(v for k, v in db_status.items() if isinstance(v, int) and 'error' not in k)}\n"
+            f"📁 Total files: {sum(v for k, v in fs_status.items() if k.endswith('_files') and isinstance(v, int))}\n"
+            f"⚠️ Total errors: {logger.get_error_summary()['total_errors']}",
             title="Status Complete"
         ))
 

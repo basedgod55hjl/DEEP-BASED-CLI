@@ -354,8 +354,8 @@ class TransformersDeannaSetup:
             # Step 9: Export status
             status = self.export_system_status()
             
-            logger.info("✅ Transformers Deanna system setup finished!")
-            logger.info(f"📊 System status: {status}")
+            logger.info("‚úÖ Transformers Deanna system setup finished!")
+            logger.info(f"üìä System status: {status}")
             
             return True
             
@@ -365,30 +365,30 @@ class TransformersDeannaSetup:
 
 def main():
     """Main setup function"""
-    print("🚀 Transformers Deanna Memory System Setup")
+    print("üöÄ Transformers Deanna Memory System Setup")
     print("=" * 50)
     
     setup = TransformersDeannaSetup()
     
     if setup.run_transformers_setup():
-        print("\n✅ Setup completed successfully!")
-        print("\n📁 System components:")
-        print("   • Memory Manager: data/memory_manager.py")
-        print("   • Transformers Embeddings: data/transformers_embedding_system.py")
-        print("   • Database: data/deanna_memory.db")
-        print("   • Config: data/system_config.json")
-        print("   • Status: data/system_status.json")
-        print("\n🎭 Deanna persona is ready to use!")
-        print("\n🔧 Features:")
-        print("   • Qwen3-Embedding-0.6B with transformers")
-        print("   • CUDA acceleration (if available)")
-        print("   • Memory caching and search")
-        print("   • DeepSeek API integration")
-        print("   • Chat history storage")
-        print("   • Persona configuration")
+        print("\n‚úÖ Setup completed successfully!")
+        print("\nüìÅ System components:")
+        print("   ‚Ä¢ Memory Manager: data/memory_manager.py")
+        print("   ‚Ä¢ Transformers Embeddings: data/transformers_embedding_system.py")
+        print("   ‚Ä¢ Database: data/deanna_memory.db")
+        print("   ‚Ä¢ Config: data/system_config.json")
+        print("   ‚Ä¢ Status: data/system_status.json")
+        print("\nüé≠ Deanna persona is ready to use!")
+        print("\nüîß Features:")
+        print("   ‚Ä¢ Qwen3-Embedding-0.6B with transformers")
+        print("   ‚Ä¢ CUDA acceleration (if available)")
+        print("   ‚Ä¢ Memory caching and search")
+        print("   ‚Ä¢ DeepSeek API integration")
+        print("   ‚Ä¢ Chat history storage")
+        print("   ‚Ä¢ Persona configuration")
         
     else:
-        print("\n❌ Setup failed! Check logs for details.")
+        print("\n‚ùå Setup failed! Check logs for details.")
         sys.exit(1)
 
 if __name__ == "__main__":

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-üöÄ BASED CODER CLI - Unified Demo System
+🚀 BASED CODER CLI - Unified Demo System
 Made by @Lucariolucario55 on Telegram
 
 Consolidated demo system for showcasing all BASED CODER CLI features
@@ -41,7 +41,7 @@ class BasedCoderDemo:
         self.demo_examples = [
             # DeepSeek Coder Examples
             {
-                "title": "üîß DeepSeek Coder - Code Generation",
+                "title": "🔧 DeepSeek Coder - Code Generation",
                 "description": "Generate Python code for a web scraper",
                 "operation": "code_generation",
                 "params": {
@@ -51,7 +51,7 @@ class BasedCoderDemo:
                 }
             },
             {
-                "title": "üêõ DeepSeek Coder - Code Debugging",
+                "title": "🐛 DeepSeek Coder - Code Debugging",
                 "description": "Debug a Python function with errors",
                 "operation": "code_debugging",
                 "params": {
@@ -73,7 +73,7 @@ print(f"Fibonacci of 5 is: {result}")
                 }
             },
             {
-                "title": "ü©π DeepSeek Coder - Self-Healing Code",
+                "title": "🩹 DeepSeek Coder - Self-Healing Code",
                 "description": "Self-heal code with potential issues",
                 "operation": "self_healing",
                 "params": {
@@ -92,7 +92,7 @@ print(data)
                 }
             },
             {
-                "title": "üîó DeepSeek Coder - FIM Completion",
+                "title": "🔗 DeepSeek Coder - FIM Completion",
                 "description": "Fill-in-Middle code completion",
                 "operation": "fim_completion",
                 "params": {
@@ -114,7 +114,7 @@ print(result)
             },
             # Embedding Examples
             {
-                "title": "üß† Embedding System - Text Similarity",
+                "title": "🧠 Embedding System - Text Similarity",
                 "description": "Compute similarity between texts",
                 "operation": "embedding_similarity",
                 "params": {
@@ -127,7 +127,7 @@ print(result)
             },
             # Database Examples
             {
-                "title": "üóÑÔ∏è Database System - Persona Management",
+                "title": "🗄️ Database System - Persona Management",
                 "description": "Store and retrieve AI personas",
                 "operation": "persona_management",
                 "params": {
@@ -142,7 +142,7 @@ print(result)
             },
             # FIM Completion Examples
             {
-                "title": "üîó FIM Completion - Code Generation",
+                "title": "🔗 FIM Completion - Code Generation",
                 "description": "Complete code with prefix and suffix",
                 "operation": "fim_completion",
                 "params": {
@@ -153,7 +153,7 @@ print(result)
             },
             # Prefix Completion Examples
             {
-                "title": "üìù Prefix Completion - Text Generation",
+                "title": "📝 Prefix Completion - Text Generation",
                 "description": "Generate text from prefix",
                 "operation": "prefix_completion",
                 "params": {
@@ -163,7 +163,7 @@ print(result)
             },
             # LLM Query Examples
             {
-                "title": "ü§ñ LLM Query - Natural Language Processing",
+                "title": "🤖 LLM Query - Natural Language Processing",
                 "description": "Ask questions to the AI",
                 "operation": "llm_query",
                 "params": {
@@ -173,7 +173,7 @@ print(result)
             },
             # RAG Pipeline Examples
             {
-                "title": "üìö RAG Pipeline - Knowledge Retrieval",
+                "title": "📚 RAG Pipeline - Knowledge Retrieval",
                 "description": "Retrieve relevant information",
                 "operation": "rag_query",
                 "params": {
@@ -183,7 +183,7 @@ print(result)
             },
             # Reasoning Examples
             {
-                "title": "üß† Reasoning Engine - Logical Analysis",
+                "title": "🧠 Reasoning Engine - Logical Analysis",
                 "description": "Analyze complex problems",
                 "operation": "reasoning",
                 "params": {
@@ -193,7 +193,7 @@ print(result)
             },
             # Memory Examples
             {
-                "title": "üíæ Memory System - Information Storage",
+                "title": "💾 Memory System - Information Storage",
                 "description": "Store and retrieve information",
                 "operation": "memory_operations",
                 "params": {
@@ -209,27 +209,27 @@ print(result)
     def print_banner(self):
         """Print demo banner"""
         banner = f"""
-{Fore.CYAN}‚ïî‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïó
-‚ïë                                                                              ‚ïë
-‚ïë  üé≠ BASED CODER CLI - UNIFIED DEMO SYSTEM                                    ‚ïë
-‚ïë                                                                              ‚ïë
-‚ïë  Features:                                                                   ‚ïë
-‚ïë  ‚úÖ DeepSeek Coder Integration                                               ‚ïë
-‚ïë  ‚úÖ Embedding & Similarity Systems                                           ‚ïë
-‚ïë  ‚úÖ Database & Persona Management                                            ‚ïë
-‚ïë  ‚úÖ FIM & Prefix Completion                                                  ‚ïë
-‚ïë  ‚úÖ LLM Query & RAG Pipeline                                                 ‚ïë
-‚ïë  ‚úÖ Reasoning & Memory Systems                                               ‚ïë
-‚ïë                                                                              ‚ïë
-‚ïë  Made by @Lucariolucario55 on Telegram                                      ‚ïë
-‚ïë                                                                              ‚ïë
-‚ïö‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïù{Style.RESET_ALL}
+{Fore.CYAN}╔══════════════════════════════════════════════════════════════════════════════╗
+║                                                                              ║
+║  🎭 BASED CODER CLI - UNIFIED DEMO SYSTEM                                    ║
+║                                                                              ║
+║  Features:                                                                   ║
+║  ✅ DeepSeek Coder Integration                                               ║
+║  ✅ Embedding & Similarity Systems                                           ║
+║  ✅ Database & Persona Management                                            ║
+║  ✅ FIM & Prefix Completion                                                  ║
+║  ✅ LLM Query & RAG Pipeline                                                 ║
+║  ✅ Reasoning & Memory Systems                                               ║
+║                                                                              ║
+║  Made by @Lucariolucario55 on Telegram                                      ║
+║                                                                              ║
+╚══════════════════════════════════════════════════════════════════════════════╝{Style.RESET_ALL}
         """
         print(banner)
     
     async def run_deepseek_coder_demo(self):
         """Run DeepSeek Coder demos"""
-        print(f"\n{Fore.YELLOW}üîß DeepSeek Coder Demo{Style.RESET_ALL}")
+        print(f"\n{Fore.YELLOW}🔧 DeepSeek Coder Demo{Style.RESET_ALL}")
         print("=" * 50)
         
         coder_tool = DeepSeekCoderTool()
@@ -246,7 +246,7 @@ print(result)
                 )
                 
                 if result.success:
-                    print(f"{Fore.GREEN}‚úÖ Success!{Style.RESET_ALL}")
+                    print(f"{Fore.GREEN}✅ Success!{Style.RESET_ALL}")
                     if 'code' in result.data:
                         print(f"Generated Code:\n{result.data['code'][:300]}...")
                     elif 'completion' in result.data:
@@ -254,17 +254,17 @@ print(result)
                     elif 'analysis' in result.data:
                         print(f"Analysis:\n{result.data['analysis'][:300]}...")
                 else:
-                    print(f"{Fore.RED}‚ùå Failed: {result.message}{Style.RESET_ALL}")
+                    print(f"{Fore.RED}❌ Failed: {result.message}{Style.RESET_ALL}")
                 
             except Exception as e:
-                print(f"{Fore.RED}‚ùå Error: {str(e)}{Style.RESET_ALL}")
+                print(f"{Fore.RED}❌ Error: {str(e)}{Style.RESET_ALL}")
             
             print()
             await asyncio.sleep(1)  # Brief pause between demos
     
     async def run_embedding_demo(self):
         """Run embedding system demo"""
-        print(f"\n{Fore.YELLOW}üß† Embedding System Demo{Style.RESET_ALL}")
+        print(f"\n{Fore.YELLOW}🧠 Embedding System Demo{Style.RESET_ALL}")
         print("=" * 50)
         
         embedding_tool = SimpleEmbeddingTool()
@@ -279,7 +279,7 @@ print(result)
             result = await embedding_tool.embed_texts(texts)
             
             if result.success:
-                print(f"{Fore.GREEN}‚úÖ Embeddings generated successfully!{Style.RESET_ALL}")
+                print(f"{Fore.GREEN}✅ Embeddings generated successfully!{Style.RESET_ALL}")
                 
                 # Compute similarities
                 embeddings = result.data['embeddings']
@@ -294,14 +294,14 @@ print(result)
                             similarity = similarity_result.data['similarity']
                             print(f"Similarity between text {i+1} and {j+1}: {similarity:.4f}")
             else:
-                print(f"{Fore.RED}‚ùå Failed: {result.message}{Style.RESET_ALL}")
+                print(f"{Fore.RED}❌ Failed: {result.message}{Style.RESET_ALL}")
                 
         except Exception as e:
-            print(f"{Fore.RED}‚ùå Error: {str(e)}{Style.RESET_ALL}")
+            print(f"{Fore.RED}❌ Error: {str(e)}{Style.RESET_ALL}")
     
     async def run_database_demo(self):
         """Run database system demo"""
-        print(f"\n{Fore.YELLOW}üóÑÔ∏è Database System Demo{Style.RESET_ALL}")
+        print(f"\n{Fore.YELLOW}🗄️ Database System Demo{Style.RESET_ALL}")
         print("=" * 50)
         
         sql_db = SQLDatabaseTool()
@@ -321,7 +321,7 @@ print(result)
             )
             
             if store_result.success:
-                print(f"{Fore.GREEN}‚úÖ Persona stored successfully!{Style.RESET_ALL}")
+                print(f"{Fore.GREEN}✅ Persona stored successfully!{Style.RESET_ALL}")
                 
                 # Retrieve persona
                 retrieve_result = await sql_db.execute(
@@ -330,19 +330,19 @@ print(result)
                 )
                 
                 if retrieve_result.success:
-                    print(f"{Fore.GREEN}‚úÖ Persona retrieved successfully!{Style.RESET_ALL}")
+                    print(f"{Fore.GREEN}✅ Persona retrieved successfully!{Style.RESET_ALL}")
                     print(f"Retrieved: {retrieve_result.data['persona']['name']}")
                 else:
-                    print(f"{Fore.RED}‚ùå Retrieval failed: {retrieve_result.message}{Style.RESET_ALL}")
+                    print(f"{Fore.RED}❌ Retrieval failed: {retrieve_result.message}{Style.RESET_ALL}")
             else:
-                print(f"{Fore.RED}‚ùå Storage failed: {store_result.message}{Style.RESET_ALL}")
+                print(f"{Fore.RED}❌ Storage failed: {store_result.message}{Style.RESET_ALL}")
                 
         except Exception as e:
-            print(f"{Fore.RED}‚ùå Error: {str(e)}{Style.RESET_ALL}")
+            print(f"{Fore.RED}❌ Error: {str(e)}{Style.RESET_ALL}")
     
     async def run_fim_completion_demo(self):
         """Run FIM completion demo"""
-        print(f"\n{Fore.YELLOW}üîó FIM Completion Demo{Style.RESET_ALL}")
+        print(f"\n{Fore.YELLOW}🔗 FIM Completion Demo{Style.RESET_ALL}")
         print("=" * 50)
         
         fim_tool = FIMCompletionTool()
@@ -361,17 +361,17 @@ print(result)
             )
             
             if result.success:
-                print(f"{Fore.GREEN}‚úÖ FIM completion successful!{Style.RESET_ALL}")
+                print(f"{Fore.GREEN}✅ FIM completion successful!{Style.RESET_ALL}")
                 print(f"Completion:\n{result.data.get('completion', 'N/A')}")
             else:
-                print(f"{Fore.RED}‚ùå Failed: {result.message}{Style.RESET_ALL}")
+                print(f"{Fore.RED}❌ Failed: {result.message}{Style.RESET_ALL}")
                 
         except Exception as e:
-            print(f"{Fore.RED}‚ùå Error: {str(e)}{Style.RESET_ALL}")
+            print(f"{Fore.RED}❌ Error: {str(e)}{Style.RESET_ALL}")
     
     async def run_prefix_completion_demo(self):
         """Run prefix completion demo"""
-        print(f"\n{Fore.YELLOW}üìù Prefix Completion Demo{Style.RESET_ALL}")
+        print(f"\n{Fore.YELLOW}📝 Prefix Completion Demo{Style.RESET_ALL}")
         print("=" * 50)
         
         prefix_tool = PrefixCompletionTool()
@@ -389,17 +389,17 @@ print(result)
             )
             
             if result.success:
-                print(f"{Fore.GREEN}‚úÖ Prefix completion successful!{Style.RESET_ALL}")
+                print(f"{Fore.GREEN}✅ Prefix completion successful!{Style.RESET_ALL}")
                 print(f"Generated:\n{result.data.get('completion', 'N/A')}")
             else:
-                print(f"{Fore.RED}‚ùå Failed: {result.message}{Style.RESET_ALL}")
+                print(f"{Fore.RED}❌ Failed: {result.message}{Style.RESET_ALL}")
                 
         except Exception as e:
-            print(f"{Fore.RED}‚ùå Error: {str(e)}{Style.RESET_ALL}")
+            print(f"{Fore.RED}❌ Error: {str(e)}{Style.RESET_ALL}")
     
     async def run_llm_query_demo(self):
         """Run LLM query demo"""
-        print(f"\n{Fore.YELLOW}ü§ñ LLM Query Demo{Style.RESET_ALL}")
+        print(f"\n{Fore.YELLOW}🤖 LLM Query Demo{Style.RESET_ALL}")
         print("=" * 50)
         
         llm_tool = LLMQueryTool()
@@ -417,17 +417,17 @@ print(result)
             )
             
             if result.success:
-                print(f"{Fore.GREEN}‚úÖ LLM query successful!{Style.RESET_ALL}")
+                print(f"{Fore.GREEN}✅ LLM query successful!{Style.RESET_ALL}")
                 print(f"Response:\n{result.data.get('response', 'N/A')}")
             else:
-                print(f"{Fore.RED}‚ùå Failed: {result.message}{Style.RESET_ALL}")
+                print(f"{Fore.RED}❌ Failed: {result.message}{Style.RESET_ALL}")
                 
         except Exception as e:
-            print(f"{Fore.RED}‚ùå Error: {str(e)}{Style.RESET_ALL}")
+            print(f"{Fore.RED}❌ Error: {str(e)}{Style.RESET_ALL}")
     
     async def run_rag_pipeline_demo(self):
         """Run RAG pipeline demo"""
-        print(f"\n{Fore.YELLOW}üìö RAG Pipeline Demo{Style.RESET_ALL}")
+        print(f"\n{Fore.YELLOW}📚 RAG Pipeline Demo{Style.RESET_ALL}")
         print("=" * 50)
         
         rag_tool = RAGPipelineTool()
@@ -445,20 +445,20 @@ print(result)
             )
             
             if result.success:
-                print(f"{Fore.GREEN}‚úÖ RAG query successful!{Style.RESET_ALL}")
+                print(f"{Fore.GREEN}✅ RAG query successful!{Style.RESET_ALL}")
                 documents = result.data.get('documents', [])
                 print(f"Found {len(documents)} relevant documents")
                 for i, doc in enumerate(documents[:2]):  # Show first 2
                     print(f"Document {i+1}: {doc.get('content', 'N/A')[:100]}...")
             else:
-                print(f"{Fore.RED}‚ùå Failed: {result.message}{Style.RESET_ALL}")
+                print(f"{Fore.RED}❌ Failed: {result.message}{Style.RESET_ALL}")
                 
         except Exception as e:
-            print(f"{Fore.RED}‚ùå Error: {str(e)}{Style.RESET_ALL}")
+            print(f"{Fore.RED}❌ Error: {str(e)}{Style.RESET_ALL}")
     
     async def run_reasoning_demo(self):
         """Run reasoning engine demo"""
-        print(f"\n{Fore.YELLOW}üß† Reasoning Engine Demo{Style.RESET_ALL}")
+        print(f"\n{Fore.YELLOW}🧠 Reasoning Engine Demo{Style.RESET_ALL}")
         print("=" * 50)
         
         reasoning_tool = ReasoningEngine()
@@ -476,17 +476,17 @@ print(result)
             )
             
             if result.success:
-                print(f"{Fore.GREEN}‚úÖ Reasoning successful!{Style.RESET_ALL}")
+                print(f"{Fore.GREEN}✅ Reasoning successful!{Style.RESET_ALL}")
                 print(f"Analysis:\n{result.data.get('reasoning', 'N/A')}")
             else:
-                print(f"{Fore.RED}‚ùå Failed: {result.message}{Style.RESET_ALL}")
+                print(f"{Fore.RED}❌ Failed: {result.message}{Style.RESET_ALL}")
                 
         except Exception as e:
-            print(f"{Fore.RED}‚ùå Error: {str(e)}{Style.RESET_ALL}")
+            print(f"{Fore.RED}❌ Error: {str(e)}{Style.RESET_ALL}")
     
     async def run_memory_demo(self):
         """Run memory system demo"""
-        print(f"\n{Fore.YELLOW}üíæ Memory System Demo{Style.RESET_ALL}")
+        print(f"\n{Fore.YELLOW}💾 Memory System Demo{Style.RESET_ALL}")
         print("=" * 50)
         
         memory_tool = MemoryTool()
@@ -506,9 +506,9 @@ print(result)
                         content=operation['content']
                     )
                     if result.success:
-                        print(f"{Fore.GREEN}‚úÖ Stored: {operation['content'][:50]}...{Style.RESET_ALL}")
+                        print(f"{Fore.GREEN}✅ Stored: {operation['content'][:50]}...{Style.RESET_ALL}")
                     else:
-                        print(f"{Fore.RED}‚ùå Storage failed: {result.message}{Style.RESET_ALL}")
+                        print(f"{Fore.RED}❌ Storage failed: {result.message}{Style.RESET_ALL}")
                 
                 elif operation['action'] == 'retrieve':
                     result = await memory_tool.execute(
@@ -516,37 +516,37 @@ print(result)
                         query=operation['query']
                     )
                     if result.success:
-                        print(f"{Fore.GREEN}‚úÖ Retrieved: {result.data.get('memories', [])}{Style.RESET_ALL}")
+                        print(f"{Fore.GREEN}✅ Retrieved: {result.data.get('memories', [])}{Style.RESET_ALL}")
                     else:
-                        print(f"{Fore.RED}‚ùå Retrieval failed: {result.message}{Style.RESET_ALL}")
+                        print(f"{Fore.RED}❌ Retrieval failed: {result.message}{Style.RESET_ALL}")
                 
         except Exception as e:
-            print(f"{Fore.RED}‚ùå Error: {str(e)}{Style.RESET_ALL}")
+            print(f"{Fore.RED}❌ Error: {str(e)}{Style.RESET_ALL}")
     
     def print_demo_summary(self):
         """Print demo summary"""
-        print(f"\n{Fore.CYAN}üé≠ DEMO SUMMARY{Style.RESET_ALL}")
+        print(f"\n{Fore.CYAN}🎭 DEMO SUMMARY{Style.RESET_ALL}")
         print("=" * 60)
-        print(f"{Fore.GREEN}‚úÖ All demos completed successfully!{Style.RESET_ALL}")
+        print(f"{Fore.GREEN}✅ All demos completed successfully!{Style.RESET_ALL}")
         print(f"\n{Fore.YELLOW}Features demonstrated:{Style.RESET_ALL}")
-        print("  üîß DeepSeek Coder - Code generation, debugging, self-healing, FIM")
-        print("  üß† Embedding System - Text similarity and vector operations")
-        print("  üóÑÔ∏è Database System - Persona management and storage")
-        print("  üîó FIM Completion - Fill-in-Middle code completion")
-        print("  üìù Prefix Completion - Text generation from prefixes")
-        print("  ü§ñ LLM Query - Natural language processing")
-        print("  üìö RAG Pipeline - Knowledge retrieval and augmentation")
-        print("  üß† Reasoning Engine - Logical analysis and problem solving")
-        print("  üíæ Memory System - Information storage and retrieval")
+        print("  🔧 DeepSeek Coder - Code generation, debugging, self-healing, FIM")
+        print("  🧠 Embedding System - Text similarity and vector operations")
+        print("  🗄️ Database System - Persona management and storage")
+        print("  🔗 FIM Completion - Fill-in-Middle code completion")
+        print("  📝 Prefix Completion - Text generation from prefixes")
+        print("  🤖 LLM Query - Natural language processing")
+        print("  📚 RAG Pipeline - Knowledge retrieval and augmentation")
+        print("  🧠 Reasoning Engine - Logical analysis and problem solving")
+        print("  💾 Memory System - Information storage and retrieval")
         
-        print(f"\n{Fore.CYAN}üöÄ Ready to use BASED CODER CLI!{Style.RESET_ALL}")
+        print(f"\n{Fore.CYAN}🚀 Ready to use BASED CODER CLI!{Style.RESET_ALL}")
         print("Run 'python main.py' to start the interactive CLI")
     
     async def run_complete_demo(self):
         """Run complete demo system"""
         self.print_banner()
         
-        print(f"{Fore.CYAN}üé≠ Starting BASED CODER CLI Demo System...{Style.RESET_ALL}")
+        print(f"{Fore.CYAN}🎭 Starting BASED CODER CLI Demo System...{Style.RESET_ALL}")
         
         # Run all demos
         await self.run_deepseek_coder_demo()

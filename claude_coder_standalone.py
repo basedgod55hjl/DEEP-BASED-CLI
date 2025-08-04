@@ -81,7 +81,7 @@ class ClaudeCoderAgent:
         
     def _check_system_status(self):
         """Check system status and dependencies"""
-        console.logger.info(Panel.fit(
+        console.print(Panel.fit(
             "[bold blue]🔍 Checking System Status[/bold blue]",
             title="System Check"
         ))
@@ -189,7 +189,7 @@ class ClaudeCoderAgent:
         table.add_row("DeepSeek API", "✅ Working" if status.deepseek_api_working else "❌ Failed")
         table.add_row("Database", status.database_status)
         
-        console.logger.info(table)
+        console.print(table)
         
         if status.tool_status:
             tool_table = Table(title="Tool Status")
@@ -200,16 +200,20 @@ class ClaudeCoderAgent:
                 status_text = "✅ Available" if available else "❌ Missing"
                 tool_table.add_row(tool, status_text)
             
-            console.logger.info(tool_table)
+            console.print(tool_table)
         
     async def analyze_codebase(self):
         """Analyze the entire codebase"""
-        console.logger.info(Panel.fit(
+        console.print(Panel.fit(
             "[bold blue]🔍 Analyzing Codebase[/bold blue]",
             title="Code Analysis"
         ))
         
-        python_files = list(self.codebase_path.rglob("*.py"))
+        python_files = []
+        for py_file in self.codebase_path.rglob("*.py"):
+            # Skip backup directories and certain problematic files
+            if "backup" not in str(py_file) and "node_modules" not in str(py_file):
+                python_files.append(py_file)
         
         with Progress(
             SpinnerColumn(),
@@ -227,10 +231,23 @@ class ClaudeCoderAgent:
         self._display_analysis_summary()
         
     async def _analyze_file(self, file_path: Path) -> CodeAnalysis:
-        """Analyze a single file"""
+        """Analyze a single file with improved error handling"""
         try:
-            with open(file_path, "r", encoding="utf-8") as f:
-                content = f.read()
+            # Try multiple encodings
+            content = None
+            for encoding in ['utf-8', 'utf-8-sig', 'latin-1', 'cp1252']:
+                try:
+                    with open(file_path, "r", encoding=encoding) as f:
+                        content = f.read()
+                    break
+                except UnicodeDecodeError:
+                    continue
+                except Exception as e:
+                    logger.warning(f"Error reading {file_path} with {encoding}: {e}")
+                    continue
+            
+            if content is None:
+                raise Exception("Could not read file with any encoding")
             
             complexity_score = self._calculate_complexity(content)
             issues = self._identify_issues(content, file_path)
@@ -257,7 +274,7 @@ class ClaudeCoderAgent:
                 file_path=str(file_path),
                 complexity_score=0,
                 issues=[f"Error reading file: {e}"],
-                suggestions=[],
+                suggestions=["Check file encoding", "Verify file integrity"],
                 dependencies=[],
                 estimated_rewrite_time=0,
                 file_size=0,
@@ -342,7 +359,7 @@ class ClaudeCoderAgent:
         
     def _display_analysis_summary(self):
         """Display analysis summary"""
-        console.logger.info(Panel.fit(
+        console.print(Panel.fit(
             "[bold blue]📊 Analysis Summary[/bold blue]",
             title="Code Analysis Results"
         ))
@@ -365,10 +382,10 @@ class ClaudeCoderAgent:
         summary_table.add_row("Average Complexity", f"{avg_complexity:.1f}")
         summary_table.add_row("Estimated Rewrite Time", f"{total_rewrite_time} minutes")
         
-        console.logger.info(summary_table)
+        console.print(summary_table)
         
         if total_issues > 0:
-            console.logger.info(Panel.fit(
+            console.print(Panel.fit(
                 "[bold yellow]⚠️ Top Issues Found[/bold yellow]",
                 title="Issues Summary"
             ))
@@ -388,12 +405,12 @@ class ClaudeCoderAgent:
             for issue, count in sorted(issue_counts.items(), key=lambda x: x[1], reverse=True)[:5]:
                 issue_table.add_row(issue, str(count))
             
-            console.logger.info(issue_table)
+            console.print(issue_table)
         
         # Show most complex files
         complex_files = sorted(self.analysis_results, key=lambda x: x.complexity_score, reverse=True)[:5]
         if complex_files:
-            console.logger.info(Panel.fit(
+            console.print(Panel.fit(
                 "[bold red]🔴 Most Complex Files[/bold red]",
                 title="Complexity Analysis"
             ))
@@ -410,11 +427,11 @@ class ClaudeCoderAgent:
                     str(file_analysis.lines_of_code)
                 )
             
-            console.logger.info(complex_table)
+            console.print(complex_table)
         
     async def run_full_scan(self):
         """Run complete codebase scan"""
-        console.logger.info(Panel.fit(
+        console.print(Panel.fit(
             "[bold green]🚀 Starting Full Codebase Scan[/bold green]",
             title="Full Scan"
         ))
@@ -457,11 +474,11 @@ class ClaudeCoderAgent:
         with open(report_path, "w") as f:
             json.dump(report_data, f, indent=2)
         
-        console.logger.info(f"✅ Scan report saved to: {report_path}")
+        console.print(f"✅ Scan report saved to: {report_path}")
 
 async def main():
     """Main function"""
-    console.logger.info(Panel.fit(
+    console.print(Panel.fit(
         "[bold blue]Claude 4 Coder Agent - Standalone Edition[/bold blue]\n"
         "Advanced Codebase Analysis and Debugging System\n"
         "God-level development with AI-powered insights",
@@ -472,7 +489,7 @@ async def main():
     
     await agent.run_full_scan()
     
-    console.logger.info(Panel.fit(
+    console.print(Panel.fit(
         "[bold green]🎉 Codebase Scan Complete![/bold green]\n"
         "Your codebase has been analyzed with:\n"
         "• Advanced code complexity scoring\n"

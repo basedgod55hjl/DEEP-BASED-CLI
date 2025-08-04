@@ -78,7 +78,7 @@ class ClaudeCoderAgent:
     def _check_system_status(self):
         """Check system status and dependencies"""
         console.print(Panel.fit(
-            "[bold blue]üîç Checking System Status[/bold blue]",
+            "[bold blue]🔍 Checking System Status[/bold blue]",
             title="System Check"
         ))
         
@@ -166,11 +166,11 @@ class ClaudeCoderAgent:
         try:
             db_path = Path("data/deepcli_database.db")
             if db_path.exists():
-                return "‚úÖ Available"
+                return "✅ Available"
             else:
-                return "‚ùå Not found"
+                return "❌ Not found"
         except Exception as e:
-            return f"‚ö†Ô∏è Error: {e}"
+            return f"⚠️ Error: {e}"
             
     def _check_tools(self) -> Dict[str, bool]:
         """Check tool availability"""
@@ -196,9 +196,9 @@ class ClaudeCoderAgent:
         table.add_column("Status", style="bold")
         
 
-        table.add_row("MCP", "‚úÖ Available" if status.mcp_available else "‚ùå Not Available")
-        table.add_row("Claude API", "‚úÖ Working" if status.claude_api_working else "‚ùå Failed")
-        table.add_row("DeepSeek API", "‚úÖ Working" if status.deepseek_api_working else "‚ùå Failed")
+        table.add_row("MCP", "✅ Available" if status.mcp_available else "❌ Not Available")
+        table.add_row("Claude API", "✅ Working" if status.claude_api_working else "❌ Failed")
+        table.add_row("DeepSeek API", "✅ Working" if status.deepseek_api_working else "❌ Failed")
         table.add_row("Database", status.database_status)
         
         console.print(table)
@@ -209,7 +209,7 @@ class ClaudeCoderAgent:
             tool_table.add_column("Status", style="bold")
             
             for tool, available in status.tool_status.items():
-                status_text = "‚úÖ Available" if available else "‚ùå Missing"
+                status_text = "✅ Available" if available else "❌ Missing"
                 tool_table.add_row(tool, status_text)
                 
             console.print(tool_table)
@@ -217,7 +217,7 @@ class ClaudeCoderAgent:
     async def analyze_codebase(self):
         """Analyze the entire codebase"""
         console.print(Panel.fit(
-            "[bold blue]üîç Analyzing Codebase[/bold blue]",
+            "[bold blue]🔍 Analyzing Codebase[/bold blue]",
             title="Code Analysis"
         ))
         
@@ -349,7 +349,7 @@ class ClaudeCoderAgent:
     def _display_analysis_summary(self):
         """Display analysis summary"""
         console.print(Panel.fit(
-            "[bold blue]üìä Analysis Summary[/bold blue]",
+            "[bold blue]📊 Analysis Summary[/bold blue]",
             title="Code Analysis Results"
         ))
         
@@ -373,7 +373,7 @@ class ClaudeCoderAgent:
         
         if total_issues > 0:
             console.print(Panel.fit(
-                "[bold yellow]‚ö†Ô∏è Top Issues Found[/bold yellow]",
+                "[bold yellow]⚠️ Top Issues Found[/bold yellow]",
                 title="Issues Summary"
             ))
             
@@ -397,7 +397,7 @@ class ClaudeCoderAgent:
     async def upgrade_codebase(self):
         """Upgrade the codebase with advanced features"""
         console.print(Panel.fit(
-            "[bold green]üöÄ Upgrading Codebase[/bold green]",
+            "[bold green]🚀 Upgrading Codebase[/bold green]",
             title="Codebase Upgrade"
         ))
         
@@ -459,7 +459,7 @@ class ClaudeCoderAgent:
             
             for section_name, section in plan.items():
                 if section["enabled"]:
-                    console.print(f"\n[bold blue]üîß {section_name.title()}[/bold blue]")
+                    console.print(f"\n[bold blue]🔧 {section_name.title()}[/bold blue]")
                     
                     for action in section["actions"]:
                         progress.update(task, description=f"Executing: {action}")
@@ -499,24 +499,24 @@ class ClaudeCoderAgent:
         with open("mcp-config.json", 'w') as f:
             json.dump(mcp_config, f, indent=2)
             
-        console.print("‚úÖ MCP integration setup complete")
+        console.print("✅ MCP integration setup complete")
         
     async def _enhance_apis(self):
         """Enhance API integrations"""
-        console.print("‚úÖ API enhancements complete")
+        console.print("✅ API enhancements complete")
         
     async def _improve_code(self):
         """Improve code quality"""
-        console.print("‚úÖ Code improvements complete")
+        console.print("✅ Code improvements complete")
         
     async def _enhance_debugging(self):
         """Enhance debugging capabilities"""
-        console.print("‚úÖ Debugging enhancements complete")
+        console.print("✅ Debugging enhancements complete")
         
     async def run_full_system(self):
         """Run the full upgraded system"""
         console.print(Panel.fit(
-            "[bold green]üöÄ Starting Full System[/bold green]",
+            "[bold green]🚀 Starting Full System[/bold green]",
             title="System Startup"
         ))
         
@@ -529,22 +529,22 @@ class ClaudeCoderAgent:
             
     async def _initialize_mcp(self):
         """Initialize MCP client"""
-        console.print("üîß Initializing MCP...")
+        console.print("🔧 Initializing MCP...")
         
         try:
-            console.print("‚úÖ MCP initialized")
+            console.print("✅ MCP initialized")
         except Exception as e:
-            console.print(f"‚ùå Failed to initialize MCP: {e}")
+            console.print(f"❌ Failed to initialize MCP: {e}")
             
     async def _start_main_application(self):
         """Start the main application"""
-        console.print("üéØ Starting main application...")
+        console.print("🎯 Starting main application...")
         
         try:
             import main
-            console.print("‚úÖ Main application ready")
+            console.print("✅ Main application ready")
         except Exception as e:
-            console.print(f"‚ùå Failed to start main application: {e}")
+            console.print(f"❌ Failed to start main application: {e}")
 
 async def main():
     """Main function"""
@@ -552,7 +552,7 @@ async def main():
         "[bold blue]Claude 4 Coder Agent[/bold blue]\n"
         "Advanced Codebase Analysis and Upgrade System\n"
         "God-level development with MCP tools",
-        title="üöÄ Claude Coder Agent"
+        title="🚀 Claude Coder Agent"
     ))
     
     agent = ClaudeCoderAgent()
@@ -562,14 +562,14 @@ async def main():
     await agent.run_full_system()
     
     console.print(Panel.fit(
-        "[bold green]üéâ System Upgrade Complete![/bold green]\n"
+        "[bold green]🎉 System Upgrade Complete![/bold green]\n"
         "Your DEEP-CLI has been upgraded with:\n"
-        "‚Ä¢ MCP integration for enhanced tools\n"
-        "‚Ä¢ Intelligent model switching (Claude ‚Üî DeepSeek)\n"
-        "‚Ä¢ Advanced debugging capabilities\n"
-        "‚Ä¢ Enhanced error handling and logging\n"
-        "‚Ä¢ Performance monitoring and optimization",
-        title="‚úÖ Upgrade Complete"
+        "• MCP integration for enhanced tools\n"
+        "• Intelligent model switching (Claude ↔ DeepSeek)\n"
+        "• Advanced debugging capabilities\n"
+        "• Enhanced error handling and logging\n"
+        "• Performance monitoring and optimization",
+        title="✅ Upgrade Complete"
     ))
 
 if __name__ == "__main__":

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-üöÄ BASED CODER CLI - Unified Setup System
+🚀 BASED CODER CLI - Unified Setup System
 Made by @Lucariolucario55 on Telegram
 
 Consolidated setup system for the entire BASED CODER CLI
@@ -61,20 +61,20 @@ class BasedCoderSetup:
     def print_banner(self):
         """Print setup banner"""
         banner = f"""
-{Fore.CYAN}‚ïî‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïó
-‚ïë                                                                              ‚ïë
-‚ïë  ‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ïó  ‚ñà‚ñà‚ñà‚ñà‚ñà‚ïó ‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ïó‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ïó‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ïó      ‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ïó ‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ïó ‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ïó ‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ïó‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ïó  ‚ïë
-‚ïë  ‚ñà‚ñà‚ïî‚ïê‚ïê‚ñà‚ñà‚ïó‚ñà‚ñà‚ïî‚ïê‚ïê‚ñà‚ñà‚ïó‚ñà‚ñà‚ïî‚ïê‚ïê‚ïê‚ïê‚ïù‚ñà‚ñà‚ïî‚ïê‚ïê‚ïê‚ïê‚ïù‚ñà‚ñà‚ïî‚ïê‚ïê‚ñà‚ñà‚ïó    ‚ñà‚ñà‚ïî‚ïê‚ïê‚ïê‚ïê‚ïù‚ñà‚ñà‚ïî‚ïê‚ïê‚ïê‚ñà‚ñà‚ïó‚ñà‚ñà‚ïî‚ïê‚ïê‚ñà‚ñà‚ïó‚ñà‚ñà‚ïî‚ïê‚ïê‚ïê‚ïê‚ïù‚ñà‚ñà‚ïî‚ïê‚ïê‚ñà‚ñà‚ïó ‚ïë
-‚ïë  ‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ïî‚ïù‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ïë‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ïó‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ïó‚ñà‚ñà‚ïë  ‚ñà‚ñà‚ïë    ‚ñà‚ñà‚ïë     ‚ñà‚ñà‚ïë   ‚ñà‚ñà‚ïë‚ñà‚ñà‚ïë  ‚ñà‚ñà‚ïë‚ñà‚ñà‚ñà‚ñà‚ñà‚ïó  ‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ïî‚ïù ‚ïë
-‚ïë  ‚ñà‚ñà‚ïî‚ïê‚ïê‚ñà‚ñà‚ïó‚ñà‚ñà‚ïî‚ïê‚ïê‚ñà‚ñà‚ïë‚ïö‚ïê‚ïê‚ïê‚ïê‚ñà‚ñà‚ïë‚ïö‚ïê‚ïê‚ïê‚ïê‚ñà‚ñà‚ïë‚ñà‚ñà‚ïë  ‚ñà‚ñà‚ïë    ‚ñà‚ñà‚ïë     ‚ñà‚ñà‚ïë   ‚ñà‚ñà‚ïë‚ñà‚ñà‚ïë  ‚ñà‚ñà‚ïë‚ñà‚ñà‚ïî‚ïê‚ïê‚ïù  ‚ñà‚ñà‚ïî‚ïê‚ïê‚ñà‚ñà‚ïó ‚ïë
-‚ïë  ‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ïî‚ïù‚ñà‚ñà‚ïë  ‚ñà‚ñà‚ïë‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ïë‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ïë‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ïî‚ïù    ‚ïö‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ïó‚ïö‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ïî‚ïù‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ïî‚ïù‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ñà‚ïó‚ñà‚ñà‚ïë  ‚ñà‚ñà‚ïë ‚ïë
-‚ïë  ‚ïö‚ïê‚ïê‚ïê‚ïê‚ïê‚ïù ‚ïö‚ïê‚ïù  ‚ïö‚ïê‚ïù‚ïö‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïù‚ïö‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïù‚ïö‚ïê‚ïê‚ïê‚ïê‚ïê‚ïù      ‚ïö‚ïê‚ïê‚ïê‚ïê‚ïê‚ïù ‚ïö‚ïê‚ïê‚ïê‚ïê‚ïê‚ïù ‚ïö‚ïê‚ïê‚ïê‚ïê‚ïê‚ïù ‚ïö‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïù‚ïö‚ïê‚ïù  ‚ïö‚ïê‚ïù ‚ïë
-‚ïë                                                                              ‚ïë
-‚ïë                    üöÄ BASED CODER CLI - UNIFIED SETUP                        ‚ïë
-‚ïë                                                                              ‚ïë
-‚ïë                    Made by @Lucariolucario55 on Telegram                     ‚ïë
-‚ïë                                                                              ‚ïë
-‚ïö‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïê‚ïù{Style.RESET_ALL}
+{Fore.CYAN}╔══════════════════════════════════════════════════════════════════════════════╗
+║                                                                              ║
+║  ██████╗  █████╗ ███████╗███████╗██████╗      ██████╗ ██████╗ ██████╗ ███████╗██████╗  ║
+║  ██╔══██╗██╔══██╗██╔════╝██╔════╝██╔══██╗    ██╔════╝██╔═══██╗██╔══██╗██╔════╝██╔══██╗ ║
+║  ██████╔╝███████║███████╗███████╗██║  ██║    ██║     ██║   ██║██║  ██║█████╗  ██████╔╝ ║
+║  ██╔══██╗██╔══██║╚════██║╚════██║██║  ██║    ██║     ██║   ██║██║  ██║██╔══╝  ██╔══██╗ ║
+║  ██████╔╝██║  ██║███████║███████║██████╔╝    ╚██████╗╚██████╔╝██████╔╝███████╗██║  ██║ ║
+║  ╚═════╝ ╚═╝  ╚═╝╚══════╝╚══════╝╚═════╝      ╚═════╝ ╚═════╝ ╚═════╝ ╚══════╝╚═╝  ╚═╝ ║
+║                                                                              ║
+║                    🚀 BASED CODER CLI - UNIFIED SETUP                        ║
+║                                                                              ║
+║                    Made by @Lucariolucario55 on Telegram                     ║
+║                                                                              ║
+╚══════════════════════════════════════════════════════════════════════════════╝{Style.RESET_ALL}
         """
         print(banner)
     
@@ -83,13 +83,13 @@ class BasedCoderSetup:
         try:
             version = sys.version_info
             if version.major >= 3 and version.minor >= 8:
-                print(f"{Fore.GREEN}‚úÖ Python {version.major}.{version.minor}.{version.micro} detected{Style.RESET_ALL}")
+                print(f"{Fore.GREEN}✅ Python {version.major}.{version.minor}.{version.micro} detected{Style.RESET_ALL}")
                 return True
             else:
-                print(f"{Fore.RED}‚ùå Python 3.8+ required, found {version.major}.{version.minor}.{version.micro}{Style.RESET_ALL}")
+                print(f"{Fore.RED}❌ Python 3.8+ required, found {version.major}.{version.minor}.{version.micro}{Style.RESET_ALL}")
                 return False
         except Exception as e:
-            print(f"{Fore.RED}‚ùå Error checking Python version: {e}{Style.RESET_ALL}")
+            print(f"{Fore.RED}❌ Error checking Python version: {e}{Style.RESET_ALL}")
             return False
     
     def check_node_version(self) -> bool:
@@ -98,18 +98,18 @@ class BasedCoderSetup:
             result = subprocess.run(['node', '--version'], capture_output=True, text=True)
             if result.returncode == 0:
                 version = result.stdout.strip()
-                print(f"{Fore.GREEN}‚úÖ Node.js {version} detected{Style.RESET_ALL}")
+                print(f"{Fore.GREEN}✅ Node.js {version} detected{Style.RESET_ALL}")
                 return True
             else:
-                print(f"{Fore.RED}‚ùå Node.js not found{Style.RESET_ALL}")
+                print(f"{Fore.RED}❌ Node.js not found{Style.RESET_ALL}")
                 return False
         except Exception as e:
-            print(f"{Fore.RED}‚ùå Error checking Node.js version: {e}{Style.RESET_ALL}")
+            print(f"{Fore.RED}❌ Error checking Node.js version: {e}{Style.RESET_ALL}")
             return False
     
     def setup_api_keys_interactive(self) -> bool:
         """Interactive API keys setup"""
-        print(f"\n{Fore.YELLOW}üîë API Keys Setup{Style.RESET_ALL}")
+        print(f"\n{Fore.YELLOW}🔑 API Keys Setup{Style.RESET_ALL}")
         print("=" * 50)
         
         # DeepSeek API Key
@@ -139,17 +139,17 @@ class BasedCoderSetup:
         if deepseek_key:
             if validate_deepseek_key(deepseek_key):
                 update_api_keys(deepseek_key=deepseek_key)
-                print(f"{Fore.GREEN}‚úÖ DeepSeek API key updated successfully!{Style.RESET_ALL}")
+                print(f"{Fore.GREEN}✅ DeepSeek API key updated successfully!{Style.RESET_ALL}")
             else:
-                print(f"{Fore.RED}‚ùå Invalid DeepSeek API key format{Style.RESET_ALL}")
+                print(f"{Fore.RED}❌ Invalid DeepSeek API key format{Style.RESET_ALL}")
                 valid_keys = False
         
         if huggingface_token:
             if validate_huggingface_token(huggingface_token):
                 update_api_keys(huggingface_token=huggingface_token)
-                print(f"{Fore.GREEN}‚úÖ HuggingFace token updated successfully!{Style.RESET_ALL}")
+                print(f"{Fore.GREEN}✅ HuggingFace token updated successfully!{Style.RESET_ALL}")
             else:
-                print(f"{Fore.RED}‚ùå Invalid HuggingFace token format{Style.RESET_ALL}")
+                print(f"{Fore.RED}❌ Invalid HuggingFace token format{Style.RESET_ALL}")
                 valid_keys = False
         
         # Create .env file
@@ -163,14 +163,14 @@ class BasedCoderSetup:
             env_file = self.project_root / ".env"
             with open(env_file, 'w') as f:
                 f.write(env_content)
-            print(f"{Fore.GREEN}‚úÖ .env file created{Style.RESET_ALL}")
+            print(f"{Fore.GREEN}✅ .env file created{Style.RESET_ALL}")
         
         self.setup_status["api_keys_setup"] = valid_keys
         return valid_keys
     
     async def install_dependencies(self) -> bool:
         """Install all dependencies"""
-        print(f"\n{Fore.YELLOW}üì¶ Installing Dependencies{Style.RESET_ALL}")
+        print(f"\n{Fore.YELLOW}📦 Installing Dependencies{Style.RESET_ALL}")
         print("=" * 50)
         
         # Install Python dependencies
@@ -193,12 +193,12 @@ class BasedCoderSetup:
     
     async def download_models(self) -> bool:
         """Download required models"""
-        print(f"\n{Fore.YELLOW}üì• Downloading Models{Style.RESET_ALL}")
+        print(f"\n{Fore.YELLOW}📥 Downloading Models{Style.RESET_ALL}")
         print("=" * 50)
         
         # Validate credentials first
         if not self.download_manager.validate_credentials():
-            print(f"{Fore.RED}‚ùå API credentials not valid. Please run setup again.{Style.RESET_ALL}")
+            print(f"{Fore.RED}❌ API credentials not valid. Please run setup again.{Style.RESET_ALL}")
             return False
         
         # Download Qwen model
@@ -216,7 +216,7 @@ class BasedCoderSetup:
     
     def initialize_database(self) -> bool:
         """Initialize database and tables"""
-        print(f"\n{Fore.YELLOW}üóÑÔ∏è Initializing Database{Style.RESET_ALL}")
+        print(f"\n{Fore.YELLOW}🗄️ Initializing Database{Style.RESET_ALL}")
         print("=" * 50)
         
         try:
@@ -276,17 +276,17 @@ class BasedCoderSetup:
             conn.commit()
             conn.close()
             
-            print(f"{Fore.GREEN}‚úÖ Database initialized successfully{Style.RESET_ALL}")
+            print(f"{Fore.GREEN}✅ Database initialized successfully{Style.RESET_ALL}")
             self.setup_status["database_initialized"] = True
             return True
             
         except Exception as e:
-            print(f"{Fore.RED}‚ùå Failed to initialize database: {e}{Style.RESET_ALL}")
+            print(f"{Fore.RED}❌ Failed to initialize database: {e}{Style.RESET_ALL}")
             return False
     
     def configure_tools(self) -> bool:
         """Configure tools and systems"""
-        print(f"\n{Fore.YELLOW}üõ†Ô∏è Configuring Tools{Style.RESET_ALL}")
+        print(f"\n{Fore.YELLOW}🛠️ Configuring Tools{Style.RESET_ALL}")
         print("=" * 50)
         
         try:
@@ -320,17 +320,17 @@ class BasedCoderSetup:
             with open(tools_config_file, 'w') as f:
                 json.dump(tools_config, f, indent=2)
             
-            print(f"{Fore.GREEN}‚úÖ Tools configured successfully{Style.RESET_ALL}")
+            print(f"{Fore.GREEN}✅ Tools configured successfully{Style.RESET_ALL}")
             self.setup_status["tools_configured"] = True
             return True
             
         except Exception as e:
-            print(f"{Fore.RED}‚ùå Failed to configure tools: {e}{Style.RESET_ALL}")
+            print(f"{Fore.RED}❌ Failed to configure tools: {e}{Style.RESET_ALL}")
             return False
     
     def create_startup_scripts(self) -> bool:
         """Create startup scripts"""
-        print(f"\n{Fore.YELLOW}üöÄ Creating Startup Scripts{Style.RESET_ALL}")
+        print(f"\n{Fore.YELLOW}🚀 Creating Startup Scripts{Style.RESET_ALL}")
         print("=" * 50)
         
         try:
@@ -339,7 +339,7 @@ class BasedCoderSetup:
             if not main_py.exists():
                 main_content = '''#!/usr/bin/env python3
 """
-üöÄ BASED CODER CLI - Main Entry Point
+🚀 BASED CODER CLI - Main Entry Point
 Made by @Lucariolucario55 on Telegram
 """
 
@@ -354,7 +354,7 @@ if __name__ == "__main__":
                 
                 # Make executable
                 os.chmod(main_py, 0o755)
-                print(f"{Fore.GREEN}‚úÖ Created main.py{Style.RESET_ALL}")
+                print(f"{Fore.GREEN}✅ Created main.py{Style.RESET_ALL}")
             
             # Create batch file for Windows
             if os.name == 'nt':
@@ -366,7 +366,7 @@ pause
 '''
                 with open(batch_file, 'w') as f:
                     f.write(batch_content)
-                print(f"{Fore.GREEN}‚úÖ Created run.bat{Style.RESET_ALL}")
+                print(f"{Fore.GREEN}✅ Created run.bat{Style.RESET_ALL}")
             
             # Create shell script for Unix
             else:
@@ -380,17 +380,17 @@ python3 main.py
                 
                 # Make executable
                 os.chmod(shell_file, 0o755)
-                print(f"{Fore.GREEN}‚úÖ Created run.sh{Style.RESET_ALL}")
+                print(f"{Fore.GREEN}✅ Created run.sh{Style.RESET_ALL}")
             
             return True
             
         except Exception as e:
-            print(f"{Fore.RED}‚ùå Failed to create startup scripts: {e}{Style.RESET_ALL}")
+            print(f"{Fore.RED}❌ Failed to create startup scripts: {e}{Style.RESET_ALL}")
             return False
     
     async def run_tests(self) -> bool:
         """Run system tests"""
-        print(f"\n{Fore.YELLOW}üß™ Running System Tests{Style.RESET_ALL}")
+        print(f"\n{Fore.YELLOW}🧪 Running System Tests{Style.RESET_ALL}")
         print("=" * 50)
         
         try:
@@ -406,24 +406,24 @@ python3 main.py
             
             print(f"\n{Fore.CYAN}Test Results:{Style.RESET_ALL}")
             for test_name, success in test_results.items():
-                status_icon = "‚úÖ" if success else "‚ùå"
+                status_icon = "✅" if success else "❌"
                 print(f"  {status_icon} {test_name}")
             
-            print(f"\n{Fore.GREEN}‚úÖ {success_count}/{total_count} tests passed{Style.RESET_ALL}")
+            print(f"\n{Fore.GREEN}✅ {success_count}/{total_count} tests passed{Style.RESET_ALL}")
             
             return success_count == total_count
             
         except Exception as e:
-            print(f"{Fore.RED}‚ùå Failed to run tests: {e}{Style.RESET_ALL}")
+            print(f"{Fore.RED}❌ Failed to run tests: {e}{Style.RESET_ALL}")
             return False
     
     def print_setup_summary(self):
         """Print setup summary"""
-        print(f"\n{Fore.CYAN}üìä SETUP SUMMARY{Style.RESET_ALL}")
+        print(f"\n{Fore.CYAN}📊 SETUP SUMMARY{Style.RESET_ALL}")
         print("=" * 60)
         
         for component, status in self.setup_status.items():
-            status_icon = "‚úÖ" if status else "‚ùå"
+            status_icon = "✅" if status else "❌"
             component_name = component.replace("_", " ").title()
             print(f"{status_icon} {component_name}")
         
@@ -434,29 +434,29 @@ python3 main.py
         total_count = len(self.setup_status)
         
         if success_count == total_count:
-            print(f"{Fore.GREEN}üéâ Setup completed successfully!{Style.RESET_ALL}")
+            print(f"{Fore.GREEN}🎉 Setup completed successfully!{Style.RESET_ALL}")
             print(f"\n{Fore.YELLOW}Next steps:{Style.RESET_ALL}")
             print("1. Run: python main.py")
             print("2. Or use: ./run.sh (Unix) or run.bat (Windows)")
         else:
-            print(f"{Fore.YELLOW}‚ö†Ô∏è {success_count}/{total_count} components setup successfully{Style.RESET_ALL}")
+            print(f"{Fore.YELLOW}⚠️ {success_count}/{total_count} components setup successfully{Style.RESET_ALL}")
             print(f"\n{Fore.RED}Some components failed. Please check the errors above.{Style.RESET_ALL}")
     
     async def run_complete_setup(self) -> bool:
         """Run complete setup process"""
         self.print_banner()
         
-        print(f"{Fore.CYAN}üöÄ Starting BASED CODER CLI Setup...{Style.RESET_ALL}")
+        print(f"{Fore.CYAN}🚀 Starting BASED CODER CLI Setup...{Style.RESET_ALL}")
         
         # Check system requirements
-        print(f"\n{Fore.YELLOW}üîç Checking System Requirements{Style.RESET_ALL}")
+        print(f"\n{Fore.YELLOW}🔍 Checking System Requirements{Style.RESET_ALL}")
         print("=" * 50)
         
         if not self.check_python_version():
             return False
         
         if not self.check_node_version():
-            print(f"{Fore.YELLOW}‚ö†Ô∏è Node.js not found. Some features may not work.{Style.RESET_ALL}")
+            print(f"{Fore.YELLOW}⚠️ Node.js not found. Some features may not work.{Style.RESET_ALL}")
         
         # Setup API keys
         self.setup_api_keys_interactive()
