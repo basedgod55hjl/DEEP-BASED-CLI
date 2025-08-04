@@ -1,172 +1,211 @@
-# 🚀 Enhanced BASED CODER CLI
+# 🚀 BASED CODER CLI
 
-**Advanced AI-Powered Development Tool with Anthropic Cookbook Integration**
+> A powerful AI-powered coding assistant with full system access and multi-modal capabilities
+> Made by @Lucariolucario55 on Telegram
 
-Made by @Lucariolucario55 on Telegram
+## ✨ Features
 
-## 🌟 Features
-
-### ✨ Enhanced Features (New)
-- **Enhanced Tool Integration** - Advanced tool registry with validation and caching
-- **JSON Mode Support** - Structured JSON output with schema validation
-- **Prompt Caching System** - Multi-strategy caching for performance optimization
-- **Sub-Agent Architecture** - Hierarchical agent system for complex tasks
-- **Advanced RAG Pipeline** - Enhanced retrieval augmented generation
-
-### 🔧 Core Features
-- **Code Generation** - AI-powered code generation and completion
-- **FIM Completion** - Fill-in-middle code completion
-- **Prefix Completion** - Context-aware prefix completion
-- **Memory Management** - Intelligent memory and context management
-- **Vector Database** - High-performance vector storage and retrieval
-- **SQL Database** - Structured data storage and querying
-- **Reasoning Engine** - Advanced logical reasoning capabilities
+- **🤖 AI-Powered Assistance**: Chat with advanced AI models (DeepSeek, GPT, Claude)
+- **💻 Full System Access**: Execute commands and manage your development environment
+- **🔧 Code Generation & Analysis**: Generate, debug, and optimize code with AI
+- **📚 RAG Pipeline**: Advanced retrieval-augmented generation for context-aware responses
+- **🧠 Reasoning Engine**: Step-by-step problem solving with chain-of-thought reasoning
+- **💾 Memory System**: Persistent memory for context retention across sessions
+- **🌈 Beautiful CLI**: Rainbow interface with rich formatting
+- **🔄 Multi-Language Support**: Python and TypeScript implementations
 
 ## 🚀 Quick Start
 
+### Prerequisites
+
+- Python 3.8 or higher
+- Node.js 18 or higher (for TypeScript components)
+- Git
+
 ### Installation
+
+1. Clone the repository:
 ```bash
-# Clone repository
-git clone https://github.com/basedgod55hjl/DEEP-CLI.git
-cd DEEP-CLI
-
-# Install dependencies
-pip install -r requirements_enhanced.txt
-
-# Run enhanced CLI
-python enhanced_based_god_cli.py
+git clone https://github.com/yourusername/based-coder-cli.git
+cd based-coder-cli
 ```
 
-### Basic Usage
+2. Install Python dependencies:
 ```bash
-# Start interactive mode
-python enhanced_based_god_cli.py
-
-# Show system status
-python enhanced_based_god_cli.py --status
-
-# Run tests
-python enhanced_based_god_cli.py --test
+pip install -r requirements.txt
 ```
 
-## 🎮 Commands
+3. Install Node.js dependencies (optional, for TypeScript tools):
+```bash
+npm install
+```
 
-### Enhanced Commands
-- `/enhanced-tools` - Show enhanced tool integration status
-- `/json-mode <schema>` - Enable JSON mode with schema validation
-- `/cache-stats` - Show prompt caching statistics
-- `/sub-agents` - Show sub-agent system status
-- `/complex-task <desc>` - Execute complex task with sub-agents
+4. Set up your API keys:
+```bash
+python main.py --setup
+```
 
-### Core Commands
-- `/help` - Show help menu
-- `/status` - Show system status
-- `/chat <message>` - Chat with AI
-- `/code <prompt>` - Generate code
-- `/debug <code>` - Debug and fix code
-- `/search <query>` - Web search
-- `/rag <query>` - RAG pipeline query
-- `/reason <question>` - Reasoning engine
-- `/memory <operation>` - Memory operations
+Or create a `.env` file:
+```env
+DEEPSEEK_API_KEY=your_deepseek_api_key
+HUGGINGFACE_API_KEY=your_huggingface_token
+OPENAI_API_KEY=your_openai_key  # Optional
+ANTHROPIC_API_KEY=your_anthropic_key  # Optional
+```
 
-## 📁 Project Structure
+### Running the CLI
+
+Start the interactive mode:
+```bash
+python main.py
+```
+
+Or use command-line arguments:
+```bash
+python main.py --interactive
+```
+
+## 📖 Commands
+
+### System Commands
+- `/help` - Show available commands
+- `/status` - Display system status
+- `/clear` - Clear conversation history
+- `/history` - Show conversation history
+- `/setup` - Configure API keys
+
+### AI Commands
+- `/chat <message>` - Chat with AI assistant
+- `/code <prompt>` - Generate code from description
+- `/debug <code>` - Debug and fix code issues
+- `/analyze <code>` - Analyze code structure and quality
+- `/reason <question>` - Use reasoning engine for problem-solving
+
+### Memory Commands
+- `/remember <content>` - Store information in memory
+- `/recall <query>` - Retrieve information from memory
+
+### Advanced Features
+- `/fim <prefix> <suffix>` - Fill-in-Middle completion
+- `/prefix <text>` - Prefix-based code completion
+- `/rag <query>` - Query using RAG pipeline
+- `/web <query>` - Search the web
+- `/scrape <url>` - Extract content from websites
+
+## 🏗️ Architecture
 
 ```
-DEEP-BASED-CLI/
-├── enhanced_based_god_cli.py      # Enhanced main CLI
-├── main.py                        # Original CLI (backup)
-├── config.py                      # Configuration management
-├── requirements_enhanced.txt      # Enhanced dependencies
-├── tools/                         # Core tools and systems
-│   ├── enhanced_tool_integration.py
-│   ├── json_mode_support.py
-│   ├── prompt_caching_system.py
-│   ├── sub_agent_architecture.py
+based-coder-cli/
+├── main.py              # Main entry point
+├── config.py            # Configuration management
+├── requirements.txt     # Python dependencies
+├── package.json         # Node.js dependencies
+├── tsconfig.json        # TypeScript configuration
+├── tools/               # Python tools and agents
+│   ├── __init__.py
 │   ├── base_tool.py
-│   ├── tool_manager.py
 │   ├── llm_query_tool.py
-│   ├── unified_agent_system.py
-│   ├── simple_embedding_tool.py
-│   ├── sql_database_tool.py
-│   ├── rag_pipeline_tool.py
-│   ├── vector_database_tool.py
 │   ├── memory_tool.py
-│   ├── reasoning_engine.py
-│   ├── deepseek_coder_tool.py
-│   ├── fim_completion_tool.py
-│   └── prefix_completion_tool.py
-├── config/                        # Configuration files
-├── data/                          # Data storage
-├── logs/                          # Log files
-├── docs/                          # Documentation
-└── tests/                         # Test files
+│   ├── rag_pipeline_tool.py
+│   └── ...
+├── src/                 # TypeScript implementation
+│   ├── ToolManager.ts
+│   ├── cli/
+│   ├── tools/
+│   └── common/
+├── data/                # Data storage
+│   ├── unified_agent.db
+│   ├── embeddings/
+│   └── models/
+└── config/              # Configuration files
+    ├── api_keys.py
+    └── enhanced_config.json
 ```
 
 ## 🔧 Configuration
 
-### Environment Variables
-```bash
-# DeepSeek API (configured in tools/llm_query_tool.py)
-DEEPSEEK_API_KEY=your_api_key_here
+The CLI can be configured through:
 
-# HuggingFace Token (optional)
-HUGGINGFACE_TOKEN=your_token_here
+1. **Environment Variables** (`.env` file)
+2. **Configuration Files** (`config/enhanced_config.json`)
+3. **Command-line Arguments**
+
+### Configuration Options
+
+```json
+{
+  "llm": {
+    "default_model": "deepseek-chat",
+    "temperature": 0.7,
+    "max_tokens": 4000
+  },
+  "embedding": {
+    "model": "qwen3-embedding",
+    "dimension": 1024
+  },
+  "rag": {
+    "chunk_size": 1000,
+    "overlap": 200,
+    "top_k": 5
+  }
+}
 ```
 
-### API Keys
-The system uses hardcoded DeepSeek API key for immediate functionality:
-- **DeepSeek API**: Configured in `tools/llm_query_tool.py`
-- **No environment setup required** for basic functionality
+## 🛠️ Development
 
-## 📊 Performance
-
-| Metric | Before | After | Improvement |
-|--------|--------|-------|-------------|
-| Tool Response Time | 2-5s | 0.1-0.5s | 80-90% faster |
-| Cache Hit Rate | N/A | 85-95% | New feature |
-| JSON Parsing Success | 70% | 98% | 28% improvement |
-| Complex Task Success | 60% | 90% | 30% improvement |
-| System Reliability | 85% | 98% | 13% improvement |
-
-## 🧪 Testing
+### Building TypeScript Components
 
 ```bash
-# Run all tests
-python enhanced_based_god_cli.py --test
-
-# Test individual components
-python tools/enhanced_tool_integration.py
-python tools/json_mode_support.py
-python tools/prompt_caching_system.py
-python tools/sub_agent_architecture.py
+npm run build
 ```
 
-## 📚 Documentation
+### Running Tests
 
-- [Anthropic Cookbook Upgrade Summary](ANTHROPIC_COOKBOOK_UPGRADE_SUMMARY.md)
-- [Tools Cleanup Summary](TOOLS_CLEANUP_SUMMARY.md)
-- [API Documentation](docs/api/)
+```bash
+# Python tests
+pytest
+
+# TypeScript tests
+npm test
+```
+
+### Linting
+
+```bash
+# Python
+pylint tools/
+black tools/
+
+# TypeScript
+npm run lint
+```
 
 ## 🤝 Contributing
 
+Contributions are welcome! Please feel free to submit a Pull Request.
+
 1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests
-5. Submit a pull request
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
 ## 📄 License
 
-This project is licensed under the MIT License.
+This project is licensed under the MIT License - see the LICENSE file for details.
 
 ## 🙏 Acknowledgments
 
-- Inspired by [Anthropic Cookbook](https://github.com/anthropics/anthropic-cookbook)
-- Built with DeepSeek AI models
-- Enhanced with modern AI development patterns
+- Made by @Lucariolucario55 on Telegram
+- Built with DeepSeek, OpenAI, and Anthropic APIs
+- Inspired by modern AI coding assistants
+
+## 📞 Support
+
+For support, questions, or feature requests:
+- Telegram: @Lucariolucario55
+- GitHub Issues: [Create an issue](https://github.com/yourusername/based-coder-cli/issues)
 
 ---
 
-**Made with ❤️ by @Lucariolucario55 on Telegram**
-
-*Experience the future of AI-powered development with Enhanced BASED CODER CLI!*
+**Note**: This is an AI-powered tool. Always review generated code and commands before execution. Use responsibly and ensure you understand the implications of granting system access to AI tools.

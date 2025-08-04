@@ -58,10 +58,21 @@ from tools.vector_database_tool import VectorDatabaseTool
 from tools.deepseek_coder_tool import DeepSeekCoderTool
 from tools.tool_manager import ToolManager
 
+# Try to import enhanced tools (optional)
+try:
+    from tools.enhanced_tool_integration import EnhancedToolManager
+    from tools.json_mode_support import JSONModeManager
+    from tools.prompt_caching_system import PromptCache
+    from tools.sub_agent_architecture import SubAgentSystem
+    ENHANCED_FEATURES = True
+except ImportError:
+    ENHANCED_FEATURES = False
+
 # Set up rich console
 console = Console()
 
 # Set up logging
+os.makedirs('logs', exist_ok=True)
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
