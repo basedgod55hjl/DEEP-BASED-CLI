@@ -133,6 +133,8 @@ data/cache/
 data/logs/
 data/exports/
 data/temp_embeddings/
+data/models/qwen3_embedding/model.safetensors
+data/models/qwen3_embedding/tokenizer.json
 logs/
 scans/
 *.log
