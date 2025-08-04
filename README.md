@@ -85,4 +85,19 @@ g++ tools/website_mapper.cpp -o tools/website_mapper -lcurl
 tools/website_mapper https://example.com
 ```
 
+### Web UI
+
+A simple web interface is available to run the mapper from your browser.
+
+```bash
+# build the C++ mapper if you haven't already
+g++ tools/website_mapper.cpp -o tools/website_mapper -lcurl
+
+# start the web server
+node tools/website_mapper_server.js
+```
+
+Then open [http://localhost:3001](http://localhost:3001) and enter a URL to
+see the discovered links and button labels.
+
 ## Made by @Lucariolucario55 on Telegram
