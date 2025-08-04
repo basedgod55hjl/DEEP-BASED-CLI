@@ -11,6 +11,7 @@ from .json_memory_tool import JSONMemoryTool
 from .llm_query_tool import LLMQueryTool
 from .reasoning_engine import FastReasoningEngine
 from .tool_manager import ToolManager
+from .unified_tool_manager import UnifiedToolManager
 from .fim_completion_tool import FIMCompletionTool
 from .prefix_completion_tool import PrefixCompletionTool
 from .unified_agent_system import UnifiedAgentSystem, EnhancedContact, EnhancedMemory
@@ -34,6 +35,7 @@ __all__ = [
     'LLMQueryTool',
     'FastReasoningEngine',
     'ToolManager',
+    'UnifiedToolManager',
     'FIMCompletionTool',
     'PrefixCompletionTool',
     'UnifiedAgentSystem',
