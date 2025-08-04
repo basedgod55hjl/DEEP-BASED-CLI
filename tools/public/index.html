@@ -3,31 +3,55 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Website Mapper</title>
-  <style>
-    body { font-family: Arial, sans-serif; margin: 2rem; }
-    h1 { color: #333; }
-    form { margin-bottom: 1rem; }
-    input[type=text] { width: 300px; padding: 0.5rem; }
-    button { padding: 0.5rem 1rem; }
-    pre { background: #f4f4f4; padding: 1rem; border: 1px solid #ddd; max-height: 400px; overflow: auto; }
-  </style>
+  <title>BASED CLI WebUI</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <h1>Website Mapper</h1>
-  <form id="mapperForm">
-    <input id="urlInput" type="text" placeholder="https://example.com" required />
-    <button type="submit">Map</button>
-  </form>
-  <pre id="output"></pre>
+  <div id="topbar">BASED CLI WebUI</div>
+  <div id="container">
+    <div class="panel">
+      <h2>CLI Runner</h2>
+      <input id="cliInput" type="text" placeholder="--status" />
+      <div class="buttons">
+        <button id="runBtn">Run CLI</button>
+        <button id="statusBtn">Status</button>
+      </div>
+      <pre id="cliOutput"></pre>
+    </div>
+    <div class="panel">
+      <h2>Website Mapper (C++)</h2>
+      <input id="urlInput" type="text" placeholder="https://example.com" />
+      <button id="mapBtn">Map</button>
+      <pre id="mapOutput"></pre>
+    </div>
+  </div>
+
   <script>
-    const form = document.getElementById('mapperForm');
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
+    async function runCLI(cmd) {
+      const res = await fetch('/api/cli', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ cmd })
+      });
+      return res.json();
+    }
+
+    document.getElementById('runBtn').addEventListener('click', async () => {
+      const cmd = document.getElementById('cliInput').value;
+      const data = await runCLI(cmd);
+      document.getElementById('cliOutput').textContent = data.error || data.output;
+    });
+
+    document.getElementById('statusBtn').addEventListener('click', async () => {
+      const data = await runCLI('--status');
+      document.getElementById('cliOutput').textContent = data.error || data.output;
+    });
+
+    document.getElementById('mapBtn').addEventListener('click', async () => {
       const url = document.getElementById('urlInput').value;
       const res = await fetch(`/api/map?url=${encodeURIComponent(url)}`);
       const data = await res.json();
-      document.getElementById('output').textContent = data.output.join('\n');
+      document.getElementById('mapOutput').textContent = data.error || data.output.join('\n');
     });
   </script>
 </body>

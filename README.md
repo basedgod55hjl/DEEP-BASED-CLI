@@ -87,17 +87,20 @@ tools/website_mapper https://example.com
 
 ### Web UI
 
-A simple web interface is available to run the mapper from your browser.
+A Replit-style web interface is available to run CLI commands and the C++
+website mapper from your browser.
 
 ```bash
 # build the C++ mapper if you haven't already
 g++ tools/website_mapper.cpp -o tools/website_mapper -lcurl
 
 # start the web server
-node tools/website_mapper_server.js
+node tools/webui_server.js
 ```
 
-Then open [http://localhost:3001](http://localhost:3001) and enter a URL to
-see the discovered links and button labels.
+Open [http://localhost:3001](http://localhost:3001) to access the interface.
+Use the **CLI Runner** to execute `enhanced_based_god_cli.py` commands like
+`--status` and the **Website Mapper** panel to explore links and buttons on any
+page.
 
 ## Made by @Lucariolucario55 on Telegram
