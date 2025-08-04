@@ -1,0 +1,5223 @@
+{
+  "swarm_summary": {
+    "total_agents": 190,
+    "total_tasks": 400,
+    "successful_tasks": 400,
+    "failed_tasks": 0,
+    "success_rate": 1.0,
+    "total_processing_time": 462.9071536064148,
+    "avg_gpu_usage": 0.044000000000000004,
+    "avg_memory_usage": 76.361884765625
+  },
+  "agent_distribution": {
+    "reader": 38,
+    "reasoner": 38,
+    "rewriter": 38,
+    "debugger": 38,
+    "tester": 38
+  },
+  "results_by_type": {
+    "120": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "160": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "10": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "50": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "90": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "55": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "60": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "25": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "105": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "35": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "150": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "153": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "78": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "158": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "163": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "93": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "18": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "103": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "33": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "154": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "79": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "94": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "19": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "24": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "104": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "109": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "0": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "190": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "380": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "115": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "305": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "40": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "230": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "155": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "345": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "80": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "270": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "5": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "195": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "385": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "310": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "45": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "235": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "350": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "85": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "275": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "200": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "390": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "125": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "315": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "240": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "165": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "355": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "280": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "15": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "205": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "395": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "130": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "320": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "245": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "170": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "360": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "95": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "285": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "20": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "210": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "135": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "325": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "250": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "175": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "365": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "100": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "290": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "215": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "140": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "330": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "65": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "255": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "180": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "370": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "295": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "30": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "220": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "145": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "335": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "70": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "260": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "185": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "375": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "110": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "300": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "225": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "340": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "75": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "265": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "76": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "1": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "41": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "46": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "126": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "51": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "91": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "96": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "21": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "61": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "176": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "101": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "26": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "106": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "71": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "186": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "111": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "151": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "152": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "77": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "117": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "42": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "82": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "47": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "162": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "87": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "12": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "127": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "167": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "92": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "17": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "132": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "172": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "22": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "137": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "177": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "67": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "107": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "147": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "187": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "112": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "37": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "38": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "228": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "343": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "268": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "3": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "193": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "383": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "118": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "308": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "43": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "233": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "348": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "83": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "273": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "8": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "198": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "388": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "123": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "313": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "48": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "238": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "353": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "88": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "278": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "13": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "203": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "393": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "128": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "318": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "53": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "243": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "168": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "358": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "283": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "208": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "398": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "133": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "323": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "58": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "248": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "173": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "363": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "98": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "288": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "23": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "213": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "138": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "328": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "63": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "253": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "178": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "368": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "293": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "28": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "218": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "143": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "333": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "68": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "258": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "183": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "373": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "108": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "298": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "223": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "148": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "338": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "73": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "263": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "188": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "378": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "113": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "303": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "114": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "304": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "39": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "229": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "344": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "269": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "4": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "194": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "384": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "119": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "309": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "44": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "234": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "159": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "349": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "84": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "274": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "9": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "199": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "389": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "124": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "314": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "49": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "239": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "164": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "354": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "89": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "279": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "14": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "204": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "394": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "129": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "319": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "54": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "244": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "169": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "359": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "284": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "209": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "399": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "134": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "324": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "59": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "249": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "174": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "364": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "99": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "289": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "214": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "139": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "329": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "64": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "254": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "179": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "369": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "294": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "29": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "219": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "144": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "334": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "69": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "259": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "184": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "374": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "299": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "34": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "224": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "149": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "339": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "74": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "264": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "189": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "379": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "266": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "191": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "381": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "116": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "306": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "231": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "81": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "271": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "6": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "196": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "386": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "121": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "311": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "236": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "316": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "241": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "281": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "16": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "206": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "396": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "131": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "321": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "56": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "246": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "171": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "361": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "286": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "211": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "251": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "366": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "291": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "216": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "296": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "31": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "221": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "261": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "376": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "301": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "36": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "226": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "341": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "342": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "267": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "2": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "192": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "382": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "307": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "232": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "157": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "347": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "272": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "7": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "197": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "387": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "122": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "312": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "237": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "352": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "277": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "202": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "392": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "317": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "52": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "242": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "357": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "282": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "207": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "397": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "322": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "57": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "247": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "362": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "212": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "327": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "62": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "252": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "367": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "102": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "292": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "27": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "217": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "257": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "297": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "32": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "222": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "337": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "72": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "262": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "377": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "302": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "227": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "146": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "161": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "86": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "141": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "156": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "166": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "136": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "66": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "181": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "11": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "336": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "276": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "331": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "346": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "351": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "326": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "371": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "201": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "391": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "182": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "372": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "256": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "356": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "97": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "287": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "142": {
+      "count": 1,
+      "success_rate": 1.0
+    },
+    "332": {
+      "count": 1,
+      "success_rate": 1.0
+    }
+  },
+  "detailed_results": [
+    {
+      "agent_id": 6,
+      "task_id": "task_120",
+      "success": true,
+      "processing_time": 0.011430501937866211,
+      "gpu_usage": 0.0,
+      "memory_usage": 65.0078125,
+      "result_summary": "{'file_size': 4323, 'lines': 135, 'encoding': 'utf-8', 'content_preview': '#!/usr/bin/env python3\\n\"\"\"\\nFix DeepSeek API Issues\\nScript to resolve DeepSeek API balance and configuration issues\\n\"\"\"\\n\\"
+    },
+    {
+      "agent_id": 8,
+      "task_id": "task_160",
+      "success": true,
+      "processing_time": 0.07386374473571777,
+      "gpu_usage": 0.0,
+      "memory_usage": 69.19140625,
+      "result_summary": "{'file_size': 15735, 'lines': 443, 'encoding': 'utf-8', 'content_preview': '#!/usr/bin/env python3\\n\"\"\"\\nComplete Deanna Memory System Setup\\nIntegrates DEANNA_MEMORY.JSON, local embeddings, DeepSeek "
+    },
+    {
+      "agent_id": 10,
+      "task_id": "task_10",
+      "success": true,
+      "processing_time": 0.05491447448730469,
+      "gpu_usage": 0.0,
+      "memory_usage": 68.65234375,
+      "result_summary": "{'file_size': 38140, 'lines': 977, 'encoding': 'utf-8', 'content_preview': '#!/usr/bin/env python3\\n\"\"\"\\nAdvanced Claude Coder Agent - Enhanced with Reasoning, Agents, CoT Loops, and Claude 4 Opus Thi"
+    },
+    {
+      "agent_id": 12,
+      "task_id": "task_50",
+      "success": true,
+      "processing_time": 0.07536005973815918,
+      "gpu_usage": 0.0,
+      "memory_usage": 69.11328125,
+      "result_summary": "{'file_size': 21744, 'lines': 599, 'encoding': 'utf-8', 'content_preview': '#!/usr/bin/env python3\\n\"\"\"\\n\ud83d\ude80 BASED CODER CLI - Unified Configuration System\\nMade by @Lucariolucario55 on Telegram\\n\\nCons"
+    },
+    {
+      "agent_id": 14,
+      "task_id": "task_90",
+      "success": true,
+      "processing_time": 0.04898810386657715,
+      "gpu_usage": 0.0,
+      "memory_usage": 69.078125,
+      "result_summary": "{'file_size': 18497, 'lines': 476, 'encoding': 'utf-8', 'content_preview': '#!/usr/bin/env python3\\n\"\"\"\\n\\uf8ff\u00fc\u00f6\u00c4 BASED CODER CLI - Unified Download Manager\\nMade by @Lucariolucario55 on Telegram\\n\\n"
+    },
+    {
+      "agent_id": 17,
+      "task_id": "task_55",
+      "success": true,
+      "processing_time": 0.015257120132446289,
+      "gpu_usage": 0.0,
+      "memory_usage": 65.21875,
+      "result_summary": "{'file_size': 14409, 'lines': 373, 'encoding': 'utf-8', 'content_preview': 'import logging\\nlogger = logging.getLogger(__name__)\\n#!/usr/bin/env python3\\n\"\"\"\\nConfiguration Manager for BASED CODER CLI"
+    },
+    {
+      "agent_id": 22,
+      "task_id": "task_60",
+      "success": true,
+      "processing_time": 0.06453990936279297,
+      "gpu_usage": 0.0,
+      "memory_usage": 68.90625,
+      "result_summary": "{'file_size': 14398, 'lines': 393, 'encoding': 'utf-8', 'content_preview': 'import logging\\nlogger = logging.getLogger(__name__)\\n#!/usr/bin/env python3\\n\"\"\"\\nDatabase Cleaner and Maintenance Script f"
+    },
+    {
+      "agent_id": 25,
+      "task_id": "task_25",
+      "success": true,
+      "processing_time": 0.024634361267089844,
+      "gpu_usage": 0.0,
+      "memory_usage": 66.5546875,
+      "result_summary": "{'file_size': 33074, 'lines': 951, 'encoding': 'utf-8', 'content_preview': '#!/usr/bin/env python3\\n\"\"\"\\nClaude 4 Coder Agent - Advanced Codebase Analysis and Upgrade System\\nGod-level development age"
+    },
+    {
+      "agent_id": 29,
+      "task_id": "task_105",
+      "success": true,
+      "processing_time": 0.04055166244506836,
+      "gpu_usage": 0.0,
+      "memory_usage": 68.0859375,
+      "result_summary": "{'file_size': 12458, 'lines': 332, 'encoding': 'utf-8', 'content_preview': '#!/usr/bin/env python3\\n\"\"\"\\nEnhanced DEEP-CLI with Qwen3 Embeddings\\nUses the downloaded Qwen3 embedding model for high-qua"
+    },
+    {
+      "agent_id": 35,
+      "task_id": "task_35",
+      "success": true,
+      "processing_time": 0.06030154228210449,
+      "gpu_usage": 0.0,
+      "memory_usage": 68.609375,
+      "result_summary": "{'file_size': 27647, 'lines': 705, 'encoding': 'utf-8', 'content_preview': 'import logging\\nlogger = logging.getLogger(__name__)\\n#!/usr/bin/env python3\\n\"\"\"\\nClaude Coder Agent - Fixed Edition\\nAdvan"
+    },
+    {
+      "agent_id": 36,
+      "task_id": "task_150",
+      "success": true,
+      "processing_time": 0.01985764503479004,
+      "gpu_usage": 0.0,
+      "memory_usage": 66.54296875,
+      "result_summary": "{'file_size': 14188, 'lines': 339, 'encoding': 'utf-8', 'content_preview': '#!/usr/bin/env python3\\n\"\"\"\\n\\uf8ff\u00fc\u00ee\u00eb API Keys Setup Script for BASED CODER CLI\\nInteractive script to configure API keys a"
+    },
+    {
+      "agent_id": 115,
+      "task_id": "task_153",
+      "success": true,
+      "processing_time": 0.04230093955993652,
+      "gpu_usage": 0.0,
+      "memory_usage": 68.37890625,
+      "result_summary": "{'issues_found': ['Too many print statements'], 'syntax_valid': True, 'debug_complete': True, 'file_path': 'setup_api_keys.py', 'total_issues': 1}"
+    },
+    {
+      "agent_id": 116,
+      "task_id": "task_78",
+      "success": true,
+      "processing_time": 0.06272745132446289,
+      "gpu_usage": 0.0,
+      "memory_usage": 68.90234375,
+      "result_summary": "{'issues_found': [], 'syntax_valid': True, 'debug_complete': True, 'file_path': 'demo_deepseek_coder.py', 'total_issues': 0}"
+    },
+    {
+      "agent_id": 120,
+      "task_id": "task_158",
+      "success": true,
+      "processing_time": 0.018800973892211914,
+      "gpu_usage": 0.0,
+      "memory_usage": 66.5234375,
+      "result_summary": "{'issues_found': ['File is very long'], 'syntax_valid': True, 'debug_complete': True, 'file_path': 'setup_based_coder.py', 'total_issues': 1}"
+    },
+    {
+      "agent_id": 125,
+      "task_id": "task_163",
+      "success": true,
+      "processing_time": 0.042047977447509766,
+      "gpu_usage": 0.0,
+      "memory_usage": 69.03125,
+      "result_summary": "{'issues_found': ['Bare except clauses found', 'Too many print statements'], 'syntax_valid': True, 'debug_complete': True, 'file_path': 'setup_complete_deanna_system.py', 'total_issues': 2}"
+    },
+    {
+      "agent_id": 131,
+      "task_id": "task_93",
+      "success": true,
+      "processing_time": 0.05388140678405762,
+      "gpu_usage": 0.0,
+      "memory_usage": 68.95703125,
+      "result_summary": "{'issues_found': ['Too many print statements'], 'syntax_valid': True, 'debug_complete': True, 'file_path': 'download_manager.py', 'total_issues': 1}"
+    },
+    {
+      "agent_id": 132,
+      "task_id": "task_18",
+      "success": true,
+      "processing_time": 0.08368229866027832,
+      "gpu_usage": 0.0,
+      "memory_usage": 69.9765625,
+      "result_summary": "{'issues_found': ['Bare except clauses found', 'Too many print statements', 'Wildcard imports found', 'File is very long', 'Syntax error: unterminated string literal (detected at line 805) (claude_cod"
+    },
+    {
+      "agent_id": 141,
+      "task_id": "task_103",
+      "success": true,
+      "processing_time": 0.03232288360595703,
+      "gpu_usage": 0.0,
+      "memory_usage": 67.37890625,
+      "result_summary": "{'issues_found': [], 'syntax_valid': True, 'debug_complete': True, 'file_path': 'enhanced_based_god_cli.py', 'total_issues': 0}"
+    },
+    {
+      "agent_id": 147,
+      "task_id": "task_33",
+      "success": true,
+      "processing_time": 0.04215264320373535,
+      "gpu_usage": 0.0,
+      "memory_usage": 68.16796875,
+      "result_summary": "{'issues_found': ['Bare except clauses found', 'Too many print statements', 'Wildcard imports found', 'File is very long', 'Syntax error: unterminated string literal (detected at line 728) (claude_cod"
+    },
+    {
+      "agent_id": 154,
+      "task_id": "task_154",
+      "success": true,
+      "processing_time": 0.05002593994140625,
+      "gpu_usage": 0.0,
+      "memory_usage": 69.18359375,
+      "result_summary": "{'import_test': False, 'syntax_test': True, 'basic_functionality': True, 'test_complete': True, 'file_path': 'setup_api_keys.py'}"
+    },
+    {
+      "agent_id": 155,
+      "task_id": "task_79",
+      "success": true,
+      "processing_time": 0.03667783737182617,
+      "gpu_usage": 0.0,
+      "memory_usage": 67.46875,
+      "result_summary": "{'import_test': False, 'syntax_test': True, 'basic_functionality': True, 'test_complete': True, 'file_path': 'demo_deepseek_coder.py'}"
+    },
+    {
+      "agent_id": 170,
+      "task_id": "task_94",
+      "success": true,
+      "processing_time": 0.07098793983459473,
+      "gpu_usage": 0.0,
+      "memory_usage": 68.76171875,
+      "result_summary": "{'import_test': False, 'syntax_test': True, 'basic_functionality': True, 'test_complete': True, 'file_path': 'download_manager.py'}"
+    },
+    {
+      "agent_id": 171,
+      "task_id": "task_19",
+      "success": true,
+      "processing_time": 0.06827807426452637,
+      "gpu_usage": 0.0,
+      "memory_usage": 68.85546875,
+      "result_summary": "{'import_test': False, 'syntax_test': False, 'basic_functionality': True, 'test_complete': True, 'file_path': 'claude_coder_agent.py'}"
+    },
+    {
+      "agent_id": 176,
+      "task_id": "task_24",
+      "success": true,
+      "processing_time": 0.029285430908203125,
+      "gpu_usage": 0.0,
+      "memory_usage": 67.078125,
+      "result_summary": "{'import_test': False, 'syntax_test': True, 'basic_functionality': True, 'test_complete': True, 'file_path': 'claude_coder_agent_basic.py'}"
+    },
+    {
+      "agent_id": 180,
+      "task_id": "task_104",
+      "success": true,
+      "processing_time": 0.033127784729003906,
+      "gpu_usage": 0.0,
+      "memory_usage": 67.390625,
+      "result_summary": "{'import_test': False, 'syntax_test': True, 'basic_functionality': True, 'test_complete': True, 'file_path': 'enhanced_based_god_cli.py'}"
+    },
+    {
+      "agent_id": 185,
+      "task_id": "task_109",
+      "success": true,
+      "processing_time": 0.028983354568481445,
+      "gpu_usage": 0.0,
+      "memory_usage": 67.375,
+      "result_summary": "{'import_test': False, 'syntax_test': True, 'basic_functionality': True, 'test_complete': True, 'file_path': 'enhanced_cli.py'}"
+    },
+    {
+      "agent_id": 0,
+      "task_id": "task_0",
+      "success": true,
+      "processing_time": 0.192582368850708,
+      "gpu_usage": 0.0,
+      "memory_usage": 73.2890625,
+      "result_summary": "{'file_size': 27143, 'lines': 780, 'encoding': 'utf-8', 'content_preview': '#!/usr/bin/env python3\\n\"\"\"\\nAI Swarm System - 190 AI Agents for Codebase Analysis and Rewriting\\nMulti-agent system with GP"
+    },
+    {
+      "agent_id": 0,
+      "task_id": "task_190",
+      "success": true,
+      "processing_time": 0.20929956436157227,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.6171875,
+      "result_summary": "{'file_size': 9395, 'lines': 281, 'encoding': 'utf-8', 'content_preview': '#!/usr/bin/env python3\\n\"\"\"\\nSimple Test Script for DEEP-CLI\\nTests basic functionality without complex imports\\n\"\"\"\\n\\nimpor"
+    },
+    {
+      "agent_id": 0,
+      "task_id": "task_380",
+      "success": true,
+      "processing_time": 0.25429654121398926,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.7890625,
+      "result_summary": "{'file_size': 17342, 'lines': 459, 'encoding': 'utf-8', 'content_preview': '\"\"\"\\nWeb Scraper Tool - Enhanced BASED GOD CLI\\nModular web scraping with Agent Zero reasoning patterns\\n\"\"\"\\n\\nimport aioht"
+    },
+    {
+      "agent_id": 1,
+      "task_id": "task_115",
+      "success": true,
+      "processing_time": 0.46592116355895996,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.44140625,
+      "result_summary": "{'file_size': 10194, 'lines': 268, 'encoding': 'utf-8', 'content_preview': '#!/usr/bin/env python3\\n\"\"\"\\nFile Encoding Fixer - Fixes file reading issues in DEEP-CLI codebase\\n\"\"\"\\n\\nimport os\\nimport "
+    },
+    {
+      "agent_id": 1,
+      "task_id": "task_305",
+      "success": true,
+      "processing_time": 0.2416694164276123,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.96484375,
+      "result_summary": "{'file_size': 36733, 'lines': 1060, 'encoding': 'utf-8', 'content_preview': '#!/usr/bin/env python3\\n\"\"\"\\n\ud83d\ude80 DeepSeek Coder Tool - Advanced Code Generation & Analysis\\nMade by @Lucariolucario55 on Tele"
+    },
+    {
+      "agent_id": 2,
+      "task_id": "task_40",
+      "success": true,
+      "processing_time": 0.3174467086791992,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.63671875,
+      "result_summary": "{'file_size': 18690, 'lines': 504, 'encoding': 'utf-8', 'content_preview': 'import logging\\nlogger = logging.getLogger(__name__)\\n#!/usr/bin/env python3\\n\"\"\"\\nClaude Coder Agent - Standalone Codebase "
+    },
+    {
+      "agent_id": 2,
+      "task_id": "task_230",
+      "success": true,
+      "processing_time": 0.4076845645904541,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.4375,
+      "result_summary": "{'file_size': 1846, 'lines': 57, 'encoding': 'utf-8', 'content_preview': '#!/usr/bin/env python3\\n\"\"\"\\nAPI Keys Configuration\\nCentralized configuration for all API keys used in the Enhanced BASED GOD"
+    },
+    {
+      "agent_id": 3,
+      "task_id": "task_155",
+      "success": true,
+      "processing_time": 0.11624407768249512,
+      "gpu_usage": 0.0,
+      "memory_usage": 71.00390625,
+      "result_summary": "{'file_size': 19433, 'lines': 535, 'encoding': 'utf-8', 'content_preview': 'import logging\\nlogger = logging.getLogger(__name__)\\n#!/usr/bin/env python3\\n\"\"\"\\n\ud83d\ude80 BASED CODER Setup Script\\nComprehensive"
+    },
+    {
+      "agent_id": 3,
+      "task_id": "task_345",
+      "success": true,
+      "processing_time": 0.23694181442260742,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.73046875,
+      "result_summary": "{'file_size': 26918, 'lines': 727, 'encoding': 'utf-8', 'content_preview': '\"\"\"\\nRAG Pipeline Tool - Retrieval-Augmented Generation for DEEP-CLI\\nIntegrates vector database, SQL database, and context-"
+    },
+    {
+      "agent_id": 4,
+      "task_id": "task_80",
+      "success": true,
+      "processing_time": 0.20671391487121582,
+      "gpu_usage": 0.0,
+      "memory_usage": 73.48046875,
+      "result_summary": "{'file_size': 10500, 'lines': 207, 'encoding': 'utf-8', 'content_preview': 'import logging\\nlogger = logging.getLogger(__name__)\\n#!/usr/bin/env python3\\n\"\"\"\\n\ud83d\ude80 BASED CODER CLI - Full System Demo\\nDem"
+    },
+    {
+      "agent_id": 4,
+      "task_id": "task_270",
+      "success": true,
+      "processing_time": 0.22119593620300293,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.453125,
+      "result_summary": "{'file_size': 6872, 'lines': 203, 'encoding': 'utf-8', 'content_preview': '\"\"\"\\nDEEP-CLI RAG Demo\\nDemonstrates all enhanced features: Vector DB, SQL, RAG, and Deanna persona\\n\"\"\"\\n\\nimport asyncio\\ni"
+    },
+    {
+      "agent_id": 5,
+      "task_id": "task_5",
+      "success": true,
+      "processing_time": 0.3680567741394043,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.0078125,
+      "result_summary": "{'file_size': 52723, 'lines': 1253, 'encoding': 'utf-8', 'content_preview': '#!/usr/bin/env python3\\n\"\"\"\\n\ud83d\ude80 BASED CODER CLI - Enhanced AI-Powered Command Line Interface\\nMade by @Lucariolucario55 on T"
+    },
+    {
+      "agent_id": 5,
+      "task_id": "task_195",
+      "success": true,
+      "processing_time": 0.28701281547546387,
+      "gpu_usage": 0.0,
+      "memory_usage": 76.1171875,
+      "result_summary": "{'file_size': 16198, 'lines': 416, 'encoding': 'utf-8', 'content_preview': '#!/usr/bin/env python3\\n\"\"\"\\nSystem Status Script for BASED CODER CLI\\nComprehensive system monitoring and status reporting\\"
+    },
+    {
+      "agent_id": 5,
+      "task_id": "task_385",
+      "success": true,
+      "processing_time": 0.0956277847290039,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.46875,
+      "result_summary": "{'file_size': 1351, 'lines': 43, 'encoding': 'utf-8', 'content_preview': '\"\"\"\\nEnhanced BASED GOD CLI Tools Package\\nModular tool architecture inspired by Agent Zero\\n\"\"\"\\n\\nfrom .base_tool import Bas"
+    },
+    {
+      "agent_id": 6,
+      "task_id": "task_310",
+      "success": true,
+      "processing_time": 0.4276700019836426,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.4296875,
+      "result_summary": "{'file_size': 19792, 'lines': 530, 'encoding': 'utf-8', 'content_preview': '\"\"\"\\nFile Processor Tool - Enhanced BASED GOD CLI\\nIntelligent file processing with multiple format support\\n\"\"\"\\n\\nimport o"
+    },
+    {
+      "agent_id": 7,
+      "task_id": "task_45",
+      "success": true,
+      "processing_time": 0.08861708641052246,
+      "gpu_usage": 0.0,
+      "memory_usage": 70.375,
+      "result_summary": "{'file_size': 8241, 'lines': 230, 'encoding': 'utf-8', 'content_preview': 'import logging\\nlogger = logging.getLogger(__name__)\\n#!/usr/bin/env python3\\n\"\"\"\\n\ud83e\uddf9 BASED CODER CLI - Redundant Files Cleanu"
+    },
+    {
+      "agent_id": 7,
+      "task_id": "task_235",
+      "success": true,
+      "processing_time": 0.21460700035095215,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.4921875,
+      "result_summary": "{'file_size': 25580, 'lines': 679, 'encoding': 'utf-8', 'content_preview': '\"\"\"\\nEnhanced Configuration Management for DeepCLI\\nAdvanced configuration system with dynamic settings and validation\\n\"\"\"\\"
+    },
+    {
+      "agent_id": 8,
+      "task_id": "task_350",
+      "success": true,
+      "processing_time": 0.24027490615844727,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.64453125,
+      "result_summary": "{'file_size': 25026, 'lines': 635, 'encoding': 'utf-8', 'content_preview': '\"\"\"\\nAdvanced Reasoning Engine - Enhanced BASED GOD CLI\\nFast iterative LLM reasoning loops with multi-step analysis\\n\"\"\"\\n\\"
+    },
+    {
+      "agent_id": 9,
+      "task_id": "task_85",
+      "success": true,
+      "processing_time": 0.2831845283508301,
+      "gpu_usage": 0.0,
+      "memory_usage": 74.7109375,
+      "result_summary": "{'file_size': 2119, 'lines': 71, 'encoding': 'utf-8', 'content_preview': '#!/usr/bin/env python3\\n\"\"\"\\nDownload GGUF models for DEEP-CLI\\n\"\"\"\\n\\nimport os\\nimport sys\\nfrom pathlib import Path\\nfrom h"
+    },
+    {
+      "agent_id": 9,
+      "task_id": "task_275",
+      "success": true,
+      "processing_time": 0.439847469329834,
+      "gpu_usage": 0.0,
+      "memory_usage": 76.10546875,
+      "result_summary": "{'file_size': 11395, 'lines': 314, 'encoding': 'utf-8', 'content_preview': 'import logging\\nlogger = logging.getLogger(__name__)\\nh\"\"\"\\nUnified Agent System Demo - Enhanced BASED GOD CLI\\nDemonstrates"
+    },
+    {
+      "agent_id": 10,
+      "task_id": "task_200",
+      "success": true,
+      "processing_time": 0.38822054862976074,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.40625,
+      "result_summary": "{'file_size': 12757, 'lines': 329, 'encoding': 'utf-8', 'content_preview': 'import logging\\nlogger = logging.getLogger(__name__)\\n#!/usr/bin/env python3\\n\"\"\"\\nCore Features Test\\nTest the core working"
+    },
+    {
+      "agent_id": 10,
+      "task_id": "task_390",
+      "success": true,
+      "processing_time": 0.28303050994873047,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.48046875,
+      "result_summary": "{'file_size': 20227, 'lines': 535, 'encoding': 'utf-8', 'content_preview': '\"\"\"\\nAdvanced AI Agent Orchestrator Tool\\nProvides intelligent agent coordination and workflow management.\\n\"\"\"\\n\\nimport as"
+    },
+    {
+      "agent_id": 11,
+      "task_id": "task_125",
+      "success": true,
+      "processing_time": 0.2895636558532715,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.07421875,
+      "result_summary": "{'file_size': 4128, 'lines': 128, 'encoding': 'utf-8', 'content_preview': 'import logging\\nlogger = logging.getLogger(__name__)\\n#!/usr/bin/env python3\\n\"\"\"\\nInitialize Local Database for BASED CODER "
+    },
+    {
+      "agent_id": 11,
+      "task_id": "task_315",
+      "success": true,
+      "processing_time": 0.169419527053833,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.44140625,
+      "result_summary": "{'file_size': 7720, 'lines': 202, 'encoding': 'utf-8', 'content_preview': '\"\"\"\\nFIM Completion Tool - Enhanced BASED GOD CLI\\nFill-in-Middle completion for code using DeepSeek\\n\"\"\"\\n\\nfrom typing impo"
+    },
+    {
+      "agent_id": 12,
+      "task_id": "task_240",
+      "success": true,
+      "processing_time": 0.3890342712402344,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.4296875,
+      "result_summary": "{'file_size': 440, 'lines': 24, 'encoding': 'utf-8', 'content_preview': '\"\"\"\\nConfiguration package for Enhanced BASED GOD CLI\\n\"\"\"\\n\\nfrom .deepcli_config import (\\n    get_config, \\n    get_config_m"
+    },
+    {
+      "agent_id": 13,
+      "task_id": "task_165",
+      "success": true,
+      "processing_time": 0.2842400074005127,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.1953125,
+      "result_summary": "{'file_size': 6779, 'lines': 203, 'encoding': 'utf-8', 'content_preview': 'import logging\\nlogger = logging.getLogger(__name__)\\n#!/usr/bin/env python3\\n\"\"\"\\nSetup Deanna Persona from DEANNA_MEMORY.JS"
+    },
+    {
+      "agent_id": 13,
+      "task_id": "task_355",
+      "success": true,
+      "processing_time": 0.44175052642822266,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.51953125,
+      "result_summary": "{'file_size': 17855, 'lines': 473, 'encoding': 'utf-8', 'content_preview': '#!/usr/bin/env python3\\n\"\"\"\\nSimple Embedding Tool\\nLightweight embedding generation using basic NLP techniques\\n\"\"\"\\n\\nimpo"
+    },
+    {
+      "agent_id": 14,
+      "task_id": "task_280",
+      "success": true,
+      "processing_time": 0.5470566749572754,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.4375,
+      "result_summary": "{'file_size': 173, 'lines': 8, 'encoding': 'utf-8', 'content_preview': '# Examples module for DEEP-CLI\\n<<<<<<< Current (Your changes)\\n=======\\n \\n>>>>>>> d56552d76c9eaadc6392dfb8e6c57491de43475f\\n=="
+    },
+    {
+      "agent_id": 15,
+      "task_id": "task_15",
+      "success": true,
+      "processing_time": 0.0853738784790039,
+      "gpu_usage": 0.0,
+      "memory_usage": 70.1171875,
+      "result_summary": "{'file_size': 34706, 'lines': 1001, 'encoding': 'utf-8', 'content_preview': '#!/usr/bin/env python3\\n\"\"\"\\nClaude 4 Coder Agent - Advanced Codebase Analysis and Upgrade System\\nGod-level development ag"
+    },
+    {
+      "agent_id": 15,
+      "task_id": "task_205",
+      "success": true,
+      "processing_time": 0.2496323585510254,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.43359375,
+      "result_summary": "{'file_size': 10976, 'lines': 269, 'encoding': 'utf-8', 'content_preview': 'import logging\\nlogger = logging.getLogger(__name__)\\n#!/usr/bin/env python3\\n\"\"\"\\nFinal System Test\\nComprehensive test of "
+    },
+    {
+      "agent_id": 15,
+      "task_id": "task_395",
+      "success": true,
+      "processing_time": 0.20940661430358887,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.57421875,
+      "result_summary": "{'file_size': 19496, 'lines': 494, 'encoding': 'utf-8', 'content_preview': '\"\"\"\\nAdvanced Code Architecture Analysis Tool\\nProvides comprehensive system design and architecture analysis capabilities.\\"
+    },
+    {
+      "agent_id": 16,
+      "task_id": "task_130",
+      "success": true,
+      "processing_time": 0.13655781745910645,
+      "gpu_usage": 0.0,
+      "memory_usage": 72.53125,
+      "result_summary": "{'file_size': 35238, 'lines': 844, 'encoding': 'utf-8', 'content_preview': '#!/usr/bin/env python3\\n\"\"\"\\n\ud83d\ude80 BASED CODER CLI - Unified Main Entry Point\\nMade by @Lucariolucario55 on Telegram\\n\\nConsolid"
+    },
+    {
+      "agent_id": 16,
+      "task_id": "task_320",
+      "success": true,
+      "processing_time": 0.18653440475463867,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.41796875,
+      "result_summary": "{'file_size': 21404, 'lines': 554, 'encoding': 'utf-8', 'content_preview': '\"\"\"\\nLLM Query Tool - Enhanced BASED GOD CLI\\nLangChain-powered LLM integration with Agent Zero patterns\\n\"\"\"\\n\\nimport asyn"
+    },
+    {
+      "agent_id": 17,
+      "task_id": "task_245",
+      "success": true,
+      "processing_time": 0.14161157608032227,
+      "gpu_usage": 0.0,
+      "memory_usage": 72.69140625,
+      "result_summary": "{'file_size': 12898, 'lines': 341, 'encoding': 'utf-8', 'content_preview': '#!/usr/bin/env python3\\n\"\"\"\\nEnhanced Embedding System for DEEP-CLI\\nProvides vector embeddings and similarity search for De"
+    },
+    {
+      "agent_id": 18,
+      "task_id": "task_170",
+      "success": true,
+      "processing_time": 0.4601414203643799,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.44140625,
+      "result_summary": "{'file_size': 12864, 'lines': 359, 'encoding': 'utf-8', 'content_preview': '#!/usr/bin/env python3\\n\"\"\"\\nSimple Deanna Memory System Setup\\nUses existing components and simple TF-IDF embeddings\\n\"\"\"\\n"
+    },
+    {
+      "agent_id": 18,
+      "task_id": "task_360",
+      "success": true,
+      "processing_time": 0.24884414672851562,
+      "gpu_usage": 0.0,
+      "memory_usage": 76.140625,
+      "result_summary": "{'file_size': 40577, 'lines': 1002, 'encoding': 'utf-8', 'content_preview': 'import logging\\nlogger = logging.getLogger(__name__)\\n\"\"\"\\nSQL Database Tool - SQLite Integration for DEEP-CLI\\nProvides pe"
+    },
+    {
+      "agent_id": 19,
+      "task_id": "task_95",
+      "success": true,
+      "processing_time": 0.2933018207550049,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.20703125,
+      "result_summary": "{'file_size': 4422, 'lines': 144, 'encoding': 'utf-8', 'content_preview': '#!/usr/bin/env python3\\n\"\"\"\\nDownload Qwen3 Embedding Model\\nUses the provided HuggingFace token to download the model\\n\"\"\"\\n"
+    },
+    {
+      "agent_id": 19,
+      "task_id": "task_285",
+      "success": true,
+      "processing_time": 0.1056680679321289,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.65625,
+      "result_summary": "{'file_size': 25422, 'lines': 627, 'encoding': 'utf-8', 'content_preview': '#!/usr/bin/env python3\\n\"\"\"\\nEnhanced Memory Manager - Complete Rewrite Example\\nDemonstrates Claude 4\\'s analytical approac"
+    },
+    {
+      "agent_id": 20,
+      "task_id": "task_20",
+      "success": true,
+      "processing_time": 0.14517521858215332,
+      "gpu_usage": 0.0,
+      "memory_usage": 72.67578125,
+      "result_summary": "{'file_size': 21068, 'lines': 576, 'encoding': 'utf-8', 'content_preview': '#!/usr/bin/env python3\\n\"\"\"\\nClaude 4 Coder Agent - Basic Version\\nAdvanced Codebase Analysis and Upgrade System\\n\"\"\"\\n\\nimp"
+    },
+    {
+      "agent_id": 20,
+      "task_id": "task_210",
+      "success": true,
+      "processing_time": 0.3277459144592285,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.3359375,
+      "result_summary": "{'file_size': 5296, 'lines': 153, 'encoding': 'utf-8', 'content_preview': '#!/usr/bin/env python3\\n\"\"\"\\nTest Qwen3 Embedding Model\\nTests the downloaded model for embedding generation\\n\"\"\"\\n\\nimport o"
+    },
+    {
+      "agent_id": 21,
+      "task_id": "task_135",
+      "success": true,
+      "processing_time": 0.1077110767364502,
+      "gpu_usage": 0.0,
+      "memory_usage": 70.4765625,
+      "result_summary": "{'file_size': 4480, 'lines': 126, 'encoding': 'utf-8', 'content_preview': 'import logging\\nlogger = logging.getLogger(__name__)\\n#!/usr/bin/env python3\\n\"\"\"\\nRun All Improvements Script for BASED CODE"
+    },
+    {
+      "agent_id": 21,
+      "task_id": "task_325",
+      "success": true,
+      "processing_time": 0.2095036506652832,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.4765625,
+      "result_summary": "{'file_size': 12830, 'lines': 327, 'encoding': 'utf-8', 'content_preview': '#!/usr/bin/env python3\\n\"\"\"\\nLocal Embedding Tool\\nUses sentence-transformers for local embedding generation without externa"
+    },
+    {
+      "agent_id": 22,
+      "task_id": "task_250",
+      "success": true,
+      "processing_time": 0.6595985889434814,
+      "gpu_usage": 0.0,
+      "memory_usage": 76.078125,
+      "result_summary": "{'file_size': 12787, 'lines': 362, 'encoding': 'utf-8', 'content_preview': '#!/usr/bin/env python3\\n\"\"\"\\nLocal Embedding System using llama.cpp with CUDA\\nUses Qwen/Qwen3-Embedding-0.6B-GGUF model for"
+    },
+    {
+      "agent_id": 23,
+      "task_id": "task_175",
+      "success": true,
+      "processing_time": 0.22566819190979004,
+      "gpu_usage": 0.0,
+      "memory_usage": 74.26953125,
+      "result_summary": "{'file_size': 14410, 'lines': 395, 'encoding': 'utf-8', 'content_preview': '#!/usr/bin/env python3\\n\"\"\"\\nTransformers Deanna Memory System Setup\\nUses Qwen3-Embedding-0.6B with transformers pipeline\\n"
+    },
+    {
+      "agent_id": 23,
+      "task_id": "task_365",
+      "success": true,
+      "processing_time": 0.16367077827453613,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.66796875,
+      "result_summary": "{'file_size': 15288, 'lines': 418, 'encoding': 'utf-8', 'content_preview': '\"\"\"\\nTool Manager - Enhanced BASED GOD CLI\\nCentralized tool management and orchestration inspired by Agent Zero\\n\"\"\"\\n\\nimp"
+    },
+    {
+      "agent_id": 24,
+      "task_id": "task_100",
+      "success": true,
+      "processing_time": 0.12288403511047363,
+      "gpu_usage": 0.0,
+      "memory_usage": 71.93359375,
+      "result_summary": "{'file_size': 232, 'lines': 7, 'encoding': 'utf-8', 'content_preview': '#!/usr/bin/env python3\\n\"\"\"\\nEnhanced BASED GOD CLI - Advanced AI-Powered Command Line Interface\\nUpgraded with FIM completion, "
+    },
+    {
+      "agent_id": 24,
+      "task_id": "task_290",
+      "success": true,
+      "processing_time": 0.10105252265930176,
+      "gpu_usage": 0.0,
+      "memory_usage": 73.6328125,
+      "result_summary": "{'file_size': 5766, 'lines': 178, 'encoding': 'utf-8', 'content_preview': '\"\"\"\\nBase Tool Class for Enhanced BASED GOD CLI\\nInspired by Agent Zero\\'s tool architecture\\n\"\"\"\\n\\nimport asyncio\\nimport t"
+    },
+    {
+      "agent_id": 25,
+      "task_id": "task_215",
+      "success": true,
+      "processing_time": 0.27915120124816895,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.4921875,
+      "result_summary": "{'file_size': 21100, 'lines': 526, 'encoding': 'utf-8', 'content_preview': '#!/usr/bin/env python3\\n\"\"\"\\n\ud83d\ude80 BASED CODER CLI - Unified Test Suite\\nMade by @Lucariolucario55 on Telegram\\n\\nConsolidated t"
+    },
+    {
+      "agent_id": 26,
+      "task_id": "task_140",
+      "success": true,
+      "processing_time": 0.28011035919189453,
+      "gpu_usage": 0.0,
+      "memory_usage": 74.5546875,
+      "result_summary": "{'file_size': 7591, 'lines': 227, 'encoding': 'utf-8', 'content_preview': '#!/usr/bin/env python3\\n\"\"\"\\nSimple CLI Runner for DEEP-CLI\\nUses the available tools to provide basic functionality\\n\"\"\"\\n\\n"
+    },
+    {
+      "agent_id": 26,
+      "task_id": "task_330",
+      "success": true,
+      "processing_time": 0.32041192054748535,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.4609375,
+      "result_summary": "{'file_size': 19461, 'lines': 532, 'encoding': 'utf-8', 'content_preview': '\"\"\"\\nMemory Tool - Enhanced BASED GOD CLI\\nPersistent memory and learning system inspired by Agent Zero\\n\"\"\"\\n\\nimport json\\"
+    },
+    {
+      "agent_id": 27,
+      "task_id": "task_65",
+      "success": true,
+      "processing_time": 0.22911834716796875,
+      "gpu_usage": 0.0,
+      "memory_usage": 74.15234375,
+      "result_summary": "{'file_size': 11758, 'lines': 307, 'encoding': 'utf-8', 'content_preview': 'import logging\\nlogger = logging.getLogger(__name__)\\n#!/usr/bin/env python3\\n\"\"\"\\nDeanna Chat System\\nComplete integration "
+    },
+    {
+      "agent_id": 27,
+      "task_id": "task_255",
+      "success": true,
+      "processing_time": 0.23529458045959473,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.4296875,
+      "result_summary": "{'file_size': 23360, 'lines': 676, 'encoding': 'utf-8', 'content_preview': '#!/usr/bin/env python3\\n\"\"\"\\nComprehensive Memory Manager for DEEP-CLI\\nHandles DEANNA_MEMORY.JSON, DeepSeek context caching"
+    },
+    {
+      "agent_id": 28,
+      "task_id": "task_180",
+      "success": true,
+      "processing_time": 0.5794167518615723,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.65625,
+      "result_summary": "{'file_size': 2307, 'lines': 82, 'encoding': 'utf-8', 'content_preview': '#!/usr/bin/env python3\\n\"\"\"\\nSimple Download Script for Qwen3 Model\\n\"\"\"\\n\\nimport os\\nimport sys\\nfrom pathlib import Path\\ni"
+    },
+    {
+      "agent_id": 28,
+      "task_id": "task_370",
+      "success": true,
+      "processing_time": 0.10981369018554688,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.6484375,
+      "result_summary": "{'file_size': 45623, 'lines': 1146, 'encoding': 'utf-8', 'content_preview': '\"\"\"\\nUnified LLM Agent System - Enhanced BASED GOD CLI\\nTreats memory, persona, tool-use, contact caching, and conversation"
+    },
+    {
+      "agent_id": 29,
+      "task_id": "task_295",
+      "success": true,
+      "processing_time": 0.41975975036621094,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.4453125,
+      "result_summary": "{'file_size': 19415, 'lines': 633, 'encoding': 'utf-8', 'content_preview': '\"\"\"\\nCode Generator Tool - Enhanced BASED GOD CLI\\nIntelligent code generation with multiple language support\\n\"\"\"\\n\\nimport"
+    },
+    {
+      "agent_id": 30,
+      "task_id": "task_30",
+      "success": true,
+      "processing_time": 0.358065128326416,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.81640625,
+      "result_summary": "{'file_size': 31668, 'lines': 908, 'encoding': 'utf-8', 'content_preview': '#!/usr/bin/env python3\\n\"\"\"\\nClaude 4 Coder Agent - Simplified Version\\nAdvanced Codebase Analysis and Upgrade System\\n\"\"\"\\n"
+    },
+    {
+      "agent_id": 30,
+      "task_id": "task_220",
+      "success": true,
+      "processing_time": 0.2148275375366211,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.45703125,
+      "result_summary": "{'file_size': 13033, 'lines': 394, 'encoding': 'utf-8', 'content_preview': '#!/usr/bin/env python3\\n\"\"\"\\nTest Tools Script for BASED CODER CLI\\nTests all tools to ensure they are properly wired and wo"
+    },
+    {
+      "agent_id": 31,
+      "task_id": "task_145",
+      "success": true,
+      "processing_time": 0.11310243606567383,
+      "gpu_usage": 0.0,
+      "memory_usage": 70.7578125,
+      "result_summary": "{'file_size': 22121, 'lines': 548, 'encoding': 'utf-8', 'content_preview': '#!/usr/bin/env python3\\n\"\"\"\\n\\uf8ff\u00fc\u00f6\u00c4 BASED CODER CLI - Unified Setup System\\nMade by @Lucariolucario55 on Telegram\\n\\nCons"
+    },
+    {
+      "agent_id": 31,
+      "task_id": "task_335",
+      "success": true,
+      "processing_time": 0.19595932960510254,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.66796875,
+      "result_summary": "{'file_size': 11593, 'lines': 321, 'encoding': 'utf-8', 'content_preview': '\"\"\"\\nNode.js Bridge Tool - Enhanced BASED GOD CLI\\nBridge to Node.js DeepSeek agents for advanced capabilities\\n\"\"\"\\n\\nimpor"
+    },
+    {
+      "agent_id": 32,
+      "task_id": "task_70",
+      "success": true,
+      "processing_time": 0.20776009559631348,
+      "gpu_usage": 0.0,
+      "memory_usage": 73.21875,
+      "result_summary": "{'file_size': 25320, 'lines': 624, 'encoding': 'utf-8', 'content_preview': '#!/usr/bin/env python3\\n\"\"\"\\n\\uf8ff\u00fc\u00f6\u00c4 BASED CODER CLI - Unified Demo System\\nMade by @Lucariolucario55 on Telegram\\n\\nConso"
+    },
+    {
+      "agent_id": 32,
+      "task_id": "task_260",
+      "success": true,
+      "processing_time": 0.2169802188873291,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.31640625,
+      "result_summary": "{'file_size': 8531, 'lines': 218, 'encoding': 'utf-8', 'content_preview': 'import logging\\nlogger = logging.getLogger(__name__)\\n#!/usr/bin/env python3\\n\"\"\"\\nSimple Embedding System for DEEP-CLI\\nUses"
+    },
+    {
+      "agent_id": 33,
+      "task_id": "task_185",
+      "success": true,
+      "processing_time": 0.5912723541259766,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.4609375,
+      "result_summary": "{'file_size': 6309, 'lines': 184, 'encoding': 'utf-8', 'content_preview': '#!/usr/bin/env python3\\n\"\"\"\\nSimple Embedding Setup for DEEP-CLI\\nUses sentence-transformers for local embeddings\\n\"\"\"\\n\\nimp"
+    },
+    {
+      "agent_id": 33,
+      "task_id": "task_375",
+      "success": true,
+      "processing_time": 0.12179803848266602,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.4765625,
+      "result_summary": "{'file_size': 18202, 'lines': 476, 'encoding': 'utf-8', 'content_preview': '\"\"\"\\nVector Database Tool - Qdrant Integration for DEEP-CLI\\nProvides vector storage, similarity search, and RAG capabilitie"
+    },
+    {
+      "agent_id": 34,
+      "task_id": "task_110",
+      "success": true,
+      "processing_time": 0.4017155170440674,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.62890625,
+      "result_summary": "{'file_size': 12751, 'lines': 355, 'encoding': 'utf-8', 'content_preview': '#!/usr/bin/env python3\\n\"\"\"\\nEnhanced Logging and Error Handling System for BASED CODER CLI\\nProvides comprehensive logging,"
+    },
+    {
+      "agent_id": 34,
+      "task_id": "task_300",
+      "success": true,
+      "processing_time": 0.2275846004486084,
+      "gpu_usage": 0.0,
+      "memory_usage": 76.1171875,
+      "result_summary": "{'file_size': 19227, 'lines': 498, 'encoding': 'utf-8', 'content_preview': '\"\"\"\\nData Analyzer Tool - Enhanced BASED GOD CLI\\nIntelligent data analysis with multiple format support\\n\"\"\"\\n\\nimport json"
+    },
+    {
+      "agent_id": 35,
+      "task_id": "task_225",
+      "success": true,
+      "processing_time": 0.2879481315612793,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.69140625,
+      "result_summary": "{'file_size': 1684, 'lines': 54, 'encoding': 'utf-8', 'content_preview': 'import logging\\nlogger = logging.getLogger(__name__)\\n#!/usr/bin/env python3\\n\"\"\"\\nUpdate API Key Script\\nSimple script to upd"
+    },
+    {
+      "agent_id": 36,
+      "task_id": "task_340",
+      "success": true,
+      "processing_time": 0.13019657135009766,
+      "gpu_usage": 0.0,
+      "memory_usage": 72.40625,
+      "result_summary": "{'file_size': 11085, 'lines': 283, 'encoding': 'utf-8', 'content_preview': '\"\"\"\\nPrefix Completion Tool - Enhanced BASED GOD CLI\\nPrefix-based text and code completion using DeepSeek\\n\"\"\"\\n\\nfrom typi"
+    },
+    {
+      "agent_id": 37,
+      "task_id": "task_75",
+      "success": true,
+      "processing_time": 0.2632453441619873,
+      "gpu_usage": 0.0,
+      "memory_usage": 74.4296875,
+      "result_summary": "{'file_size': 17635, 'lines': 439, 'encoding': 'utf-8', 'content_preview': 'import logging\\nlogger = logging.getLogger(__name__)\\n#!/usr/bin/env python3\\n\"\"\"\\n\ud83d\ude80 DeepSeek Coder Demo - Advanced Code Gen"
+    },
+    {
+      "agent_id": 37,
+      "task_id": "task_265",
+      "success": true,
+      "processing_time": 0.44170689582824707,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.65234375,
+      "result_summary": "{'file_size': 13809, 'lines': 377, 'encoding': 'utf-8', 'content_preview': '#!/usr/bin/env python3\\n\"\"\"\\nTransformers Embedding System for DEEP-CLI\\nUses Qwen/Qwen3-Embedding-0.6B model with transform"
+    },
+    {
+      "agent_id": 38,
+      "task_id": "task_76",
+      "success": true,
+      "processing_time": 1.0070641040802002,
+      "gpu_usage": 0.11,
+      "memory_usage": 81.68359375,
+      "result_summary": "{'error': 'API request failed: 429', 'analysis_complete': False}"
+    },
+    {
+      "agent_id": 39,
+      "task_id": "task_1",
+      "success": true,
+      "processing_time": 0.9946880340576172,
+      "gpu_usage": 0.11,
+      "memory_usage": 81.66796875,
+      "result_summary": "{'error': 'API request failed: 429', 'analysis_complete': False}"
+    },
+    {
+      "agent_id": 41,
+      "task_id": "task_41",
+      "success": true,
+      "processing_time": 1.045196533203125,
+      "gpu_usage": 0.11,
+      "memory_usage": 82.0,
+      "result_summary": "{'error': 'API request failed: 429', 'analysis_complete': False}"
+    },
+    {
+      "agent_id": 46,
+      "task_id": "task_46",
+      "success": true,
+      "processing_time": 1.0467345714569092,
+      "gpu_usage": 0.11,
+      "memory_usage": 81.97265625,
+      "result_summary": "{'error': 'API request failed: 429', 'analysis_complete': False}"
+    },
+    {
+      "agent_id": 50,
+      "task_id": "task_126",
+      "success": true,
+      "processing_time": 1.0844385623931885,
+      "gpu_usage": 0.11,
+      "memory_usage": 82.12890625,
+      "result_summary": "{'error': 'API request failed: 429', 'analysis_complete': False}"
+    },
+    {
+      "agent_id": 51,
+      "task_id": "task_51",
+      "success": true,
+      "processing_time": 0.9734146595001221,
+      "gpu_usage": 0.11,
+      "memory_usage": 81.53125,
+      "result_summary": "{'error': 'API request failed: 429', 'analysis_complete': False}"
+    },
+    {
+      "agent_id": 53,
+      "task_id": "task_91",
+      "success": true,
+      "processing_time": 1.001215934753418,
+      "gpu_usage": 0.11,
+      "memory_usage": 81.68359375,
+      "result_summary": "{'error': 'API request failed: 429', 'analysis_complete': False}"
+    },
+    {
+      "agent_id": 58,
+      "task_id": "task_96",
+      "success": true,
+      "processing_time": 1.060950756072998,
+      "gpu_usage": 0.11,
+      "memory_usage": 82.09375,
+      "result_summary": "{'error': 'API request failed: 429', 'analysis_complete': False}"
+    },
+    {
+      "agent_id": 59,
+      "task_id": "task_21",
+      "success": true,
+      "processing_time": 1.0573952198028564,
+      "gpu_usage": 0.11,
+      "memory_usage": 82.078125,
+      "result_summary": "{'error': 'API request failed: 429', 'analysis_complete': False}"
+    },
+    {
+      "agent_id": 61,
+      "task_id": "task_61",
+      "success": true,
+      "processing_time": 1.035430669784546,
+      "gpu_usage": 0.11,
+      "memory_usage": 81.91015625,
+      "result_summary": "{'error': 'API request failed: 429', 'analysis_complete': False}"
+    },
+    {
+      "agent_id": 62,
+      "task_id": "task_176",
+      "success": true,
+      "processing_time": 1.0600800514221191,
+      "gpu_usage": 0.11,
+      "memory_usage": 82.09375,
+      "result_summary": "{'error': 'API request failed: 429', 'analysis_complete': False}"
+    },
+    {
+      "agent_id": 63,
+      "task_id": "task_101",
+      "success": true,
+      "processing_time": 1.026545763015747,
+      "gpu_usage": 0.11,
+      "memory_usage": 81.8203125,
+      "result_summary": "{'error': 'API request failed: 429', 'analysis_complete': False}"
+    },
+    {
+      "agent_id": 64,
+      "task_id": "task_26",
+      "success": true,
+      "processing_time": 1.0349535942077637,
+      "gpu_usage": 0.11,
+      "memory_usage": 82.0,
+      "result_summary": "{'error': 'API request failed: 429', 'analysis_complete': False}"
+    },
+    {
+      "agent_id": 68,
+      "task_id": "task_106",
+      "success": true,
+      "processing_time": 0.9943244457244873,
+      "gpu_usage": 0.11,
+      "memory_usage": 81.6484375,
+      "result_summary": "{'error': 'API request failed: 429', 'analysis_complete': False}"
+    },
+    {
+      "agent_id": 71,
+      "task_id": "task_71",
+      "success": true,
+      "processing_time": 1.0481250286102295,
+      "gpu_usage": 0.11,
+      "memory_usage": 81.9921875,
+      "result_summary": "{'error': 'API request failed: 429', 'analysis_complete': False}"
+    },
+    {
+      "agent_id": 72,
+      "task_id": "task_186",
+      "success": true,
+      "processing_time": 1.0629997253417969,
+      "gpu_usage": 0.11,
+      "memory_usage": 82.09375,
+      "result_summary": "{'error': 'API request failed: 429', 'analysis_complete': False}"
+    },
+    {
+      "agent_id": 73,
+      "task_id": "task_111",
+      "success": true,
+      "processing_time": 1.052093744277954,
+      "gpu_usage": 0.11,
+      "memory_usage": 82.05859375,
+      "result_summary": "{'error': 'API request failed: 429', 'analysis_complete': False}"
+    },
+    {
+      "agent_id": 75,
+      "task_id": "task_151",
+      "success": true,
+      "processing_time": 1.081617832183838,
+      "gpu_usage": 0.11,
+      "memory_usage": 82.13671875,
+      "result_summary": "{'error': 'API request failed: 429', 'analysis_complete': False}"
+    },
+    {
+      "agent_id": 76,
+      "task_id": "task_152",
+      "success": true,
+      "processing_time": 1.0458624362945557,
+      "gpu_usage": 0.11,
+      "memory_usage": 81.9921875,
+      "result_summary": "{'error': 'API request failed: 429', 'rewrite_complete': False}"
+    },
+    {
+      "agent_id": 77,
+      "task_id": "task_77",
+      "success": true,
+      "processing_time": 1.0271449089050293,
+      "gpu_usage": 0.11,
+      "memory_usage": 81.8203125,
+      "result_summary": "{'error': 'API request failed: 429', 'rewrite_complete': False}"
+    },
+    {
+      "agent_id": 79,
+      "task_id": "task_117",
+      "success": true,
+      "processing_time": 1.0203185081481934,
+      "gpu_usage": 0.11,
+      "memory_usage": 81.75,
+      "result_summary": "{'error': 'API request failed: 429', 'rewrite_complete': False}"
+    },
+    {
+      "agent_id": 80,
+      "task_id": "task_42",
+      "success": true,
+      "processing_time": 0.9823586940765381,
+      "gpu_usage": 0.11,
+      "memory_usage": 81.62890625,
+      "result_summary": "{'error': 'API request failed: 429', 'rewrite_complete': False}"
+    },
+    {
+      "agent_id": 82,
+      "task_id": "task_82",
+      "success": true,
+      "processing_time": 1.0901460647583008,
+      "gpu_usage": 0.11,
+      "memory_usage": 82.140625,
+      "result_summary": "{'error': 'API request failed: 429', 'rewrite_complete': False}"
+    },
+    {
+      "agent_id": 85,
+      "task_id": "task_47",
+      "success": true,
+      "processing_time": 1.082298994064331,
+      "gpu_usage": 0.11,
+      "memory_usage": 82.11328125,
+      "result_summary": "{'error': 'API request failed: 429', 'rewrite_complete': False}"
+    },
+    {
+      "agent_id": 86,
+      "task_id": "task_162",
+      "success": true,
+      "processing_time": 1.0154168605804443,
+      "gpu_usage": 0.11,
+      "memory_usage": 81.7109375,
+      "result_summary": "{'error': 'API request failed: 429', 'rewrite_complete': False}"
+    },
+    {
+      "agent_id": 87,
+      "task_id": "task_87",
+      "success": true,
+      "processing_time": 1.0069289207458496,
+      "gpu_usage": 0.11,
+      "memory_usage": 81.68359375,
+      "result_summary": "{'error': 'API request failed: 429', 'rewrite_complete': False}"
+    },
+    {
+      "agent_id": 88,
+      "task_id": "task_12",
+      "success": true,
+      "processing_time": 1.0199322700500488,
+      "gpu_usage": 0.11,
+      "memory_usage": 81.7109375,
+      "result_summary": "{'error': 'API request failed: 429', 'rewrite_complete': False}"
+    },
+    {
+      "agent_id": 89,
+      "task_id": "task_127",
+      "success": true,
+      "processing_time": 1.002516746520996,
+      "gpu_usage": 0.11,
+      "memory_usage": 81.6796875,
+      "result_summary": "{'error': 'API request failed: 429', 'rewrite_complete': False}"
+    },
+    {
+      "agent_id": 91,
+      "task_id": "task_167",
+      "success": true,
+      "processing_time": 0.9905495643615723,
+      "gpu_usage": 0.11,
+      "memory_usage": 81.65625,
+      "result_summary": "{'error': 'API request failed: 429', 'rewrite_complete': False}"
+    },
+    {
+      "agent_id": 92,
+      "task_id": "task_92",
+      "success": true,
+      "processing_time": 0.9782538414001465,
+      "gpu_usage": 0.11,
+      "memory_usage": 81.61328125,
+      "result_summary": "{'error': 'API request failed: 429', 'rewrite_complete': False}"
+    },
+    {
+      "agent_id": 93,
+      "task_id": "task_17",
+      "success": true,
+      "processing_time": 1.0671684741973877,
+      "gpu_usage": 0.11,
+      "memory_usage": 82.08984375,
+      "result_summary": "{'error': 'API request failed: 429', 'rewrite_complete': False}"
+    },
+    {
+      "agent_id": 94,
+      "task_id": "task_132",
+      "success": true,
+      "processing_time": 1.0372509956359863,
+      "gpu_usage": 0.11,
+      "memory_usage": 81.90625,
+      "result_summary": "{'error': 'API request failed: 429', 'rewrite_complete': False}"
+    },
+    {
+      "agent_id": 96,
+      "task_id": "task_172",
+      "success": true,
+      "processing_time": 0.9952516555786133,
+      "gpu_usage": 0.11,
+      "memory_usage": 81.671875,
+      "result_summary": "{'error': 'API request failed: 429', 'rewrite_complete': False}"
+    },
+    {
+      "agent_id": 98,
+      "task_id": "task_22",
+      "success": true,
+      "processing_time": 1.0163047313690186,
+      "gpu_usage": 0.11,
+      "memory_usage": 81.69921875,
+      "result_summary": "{'error': 'API request failed: 429', 'rewrite_complete': False}"
+    },
+    {
+      "agent_id": 99,
+      "task_id": "task_137",
+      "success": true,
+      "processing_time": 1.0349998474121094,
+      "gpu_usage": 0.11,
+      "memory_usage": 81.890625,
+      "result_summary": "{'error': 'API request failed: 429', 'rewrite_complete': False}"
+    },
+    {
+      "agent_id": 101,
+      "task_id": "task_177",
+      "success": true,
+      "processing_time": 1.07462739944458,
+      "gpu_usage": 0.11,
+      "memory_usage": 82.11328125,
+      "result_summary": "{'error': 'API request failed: 429', 'rewrite_complete': False}"
+    },
+    {
+      "agent_id": 105,
+      "task_id": "task_67",
+      "success": true,
+      "processing_time": 0.9959616661071777,
+      "gpu_usage": 0.11,
+      "memory_usage": 81.65234375,
+      "result_summary": "{'error': 'API request failed: 429', 'rewrite_complete': False}"
+    },
+    {
+      "agent_id": 107,
+      "task_id": "task_107",
+      "success": true,
+      "processing_time": 1.0510215759277344,
+      "gpu_usage": 0.11,
+      "memory_usage": 82.00390625,
+      "result_summary": "{'error': 'API request failed: 429', 'rewrite_complete': False}"
+    },
+    {
+      "agent_id": 109,
+      "task_id": "task_147",
+      "success": true,
+      "processing_time": 1.064046859741211,
+      "gpu_usage": 0.11,
+      "memory_usage": 82.09375,
+      "result_summary": "{'error': 'API request failed: 429', 'rewrite_complete': False}"
+    },
+    {
+      "agent_id": 111,
+      "task_id": "task_187",
+      "success": true,
+      "processing_time": 1.0350265502929688,
+      "gpu_usage": 0.11,
+      "memory_usage": 82.05078125,
+      "result_summary": "{'error': 'API request failed: 429', 'rewrite_complete': False}"
+    },
+    {
+      "agent_id": 112,
+      "task_id": "task_112",
+      "success": true,
+      "processing_time": 1.0877034664154053,
+      "gpu_usage": 0.11,
+      "memory_usage": 82.13671875,
+      "result_summary": "{'error': 'API request failed: 429', 'rewrite_complete': False}"
+    },
+    {
+      "agent_id": 113,
+      "task_id": "task_37",
+      "success": true,
+      "processing_time": 1.0343258380889893,
+      "gpu_usage": 0.11,
+      "memory_usage": 81.91015625,
+      "result_summary": "{'error': 'API request failed: 429', 'rewrite_complete': False}"
+    },
+    {
+      "agent_id": 114,
+      "task_id": "task_38",
+      "success": true,
+      "processing_time": 0.3895859718322754,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.69921875,
+      "result_summary": "{'issues_found': ['Wildcard imports found', 'File is very long'], 'syntax_valid': True, 'debug_complete': True, 'file_path': 'claude_coder_fixed.py', 'total_issues': 2}"
+    },
+    {
+      "agent_id": 114,
+      "task_id": "task_228",
+      "success": true,
+      "processing_time": 0.2743356227874756,
+      "gpu_usage": 0.0,
+      "memory_usage": 76.0390625,
+      "result_summary": "{'issues_found': [], 'syntax_valid': True, 'debug_complete': True, 'file_path': 'update_api_key.py', 'total_issues': 0}"
+    },
+    {
+      "agent_id": 115,
+      "task_id": "task_343",
+      "success": true,
+      "processing_time": 0.1144096851348877,
+      "gpu_usage": 0.0,
+      "memory_usage": 72.84375,
+      "result_summary": "{'issues_found': [], 'syntax_valid': True, 'debug_complete': True, 'file_path': 'tools\\\\prefix_completion_tool.py', 'total_issues': 0}"
+    },
+    {
+      "agent_id": 116,
+      "task_id": "task_268",
+      "success": true,
+      "processing_time": 0.14166688919067383,
+      "gpu_usage": 0.0,
+      "memory_usage": 73.17578125,
+      "result_summary": "{'issues_found': ['Too many print statements'], 'syntax_valid': True, 'debug_complete': True, 'file_path': 'data\\\\transformers_embedding_system.py', 'total_issues': 1}"
+    },
+    {
+      "agent_id": 117,
+      "task_id": "task_3",
+      "success": true,
+      "processing_time": 0.11106729507446289,
+      "gpu_usage": 0.0,
+      "memory_usage": 70.4765625,
+      "result_summary": "{'issues_found': ['Bare except clauses found', 'Too many print statements', 'Wildcard imports found', 'File is very long'], 'syntax_valid': True, 'debug_complete': True, 'file_path': 'ai_swarm_system."
+    },
+    {
+      "agent_id": 117,
+      "task_id": "task_193",
+      "success": true,
+      "processing_time": 0.543964147567749,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.71875,
+      "result_summary": "{'issues_found': [], 'syntax_valid': True, 'debug_complete': True, 'file_path': 'simple_test.py', 'total_issues': 0}"
+    },
+    {
+      "agent_id": 117,
+      "task_id": "task_383",
+      "success": true,
+      "processing_time": 0.10450935363769531,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.46875,
+      "result_summary": "{'issues_found': [], 'syntax_valid': True, 'debug_complete': True, 'file_path': 'tools\\\\web_scraper_tool.py', 'total_issues': 0}"
+    },
+    {
+      "agent_id": 118,
+      "task_id": "task_118",
+      "success": true,
+      "processing_time": 0.618725061416626,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.3828125,
+      "result_summary": "{'issues_found': ['Too many print statements'], 'syntax_valid': True, 'debug_complete': True, 'file_path': 'file_encoding_fixer.py', 'total_issues': 1}"
+    },
+    {
+      "agent_id": 118,
+      "task_id": "task_308",
+      "success": true,
+      "processing_time": 0.07095885276794434,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.8515625,
+      "result_summary": "{'issues_found': ['File is very long'], 'syntax_valid': True, 'debug_complete': True, 'file_path': 'tools\\\\deepseek_coder_tool.py', 'total_issues': 1}"
+    },
+    {
+      "agent_id": 119,
+      "task_id": "task_43",
+      "success": true,
+      "processing_time": 0.45534825325012207,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.44140625,
+      "result_summary": "{'issues_found': ['Too many print statements', 'Wildcard imports found', 'File is very long'], 'syntax_valid': True, 'debug_complete': True, 'file_path': 'claude_coder_standalone.py', 'total_issues': "
+    },
+    {
+      "agent_id": 119,
+      "task_id": "task_233",
+      "success": true,
+      "processing_time": 0.1905958652496338,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.8671875,
+      "result_summary": "{'issues_found': [], 'syntax_valid': True, 'debug_complete': True, 'file_path': 'config\\\\api_keys.py', 'total_issues': 0}"
+    },
+    {
+      "agent_id": 120,
+      "task_id": "task_348",
+      "success": true,
+      "processing_time": 0.1782214641571045,
+      "gpu_usage": 0.0,
+      "memory_usage": 73.1015625,
+      "result_summary": "{'issues_found': ['File is very long'], 'syntax_valid': True, 'debug_complete': True, 'file_path': 'tools\\\\rag_pipeline_tool.py', 'total_issues': 1}"
+    },
+    {
+      "agent_id": 121,
+      "task_id": "task_83",
+      "success": true,
+      "processing_time": 0.29340505599975586,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.20703125,
+      "result_summary": "{'issues_found': [], 'syntax_valid': True, 'debug_complete': True, 'file_path': 'demo_full_system.py', 'total_issues': 0}"
+    },
+    {
+      "agent_id": 121,
+      "task_id": "task_273",
+      "success": true,
+      "processing_time": 0.43047022819519043,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.4375,
+      "result_summary": "{'issues_found': ['Too many print statements', 'Syntax error: invalid syntax (rag_demo.py, line 197)'], 'syntax_valid': False, 'debug_complete': True, 'file_path': 'examples\\\\rag_demo.py', 'total_issu"
+    },
+    {
+      "agent_id": 122,
+      "task_id": "task_8",
+      "success": true,
+      "processing_time": 0.1792433261871338,
+      "gpu_usage": 0.0,
+      "memory_usage": 73.546875,
+      "result_summary": "{'issues_found': ['Bare except clauses found', 'Too many print statements', 'File is very long'], 'syntax_valid': True, 'debug_complete': True, 'file_path': 'based_coder_cli.py', 'total_issues': 3}"
+    },
+    {
+      "agent_id": 122,
+      "task_id": "task_198",
+      "success": true,
+      "processing_time": 0.3717007637023926,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.60546875,
+      "result_summary": "{'issues_found': ['Too many print statements'], 'syntax_valid': True, 'debug_complete': True, 'file_path': 'system_status.py', 'total_issues': 1}"
+    },
+    {
+      "agent_id": 122,
+      "task_id": "task_388",
+      "success": true,
+      "processing_time": 0.11737513542175293,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.84765625,
+      "result_summary": "{'issues_found': [], 'syntax_valid': True, 'debug_complete': True, 'file_path': 'tools\\\\__init__.py', 'total_issues': 0}"
+    },
+    {
+      "agent_id": 123,
+      "task_id": "task_123",
+      "success": true,
+      "processing_time": 0.3313601016998291,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.4296875,
+      "result_summary": "{'issues_found': ['Too many print statements'], 'syntax_valid': True, 'debug_complete': True, 'file_path': 'fix_deepseek_issues.py', 'total_issues': 1}"
+    },
+    {
+      "agent_id": 123,
+      "task_id": "task_313",
+      "success": true,
+      "processing_time": 0.14299273490905762,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.37890625,
+      "result_summary": "{'issues_found': ['File is very long'], 'syntax_valid': True, 'debug_complete': True, 'file_path': 'tools\\\\file_processor_tool.py', 'total_issues': 1}"
+    },
+    {
+      "agent_id": 124,
+      "task_id": "task_48",
+      "success": true,
+      "processing_time": 0.1495037078857422,
+      "gpu_usage": 0.0,
+      "memory_usage": 72.453125,
+      "result_summary": "{'issues_found': [], 'syntax_valid': True, 'debug_complete': True, 'file_path': 'cleanup_redundant_files.py', 'total_issues': 0}"
+    },
+    {
+      "agent_id": 124,
+      "task_id": "task_238",
+      "success": true,
+      "processing_time": 0.2698178291320801,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.328125,
+      "result_summary": "{'issues_found': ['File is very long'], 'syntax_valid': True, 'debug_complete': True, 'file_path': 'config\\\\deepcli_config.py', 'total_issues': 1}"
+    },
+    {
+      "agent_id": 125,
+      "task_id": "task_353",
+      "success": true,
+      "processing_time": 0.18584895133972168,
+      "gpu_usage": 0.0,
+      "memory_usage": 74.26953125,
+      "result_summary": "{'issues_found': ['File is very long'], 'syntax_valid': True, 'debug_complete': True, 'file_path': 'tools\\\\reasoning_engine.py', 'total_issues': 1}"
+    },
+    {
+      "agent_id": 126,
+      "task_id": "task_88",
+      "success": true,
+      "processing_time": 0.6269760131835938,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.9453125,
+      "result_summary": "{'issues_found': [], 'syntax_valid': True, 'debug_complete': True, 'file_path': 'download_gguf_models.py', 'total_issues': 0}"
+    },
+    {
+      "agent_id": 126,
+      "task_id": "task_278",
+      "success": true,
+      "processing_time": 0.14707422256469727,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.3984375,
+      "result_summary": "{'issues_found': ['Syntax error: invalid syntax (unified_agent_demo.py, line 3)'], 'syntax_valid': False, 'debug_complete': True, 'file_path': 'examples\\\\unified_agent_demo.py', 'total_issues': 1}"
+    },
+    {
+      "agent_id": 127,
+      "task_id": "task_13",
+      "success": true,
+      "processing_time": 0.19151568412780762,
+      "gpu_usage": 0.0,
+      "memory_usage": 73.375,
+      "result_summary": "{'issues_found': ['Bare except clauses found', 'Too many print statements', 'Wildcard imports found', 'File is very long'], 'syntax_valid': True, 'debug_complete': True, 'file_path': 'claude_coder_adv"
+    },
+    {
+      "agent_id": 127,
+      "task_id": "task_203",
+      "success": true,
+      "processing_time": 0.16436266899108887,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.7265625,
+      "result_summary": "{'issues_found': [], 'syntax_valid': True, 'debug_complete': True, 'file_path': 'test_core_features.py', 'total_issues': 0}"
+    },
+    {
+      "agent_id": 127,
+      "task_id": "task_393",
+      "success": true,
+      "processing_time": 0.32257533073425293,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.8125,
+      "result_summary": "{'issues_found': ['File is very long'], 'syntax_valid': True, 'debug_complete': True, 'file_path': 'src\\\\tools\\\\advanced\\\\ai_agent_orchestrator.py', 'total_issues': 1}"
+    },
+    {
+      "agent_id": 128,
+      "task_id": "task_128",
+      "success": true,
+      "processing_time": 0.26674675941467285,
+      "gpu_usage": 0.0,
+      "memory_usage": 74.03515625,
+      "result_summary": "{'issues_found': [], 'syntax_valid': True, 'debug_complete': True, 'file_path': 'init_local_db.py', 'total_issues': 0}"
+    },
+    {
+      "agent_id": 128,
+      "task_id": "task_318",
+      "success": true,
+      "processing_time": 0.19256877899169922,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.3203125,
+      "result_summary": "{'issues_found': [], 'syntax_valid': True, 'debug_complete': True, 'file_path': 'tools\\\\fim_completion_tool.py', 'total_issues': 0}"
+    },
+    {
+      "agent_id": 129,
+      "task_id": "task_53",
+      "success": true,
+      "processing_time": 0.4105660915374756,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.25,
+      "result_summary": "{'issues_found': ['File is very long'], 'syntax_valid': True, 'debug_complete': True, 'file_path': 'config.py', 'total_issues': 1}"
+    },
+    {
+      "agent_id": 129,
+      "task_id": "task_243",
+      "success": true,
+      "processing_time": 0.24370622634887695,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.72265625,
+      "result_summary": "{'issues_found': [], 'syntax_valid': True, 'debug_complete': True, 'file_path': 'config\\\\__init__.py', 'total_issues': 0}"
+    },
+    {
+      "agent_id": 130,
+      "task_id": "task_168",
+      "success": true,
+      "processing_time": 0.28303074836730957,
+      "gpu_usage": 0.0,
+      "memory_usage": 74.98828125,
+      "result_summary": "{'issues_found': [], 'syntax_valid': True, 'debug_complete': True, 'file_path': 'setup_deanna_persona.py', 'total_issues': 0}"
+    },
+    {
+      "agent_id": 130,
+      "task_id": "task_358",
+      "success": true,
+      "processing_time": 0.37577390670776367,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.921875,
+      "result_summary": "{'issues_found': [], 'syntax_valid': True, 'debug_complete': True, 'file_path': 'tools\\\\simple_embedding_tool.py', 'total_issues': 0}"
+    },
+    {
+      "agent_id": 131,
+      "task_id": "task_283",
+      "success": true,
+      "processing_time": 0.2994973659515381,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.8203125,
+      "result_summary": "{'issues_found': ['Syntax error: invalid syntax (__init__.py, line 2)'], 'syntax_valid': False, 'debug_complete': True, 'file_path': 'examples\\\\__init__.py', 'total_issues': 1}"
+    },
+    {
+      "agent_id": 132,
+      "task_id": "task_208",
+      "success": true,
+      "processing_time": 0.5139496326446533,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.4375,
+      "result_summary": "{'issues_found': [], 'syntax_valid': True, 'debug_complete': True, 'file_path': 'test_final_system.py', 'total_issues': 0}"
+    },
+    {
+      "agent_id": 132,
+      "task_id": "task_398",
+      "success": true,
+      "processing_time": 0.1264488697052002,
+      "gpu_usage": 0.0,
+      "memory_usage": 76.16015625,
+      "result_summary": "{'issues_found': [], 'syntax_valid': True, 'debug_complete': True, 'file_path': 'src\\\\tools\\\\advanced\\\\code_architecture_tool.py', 'total_issues': 0}"
+    },
+    {
+      "agent_id": 133,
+      "task_id": "task_133",
+      "success": true,
+      "processing_time": 0.5351448059082031,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.65234375,
+      "result_summary": "{'issues_found': ['Too many print statements', 'File is very long'], 'syntax_valid': True, 'debug_complete': True, 'file_path': 'main.py', 'total_issues': 2}"
+    },
+    {
+      "agent_id": 133,
+      "task_id": "task_323",
+      "success": true,
+      "processing_time": 0.14499521255493164,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.69140625,
+      "result_summary": "{'issues_found': ['File is very long'], 'syntax_valid': True, 'debug_complete': True, 'file_path': 'tools\\\\llm_query_tool.py', 'total_issues': 1}"
+    },
+    {
+      "agent_id": 134,
+      "task_id": "task_58",
+      "success": true,
+      "processing_time": 0.08806300163269043,
+      "gpu_usage": 0.0,
+      "memory_usage": 70.375,
+      "result_summary": "{'issues_found': [], 'syntax_valid': True, 'debug_complete': True, 'file_path': 'config_manager.py', 'total_issues': 0}"
+    },
+    {
+      "agent_id": 134,
+      "task_id": "task_248",
+      "success": true,
+      "processing_time": 0.46666860580444336,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.421875,
+      "result_summary": "{'issues_found': [], 'syntax_valid': True, 'debug_complete': True, 'file_path': 'data\\\\embedding_system.py', 'total_issues': 0}"
+    },
+    {
+      "agent_id": 135,
+      "task_id": "task_173",
+      "success": true,
+      "processing_time": 0.21303844451904297,
+      "gpu_usage": 0.0,
+      "memory_usage": 73.2890625,
+      "result_summary": "{'issues_found': ['Bare except clauses found', 'Too many print statements'], 'syntax_valid': True, 'debug_complete': True, 'file_path': 'setup_simple_deanna_system.py', 'total_issues': 2}"
+    },
+    {
+      "agent_id": 135,
+      "task_id": "task_363",
+      "success": true,
+      "processing_time": 0.37021565437316895,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.7265625,
+      "result_summary": "{'issues_found': ['File is very long'], 'syntax_valid': True, 'debug_complete': True, 'file_path': 'tools\\\\sql_database_tool.py', 'total_issues': 1}"
+    },
+    {
+      "agent_id": 136,
+      "task_id": "task_98",
+      "success": true,
+      "processing_time": 0.2637748718261719,
+      "gpu_usage": 0.0,
+      "memory_usage": 74.3359375,
+      "result_summary": "{'issues_found': [], 'syntax_valid': True, 'debug_complete': True, 'file_path': 'download_qwen_model.py', 'total_issues': 0}"
+    },
+    {
+      "agent_id": 136,
+      "task_id": "task_288",
+      "success": true,
+      "processing_time": 0.31566858291625977,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.875,
+      "result_summary": "{'issues_found': ['File is very long'], 'syntax_valid': True, 'debug_complete': True, 'file_path': 'rewrite_examples\\\\memory_manager_rewrite.py', 'total_issues': 1}"
+    },
+    {
+      "agent_id": 137,
+      "task_id": "task_23",
+      "success": true,
+      "processing_time": 0.34498047828674316,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.8828125,
+      "result_summary": "{'issues_found': ['Bare except clauses found', 'Too many print statements', 'Wildcard imports found', 'File is very long'], 'syntax_valid': True, 'debug_complete': True, 'file_path': 'claude_coder_age"
+    },
+    {
+      "agent_id": 137,
+      "task_id": "task_213",
+      "success": true,
+      "processing_time": 0.2930934429168701,
+      "gpu_usage": 0.0,
+      "memory_usage": 76.53515625,
+      "result_summary": "{'issues_found': [], 'syntax_valid': True, 'debug_complete': True, 'file_path': 'test_qwen_model.py', 'total_issues': 0}"
+    },
+    {
+      "agent_id": 138,
+      "task_id": "task_138",
+      "success": true,
+      "processing_time": 0.3284156322479248,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.41796875,
+      "result_summary": "{'issues_found': [], 'syntax_valid': True, 'debug_complete': True, 'file_path': 'run_all_improvements.py', 'total_issues': 0}"
+    },
+    {
+      "agent_id": 138,
+      "task_id": "task_328",
+      "success": true,
+      "processing_time": 0.38822364807128906,
+      "gpu_usage": 0.0,
+      "memory_usage": 76.19921875,
+      "result_summary": "{'issues_found': [], 'syntax_valid': True, 'debug_complete': True, 'file_path': 'tools\\\\local_embedding_tool.py', 'total_issues': 0}"
+    },
+    {
+      "agent_id": 139,
+      "task_id": "task_63",
+      "success": true,
+      "processing_time": 0.15183615684509277,
+      "gpu_usage": 0.0,
+      "memory_usage": 72.40234375,
+      "result_summary": "{'issues_found': [], 'syntax_valid': True, 'debug_complete': True, 'file_path': 'database_cleaner.py', 'total_issues': 0}"
+    },
+    {
+      "agent_id": 139,
+      "task_id": "task_253",
+      "success": true,
+      "processing_time": 0.2792937755584717,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.33984375,
+      "result_summary": "{'issues_found': ['Bare except clauses found', 'Too many print statements'], 'syntax_valid': True, 'debug_complete': True, 'file_path': 'data\\\\local_embedding_system.py', 'total_issues': 2}"
+    },
+    {
+      "agent_id": 140,
+      "task_id": "task_178",
+      "success": true,
+      "processing_time": 0.25806379318237305,
+      "gpu_usage": 0.0,
+      "memory_usage": 74.21875,
+      "result_summary": "{'issues_found': ['Bare except clauses found', 'Too many print statements'], 'syntax_valid': True, 'debug_complete': True, 'file_path': 'setup_transformers_deanna_system.py', 'total_issues': 2}"
+    },
+    {
+      "agent_id": 140,
+      "task_id": "task_368",
+      "success": true,
+      "processing_time": 0.22100567817687988,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.51171875,
+      "result_summary": "{'issues_found': ['Too many print statements'], 'syntax_valid': True, 'debug_complete': True, 'file_path': 'tools\\\\tool_manager.py', 'total_issues': 1}"
+    },
+    {
+      "agent_id": 141,
+      "task_id": "task_293",
+      "success": true,
+      "processing_time": 0.5930049419403076,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.8671875,
+      "result_summary": "{'issues_found': [], 'syntax_valid': True, 'debug_complete': True, 'file_path': 'tools\\\\base_tool.py', 'total_issues': 0}"
+    },
+    {
+      "agent_id": 142,
+      "task_id": "task_28",
+      "success": true,
+      "processing_time": 0.14176368713378906,
+      "gpu_usage": 0.0,
+      "memory_usage": 72.66015625,
+      "result_summary": "{'issues_found': ['Bare except clauses found', 'Too many print statements', 'Wildcard imports found', 'File is very long', 'Syntax error: unterminated string literal (detected at line 758) (claude_cod"
+    },
+    {
+      "agent_id": 142,
+      "task_id": "task_218",
+      "success": true,
+      "processing_time": 0.46613311767578125,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.5234375,
+      "result_summary": "{'issues_found': ['Too many print statements', 'File is very long'], 'syntax_valid': True, 'debug_complete': True, 'file_path': 'test_suite.py', 'total_issues': 2}"
+    },
+    {
+      "agent_id": 143,
+      "task_id": "task_143",
+      "success": true,
+      "processing_time": 0.09257912635803223,
+      "gpu_usage": 0.0,
+      "memory_usage": 70.40625,
+      "result_summary": "{'issues_found': [], 'syntax_valid': True, 'debug_complete': True, 'file_path': 'run_cli.py', 'total_issues': 0}"
+    },
+    {
+      "agent_id": 143,
+      "task_id": "task_333",
+      "success": true,
+      "processing_time": 0.21254205703735352,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.65625,
+      "result_summary": "{'issues_found': ['File is very long'], 'syntax_valid': True, 'debug_complete': True, 'file_path': 'tools\\\\memory_tool.py', 'total_issues': 1}"
+    },
+    {
+      "agent_id": 144,
+      "task_id": "task_68",
+      "success": true,
+      "processing_time": 0.11361527442932129,
+      "gpu_usage": 0.0,
+      "memory_usage": 70.703125,
+      "result_summary": "{'issues_found': [], 'syntax_valid': True, 'debug_complete': True, 'file_path': 'deanna_chat_system.py', 'total_issues': 0}"
+    },
+    {
+      "agent_id": 144,
+      "task_id": "task_258",
+      "success": true,
+      "processing_time": 0.22950148582458496,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.58984375,
+      "result_summary": "{'issues_found': ['File is very long'], 'syntax_valid': True, 'debug_complete': True, 'file_path': 'data\\\\memory_manager.py', 'total_issues': 1}"
+    },
+    {
+      "agent_id": 145,
+      "task_id": "task_183",
+      "success": true,
+      "processing_time": 0.6129922866821289,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.4375,
+      "result_summary": "{'issues_found': [], 'syntax_valid': True, 'debug_complete': True, 'file_path': 'simple_download.py', 'total_issues': 0}"
+    },
+    {
+      "agent_id": 145,
+      "task_id": "task_373",
+      "success": true,
+      "processing_time": 0.1365816593170166,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.6640625,
+      "result_summary": "{'issues_found': ['File is very long'], 'syntax_valid': True, 'debug_complete': True, 'file_path': 'tools\\\\unified_agent_system.py', 'total_issues': 1}"
+    },
+    {
+      "agent_id": 146,
+      "task_id": "task_108",
+      "success": true,
+      "processing_time": 0.6306302547454834,
+      "gpu_usage": 0.0,
+      "memory_usage": 76.25390625,
+      "result_summary": "{'issues_found': [], 'syntax_valid': True, 'debug_complete': True, 'file_path': 'enhanced_cli.py', 'total_issues': 0}"
+    },
+    {
+      "agent_id": 146,
+      "task_id": "task_298",
+      "success": true,
+      "processing_time": 0.12892937660217285,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.45703125,
+      "result_summary": "{'issues_found': ['File is very long'], 'syntax_valid': True, 'debug_complete': True, 'file_path': 'tools\\\\code_generator_tool.py', 'total_issues': 1}"
+    },
+    {
+      "agent_id": 147,
+      "task_id": "task_223",
+      "success": true,
+      "processing_time": 0.23758673667907715,
+      "gpu_usage": 0.0,
+      "memory_usage": 74.30078125,
+      "result_summary": "{'issues_found': [], 'syntax_valid': True, 'debug_complete': True, 'file_path': 'test_tools.py', 'total_issues': 0}"
+    },
+    {
+      "agent_id": 148,
+      "task_id": "task_148",
+      "success": true,
+      "processing_time": 0.3218250274658203,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.3671875,
+      "result_summary": "{'issues_found': ['Too many print statements', 'File is very long'], 'syntax_valid': True, 'debug_complete': True, 'file_path': 'setup.py', 'total_issues': 2}"
+    },
+    {
+      "agent_id": 148,
+      "task_id": "task_338",
+      "success": true,
+      "processing_time": 0.1949448585510254,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.25390625,
+      "result_summary": "{'issues_found': [], 'syntax_valid': True, 'debug_complete': True, 'file_path': 'tools\\\\nodejs_bridge_tool.py', 'total_issues': 0}"
+    },
+    {
+      "agent_id": 149,
+      "task_id": "task_73",
+      "success": true,
+      "processing_time": 0.5175058841705322,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.3984375,
+      "result_summary": "{'issues_found': ['Too many print statements', 'File is very long'], 'syntax_valid': True, 'debug_complete': True, 'file_path': 'demo.py', 'total_issues': 2}"
+    },
+    {
+      "agent_id": 149,
+      "task_id": "task_263",
+      "success": true,
+      "processing_time": 0.21555733680725098,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.58984375,
+      "result_summary": "{'issues_found': [], 'syntax_valid': True, 'debug_complete': True, 'file_path': 'data\\\\simple_embedding_system.py', 'total_issues': 0}"
+    },
+    {
+      "agent_id": 150,
+      "task_id": "task_188",
+      "success": true,
+      "processing_time": 0.3332951068878174,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.65625,
+      "result_summary": "{'issues_found': [], 'syntax_valid': True, 'debug_complete': True, 'file_path': 'simple_embedding_setup.py', 'total_issues': 0}"
+    },
+    {
+      "agent_id": 150,
+      "task_id": "task_378",
+      "success": true,
+      "processing_time": 0.3690934181213379,
+      "gpu_usage": 0.0,
+      "memory_usage": 76.2734375,
+      "result_summary": "{'issues_found': [], 'syntax_valid': True, 'debug_complete': True, 'file_path': 'tools\\\\vector_database_tool.py', 'total_issues': 0}"
+    },
+    {
+      "agent_id": 151,
+      "task_id": "task_113",
+      "success": true,
+      "processing_time": 0.14426398277282715,
+      "gpu_usage": 0.0,
+      "memory_usage": 72.55859375,
+      "result_summary": "{'issues_found': [], 'syntax_valid': True, 'debug_complete': True, 'file_path': 'enhanced_logging.py', 'total_issues': 0}"
+    },
+    {
+      "agent_id": 151,
+      "task_id": "task_303",
+      "success": true,
+      "processing_time": 0.30020785331726074,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.4375,
+      "result_summary": "{'issues_found': [], 'syntax_valid': True, 'debug_complete': True, 'file_path': 'tools\\\\data_analyzer_tool.py', 'total_issues': 0}"
+    },
+    {
+      "agent_id": 152,
+      "task_id": "task_114",
+      "success": true,
+      "processing_time": 0.12166810035705566,
+      "gpu_usage": 0.0,
+      "memory_usage": 71.73046875,
+      "result_summary": "{'import_test': False, 'syntax_test': True, 'basic_functionality': True, 'test_complete': True, 'file_path': 'enhanced_logging.py'}"
+    },
+    {
+      "agent_id": 152,
+      "task_id": "task_304",
+      "success": true,
+      "processing_time": 0.33072710037231445,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.36328125,
+      "result_summary": "{'import_test': False, 'syntax_test': True, 'basic_functionality': True, 'test_complete': True, 'file_path': 'tools\\\\data_analyzer_tool.py'}"
+    },
+    {
+      "agent_id": 153,
+      "task_id": "task_39",
+      "success": true,
+      "processing_time": 0.28378725051879883,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.3046875,
+      "result_summary": "{'import_test': False, 'syntax_test': True, 'basic_functionality': True, 'test_complete': True, 'file_path': 'claude_coder_fixed.py'}"
+    },
+    {
+      "agent_id": 153,
+      "task_id": "task_229",
+      "success": true,
+      "processing_time": 0.33321428298950195,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.4609375,
+      "result_summary": "{'import_test': False, 'syntax_test': True, 'basic_functionality': True, 'test_complete': True, 'file_path': 'update_api_key.py'}"
+    },
+    {
+      "agent_id": 154,
+      "task_id": "task_344",
+      "success": true,
+      "processing_time": 0.127793550491333,
+      "gpu_usage": 0.0,
+      "memory_usage": 73.07421875,
+      "result_summary": "{'import_test': False, 'syntax_test': True, 'basic_functionality': True, 'test_complete': True, 'file_path': 'tools\\\\prefix_completion_tool.py'}"
+    },
+    {
+      "agent_id": 155,
+      "task_id": "task_269",
+      "success": true,
+      "processing_time": 0.32493066787719727,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.94921875,
+      "result_summary": "{'import_test': False, 'syntax_test': True, 'basic_functionality': True, 'test_complete': True, 'file_path': 'data\\\\transformers_embedding_system.py'}"
+    },
+    {
+      "agent_id": 156,
+      "task_id": "task_4",
+      "success": true,
+      "processing_time": 0.2643420696258545,
+      "gpu_usage": 0.0,
+      "memory_usage": 74.515625,
+      "result_summary": "{'import_test': False, 'syntax_test': True, 'basic_functionality': True, 'test_complete': True, 'file_path': 'ai_swarm_system.py'}"
+    },
+    {
+      "agent_id": 156,
+      "task_id": "task_194",
+      "success": true,
+      "processing_time": 0.2951695919036865,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.45703125,
+      "result_summary": "{'import_test': False, 'syntax_test': True, 'basic_functionality': True, 'test_complete': True, 'file_path': 'simple_test.py'}"
+    },
+    {
+      "agent_id": 156,
+      "task_id": "task_384",
+      "success": true,
+      "processing_time": 0.17340421676635742,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.609375,
+      "result_summary": "{'import_test': False, 'syntax_test': True, 'basic_functionality': True, 'test_complete': True, 'file_path': 'tools\\\\web_scraper_tool.py'}"
+    },
+    {
+      "agent_id": 157,
+      "task_id": "task_119",
+      "success": true,
+      "processing_time": 0.6479361057281494,
+      "gpu_usage": 0.0,
+      "memory_usage": 76.51171875,
+      "result_summary": "{'import_test': False, 'syntax_test': True, 'basic_functionality': True, 'test_complete': True, 'file_path': 'file_encoding_fixer.py'}"
+    },
+    {
+      "agent_id": 157,
+      "task_id": "task_309",
+      "success": true,
+      "processing_time": 0.09361863136291504,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.71875,
+      "result_summary": "{'import_test': False, 'syntax_test': True, 'basic_functionality': True, 'test_complete': True, 'file_path': 'tools\\\\deepseek_coder_tool.py'}"
+    },
+    {
+      "agent_id": 158,
+      "task_id": "task_44",
+      "success": true,
+      "processing_time": 0.398897647857666,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.76171875,
+      "result_summary": "{'import_test': False, 'syntax_test': True, 'basic_functionality': True, 'test_complete': True, 'file_path': 'claude_coder_standalone.py'}"
+    },
+    {
+      "agent_id": 158,
+      "task_id": "task_234",
+      "success": true,
+      "processing_time": 0.34579968452453613,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.75,
+      "result_summary": "{'import_test': False, 'syntax_test': True, 'basic_functionality': True, 'test_complete': True, 'file_path': 'config\\\\api_keys.py'}"
+    },
+    {
+      "agent_id": 159,
+      "task_id": "task_159",
+      "success": true,
+      "processing_time": 0.09012365341186523,
+      "gpu_usage": 0.0,
+      "memory_usage": 70.4453125,
+      "result_summary": "{'import_test': False, 'syntax_test': True, 'basic_functionality': True, 'test_complete': True, 'file_path': 'setup_based_coder.py'}"
+    },
+    {
+      "agent_id": 159,
+      "task_id": "task_349",
+      "success": true,
+      "processing_time": 0.34732747077941895,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.4296875,
+      "result_summary": "{'import_test': False, 'syntax_test': True, 'basic_functionality': True, 'test_complete': True, 'file_path': 'tools\\\\rag_pipeline_tool.py'}"
+    },
+    {
+      "agent_id": 160,
+      "task_id": "task_84",
+      "success": true,
+      "processing_time": 0.3464086055755615,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.69140625,
+      "result_summary": "{'import_test': False, 'syntax_test': True, 'basic_functionality': True, 'test_complete': True, 'file_path': 'demo_full_system.py'}"
+    },
+    {
+      "agent_id": 160,
+      "task_id": "task_274",
+      "success": true,
+      "processing_time": 0.30308103561401367,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.828125,
+      "result_summary": "{'import_test': False, 'syntax_test': False, 'basic_functionality': True, 'test_complete': True, 'file_path': 'examples\\\\rag_demo.py'}"
+    },
+    {
+      "agent_id": 161,
+      "task_id": "task_9",
+      "success": true,
+      "processing_time": 0.25177001953125,
+      "gpu_usage": 0.0,
+      "memory_usage": 74.6953125,
+      "result_summary": "{'import_test': False, 'syntax_test': True, 'basic_functionality': True, 'test_complete': True, 'file_path': 'based_coder_cli.py'}"
+    },
+    {
+      "agent_id": 161,
+      "task_id": "task_199",
+      "success": true,
+      "processing_time": 0.28753161430358887,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.57421875,
+      "result_summary": "{'import_test': False, 'syntax_test': True, 'basic_functionality': True, 'test_complete': True, 'file_path': 'system_status.py'}"
+    },
+    {
+      "agent_id": 161,
+      "task_id": "task_389",
+      "success": true,
+      "processing_time": 0.17626357078552246,
+      "gpu_usage": 0.0,
+      "memory_usage": 76.1875,
+      "result_summary": "{'import_test': False, 'syntax_test': True, 'basic_functionality': True, 'test_complete': True, 'file_path': 'tools\\\\__init__.py'}"
+    },
+    {
+      "agent_id": 162,
+      "task_id": "task_124",
+      "success": true,
+      "processing_time": 0.5718727111816406,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.515625,
+      "result_summary": "{'import_test': False, 'syntax_test': True, 'basic_functionality': True, 'test_complete': True, 'file_path': 'fix_deepseek_issues.py'}"
+    },
+    {
+      "agent_id": 162,
+      "task_id": "task_314",
+      "success": true,
+      "processing_time": 0.1945018768310547,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.390625,
+      "result_summary": "{'import_test': False, 'syntax_test': True, 'basic_functionality': True, 'test_complete': True, 'file_path': 'tools\\\\file_processor_tool.py'}"
+    },
+    {
+      "agent_id": 163,
+      "task_id": "task_49",
+      "success": true,
+      "processing_time": 0.1441211700439453,
+      "gpu_usage": 0.0,
+      "memory_usage": 72.671875,
+      "result_summary": "{'import_test': False, 'syntax_test': True, 'basic_functionality': True, 'test_complete': True, 'file_path': 'cleanup_redundant_files.py'}"
+    },
+    {
+      "agent_id": 163,
+      "task_id": "task_239",
+      "success": true,
+      "processing_time": 0.4581940174102783,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.51171875,
+      "result_summary": "{'import_test': False, 'syntax_test': True, 'basic_functionality': True, 'test_complete': True, 'file_path': 'config\\\\deepcli_config.py'}"
+    },
+    {
+      "agent_id": 164,
+      "task_id": "task_164",
+      "success": true,
+      "processing_time": 0.2954404354095459,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.4921875,
+      "result_summary": "{'import_test': False, 'syntax_test': True, 'basic_functionality': True, 'test_complete': True, 'file_path': 'setup_complete_deanna_system.py'}"
+    },
+    {
+      "agent_id": 164,
+      "task_id": "task_354",
+      "success": true,
+      "processing_time": 0.1787395477294922,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.546875,
+      "result_summary": "{'import_test': False, 'syntax_test': True, 'basic_functionality': True, 'test_complete': True, 'file_path': 'tools\\\\reasoning_engine.py'}"
+    },
+    {
+      "agent_id": 165,
+      "task_id": "task_89",
+      "success": true,
+      "processing_time": 0.3345813751220703,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.58203125,
+      "result_summary": "{'import_test': False, 'syntax_test': True, 'basic_functionality': True, 'test_complete': True, 'file_path': 'download_gguf_models.py'}"
+    },
+    {
+      "agent_id": 165,
+      "task_id": "task_279",
+      "success": true,
+      "processing_time": 0.30829930305480957,
+      "gpu_usage": 0.0,
+      "memory_usage": 76.4921875,
+      "result_summary": "{'import_test': False, 'syntax_test': False, 'basic_functionality': True, 'test_complete': True, 'file_path': 'examples\\\\unified_agent_demo.py'}"
+    },
+    {
+      "agent_id": 166,
+      "task_id": "task_14",
+      "success": true,
+      "processing_time": 0.12621378898620605,
+      "gpu_usage": 0.0,
+      "memory_usage": 72.0546875,
+      "result_summary": "{'import_test': False, 'syntax_test': True, 'basic_functionality': True, 'test_complete': True, 'file_path': 'claude_coder_advanced.py'}"
+    },
+    {
+      "agent_id": 166,
+      "task_id": "task_204",
+      "success": true,
+      "processing_time": 0.5599770545959473,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.7109375,
+      "result_summary": "{'import_test': False, 'syntax_test': True, 'basic_functionality': True, 'test_complete': True, 'file_path': 'test_core_features.py'}"
+    },
+    {
+      "agent_id": 166,
+      "task_id": "task_394",
+      "success": true,
+      "processing_time": 0.07968354225158691,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.3984375,
+      "result_summary": "{'import_test': False, 'syntax_test': True, 'basic_functionality': True, 'test_complete': True, 'file_path': 'src\\\\tools\\\\advanced\\\\ai_agent_orchestrator.py'}"
+    },
+    {
+      "agent_id": 167,
+      "task_id": "task_129",
+      "success": true,
+      "processing_time": 0.1162724494934082,
+      "gpu_usage": 0.0,
+      "memory_usage": 71.0,
+      "result_summary": "{'import_test': False, 'syntax_test': True, 'basic_functionality': True, 'test_complete': True, 'file_path': 'init_local_db.py'}"
+    },
+    {
+      "agent_id": 167,
+      "task_id": "task_319",
+      "success": true,
+      "processing_time": 0.3484008312225342,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.44140625,
+      "result_summary": "{'import_test': False, 'syntax_test': True, 'basic_functionality': True, 'test_complete': True, 'file_path': 'tools\\\\fim_completion_tool.py'}"
+    },
+    {
+      "agent_id": 168,
+      "task_id": "task_54",
+      "success": true,
+      "processing_time": 0.3072071075439453,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.62109375,
+      "result_summary": "{'import_test': False, 'syntax_test': True, 'basic_functionality': True, 'test_complete': True, 'file_path': 'config.py'}"
+    },
+    {
+      "agent_id": 168,
+      "task_id": "task_244",
+      "success": true,
+      "processing_time": 0.38342761993408203,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.640625,
+      "result_summary": "{'import_test': False, 'syntax_test': True, 'basic_functionality': True, 'test_complete': True, 'file_path': 'config\\\\__init__.py'}"
+    },
+    {
+      "agent_id": 169,
+      "task_id": "task_169",
+      "success": true,
+      "processing_time": 0.6143176555633545,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.4609375,
+      "result_summary": "{'import_test': False, 'syntax_test': True, 'basic_functionality': True, 'test_complete': True, 'file_path': 'setup_deanna_persona.py'}"
+    },
+    {
+      "agent_id": 169,
+      "task_id": "task_359",
+      "success": true,
+      "processing_time": 0.07714962959289551,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.65625,
+      "result_summary": "{'import_test': False, 'syntax_test': True, 'basic_functionality': True, 'test_complete': True, 'file_path': 'tools\\\\simple_embedding_tool.py'}"
+    },
+    {
+      "agent_id": 170,
+      "task_id": "task_284",
+      "success": true,
+      "processing_time": 0.2755849361419678,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.69140625,
+      "result_summary": "{'import_test': False, 'syntax_test': False, 'basic_functionality': True, 'test_complete': True, 'file_path': 'examples\\\\__init__.py'}"
+    },
+    {
+      "agent_id": 171,
+      "task_id": "task_209",
+      "success": true,
+      "processing_time": 0.20223164558410645,
+      "gpu_usage": 0.0,
+      "memory_usage": 74.03125,
+      "result_summary": "{'import_test': False, 'syntax_test': True, 'basic_functionality': True, 'test_complete': True, 'file_path': 'test_final_system.py'}"
+    },
+    {
+      "agent_id": 171,
+      "task_id": "task_399",
+      "success": true,
+      "processing_time": 0.09839415550231934,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.890625,
+      "result_summary": "{'import_test': False, 'syntax_test': True, 'basic_functionality': True, 'test_complete': True, 'file_path': 'src\\\\tools\\\\advanced\\\\code_architecture_tool.py'}"
+    },
+    {
+      "agent_id": 172,
+      "task_id": "task_134",
+      "success": true,
+      "processing_time": 0.2176058292388916,
+      "gpu_usage": 0.0,
+      "memory_usage": 73.48046875,
+      "result_summary": "{'import_test': False, 'syntax_test': True, 'basic_functionality': True, 'test_complete': True, 'file_path': 'main.py'}"
+    },
+    {
+      "agent_id": 172,
+      "task_id": "task_324",
+      "success": true,
+      "processing_time": 0.28212523460388184,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.40625,
+      "result_summary": "{'import_test': False, 'syntax_test': True, 'basic_functionality': True, 'test_complete': True, 'file_path': 'tools\\\\llm_query_tool.py'}"
+    },
+    {
+      "agent_id": 173,
+      "task_id": "task_59",
+      "success": true,
+      "processing_time": 0.35945582389831543,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.69921875,
+      "result_summary": "{'import_test': False, 'syntax_test': True, 'basic_functionality': True, 'test_complete': True, 'file_path': 'config_manager.py'}"
+    },
+    {
+      "agent_id": 173,
+      "task_id": "task_249",
+      "success": true,
+      "processing_time": 0.3534672260284424,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.41015625,
+      "result_summary": "{'import_test': False, 'syntax_test': True, 'basic_functionality': True, 'test_complete': True, 'file_path': 'data\\\\embedding_system.py'}"
+    },
+    {
+      "agent_id": 174,
+      "task_id": "task_174",
+      "success": true,
+      "processing_time": 0.23161602020263672,
+      "gpu_usage": 0.0,
+      "memory_usage": 74.15625,
+      "result_summary": "{'import_test': False, 'syntax_test': True, 'basic_functionality': True, 'test_complete': True, 'file_path': 'setup_simple_deanna_system.py'}"
+    },
+    {
+      "agent_id": 174,
+      "task_id": "task_364",
+      "success": true,
+      "processing_time": 0.4230215549468994,
+      "gpu_usage": 0.0,
+      "memory_usage": 76.14453125,
+      "result_summary": "{'import_test': False, 'syntax_test': True, 'basic_functionality': True, 'test_complete': True, 'file_path': 'tools\\\\sql_database_tool.py'}"
+    },
+    {
+      "agent_id": 175,
+      "task_id": "task_99",
+      "success": true,
+      "processing_time": 0.26512885093688965,
+      "gpu_usage": 0.0,
+      "memory_usage": 74.1796875,
+      "result_summary": "{'import_test': False, 'syntax_test': True, 'basic_functionality': True, 'test_complete': True, 'file_path': 'download_qwen_model.py'}"
+    },
+    {
+      "agent_id": 175,
+      "task_id": "task_289",
+      "success": true,
+      "processing_time": 0.3002784252166748,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.8359375,
+      "result_summary": "{'import_test': False, 'syntax_test': True, 'basic_functionality': True, 'test_complete': True, 'file_path': 'rewrite_examples\\\\memory_manager_rewrite.py'}"
+    },
+    {
+      "agent_id": 176,
+      "task_id": "task_214",
+      "success": true,
+      "processing_time": 0.25220251083374023,
+      "gpu_usage": 0.0,
+      "memory_usage": 74.34375,
+      "result_summary": "{'import_test': False, 'syntax_test': True, 'basic_functionality': True, 'test_complete': True, 'file_path': 'test_qwen_model.py'}"
+    },
+    {
+      "agent_id": 177,
+      "task_id": "task_139",
+      "success": true,
+      "processing_time": 0.30622363090515137,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.66015625,
+      "result_summary": "{'import_test': False, 'syntax_test': True, 'basic_functionality': True, 'test_complete': True, 'file_path': 'run_all_improvements.py'}"
+    },
+    {
+      "agent_id": 177,
+      "task_id": "task_329",
+      "success": true,
+      "processing_time": 0.16202545166015625,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.3359375,
+      "result_summary": "{'import_test': False, 'syntax_test': True, 'basic_functionality': True, 'test_complete': True, 'file_path': 'tools\\\\local_embedding_tool.py'}"
+    },
+    {
+      "agent_id": 178,
+      "task_id": "task_64",
+      "success": true,
+      "processing_time": 0.32820892333984375,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.421875,
+      "result_summary": "{'import_test': False, 'syntax_test': True, 'basic_functionality': True, 'test_complete': True, 'file_path': 'database_cleaner.py'}"
+    },
+    {
+      "agent_id": 178,
+      "task_id": "task_254",
+      "success": true,
+      "processing_time": 0.3754270076751709,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.703125,
+      "result_summary": "{'import_test': False, 'syntax_test': True, 'basic_functionality': True, 'test_complete': True, 'file_path': 'data\\\\local_embedding_system.py'}"
+    },
+    {
+      "agent_id": 179,
+      "task_id": "task_179",
+      "success": true,
+      "processing_time": 0.29192018508911133,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.2578125,
+      "result_summary": "{'import_test': False, 'syntax_test': True, 'basic_functionality': True, 'test_complete': True, 'file_path': 'setup_transformers_deanna_system.py'}"
+    },
+    {
+      "agent_id": 179,
+      "task_id": "task_369",
+      "success": true,
+      "processing_time": 0.28672122955322266,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.59765625,
+      "result_summary": "{'import_test': False, 'syntax_test': True, 'basic_functionality': True, 'test_complete': True, 'file_path': 'tools\\\\tool_manager.py'}"
+    },
+    {
+      "agent_id": 180,
+      "task_id": "task_294",
+      "success": true,
+      "processing_time": 0.28432488441467285,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.61328125,
+      "result_summary": "{'import_test': False, 'syntax_test': True, 'basic_functionality': True, 'test_complete': True, 'file_path': 'tools\\\\base_tool.py'}"
+    },
+    {
+      "agent_id": 181,
+      "task_id": "task_29",
+      "success": true,
+      "processing_time": 0.1300368309020996,
+      "gpu_usage": 0.0,
+      "memory_usage": 72.4453125,
+      "result_summary": "{'import_test': False, 'syntax_test': False, 'basic_functionality': True, 'test_complete': True, 'file_path': 'claude_coder_agent_fixed.py'}"
+    },
+    {
+      "agent_id": 181,
+      "task_id": "task_219",
+      "success": true,
+      "processing_time": 0.2781693935394287,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.18359375,
+      "result_summary": "{'import_test': False, 'syntax_test': True, 'basic_functionality': True, 'test_complete': True, 'file_path': 'test_suite.py'}"
+    },
+    {
+      "agent_id": 182,
+      "task_id": "task_144",
+      "success": true,
+      "processing_time": 0.22515320777893066,
+      "gpu_usage": 0.0,
+      "memory_usage": 73.828125,
+      "result_summary": "{'import_test': False, 'syntax_test': True, 'basic_functionality': True, 'test_complete': True, 'file_path': 'run_cli.py'}"
+    },
+    {
+      "agent_id": 182,
+      "task_id": "task_334",
+      "success": true,
+      "processing_time": 0.3866450786590576,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.515625,
+      "result_summary": "{'import_test': False, 'syntax_test': True, 'basic_functionality': True, 'test_complete': True, 'file_path': 'tools\\\\memory_tool.py'}"
+    },
+    {
+      "agent_id": 183,
+      "task_id": "task_69",
+      "success": true,
+      "processing_time": 0.19361639022827148,
+      "gpu_usage": 0.0,
+      "memory_usage": 73.09765625,
+      "result_summary": "{'import_test': False, 'syntax_test': True, 'basic_functionality': True, 'test_complete': True, 'file_path': 'deanna_chat_system.py'}"
+    },
+    {
+      "agent_id": 183,
+      "task_id": "task_259",
+      "success": true,
+      "processing_time": 0.31499648094177246,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.4140625,
+      "result_summary": "{'import_test': False, 'syntax_test': True, 'basic_functionality': True, 'test_complete': True, 'file_path': 'data\\\\memory_manager.py'}"
+    },
+    {
+      "agent_id": 184,
+      "task_id": "task_184",
+      "success": true,
+      "processing_time": 0.3500344753265381,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.81640625,
+      "result_summary": "{'import_test': False, 'syntax_test': True, 'basic_functionality': True, 'test_complete': True, 'file_path': 'simple_download.py'}"
+    },
+    {
+      "agent_id": 184,
+      "task_id": "task_374",
+      "success": true,
+      "processing_time": 0.28586530685424805,
+      "gpu_usage": 0.0,
+      "memory_usage": 76.6328125,
+      "result_summary": "{'import_test': False, 'syntax_test': True, 'basic_functionality': True, 'test_complete': True, 'file_path': 'tools\\\\unified_agent_system.py'}"
+    },
+    {
+      "agent_id": 185,
+      "task_id": "task_299",
+      "success": true,
+      "processing_time": 0.6388890743255615,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.96484375,
+      "result_summary": "{'import_test': False, 'syntax_test': True, 'basic_functionality': True, 'test_complete': True, 'file_path': 'tools\\\\code_generator_tool.py'}"
+    },
+    {
+      "agent_id": 186,
+      "task_id": "task_34",
+      "success": true,
+      "processing_time": 0.315136194229126,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.796875,
+      "result_summary": "{'import_test': False, 'syntax_test': False, 'basic_functionality': True, 'test_complete': True, 'file_path': 'claude_coder_agent_simple.py'}"
+    },
+    {
+      "agent_id": 186,
+      "task_id": "task_224",
+      "success": true,
+      "processing_time": 0.2909214496612549,
+      "gpu_usage": 0.0,
+      "memory_usage": 76.1171875,
+      "result_summary": "{'import_test': False, 'syntax_test': True, 'basic_functionality': True, 'test_complete': True, 'file_path': 'test_tools.py'}"
+    },
+    {
+      "agent_id": 187,
+      "task_id": "task_149",
+      "success": true,
+      "processing_time": 0.48613619804382324,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.5859375,
+      "result_summary": "{'import_test': False, 'syntax_test': True, 'basic_functionality': True, 'test_complete': True, 'file_path': 'setup.py'}"
+    },
+    {
+      "agent_id": 187,
+      "task_id": "task_339",
+      "success": true,
+      "processing_time": 0.2274155616760254,
+      "gpu_usage": 0.0,
+      "memory_usage": 76.0859375,
+      "result_summary": "{'import_test': False, 'syntax_test': True, 'basic_functionality': True, 'test_complete': True, 'file_path': 'tools\\\\nodejs_bridge_tool.py'}"
+    },
+    {
+      "agent_id": 188,
+      "task_id": "task_74",
+      "success": true,
+      "processing_time": 0.10277438163757324,
+      "gpu_usage": 0.0,
+      "memory_usage": 70.58203125,
+      "result_summary": "{'import_test': False, 'syntax_test': True, 'basic_functionality': True, 'test_complete': True, 'file_path': 'demo.py'}"
+    },
+    {
+      "agent_id": 188,
+      "task_id": "task_264",
+      "success": true,
+      "processing_time": 0.19275832176208496,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.21484375,
+      "result_summary": "{'import_test': False, 'syntax_test': True, 'basic_functionality': True, 'test_complete': True, 'file_path': 'data\\\\simple_embedding_system.py'}"
+    },
+    {
+      "agent_id": 189,
+      "task_id": "task_189",
+      "success": true,
+      "processing_time": 0.09379267692565918,
+      "gpu_usage": 0.0,
+      "memory_usage": 70.33203125,
+      "result_summary": "{'import_test': False, 'syntax_test': True, 'basic_functionality': True, 'test_complete': True, 'file_path': 'simple_embedding_setup.py'}"
+    },
+    {
+      "agent_id": 189,
+      "task_id": "task_379",
+      "success": true,
+      "processing_time": 0.4744100570678711,
+      "gpu_usage": 0.0,
+      "memory_usage": 75.484375,
+      "result_summary": "{'import_test': False, 'syntax_test': True, 'basic_functionality': True, 'test_complete': True, 'file_path': 'tools\\\\vector_database_tool.py'}"
+    },
+    {
+      "agent_id": 38,
+      "task_id": "task_266",
+      "success": true,
+      "processing_time": 0.1638166904449463,
+      "gpu_usage": 0.11,
+      "memory_usage": 81.2265625,
+      "result_summary": "{'error': 'API request failed: 429', 'analysis_complete': False}"
+    },
+    {
+      "agent_id": 39,
+      "task_id": "task_191",
+      "success": true,
+      "processing_time": 0.16250181198120117,
+      "gpu_usage": 0.11,
+      "memory_usage": 81.7890625,
+      "result_summary": "{'error': 'API request failed: 429', 'analysis_complete': False}"
+    },
+    {
+      "agent_id": 39,
+      "task_id": "task_381",
+      "success": true,
+      "processing_time": 0.19817733764648438,
+      "gpu_usage": 0.11,
+      "memory_usage": 79.41796875,
+      "result_summary": "{'error': 'API request failed: 429', 'analysis_complete': False}"
+    },
+    {
+      "agent_id": 40,
+      "task_id": "task_116",
+      "success": true,
+      "processing_time": 1.266970157623291,
+      "gpu_usage": 0.11,
+      "memory_usage": 79.03515625,
+      "result_summary": "{'error': 'API request failed: 429', 'analysis_complete': False}"
+    },
+    {
+      "agent_id": 40,
+      "task_id": "task_306",
+      "success": true,
+      "processing_time": 0.3584554195404053,
+      "gpu_usage": 0.11,
+      "memory_usage": 76.99609375,
+      "result_summary": "{'error': 'API request failed: 429', 'analysis_complete': False}"
+    },
+    {
+      "agent_id": 41,
+      "task_id": "task_231",
+      "success": true,
+      "processing_time": 0.19394540786743164,
+      "gpu_usage": 0.11,
+      "memory_usage": 80.125,
+      "result_summary": "{'error': 'API request failed: 429', 'analysis_complete': False}"
+    },
+    {
+      "agent_id": 43,
+      "task_id": "task_81",
+      "success": true,
+      "processing_time": 1.1139278411865234,
+      "gpu_usage": 0.11,
+      "memory_usage": 82.03515625,
+      "result_summary": "{'error': 'API request failed: 429', 'analysis_complete': False}"
+    },
+    {
+      "agent_id": 43,
+      "task_id": "task_271",
+      "success": true,
+      "processing_time": 0.2753410339355469,
+      "gpu_usage": 0.11,
+      "memory_usage": 78.953125,
+      "result_summary": "{'error': 'API request failed: 429', 'analysis_complete': False}"
+    },
+    {
+      "agent_id": 44,
+      "task_id": "task_6",
+      "success": true,
+      "processing_time": 1.2524528503417969,
+      "gpu_usage": 0.11,
+      "memory_usage": 79.75,
+      "result_summary": "{'error': 'API request failed: 429', 'analysis_complete': False}"
+    },
+    {
+      "agent_id": 44,
+      "task_id": "task_196",
+      "success": true,
+      "processing_time": 0.1396796703338623,
+      "gpu_usage": 0.11,
+      "memory_usage": 78.48828125,
+      "result_summary": "{'error': 'API request failed: 429', 'analysis_complete': False}"
+    },
+    {
+      "agent_id": 44,
+      "task_id": "task_386",
+      "success": true,
+      "processing_time": 0.18529915809631348,
+      "gpu_usage": 0.11,
+      "memory_usage": 77.4765625,
+      "result_summary": "{'error': 'API request failed: 429', 'analysis_complete': False}"
+    },
+    {
+      "agent_id": 45,
+      "task_id": "task_121",
+      "success": true,
+      "processing_time": 1.1510884761810303,
+      "gpu_usage": 0.11,
+      "memory_usage": 82.22265625,
+      "result_summary": "{'error': 'API request failed: 429', 'analysis_complete': False}"
+    },
+    {
+      "agent_id": 45,
+      "task_id": "task_311",
+      "success": true,
+      "processing_time": 0.21561574935913086,
+      "gpu_usage": 0.11,
+      "memory_usage": 79.421875,
+      "result_summary": "{'error': 'API request failed: 429', 'analysis_complete': False}"
+    },
+    {
+      "agent_id": 46,
+      "task_id": "task_236",
+      "success": true,
+      "processing_time": 0.13089585304260254,
+      "gpu_usage": 0.11,
+      "memory_usage": 80.76171875,
+      "result_summary": "{'error': 'API request failed: 429', 'analysis_complete': False}"
+    },
+    {
+      "agent_id": 50,
+      "task_id": "task_316",
+      "success": true,
+      "processing_time": 0.15647387504577637,
+      "gpu_usage": 0.11,
+      "memory_usage": 80.125,
+      "result_summary": "{'error': 'API request failed: 429', 'analysis_complete': False}"
+    },
+    {
+      "agent_id": 51,
+      "task_id": "task_241",
+      "success": true,
+      "processing_time": 0.1832423210144043,
+      "gpu_usage": 0.11,
+      "memory_usage": 81.8203125,
+      "result_summary": "{'error': 'API request failed: 429', 'analysis_complete': False}"
+    },
+    {
+      "agent_id": 53,
+      "task_id": "task_281",
+      "success": true,
+      "processing_time": 0.15946388244628906,
+      "gpu_usage": 0.11,
+      "memory_usage": 81.48828125,
+      "result_summary": "{'error': 'API request failed: 429', 'analysis_complete': False}"
+    },
+    {
+      "agent_id": 54,
+      "task_id": "task_16",
+      "success": true,
+      "processing_time": 1.109532356262207,
+      "gpu_usage": 0.11,
+      "memory_usage": 82.01953125,
+      "result_summary": "{'error': 'API request failed: 429', 'analysis_complete': False}"
+    },
+    {
+      "agent_id": 54,
+      "task_id": "task_206",
+      "success": true,
+      "processing_time": 0.16791152954101562,
+      "gpu_usage": 0.11,
+      "memory_usage": 79.37109375,
+      "result_summary": "{'error': 'API request failed: 429', 'analysis_complete': False}"
+    },
+    {
+      "agent_id": 54,
+      "task_id": "task_396",
+      "success": true,
+      "processing_time": 0.15499401092529297,
+      "gpu_usage": 0.11,
+      "memory_usage": 78.4921875,
+      "result_summary": "{'error': 'API request failed: 429', 'analysis_complete': False}"
+    },
+    {
+      "agent_id": 55,
+      "task_id": "task_131",
+      "success": true,
+      "processing_time": 1.0931637287139893,
+      "gpu_usage": 0.11,
+      "memory_usage": 82.18359375,
+      "result_summary": "{'error': 'API request failed: 429', 'analysis_complete': False}"
+    },
+    {
+      "agent_id": 55,
+      "task_id": "task_321",
+      "success": true,
+      "processing_time": 0.1650688648223877,
+      "gpu_usage": 0.11,
+      "memory_usage": 79.03125,
+      "result_summary": "{'error': 'API request failed: 429', 'analysis_complete': False}"
+    },
+    {
+      "agent_id": 56,
+      "task_id": "task_56",
+      "success": true,
+      "processing_time": 1.088042974472046,
+      "gpu_usage": 0.11,
+      "memory_usage": 82.18359375,
+      "result_summary": "{'error': 'API request failed: 429', 'analysis_complete': False}"
+    },
+    {
+      "agent_id": 56,
+      "task_id": "task_246",
+      "success": true,
+      "processing_time": 0.16130423545837402,
+      "gpu_usage": 0.11,
+      "memory_usage": 79.578125,
+      "result_summary": "{'error': 'API request failed: 429', 'analysis_complete': False}"
+    },
+    {
+      "agent_id": 57,
+      "task_id": "task_171",
+      "success": true,
+      "processing_time": 1.1286406517028809,
+      "gpu_usage": 0.11,
+      "memory_usage": 82.16796875,
+      "result_summary": "{'error': 'API request failed: 429', 'analysis_complete': False}"
+    },
+    {
+      "agent_id": 57,
+      "task_id": "task_361",
+      "success": true,
+      "processing_time": 0.2516944408416748,
+      "gpu_usage": 0.11,
+      "memory_usage": 79.34375,
+      "result_summary": "{'error': 'API request failed: 429', 'analysis_complete': False}"
+    },
+    {
+      "agent_id": 58,
+      "task_id": "task_286",
+      "success": true,
+      "processing_time": 0.2719454765319824,
+      "gpu_usage": 0.11,
+      "memory_usage": 79.39453125,
+      "result_summary": "{'error': 'API request failed: 429', 'analysis_complete': False}"
+    },
+    {
+      "agent_id": 59,
+      "task_id": "task_211",
+      "success": true,
+      "processing_time": 0.21987509727478027,
+      "gpu_usage": 0.11,
+      "memory_usage": 79.390625,
+      "result_summary": "{'error': 'API request failed: 429', 'analysis_complete': False}"
+    },
+    {
+      "agent_id": 61,
+      "task_id": "task_251",
+      "success": true,
+      "processing_time": 0.15616464614868164,
+      "gpu_usage": 0.11,
+      "memory_usage": 80.796875,
+      "result_summary": "{'error': 'API request failed: 429', 'analysis_complete': False}"
+    },
+    {
+      "agent_id": 62,
+      "task_id": "task_366",
+      "success": true,
+      "processing_time": 0.19946026802062988,
+      "gpu_usage": 0.11,
+      "memory_usage": 79.03515625,
+      "result_summary": "{'error': 'API request failed: 429', 'analysis_complete': False}"
+    },
+    {
+      "agent_id": 63,
+      "task_id": "task_291",
+      "success": true,
+      "processing_time": 0.15092992782592773,
+      "gpu_usage": 0.11,
+      "memory_usage": 80.7421875,
+      "result_summary": "{'error': 'API request failed: 429', 'analysis_complete': False}"
+    },
+    {
+      "agent_id": 64,
+      "task_id": "task_216",
+      "success": true,
+      "processing_time": 0.1745924949645996,
+      "gpu_usage": 0.11,
+      "memory_usage": 80.53515625,
+      "result_summary": "{'error': 'API request failed: 429', 'analysis_complete': False}"
+    },
+    {
+      "agent_id": 68,
+      "task_id": "task_296",
+      "success": true,
+      "processing_time": 0.20485854148864746,
+      "gpu_usage": 0.11,
+      "memory_usage": 80.75,
+      "result_summary": "{'error': 'API request failed: 429', 'analysis_complete': False}"
+    },
+    {
+      "agent_id": 69,
+      "task_id": "task_31",
+      "success": true,
+      "processing_time": 1.0916578769683838,
+      "gpu_usage": 0.11,
+      "memory_usage": 82.125,
+      "result_summary": "{'error': 'API request failed: 429', 'analysis_complete': False}"
+    },
+    {
+      "agent_id": 69,
+      "task_id": "task_221",
+      "success": true,
+      "processing_time": 0.18280911445617676,
+      "gpu_usage": 0.11,
+      "memory_usage": 79.38671875,
+      "result_summary": "{'error': 'API request failed: 429', 'analysis_complete': False}"
+    },
+    {
+      "agent_id": 71,
+      "task_id": "task_261",
+      "success": true,
+      "processing_time": 0.18163251876831055,
+      "gpu_usage": 0.11,
+      "memory_usage": 80.01953125,
+      "result_summary": "{'error': 'API request failed: 429', 'analysis_complete': False}"
+    },
+    {
+      "agent_id": 72,
+      "task_id": "task_376",
+      "success": true,
+      "processing_time": 0.23234105110168457,
+      "gpu_usage": 0.11,
+      "memory_usage": 79.390625,
+      "result_summary": "{'error': 'API request failed: 429', 'analysis_complete': False}"
+    },
+    {
+      "agent_id": 73,
+      "task_id": "task_301",
+      "success": true,
+      "processing_time": 0.22970962524414062,
+      "gpu_usage": 0.11,
+      "memory_usage": 79.390625,
+      "result_summary": "{'error': 'API request failed: 429', 'analysis_complete': False}"
+    },
+    {
+      "agent_id": 74,
+      "task_id": "task_36",
+      "success": true,
+      "processing_time": 1.1323552131652832,
+      "gpu_usage": 0.11,
+      "memory_usage": 82.1328125,
+      "result_summary": "{'error': 'API request failed: 429', 'analysis_complete': False}"
+    },
+    {
+      "agent_id": 74,
+      "task_id": "task_226",
+      "success": true,
+      "processing_time": 0.22727084159851074,
+      "gpu_usage": 0.11,
+      "memory_usage": 79.41796875,
+      "result_summary": "{'error': 'API request failed: 429', 'analysis_complete': False}"
+    },
+    {
+      "agent_id": 75,
+      "task_id": "task_341",
+      "success": true,
+      "processing_time": 0.1386115550994873,
+      "gpu_usage": 0.11,
+      "memory_usage": 80.40234375,
+      "result_summary": "{'error': 'API request failed: 429', 'analysis_complete': False}"
+    },
+    {
+      "agent_id": 76,
+      "task_id": "task_342",
+      "success": true,
+      "processing_time": 0.18773460388183594,
+      "gpu_usage": 0.11,
+      "memory_usage": 80.125,
+      "result_summary": "{'error': 'API request failed: 429', 'rewrite_complete': False}"
+    },
+    {
+      "agent_id": 77,
+      "task_id": "task_267",
+      "success": true,
+      "processing_time": 0.16075563430786133,
+      "gpu_usage": 0.11,
+      "memory_usage": 80.8515625,
+      "result_summary": "{'error': 'API request failed: 429', 'rewrite_complete': False}"
+    },
+    {
+      "agent_id": 78,
+      "task_id": "task_2",
+      "success": true,
+      "processing_time": 1.1716053485870361,
+      "gpu_usage": 0.11,
+      "memory_usage": 81.2734375,
+      "result_summary": "{'error': 'API request failed: 429', 'rewrite_complete': False}"
+    },
+    {
+      "agent_id": 78,
+      "task_id": "task_192",
+      "success": true,
+      "processing_time": 0.22692370414733887,
+      "gpu_usage": 0.11,
+      "memory_usage": 78.48828125,
+      "result_summary": "{'error': 'API request failed: 429', 'rewrite_complete': False}"
+    },
+    {
+      "agent_id": 78,
+      "task_id": "task_382",
+      "success": true,
+      "processing_time": 0.19283843040466309,
+      "gpu_usage": 0.11,
+      "memory_usage": 77.234375,
+      "result_summary": "{'error': 'API request failed: 429', 'rewrite_complete': False}"
+    },
+    {
+      "agent_id": 79,
+      "task_id": "task_307",
+      "success": true,
+      "processing_time": 0.20412015914916992,
+      "gpu_usage": 0.11,
+      "memory_usage": 80.01953125,
+      "result_summary": "{'error': 'API request failed: 429', 'rewrite_complete': False}"
+    },
+    {
+      "agent_id": 80,
+      "task_id": "task_232",
+      "success": true,
+      "processing_time": 0.18295907974243164,
+      "gpu_usage": 0.11,
+      "memory_usage": 81.4921875,
+      "result_summary": "{'error': 'API request failed: 429', 'rewrite_complete': False}"
+    },
+    {
+      "agent_id": 81,
+      "task_id": "task_157",
+      "success": true,
+      "processing_time": 1.1250331401824951,
+      "gpu_usage": 0.11,
+      "memory_usage": 82.078125,
+      "result_summary": "{'error': 'API request failed: 429', 'rewrite_complete': False}"
+    },
+    {
+      "agent_id": 81,
+      "task_id": "task_347",
+      "success": true,
+      "processing_time": 0.2279956340789795,
+      "gpu_usage": 0.11,
+      "memory_usage": 79.3984375,
+      "result_summary": "{'error': 'API request failed: 429', 'rewrite_complete': False}"
+    },
+    {
+      "agent_id": 82,
+      "task_id": "task_272",
+      "success": true,
+      "processing_time": 0.18387413024902344,
+      "gpu_usage": 0.11,
+      "memory_usage": 79.359375,
+      "result_summary": "{'error': 'API request failed: 429', 'rewrite_complete': False}"
+    },
+    {
+      "agent_id": 83,
+      "task_id": "task_7",
+      "success": true,
+      "processing_time": 1.1558709144592285,
+      "gpu_usage": 0.11,
+      "memory_usage": 81.8203125,
+      "result_summary": "{'error': 'API request failed: 429', 'rewrite_complete': False}"
+    },
+    {
+      "agent_id": 83,
+      "task_id": "task_197",
+      "success": true,
+      "processing_time": 0.2286698818206787,
+      "gpu_usage": 0.11,
+      "memory_usage": 79.421875,
+      "result_summary": "{'error': 'API request failed: 429', 'rewrite_complete': False}"
+    },
+    {
+      "agent_id": 83,
+      "task_id": "task_387",
+      "success": true,
+      "processing_time": 0.15845394134521484,
+      "gpu_usage": 0.11,
+      "memory_usage": 77.65625,
+      "result_summary": "{'error': 'API request failed: 429', 'rewrite_complete': False}"
+    },
+    {
+      "agent_id": 84,
+      "task_id": "task_122",
+      "success": true,
+      "processing_time": 1.2002413272857666,
+      "gpu_usage": 0.11,
+      "memory_usage": 80.75390625,
+      "result_summary": "{'error': 'API request failed: 429', 'rewrite_complete': False}"
+    },
+    {
+      "agent_id": 84,
+      "task_id": "task_312",
+      "success": true,
+      "processing_time": 0.23019003868103027,
+      "gpu_usage": 0.11,
+      "memory_usage": 78.4921875,
+      "result_summary": "{'error': 'API request failed: 429', 'rewrite_complete': False}"
+    },
+    {
+      "agent_id": 85,
+      "task_id": "task_237",
+      "success": true,
+      "processing_time": 0.3830533027648926,
+      "gpu_usage": 0.11,
+      "memory_usage": 77.79296875,
+      "result_summary": "{'error': 'API request failed: 429', 'rewrite_complete': False}"
+    },
+    {
+      "agent_id": 86,
+      "task_id": "task_352",
+      "success": true,
+      "processing_time": 0.231156587600708,
+      "gpu_usage": 0.11,
+      "memory_usage": 79.953125,
+      "result_summary": "{'error': 'API request failed: 429', 'rewrite_complete': False}"
+    },
+    {
+      "agent_id": 87,
+      "task_id": "task_277",
+      "success": true,
+      "processing_time": 0.438992977142334,
+      "gpu_usage": 0.11,
+      "memory_usage": 78.484375,
+      "result_summary": "{'error': 'API request failed: 429', 'rewrite_complete': False}"
+    },
+    {
+      "agent_id": 88,
+      "task_id": "task_202",
+      "success": true,
+      "processing_time": 0.2272167205810547,
+      "gpu_usage": 0.11,
+      "memory_usage": 80.00390625,
+      "result_summary": "{'error': 'API request failed: 429', 'rewrite_complete': False}"
+    },
+    {
+      "agent_id": 88,
+      "task_id": "task_392",
+      "success": true,
+      "processing_time": 0.1484997272491455,
+      "gpu_usage": 0.11,
+      "memory_usage": 78.48828125,
+      "result_summary": "{'error': 'API request failed: 429', 'rewrite_complete': False}"
+    },
+    {
+      "agent_id": 89,
+      "task_id": "task_317",
+      "success": true,
+      "processing_time": 0.15398716926574707,
+      "gpu_usage": 0.11,
+      "memory_usage": 81.8203125,
+      "result_summary": "{'error': 'API request failed: 429', 'rewrite_complete': False}"
+    },
+    {
+      "agent_id": 90,
+      "task_id": "task_52",
+      "success": true,
+      "processing_time": 1.108905553817749,
+      "gpu_usage": 0.11,
+      "memory_usage": 82.01953125,
+      "result_summary": "{'error': 'API request failed: 429', 'rewrite_complete': False}"
+    },
+    {
+      "agent_id": 90,
+      "task_id": "task_242",
+      "success": true,
+      "processing_time": 0.1705322265625,
+      "gpu_usage": 0.11,
+      "memory_usage": 79.37890625,
+      "result_summary": "{'error': 'API request failed: 429', 'rewrite_complete': False}"
+    },
+    {
+      "agent_id": 91,
+      "task_id": "task_357",
+      "success": true,
+      "processing_time": 0.19178104400634766,
+      "gpu_usage": 0.11,
+      "memory_usage": 80.859375,
+      "result_summary": "{'error': 'API request failed: 429', 'rewrite_complete': False}"
+    },
+    {
+      "agent_id": 92,
+      "task_id": "task_282",
+      "success": true,
+      "processing_time": 0.1771225929260254,
+      "gpu_usage": 0.11,
+      "memory_usage": 81.8203125,
+      "result_summary": "{'error': 'API request failed: 429', 'rewrite_complete': False}"
+    },
+    {
+      "agent_id": 93,
+      "task_id": "task_207",
+      "success": true,
+      "processing_time": 0.20388150215148926,
+      "gpu_usage": 0.11,
+      "memory_usage": 79.3515625,
+      "result_summary": "{'error': 'API request failed: 429', 'rewrite_complete': False}"
+    },
+    {
+      "agent_id": 93,
+      "task_id": "task_397",
+      "success": true,
+      "processing_time": 0.2969851493835449,
+      "gpu_usage": 0.11,
+      "memory_usage": 77.4453125,
+      "result_summary": "{'error': 'API request failed: 429', 'rewrite_complete': False}"
+    },
+    {
+      "agent_id": 94,
+      "task_id": "task_322",
+      "success": true,
+      "processing_time": 0.20183777809143066,
+      "gpu_usage": 0.11,
+      "memory_usage": 80.125,
+      "result_summary": "{'error': 'API request failed: 429', 'rewrite_complete': False}"
+    },
+    {
+      "agent_id": 95,
+      "task_id": "task_57",
+      "success": true,
+      "processing_time": 1.3201913833618164,
+      "gpu_usage": 0.11,
+      "memory_usage": 79.390625,
+      "result_summary": "{'error': 'API request failed: 429', 'rewrite_complete': False}"
+    },
+    {
+      "agent_id": 95,
+      "task_id": "task_247",
+      "success": true,
+      "processing_time": 0.20909595489501953,
+      "gpu_usage": 0.11,
+      "memory_usage": 77.6953125,
+      "result_summary": "{'error': 'API request failed: 429', 'rewrite_complete': False}"
+    },
+    {
+      "agent_id": 96,
+      "task_id": "task_362",
+      "success": true,
+      "processing_time": 0.24587512016296387,
+      "gpu_usage": 0.11,
+      "memory_usage": 79.9296875,
+      "result_summary": "{'error': 'API request failed: 429', 'rewrite_complete': False}"
+    },
+    {
+      "agent_id": 98,
+      "task_id": "task_212",
+      "success": true,
+      "processing_time": 0.1570265293121338,
+      "gpu_usage": 0.11,
+      "memory_usage": 80.9375,
+      "result_summary": "{'error': 'API request failed: 429', 'rewrite_complete': False}"
+    },
+    {
+      "agent_id": 99,
+      "task_id": "task_327",
+      "success": true,
+      "processing_time": 0.18769311904907227,
+      "gpu_usage": 0.11,
+      "memory_usage": 80.4140625,
+      "result_summary": "{'error': 'API request failed: 429', 'rewrite_complete': False}"
+    },
+    {
+      "agent_id": 100,
+      "task_id": "task_62",
+      "success": true,
+      "processing_time": 1.159404993057251,
+      "gpu_usage": 0.11,
+      "memory_usage": 81.8203125,
+      "result_summary": "{'error': 'API request failed: 429', 'rewrite_complete': False}"
+    },
+    {
+      "agent_id": 100,
+      "task_id": "task_252",
+      "success": true,
+      "processing_time": 0.2853515148162842,
+      "gpu_usage": 0.11,
+      "memory_usage": 78.49609375,
+      "result_summary": "{'error': 'API request failed: 429', 'rewrite_complete': False}"
+    },
+    {
+      "agent_id": 101,
+      "task_id": "task_367",
+      "success": true,
+      "processing_time": 0.18181538581848145,
+      "gpu_usage": 0.11,
+      "memory_usage": 79.03515625,
+      "result_summary": "{'error': 'API request failed: 429', 'rewrite_complete': False}"
+    },
+    {
+      "agent_id": 102,
+      "task_id": "task_102",
+      "success": true,
+      "processing_time": 1.0574190616607666,
+      "gpu_usage": 0.11,
+      "memory_usage": 82.18359375,
+      "result_summary": "{'error': 'API request failed: 429', 'rewrite_complete': False}"
+    },
+    {
+      "agent_id": 102,
+      "task_id": "task_292",
+      "success": true,
+      "processing_time": 0.18448591232299805,
+      "gpu_usage": 0.11,
+      "memory_usage": 79.37890625,
+      "result_summary": "{'error': 'API request failed: 429', 'rewrite_complete': False}"
+    },
+    {
+      "agent_id": 103,
+      "task_id": "task_27",
+      "success": true,
+      "processing_time": 1.1355280876159668,
+      "gpu_usage": 0.11,
+      "memory_usage": 82.16796875,
+      "result_summary": "{'error': 'API request failed: 429', 'rewrite_complete': False}"
+    },
+    {
+      "agent_id": 103,
+      "task_id": "task_217",
+      "success": true,
+      "processing_time": 0.25289249420166016,
+      "gpu_usage": 0.11,
+      "memory_usage": 79.38671875,
+      "result_summary": "{'error': 'API request failed: 429', 'rewrite_complete': False}"
+    },
+    {
+      "agent_id": 105,
+      "task_id": "task_257",
+      "success": true,
+      "processing_time": 0.18268895149230957,
+      "gpu_usage": 0.11,
+      "memory_usage": 80.75390625,
+      "result_summary": "{'error': 'API request failed: 429', 'rewrite_complete': False}"
+    },
+    {
+      "agent_id": 107,
+      "task_id": "task_297",
+      "success": true,
+      "processing_time": 0.2282886505126953,
+      "gpu_usage": 0.11,
+      "memory_usage": 79.38671875,
+      "result_summary": "{'error': 'API request failed: 429', 'rewrite_complete': False}"
+    },
+    {
+      "agent_id": 108,
+      "task_id": "task_32",
+      "success": true,
+      "processing_time": 1.0902559757232666,
+      "gpu_usage": 0.11,
+      "memory_usage": 82.00390625,
+      "result_summary": "{'error': 'API request failed: 429', 'rewrite_complete': False}"
+    },
+    {
+      "agent_id": 108,
+      "task_id": "task_222",
+      "success": true,
+      "processing_time": 0.16918396949768066,
+      "gpu_usage": 0.11,
+      "memory_usage": 79.359375,
+      "result_summary": "{'error': 'API request failed: 429', 'rewrite_complete': False}"
+    },
+    {
+      "agent_id": 109,
+      "task_id": "task_337",
+      "success": true,
+      "processing_time": 0.2594120502471924,
+      "gpu_usage": 0.11,
+      "memory_usage": 79.390625,
+      "result_summary": "{'error': 'API request failed: 429', 'rewrite_complete': False}"
+    },
+    {
+      "agent_id": 110,
+      "task_id": "task_72",
+      "success": true,
+      "processing_time": 1.0998167991638184,
+      "gpu_usage": 0.11,
+      "memory_usage": 81.9609375,
+      "result_summary": "{'error': 'API request failed: 429', 'rewrite_complete': False}"
+    },
+    {
+      "agent_id": 110,
+      "task_id": "task_262",
+      "success": true,
+      "processing_time": 0.17548727989196777,
+      "gpu_usage": 0.11,
+      "memory_usage": 79.3671875,
+      "result_summary": "{'error': 'API request failed: 429', 'rewrite_complete': False}"
+    },
+    {
+      "agent_id": 111,
+      "task_id": "task_377",
+      "success": true,
+      "processing_time": 0.20619654655456543,
+      "gpu_usage": 0.11,
+      "memory_usage": 79.03515625,
+      "result_summary": "{'error': 'API request failed: 429', 'rewrite_complete': False}"
+    },
+    {
+      "agent_id": 112,
+      "task_id": "task_302",
+      "success": true,
+      "processing_time": 0.20829367637634277,
+      "gpu_usage": 0.11,
+      "memory_usage": 79.390625,
+      "result_summary": "{'error': 'API request failed: 429', 'rewrite_complete': False}"
+    },
+    {
+      "agent_id": 113,
+      "task_id": "task_227",
+      "success": true,
+      "processing_time": 0.16530084609985352,
+      "gpu_usage": 0.11,
+      "memory_usage": 80.671875,
+      "result_summary": "{'error': 'API request failed: 429', 'rewrite_complete': False}"
+    },
+    {
+      "agent_id": 70,
+      "task_id": "task_146",
+      "success": true,
+      "processing_time": 10.240739107131958,
+      "gpu_usage": 0.11,
+      "memory_usage": 76.27734375,
+      "result_summary": "{'reasoning': \"I'll analyze the setup.py file across the requested dimensions:\\n\\n1. Code Complexity\\n- Moderate complexity with well-organized class structure\\n- Uses multiple Python libraries and ha"
+    },
+    {
+      "agent_id": 47,
+      "task_id": "task_161",
+      "success": true,
+      "processing_time": 11.308032035827637,
+      "gpu_usage": 0.11,
+      "memory_usage": 76.31640625,
+      "result_summary": "{'reasoning': 'Let me analyze this code file across the requested dimensions:\\n\\n1. Code Complexity\\n- Current complexity is relatively low (moderate)\\n- Clear class structure with well-defined respon"
+    },
+    {
+      "agent_id": 48,
+      "task_id": "task_86",
+      "success": true,
+      "processing_time": 11.413403272628784,
+      "gpu_usage": 0.11,
+      "memory_usage": 76.39453125,
+      "result_summary": "{'reasoning': \"I'll analyze the code file according to the requested aspects:\\n\\n1. Code Complexity\\n- Low complexity (good)\\n- Linear flow with straightforward logic\\n- Clear function structure\\n- Si"
+    },
+    {
+      "agent_id": 65,
+      "task_id": "task_141",
+      "success": true,
+      "processing_time": 11.738610982894897,
+      "gpu_usage": 0.11,
+      "memory_usage": 76.41796875,
+      "result_summary": "{'reasoning': 'Let me analyze this code file across the requested dimensions:\\n\\n1. Code Complexity\\n- Low to Medium complexity\\n- Clear class structure with well-defined responsibilities\\n- Simple in"
+    },
+    {
+      "agent_id": 42,
+      "task_id": "task_156",
+      "success": true,
+      "processing_time": 12.780150413513184,
+      "gpu_usage": 0.11,
+      "memory_usage": 75.60546875,
+      "result_summary": "{'reasoning': 'I\\'ll analyze the given code file across the requested dimensions:\\n\\n1. Code Complexity\\n- The code shows moderate complexity with a class-based structure (BasedCoderSetup)\\n- Good org"
+    },
+    {
+      "agent_id": 52,
+      "task_id": "task_166",
+      "success": true,
+      "processing_time": 12.930835962295532,
+      "gpu_usage": 0.11,
+      "memory_usage": 75.609375,
+      "result_summary": "{'reasoning': 'Let me analyze the code based on the requested aspects:\\n\\n1. Code Complexity\\n- Low to moderate complexity\\n- Clear function separation and naming\\n- Simple linear flow with basic erro"
+    },
+    {
+      "agent_id": 60,
+      "task_id": "task_136",
+      "success": true,
+      "processing_time": 12.288452863693237,
+      "gpu_usage": 0.11,
+      "memory_usage": 76.43359375,
+      "result_summary": "{'reasoning': 'I\\'ll analyze the code based on the requested aspects:\\n\\n1. Code Complexity:\\n- Low to moderate complexity\\n- Clear, linear execution flow\\n- Simple function structure with good separa"
+    },
+    {
+      "agent_id": 66,
+      "task_id": "task_66",
+      "success": true,
+      "processing_time": 12.941539764404297,
+      "gpu_usage": 0.11,
+      "memory_usage": 75.609375,
+      "result_summary": "{'reasoning': \"I'll analyze this code file systematically.\\n\\n1. Code Complexity:\\n- Overall moderate complexity with clear class structure and component organization\\n- Main class `DeannaChatSystem` "
+    },
+    {
+      "agent_id": 67,
+      "task_id": "task_181",
+      "success": true,
+      "processing_time": 13.828659057617188,
+      "gpu_usage": 0.11,
+      "memory_usage": 74.87109375,
+      "result_summary": "{'reasoning': 'Let me analyze the code according to the requested aspects:\\n\\n1. Code Complexity\\n- Low complexity (good)\\n  - Simple, linear flow with clear functions\\n  - Easy to understand function"
+    },
+    {
+      "agent_id": 49,
+      "task_id": "task_11",
+      "success": true,
+      "processing_time": 15.354895114898682,
+      "gpu_usage": 0.11,
+      "memory_usage": 74.87890625,
+      "result_summary": "{'reasoning': 'Let me analyze this step by step:\\n\\n1. Core Issue:\\n- First I\\'ll examine the underlying code structure\\n- Look for complexity hotspots\\n- Identify architectural patterns being used\\n\\"
+    },
+    {
+      "agent_id": 70,
+      "task_id": "task_336",
+      "success": true,
+      "processing_time": 9.7239511013031,
+      "gpu_usage": 0.11,
+      "memory_usage": 74.7421875,
+      "result_summary": "{'reasoning': \"I'll analyze the provided NodeJSBridgeTool code file across the requested dimensions:\\n\\n1. Code Complexity\\n- Current complexity is Low to Moderate\\n- Main components are clear and wel"
+    },
+    {
+      "agent_id": 48,
+      "task_id": "task_276",
+      "success": true,
+      "processing_time": 9.798227071762085,
+      "gpu_usage": 0.11,
+      "memory_usage": 74.74609375,
+      "result_summary": "{'reasoning': 'Let me analyze this demo code file for the Unified Agent System:\\n\\n1. Code Complexity\\n- The code has relatively low complexity with a clear, linear flow\\n- Main functionality is encap"
+    },
+    {
+      "agent_id": 65,
+      "task_id": "task_331",
+      "success": true,
+      "processing_time": 9.447906017303467,
+      "gpu_usage": 0.11,
+      "memory_usage": 74.7421875,
+      "result_summary": "{'reasoning': 'Let me analyze this code file:\\n\\n1. Code Complexity\\n- Moderate complexity with a clear class structure\\n- Uses inheritance from BaseTool\\n- Multiple operation types (store, retrieve, "
+    },
+    {
+      "agent_id": 42,
+      "task_id": "task_346",
+      "success": true,
+      "processing_time": 9.98462700843811,
+      "gpu_usage": 0.11,
+      "memory_usage": 74.74609375,
+      "result_summary": "{'reasoning': 'Let me analyze this RAG Pipeline Tool code:\\n\\n1. Code Complexity:\\n- Moderate complexity level with multiple components integration\\n- Good use of dataclasses and type hints improving "
+    },
+    {
+      "agent_id": 47,
+      "task_id": "task_351",
+      "success": true,
+      "processing_time": 11.741048336029053,
+      "gpu_usage": 0.11,
+      "memory_usage": 74.75,
+      "result_summary": "{'reasoning': \"I'll analyze the code file based on the requested aspects:\\n\\n1. Code Complexity:\\n- Moderate complexity with well-structured class hierarchy\\n- Uses dataclasses and enums for clean dat"
+    },
+    {
+      "agent_id": 60,
+      "task_id": "task_326",
+      "success": true,
+      "processing_time": 10.789168119430542,
+      "gpu_usage": 0.11,
+      "memory_usage": 74.76171875,
+      "result_summary": "{'reasoning': 'Let me analyze this code file across the requested dimensions:\\n\\n1. Code Complexity\\n- Currently shows moderate complexity\\n- Clean structure using class inheritance (BaseTool)\\n- Good"
+    },
+    {
+      "agent_id": 67,
+      "task_id": "task_371",
+      "success": true,
+      "processing_time": 9.208435535430908,
+      "gpu_usage": 0.11,
+      "memory_usage": 74.75,
+      "result_summary": "{'reasoning': \"I'll analyze this code file based on the requested aspects:\\n\\n1. Code Complexity:\\n- Moderate complexity with well-structured class hierarchies using Enums and dataclasses\\n- Clear sep"
+    },
+    {
+      "agent_id": 49,
+      "task_id": "task_201",
+      "success": true,
+      "processing_time": 9.251526832580566,
+      "gpu_usage": 0.11,
+      "memory_usage": 74.66796875,
+      "result_summary": "{'reasoning': \"I'll analyze the test_core_features.py file across the requested dimensions:\\n\\n1. Code Complexity\\n- Moderate complexity with clear organization\\n- Class-based structure with well-defi"
+    },
+    {
+      "agent_id": 49,
+      "task_id": "task_391",
+      "success": true,
+      "processing_time": 0.15424156188964844,
+      "gpu_usage": 0.11,
+      "memory_usage": 74.6875,
+      "result_summary": "{'error': 'API request failed: 429', 'analysis_complete': False}"
+    },
+    {
+      "agent_id": 106,
+      "task_id": "task_182",
+      "success": true,
+      "processing_time": 24.674960374832153,
+      "gpu_usage": 0.11,
+      "memory_usage": 74.6875,
+      "result_summary": "{'rewritten_code': 'Here\\'s the improved version of the code with better error handling, typing, documentation, and best practices:\\n\\n```python\\n#!/usr/bin/env python3\\n\"\"\"\\nSimple Download Script fo"
+    },
+    {
+      "agent_id": 106,
+      "task_id": "task_372",
+      "success": true,
+      "processing_time": 0.18677425384521484,
+      "gpu_usage": 0.11,
+      "memory_usage": 74.6875,
+      "result_summary": "{'error': 'API request failed: 429', 'rewrite_complete': False}"
+    },
+    {
+      "agent_id": 66,
+      "task_id": "task_256",
+      "success": true,
+      "processing_time": 12.683518886566162,
+      "gpu_usage": 0.11,
+      "memory_usage": 74.6953125,
+      "result_summary": "{'reasoning': \"I'll analyze the provided code file according to the requested aspects:\\n\\n1. Code Complexity\\n- Currently shows moderate complexity with multiple responsibilities (memory management, d"
+    },
+    {
+      "agent_id": 52,
+      "task_id": "task_356",
+      "success": true,
+      "processing_time": 14.865412473678589,
+      "gpu_usage": 0.11,
+      "memory_usage": 74.65625,
+      "result_summary": "{'reasoning': 'Let me analyze this code file across the requested dimensions:\\n\\n1. Code Complexity:\\n- Moderate complexity level\\n- Clear class structure using inheritance from BaseTool\\n- Uses datac"
+    },
+    {
+      "agent_id": 97,
+      "task_id": "task_97",
+      "success": true,
+      "processing_time": 29.20902729034424,
+      "gpu_usage": 0.11,
+      "memory_usage": 74.59765625,
+      "result_summary": "{'rewritten_code': 'Here\\'s the improved version of the code with better error handling, logging, type hints, and documentation:\\n\\n```python\\n#!/usr/bin/env python3\\n\"\"\"\\nDownload and manage Qwen3 Em"
+    },
+    {
+      "agent_id": 97,
+      "task_id": "task_287",
+      "success": true,
+      "processing_time": 0.16101741790771484,
+      "gpu_usage": 0.11,
+      "memory_usage": 74.59765625,
+      "result_summary": "{'error': 'API request failed: 429', 'rewrite_complete': False}"
+    },
+    {
+      "agent_id": 104,
+      "task_id": "task_142",
+      "success": true,
+      "processing_time": 33.14415502548218,
+      "gpu_usage": 0.11,
+      "memory_usage": 74.5234375,
+      "result_summary": "{'rewritten_code': 'Here\\'s the improved version of the code:\\n\\n```python\\n#!/usr/bin/env python3\\n\"\"\"\\nDEEP-CLI Runner Module\\n\\nThis module provides a command-line interface for interacting with va"
+    },
+    {
+      "agent_id": 104,
+      "task_id": "task_332",
+      "success": true,
+      "processing_time": 0.1729578971862793,
+      "gpu_usage": 0.11,
+      "memory_usage": 74.52734375,
+      "result_summary": "{'error': 'API request failed: 429', 'rewrite_complete': False}"
+    }
+  ]
+}
