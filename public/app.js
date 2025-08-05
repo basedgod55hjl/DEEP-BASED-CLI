@@ -2,6 +2,12 @@ document.getElementById('runBtn').addEventListener('click', runCommand);
 document.getElementById('clearBtn').addEventListener('click', () => {
     document.getElementById('output').textContent = '';
 });
+document.getElementById('stopBtn').addEventListener('click', async () => {
+    await fetch('/cli/stop', { method: 'POST' });
+    const output = document.getElementById('output');
+    output.textContent += '\n[Process terminated]\n';
+    output.scrollTop = output.scrollHeight;
+});
 document.getElementById('commandInput').addEventListener('keyup', (e) => {
     if (e.key === 'Enter') runCommand();
 });

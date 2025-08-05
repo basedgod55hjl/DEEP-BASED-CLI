@@ -16,7 +16,7 @@ import morgan from 'morgan';
 import dotenv from 'dotenv';
 import chalk from 'chalk';
 import ora from 'ora';
-import { exec, execFile, execSync } from 'child_process';
+import { spawn, execSync } from 'child_process';
 import fs from 'fs';
 import path from 'path';
 
@@ -55,6 +55,7 @@ class DeepSeekReasonerServer {
         this.conversation = null;
         this.thoughts = null;
         this.logger = new Logger();
+        this.currentProcess = null;
         
         this.setupMiddleware();
         this.setupRoutes();
@@ -245,18 +246,38 @@ class DeepSeekReasonerServer {
                 }
             }
 
-            const execCallback = (error, stdout, stderr) => {
-                if (error) {
-                    return res.status(500).json({ error: stderr || error.message });
+            const useRunner = fs.existsSync(runner);
+            const cmd = useRunner ? runner : command;
+            const args = useRunner ? [command] : [];
+            const child = spawn(cmd, args, { shell: !useRunner });
+            this.currentProcess = child;
+
+            let stdout = '';
+            let stderr = '';
+            child.stdout.on('data', (d) => { stdout += d.toString(); });
+            child.stderr.on('data', (d) => { stderr += d.toString(); });
+
+            child.on('close', (code) => {
+                this.currentProcess = null;
+                if (code !== 0 && stderr) {
+                    return res.status(500).json({ error: stderr || `Exit code ${code}` });
                 }
                 res.json({ output: stdout });
-            };
+            });
 
-            if (fs.existsSync(runner)) {
-                execFile(runner, [command], execCallback);
-            } else {
-                exec(command, execCallback);
+            child.on('error', (err) => {
+                this.currentProcess = null;
+                res.status(500).json({ error: err.message });
+            });
+        });
+
+        this.app.post('/cli/stop', (req, res) => {
+            if (this.currentProcess) {
+                this.currentProcess.kill();
+                this.currentProcess = null;
+                return res.json({ stopped: true });
             }
+            res.status(400).json({ error: 'No process running' });
         });
     }
     
