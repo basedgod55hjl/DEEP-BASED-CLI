@@ -12,7 +12,7 @@
     "backup_interval_hours": 24
   },
   "llm": {
-    "api_key": "sk-9af038dd3bdd46258c4a9d02850c9a6d",
+    "api_key": "sk-your-api-key",
     "base_url": "https://api.deepseek.com",
     "default_model": "deepseek-chat",
     "max_tokens": 4000,

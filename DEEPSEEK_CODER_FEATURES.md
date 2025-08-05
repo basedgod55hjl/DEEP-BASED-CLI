@@ -138,7 +138,7 @@ The tool uses the DeepSeek API for code generation and analysis:
 
 ```python
 # config/api_keys.py
-DEEPSEEK_API_KEY = "sk-90e0dd863b8c4e0d879a02851a0ee194"
+DEEPSEEK_API_KEY = "sk-your-api-key"
 DEEPSEEK_BASE_URL = "https://api.deepseek.com/v1"
 ```
 

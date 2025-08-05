@@ -49,8 +49,8 @@ class ClaudeCoderAgent:
     
     def __init__(self, codebase_path: str = "."):
         self.codebase_path = Path(codebase_path)
-        self.claude_api_key = "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"
-        self.deepseek_api_key = "sk-90e0dd863b8c4e0d879a02851a0ee194"
+        self.claude_api_key = "sk-your-api-key"
+        self.deepseek_api_key = "sk-your-api-key"
         self.analysis_results = []
         self.system_status = None
         

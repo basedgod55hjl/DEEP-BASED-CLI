@@ -188,7 +188,7 @@ DEEP-CLI/
 ### Environment Variables
 Create a `.env` file in the project root:
 ```env
-DEEPSEEK_API_KEY=sk-your-deepseek-api-key
+DEEPSEEK_API_KEY=sk-your-api-key
 HUGGINGFACE_API_KEY=hf-your-huggingface-token
 ```
 

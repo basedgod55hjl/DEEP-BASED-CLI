@@ -19,11 +19,11 @@ load_dotenv()
 logger = logging.getLogger(__name__)
 
 # DeepSeek API Configuration
-DEEPSEEK_API_KEY = os.getenv("DEEPSEEK_API_KEY", "sk-90e0dd863b8c4e0d879a02851a0ee194")
+DEEPSEEK_API_KEY = os.getenv("DEEPSEEK_API_KEY", "sk-your-api-key")
 DEEPSEEK_BASE_URL = os.getenv("DEEPSEEK_BASE_URL", "https://api.deepseek.com/v1")
 
 # HuggingFace API Configuration
-HUGGINGFACE_API_KEY = os.getenv("HUGGINGFACE_API_KEY", "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")
+HUGGINGFACE_API_KEY = os.getenv("HUGGINGFACE_API_KEY", "hf-your-api-token")
 
 def update_api_keys(deepseek_key: str = None, huggingface_token: str = None):
     """Update API keys"""
@@ -66,7 +66,7 @@ class DatabaseConfig:
 @dataclass
 class LLMConfig:
     """LLM configuration settings"""
-    api_key: str = "sk-9af038dd3bdd46258c4a9d02850c9a6d"
+    api_key: str = "sk-your-api-key"
     base_url: str = "https://api.deepseek.com"
     default_model: str = "deepseek-chat"
     max_tokens: int = 4000

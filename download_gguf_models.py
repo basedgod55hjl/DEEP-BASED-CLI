@@ -35,7 +35,7 @@ def download_gguf_models():
     ]
     
     # HuggingFace token (hardcoded as in the original system)
-    token = "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"
+    token = "hf-your-api-token"
     
     for model in models:
         try:

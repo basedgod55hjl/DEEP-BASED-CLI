@@ -31,8 +31,8 @@ class LocalEmbeddingSystem:
         self.temp_dir.mkdir(exist_ok=True)
         
         # API Keys (hardcoded as requested)
-        self.huggingface_token = "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"
-        self.deepseek_token = "sk-90e0dd863b8c4e0d879a02851a0ee194"
+        self.huggingface_token = "hf-your-api-token"
+        self.deepseek_token = "sk-your-api-key"
         
         logger.info(f"Local embedding system initialized with model: {self.model_path}")
     

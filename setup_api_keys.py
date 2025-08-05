@@ -116,13 +116,13 @@ def update_config_files(deepseek_key: str, huggingface_token: str):
             
             # Update DeepSeek API key
             content = content.replace(
-                'DEEPSEEK_API_KEY = os.getenv("DEEPSEEK_API_KEY", "sk-90e0dd863b8c4e0d879a02851a0ee194")',
+                'DEEPSEEK_API_KEY = os.getenv("DEEPSEEK_API_KEY", "sk-your-api-key")',
                 f'DEEPSEEK_API_KEY = os.getenv("DEEPSEEK_API_KEY", "{deepseek_key}")'
             )
             
             # Update HuggingFace API key
             content = content.replace(
-                'HUGGINGFACE_API_KEY = os.getenv("HUGGINGFACE_API_KEY", "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")',
+                'HUGGINGFACE_API_KEY = os.getenv("HUGGINGFACE_API_KEY", "hf-your-api-token")',
                 f'HUGGINGFACE_API_KEY = os.getenv("HUGGINGFACE_API_KEY", "{huggingface_token}")'
             )
             
@@ -139,7 +139,7 @@ def update_config_files(deepseek_key: str, huggingface_token: str):
             
             # Update DeepSeek API key in LLMConfig
             content = content.replace(
-                'api_key: str = "sk-9af038dd3bdd46258c4a9d02850c9a6d"',
+                'api_key: str = "sk-your-api-key"',
                 f'api_key: str = "{deepseek_key}"'
             )
             

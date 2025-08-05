@@ -16,8 +16,8 @@ services:
       # Mount data directory
       - ./data:/app/data
     environment:
-      - CLAUDE_API_KEY=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
-      - DEEPSEEK_API_KEY=sk-90e0dd863b8c4e0d879a02851a0ee194
+      - CLAUDE_API_KEY=sk-your-api-key
+      - DEEPSEEK_API_KEY=sk-your-api-key
       - PYTHONPATH=/app
     working_dir: /app/codebase
     command: ["python", "/app/claude_coder_docker.py"]

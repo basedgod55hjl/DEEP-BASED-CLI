@@ -13,7 +13,7 @@ def update_api_key():
     """Update the DeepSeek API key with a new one"""
     
     # New API key (you should replace this with a valid one)
-    new_api_key = "sk-90e0dd863b8c4e0d879a02851a0ee194"
+    new_api_key = "sk-your-api-key"
     
     print("🔧 Fixing DeepSeek API Issues...")
     print(f"📝 Current API Key: {new_api_key[:10]}...")
@@ -57,7 +57,7 @@ def update_api_key():
             
             # Replace API key in the file
             content = content.replace(
-                'DEEPSEEK_API_KEY = os.getenv("DEEPSEEK_API_KEY", "sk-90e0dd863b8c4e0d879a02851a0ee194")',
+                'DEEPSEEK_API_KEY = os.getenv("DEEPSEEK_API_KEY", "sk-your-api-key")',
                 f'DEEPSEEK_API_KEY = os.getenv("DEEPSEEK_API_KEY", "{new_api_key}")'
             )
             
@@ -79,7 +79,7 @@ def check_api_balance():
     """Check if the API key has sufficient balance"""
     import requests
     
-    api_key = os.getenv("DEEPSEEK_API_KEY", "sk-90e0dd863b8c4e0d879a02851a0ee194")
+    api_key = os.getenv("DEEPSEEK_API_KEY", "sk-your-api-key")
     
     try:
         # Test API call
