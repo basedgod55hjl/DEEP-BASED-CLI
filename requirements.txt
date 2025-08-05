@@ -76,3 +76,4 @@ typing-extensions>=4.0.0
 # ray>=2.0.0  # For distributed computing
 # celery>=5.2.0  # For task queue management
 # redis>=4.0.0  # For caching and message broker
+sympy>=1.12
