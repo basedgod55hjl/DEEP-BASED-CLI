@@ -16,6 +16,9 @@ import morgan from 'morgan';
 import dotenv from 'dotenv';
 import chalk from 'chalk';
 import ora from 'ora';
+import { exec, execFile, execSync } from 'child_process';
+import fs from 'fs';
+import path from 'path';
 
 // Import core systems
 import { DeepSeekReasonerBrain } from './core/DeepSeekReasonerBrain.js';
@@ -220,6 +223,39 @@ class DeepSeekReasonerServer {
             } catch (error) {
                 this.logger.error('Prefix completion error:', error);
                 res.status(500).json({ error: error.message });
+            }
+        });
+
+        // CLI command execution endpoint
+        this.app.post('/cli/run', (req, res) => {
+            const { command } = req.body;
+            if (!command) {
+                return res.status(400).json({ error: 'Command is required' });
+            }
+
+            const toolsDir = path.join(process.cwd(), 'tools');
+            const runner = path.join(toolsDir, 'cli_runner');
+            const source = `${runner}.cpp`;
+
+            if (!fs.existsSync(runner) && fs.existsSync(source)) {
+                try {
+                    execSync(`g++ ${source} -O2 -o ${runner}`);
+                } catch (err) {
+                    this.logger.error('CLI runner compile error:', err);
+                }
+            }
+
+            const execCallback = (error, stdout, stderr) => {
+                if (error) {
+                    return res.status(500).json({ error: stderr || error.message });
+                }
+                res.json({ output: stdout });
+            };
+
+            if (fs.existsSync(runner)) {
+                execFile(runner, [command], execCallback);
+            } else {
+                exec(command, execCallback);
             }
         });
     }
