@@ -15,8 +15,7 @@ import compression from 'compression';
 import morgan from 'morgan';
 import dotenv from 'dotenv';
 import chalk from 'chalk';
-import ora from 'ora';
-import { exec, execFile } from 'child_process';
+impo>>>>>>> DEEP-BASED-CODER
 import fs from 'fs';
 import path from 'path';
 
@@ -55,6 +54,7 @@ class DeepSeekReasonerServer {
         this.conversation = null;
         this.thoughts = null;
         this.logger = new Logger();
+        this.currentProcess = null;
         
         this.setupMiddleware();
         this.setupRoutes();
@@ -233,20 +233,7 @@ class DeepSeekReasonerServer {
                 return res.status(400).json({ error: 'Command is required' });
             }
 
-            const runner = path.join(process.cwd(), 'tools', 'cli_runner');
-            const execCallback = (error, stdout, stderr) => {
-                if (error) {
-                    return res.status(500).json({ error: stderr || error.message });
-                }
-                res.json({ output: stdout });
-            };
-
-            if (fs.existsSync(runner)) {
-                execFile(runner, [command], execCallback);
-            } else {
-                exec(command, execCallback);
-            }
-        });
+<<        });
     }
     
     setupWebSocket() {
