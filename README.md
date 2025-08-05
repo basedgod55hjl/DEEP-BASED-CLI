@@ -7,7 +7,7 @@ Enhanced AI-powered development tool with Anthropic Cookbook integration.
 - **Enhanced Tool Integration**: Advanced tool registry with validation and caching
 - **JSON Mode Support**: Structured JSON output with schema validation
 - **Prompt Caching System**: Multi-strategy caching with compression
-- **Sub-Agent Architecture**: Hierarchical task delegation system
+- **Sub-Agent Architecture**: Hierarchical task delegation system with calculus capabilities
 - **Advanced RAG Pipeline**: Hybrid search with persona awareness
 - **Unified Agent System**: Comprehensive AI assistant capabilities
 
@@ -53,8 +53,9 @@ python enhanced_based_god_cli.py --interactive
 
 ### Sub-Agent Architecture
 - Hierarchical task delegation
-- Specialized agents (Coder, Analyzer, Researcher, etc.)
+- Specialized agents (Coder, Analyzer, Researcher, Calculus, etc.)
 - Task prioritization and performance tracking
+- Calculus agent for derivatives, integrals, and limits
 
 ## Configuration
 
