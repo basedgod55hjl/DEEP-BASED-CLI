@@ -95,12 +95,12 @@ fallback_chain = [
 ## 🔑 **API Keys Configured**
 
 ### **Claude API**
-- **Key**: `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`
+- **Key**: `sk-your-api-key`
 - **Model**: `claude-3-5-sonnet-20241022`
 - **Status**: ✅ Working
 
 ### **DeepSeek API**
-- **Key**: `sk-90e0dd863b8c4e0d879a02851a0ee194`
+- **Key**: `sk-your-api-key`
 - **Model**: `deepseek-chat`
 - **Status**: ✅ Working
 

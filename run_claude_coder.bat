@@ -29,8 +29,8 @@ docker run --rm ^
     -v "%cd%/scans:/app/scans" ^
     -v "%cd%/logs:/app/logs" ^
     -v "%cd%/data:/app/data" ^
-    -e CLAUDE_API_KEY="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" ^
-    -e DEEPSEEK_API_KEY="sk-90e0dd863b8c4e0d879a02851a0ee194" ^
+    -e CLAUDE_API_KEY="sk-your-api-key" ^
+    -e DEEPSEEK_API_KEY="sk-your-api-key" ^
     -e PYTHONPATH="/app" ^
     --name claude-coder-agent ^
     claude-coder-agent

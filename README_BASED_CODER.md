@@ -164,8 +164,8 @@ verbose <on/off>         # Toggle verbose mode
 
 The system uses the following API keys (configured automatically):
 
-- **DeepSeek API**: `sk-90e0dd863b8c4e0d879a02851a0ee194`
-- **HuggingFace Token**: `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`
+- **DeepSeek API**: `sk-your-api-key`
+- **HuggingFace Token**: `hf-your-api-token`
 
 ### Configuration Files
 

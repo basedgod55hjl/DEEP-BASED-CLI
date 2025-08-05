@@ -174,7 +174,7 @@ class BasedCoderSetup:
             snapshot_download(
                 repo_id="Qwen/Qwen3-Embedding-0.6B",
                 local_dir=str(qwen_model_path),
-                token="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"
+                token="hf-your-api-token"
             )
             
             logger.info("✅ Models downloaded successfully")
@@ -193,12 +193,12 @@ class BasedCoderSetup:
             # Create API keys configuration
             api_keys_config = {
                 "deepseek": {
-                    "api_key": "sk-90e0dd863b8c4e0d879a02851a0ee194",
+                    "api_key": "sk-your-api-key",
                     "base_url": "https://api.deepseek.com/beta",
                     "model": "deepseek-chat"
                 },
                 "huggingface": {
-                    "api_key": "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",
+                    "api_key": "hf-your-api-token",
                     "models": {
                         "embedding": "Qwen/Qwen3-Embedding-0.6B",
                         "completion": "Qwen/Qwen3-0.5B"

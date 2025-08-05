@@ -3,7 +3,7 @@
 ## ✅ System Configuration Fixed
 
 ### API Configuration
-- **DeepSeek API Key**: `sk-2942f8c8a2c6449db5a3858ff862b5de` (Updated in all locations)
+- **DeepSeek API Key**: `sk-your-api-key` (Updated in all locations)
 - **Base URL**: `https://api.deepseek.com` (Correct)
 - **Models**: 
   - `deepseek-chat` - For general chat and queries

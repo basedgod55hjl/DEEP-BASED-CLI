@@ -26,8 +26,8 @@ class TransformersEmbeddingSystem:
         self.device = "cuda" if torch.cuda.is_available() else "cpu"
         
         # API Keys (hardcoded as requested)
-        self.huggingface_token = "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"
-        self.deepseek_token = "sk-90e0dd863b8c4e0d879a02851a0ee194"
+        self.huggingface_token = "hf-your-api-token"
+        self.deepseek_token = "sk-your-api-key"
         
         # Initialize pipeline and model
         self.pipeline = None

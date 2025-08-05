@@ -36,7 +36,7 @@ class DeannaChatSystem:
         self.nickname = "DEEDEE"
         
         # API Keys (hardcoded as requested)
-        self.deepseek_token = "sk-90e0dd863b8c4e0d879a02851a0ee194"
+        self.deepseek_token = "sk-your-api-key"
         self.deepseek_base_url = "https://api.deepseek.com/v1"
         
         # Initialize components

@@ -55,7 +55,7 @@ I have successfully created a comprehensive, fully integrated BASED CODER CLI sy
 ### ✅ **DeepSeek Integration**
 - Full DeepSeek API integration
 - Beta API support for advanced features
-- API key: `sk-90e0dd863b8c4e0d879a02851a0ee194`
+- API key: `sk-your-api-key`
 
 ### ✅ **SQL Database**
 - Persistent storage with SQLite

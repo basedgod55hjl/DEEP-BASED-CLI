@@ -42,7 +42,7 @@ class DatabaseConfig:
 @dataclass
 class LLMConfig:
     """LLM configuration settings"""
-    api_key: str = os.getenv("DEEPSEEK_API_KEY", "sk-9af038dd3bdd46258c4a9d02850c9a6d")
+    api_key: str = os.getenv("DEEPSEEK_API_KEY", "sk-your-api-key")
     base_url: str = "https://api.deepseek.com"
     default_model: str = "deepseek-chat"
     max_tokens: int = 4000
@@ -228,7 +228,7 @@ class FeatureFlags:
 @dataclass
 class ModelConfig:
     """Model configuration settings"""
-    huggingface_token: str = os.getenv("HUGGINGFACE_API_KEY", "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")
+    huggingface_token: str = os.getenv("HUGGINGFACE_API_KEY", "hf-your-api-token")
     qwen_model_name: str = "Qwen/Qwen3-Embedding-0.6B"
     model_cache_dir: str = "data/models"
     enable_local_models: bool = True

@@ -58,8 +58,8 @@ python3 deanna_chat_system.py
 ## 🔧 Configuration
 
 ### API Keys (Hardcoded)
-- **HuggingFace**: `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`
-- **DeepSeek**: `sk-90e0dd863b8c4e0d879a02851a0ee194`
+- **HuggingFace**: `hf-your-api-token`
+- **DeepSeek**: `sk-your-api-key`
 
 ### Model Configuration
 - **Embedding Model**: Qwen/Qwen3-Embedding-0.6B

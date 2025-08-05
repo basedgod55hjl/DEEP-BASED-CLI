@@ -17,7 +17,7 @@ def download_qwen_model():
     """Download Qwen3 embedding model"""
     
     # HuggingFace token
-    token = "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"
+    token = "hf-your-api-token"
     
     # Model repository
     repo_id = "Qwen/Qwen3-Embedding-0.6B"
@@ -62,7 +62,7 @@ def list_available_files():
         from huggingface_hub import list_repo_files
         
         repo_id = "Qwen/Qwen3-Embedding-0.6B"
-        token = "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"
+        token = "hf-your-api-token"
         
         logger.info(f"Listing files in {repo_id}...")
         

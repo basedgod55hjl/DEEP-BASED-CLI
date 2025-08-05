@@ -19,7 +19,7 @@ def download_qwen_model():
     """Download Qwen3 embedding model using the provided token"""
     
     # HuggingFace token
-    token = "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"
+    token = "hf-your-api-token"
     
     # Model name
     model_name = "Qwen/Qwen3-Embedding-0.6B"
