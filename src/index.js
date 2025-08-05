@@ -15,8 +15,7 @@ import compression from 'compression';
 import morgan from 'morgan';
 import dotenv from 'dotenv';
 import chalk from 'chalk';
-import ora from 'ora';
-import { spawn, execSync } from 'child_process';
+impo>>>>>>> DEEP-BASED-CODER
 import fs from 'fs';
 import path from 'path';
 
@@ -234,51 +233,7 @@ class DeepSeekReasonerServer {
                 return res.status(400).json({ error: 'Command is required' });
             }
 
-            const toolsDir = path.join(process.cwd(), 'tools');
-            const runner = path.join(toolsDir, 'cli_runner');
-            const source = `${runner}.cpp`;
-
-            if (!fs.existsSync(runner) && fs.existsSync(source)) {
-                try {
-                    execSync(`g++ ${source} -O2 -o ${runner}`);
-                } catch (err) {
-                    this.logger.error('CLI runner compile error:', err);
-                }
-            }
-
-            const useRunner = fs.existsSync(runner);
-            const cmd = useRunner ? runner : command;
-            const args = useRunner ? [command] : [];
-            const child = spawn(cmd, args, { shell: !useRunner });
-            this.currentProcess = child;
-
-            let stdout = '';
-            let stderr = '';
-            child.stdout.on('data', (d) => { stdout += d.toString(); });
-            child.stderr.on('data', (d) => { stderr += d.toString(); });
-
-            child.on('close', (code) => {
-                this.currentProcess = null;
-                if (code !== 0 && stderr) {
-                    return res.status(500).json({ error: stderr || `Exit code ${code}` });
-                }
-                res.json({ output: stdout });
-            });
-
-            child.on('error', (err) => {
-                this.currentProcess = null;
-                res.status(500).json({ error: err.message });
-            });
-        });
-
-        this.app.post('/cli/stop', (req, res) => {
-            if (this.currentProcess) {
-                this.currentProcess.kill();
-                this.currentProcess = null;
-                return res.json({ stopped: true });
-            }
-            res.status(400).json({ error: 'No process running' });
-        });
+<<        });
     }
     
     setupWebSocket() {

@@ -62,3 +62,4 @@ secrets.json
 # Backup directories
 backup_*/
 *_backup/
+tools/cli_bridge
